@@ -98,7 +98,7 @@ Tầng `Presentation` đã hoàn thành các công việc nền tảng quan tr�
     -   .NET 8 SDK.
 2.  **Clone repository:**
     ```bash
-    git clone <your-repository-url>
+    git clone https://github.com/MyDung39/QuanLyThueNha.git
     ```
 3.  Mở file `RoomManagementSystem.sln` bằng Visual Studio.
 4.  Chuột phải vào project `RoomManagementSystem.Presentation` và chọn **Set as Startup Project**.
