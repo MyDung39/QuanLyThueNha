@@ -1,0 +1,191 @@
+﻿<Window x:Class="RoomManagementSystem.Presentation.Views.Windows.LoginWindow"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Title="Login" Height="650" Width="1000"
+            WindowStartupLocation="CenterScreen"
+            WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+            FontFamily="Segoe UI"
+            MouseLeftButtonDown="Window_MouseLeftButtonDown"
+            UseLayoutRounding="True">
+
+    <Window.Resources>
+        <!-- Window control button style -->
+        <Style TargetType="Button" x:Key="WindowControlButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#888"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E5E5E5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Base style for input boxes -->
+        <Style TargetType="Control" x:Key="InputBoxBaseStyle">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#EEEEEE"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="58"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- TextBox style with placeholder -->
+        <Style TargetType="TextBox" x:Key="TextBoxWithPlaceholderStyle" BasedOn="{StaticResource InputBoxBaseStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="29" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Margin="26,0,26,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" Width="20" Height="20" Margin="0,0,12,0" Opacity="0.4"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" VerticalAlignment="Center"/>
+                                <TextBlock Text="{TemplateBinding ToolTip}" Grid.Column="1" IsHitTestVisible="False" Foreground="#333333" Opacity="0.3" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- PasswordBox style with placeholder -->
+        <Style TargetType="PasswordBox" x:Key="PasswordBoxWithPlaceholderStyle" BasedOn="{StaticResource InputBoxBaseStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border CornerRadius="28" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Margin="26,0,26,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" Width="20" Height="20" Margin="0,0,12,0" Opacity="0.4"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" VerticalAlignment="Center"/>
+                                <TextBlock Text="{TemplateBinding ToolTip}" Grid.Column="1" IsHitTestVisible="False" Foreground="#333333" Opacity="0.3" VerticalAlignment="Center" x:Name="PlaceholderText"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Login button style -->
+        <Style TargetType="Button" x:Key="LoginButtonStyle">
+            <Setter Property="Background" Value="#0575E6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="57"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" CornerRadius="28.5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Main layout -->
+    <Border CornerRadius="10" Background="White" BorderBrush="#DDD" BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="86*"/>
+                <ColumnDefinition Width="58*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left section (Gradient) -->
+            <Grid Grid.Column="0">
+                <Border CornerRadius="10,0,0,10">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="#0575E6" Offset="0.0"/>
+                            <GradientStop Color="#02298A" Offset="0.848"/>
+                            <GradientStop Color="#021B79" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <Canvas>
+                    <Ellipse Width="556" Height="556" Stroke="#0575E6" StrokeThickness="1" Opacity="0.3" Canvas.Left="-250" Canvas.Bottom="-300"/>
+                    <Ellipse Width="556" Height="556" Stroke="#0575E6" StrokeThickness="1" Opacity="0.3" Canvas.Left="-160" Canvas.Bottom="-350"/>
+                </Canvas>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="80,0,80,0">
+                    <TextBlock Text="Plumeria Family" FontSize="40" FontWeight="Bold" Foreground="White" TextWrapping="Wrap"/>
+                    <TextBlock Text="Smart and simple room rental management" FontSize="18" FontWeight="Medium" Foreground="White" Margin="0,15,0,0" TextWrapping="Wrap" Opacity="0.9"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Right section (Login form) -->
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0">
+                    <Button Content="&#xE921;" Style="{StaticResource WindowControlButton}" Click="MinimizeButton_Click"/>
+                    <Button Content="&#xE922;" Style="{StaticResource WindowControlButton}" Click="MaximizeButton_Click"/>
+                    <Button Content="&#xE8BB;" Style="{StaticResource WindowControlButton}" Click="CloseButton_Click"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="80,0,80,0">
+                    <TextBlock Text="Hello Again!" FontSize="26" FontWeight="Bold" Foreground="#333333"/>
+                    <TextBlock Text="Welcome Back" FontSize="18" FontWeight="Normal" Foreground="#333333" Margin="0,5,0,43"/>
+
+                    <TextBox Style="{StaticResource TextBoxWithPlaceholderStyle}" 
+                                 ToolTip="Email Address"
+                                 Tag="pack://application:,,,/Resources/Images/email_icon.png"
+                                 Margin="0,0,0,17"/>
+
+                    <PasswordBox x:Name="PasswordInput" 
+                                     PasswordChanged="PasswordInput_PasswordChanged"
+                                     Style="{StaticResource PasswordBoxWithPlaceholderStyle}"
+                                     ToolTip="Password"
+                                     Tag="pack://application:,,,/Resources/Images/password_icon.png"
+                                     Margin="0,0,0,19"/>
+
+                    <Button Content="Login" Style="{StaticResource LoginButtonStyle}"/>
+
+                    <Button Content="Forgot Password" Background="Transparent" Foreground="#333333" Opacity="0.7"
+                                FontSize="14" Margin="0,20,0,0" BorderThickness="0" Cursor="Hand"
+                                HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

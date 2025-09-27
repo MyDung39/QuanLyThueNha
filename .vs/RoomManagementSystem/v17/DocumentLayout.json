@@ -1,0 +1,128 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{11C9018F-08D5-4887-A8F1-B4D07C8F68DE}|RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.businesslayer\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{11C9018F-08D5-4887-A8F1-B4D07C8F68DE}|RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj|solutionrelative:roommanagementsystem.businesslayer\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11C9018F-08D5-4887-A8F1-B4D07C8F68DE}|RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.businesslayer\\roommanagementsystem.businesslayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{11C9018F-08D5-4887-A8F1-B4D07C8F68DE}|RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj|solutionrelative:roommanagementsystem.businesslayer\\roommanagementsystem.businesslayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "app.manifest",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\app.manifest",
+              "RelativeDocumentMoniker": "RoomManagementSystem.BusinessLayer\\app.manifest",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\app.manifest",
+              "RelativeToolTip": "RoomManagementSystem.BusinessLayer\\app.manifest",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAFMAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001203|",
+              "WhenOpened": "2025-09-27T03:47:05.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginWindow.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-27T03:40:40.83Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginWindow.xaml.cs",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml.cs",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml.cs",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml.cs",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAADwv1QAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T03:41:42.765Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RoomManagementSystem.BusinessLayer.csproj",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
+              "RelativeDocumentMoniker": "RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
+              "RelativeToolTip": "RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-27T03:46:21.91Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "b86f4112-ee78-4e07-990b-f9daeca1fcad",
+        "Display": 0,
+        "X": 169,
+        "Y": 108,
+        "Width": 800,
+        "Height": 600,
+        "WindowState": 0
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LoginWindow.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "ViewState": "AgIAAJAAAAAAAAAAAAAgwL4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-27T03:42:08.888Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\bin\Debug\net8.0\RoomManagementSystem.Utilities.deps.json
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\bin\Debug\net8.0\RoomManagementSystem.Utilities.dll
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\bin\Debug\net8.0\RoomManagementSystem.Utilities.pdb
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.AssemblyInfoInputs.cache
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.AssemblyInfo.cs
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.csproj.CoreCompileInputs.cache
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.sourcelink.json
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.dll
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\refint\RoomManagementSystem.Utilities.dll
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.pdb
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.Utilities\obj\Debug\net8.0\ref\RoomManagementSystem.Utilities.dll
