@@ -30,3 +30,49 @@ D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.BusinessLayer\ob
 D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\refint\RoomManagementSystem.BusinessLayer.dll
 D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
 D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\ref\RoomManagementSystem.BusinessLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.csproj.AssemblyReference.cache
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.AssemblyInfoInputs.cache
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.AssemblyInfo.cs
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.csproj.CoreCompileInputs.cache
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.deps.json
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomMana.69AFB85B.Up2Date
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\refint\RoomManagementSystem.BusinessLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
+E:\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\ref\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.deps.json
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.csproj.AssemblyReference.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.AssemblyInfoInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.AssemblyInfo.cs
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.csproj.CoreCompileInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomMana.69AFB85B.Up2Date
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\refint\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\ref\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.deps.json
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.csproj.AssemblyReference.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.AssemblyInfoInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.AssemblyInfo.cs
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.csproj.CoreCompileInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.sourcelink.json
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomMana.69AFB85B.Up2Date
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\refint\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.BusinessLayer\obj\Debug\net8.0\ref\RoomManagementSystem.BusinessLayer.dll

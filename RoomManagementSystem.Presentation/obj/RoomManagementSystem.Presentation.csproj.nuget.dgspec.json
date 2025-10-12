@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj": {}
+    "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj": {}
   },
   "projects": {
-    "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj": {
+    "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
+        "projectUniqueName": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
         "projectName": "RoomManagementSystem.BusinessLayer",
-        "projectPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
-        "packagesPath": "C:\\Users\\thanhnha\\.nuget\\packages\\",
-        "outputPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\obj\\",
+        "projectPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
+        "packagesPath": "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\",
+        "outputPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\thanhnha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\KIM XUYẾN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
-                "projectPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj"
+              "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
+                "projectPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj"
               }
             }
           }
@@ -73,20 +73,20 @@
         }
       }
     },
-    "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
+    "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
+        "projectUniqueName": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
         "projectName": "RoomManagementSystem.DataLayer",
-        "projectPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
-        "packagesPath": "C:\\Users\\thanhnha\\.nuget\\packages\\",
-        "outputPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.DataLayer\\obj\\",
+        "projectPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
+        "packagesPath": "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\",
+        "outputPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\thanhnha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\KIM XUYẾN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -118,6 +118,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.1.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -138,20 +144,20 @@
         }
       }
     },
-    "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj": {
+    "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj",
+        "projectUniqueName": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj",
         "projectName": "RoomManagementSystem.Presentation",
-        "projectPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj",
-        "packagesPath": "C:\\Users\\thanhnha\\.nuget\\packages\\",
-        "outputPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\obj\\",
+        "projectPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj",
+        "packagesPath": "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\",
+        "outputPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Presentation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\thanhnha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\KIM XUYẾN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -166,8 +172,8 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj": {
-                "projectPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj"
+              "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj": {
+                "projectPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj"
               }
             }
           }
@@ -191,6 +197,10 @@
             "CommunityToolkit.Mvvm": {
               "target": "Package",
               "version": "[8.4.0, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.1.2, )"
             }
           },
           "imports": [

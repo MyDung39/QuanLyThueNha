@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj": {}
+    "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj": {}
   },
   "projects": {
-    "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj": {
+    "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj",
+        "projectUniqueName": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj",
         "projectName": "RoomManagementSystem.Utilities",
-        "projectPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj",
-        "packagesPath": "C:\\Users\\thanhnha\\.nuget\\packages\\",
-        "outputPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Utilities\\obj\\",
+        "projectPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj",
+        "packagesPath": "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\",
+        "outputPath": "D:\\ĐỀ TÀI THỰC HÀNH CMPM\\source\\QuanLyThueNha\\RoomManagementSystem.Utilities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\thanhnha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\KIM XUYẾN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
