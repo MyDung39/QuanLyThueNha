@@ -11,7 +11,7 @@ namespace RoomManagementSystem.DataLayer
 {
     public class NguoiDungAccess
     {
-        string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         
         //Kiem tra tai khoan, mat khau
         public Boolean checkDangNhap(string email, string matkhau)
