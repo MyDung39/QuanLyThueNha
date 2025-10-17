@@ -47,6 +47,14 @@ namespace RoomManagementSystem.Presentation.Views.Windows
             }
         }
 
+        private void RegisterHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            var registerWindow = new RegisterWindow(); // Tạo một cửa sổ Đăng ký mới
+            registerWindow.WindowState = this.WindowState;
+            registerWindow.Show();                     // Hiển thị cửa sổ Đăng ký
+            this.Close();                              // Đóng cửa sổ Đăng nhập hiện tại
+        }
+
         public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
         {
             if (parent == null) return null;
@@ -76,11 +84,6 @@ namespace RoomManagementSystem.Presentation.Views.Windows
                 }
             }
             return foundChild;
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

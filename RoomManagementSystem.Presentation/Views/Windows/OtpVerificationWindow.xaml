@@ -1,0 +1,195 @@
+﻿<Window x:Class="RoomManagementSystem.Presentation.Views.Windows.OtpVerificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OTP Verification"
+        MinWidth="960" MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        FontFamily="Roboto"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        UseLayoutRounding="True">
+
+    <Window.Resources>
+        <!-- Style cho Border chính của cửa sổ -->
+        <Style TargetType="Border" x:Key="MainWindowBorderStyle">
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+
+        <!-- Style cho các nút điều khiển cửa sổ -->
+        <Style TargetType="Button" x:Key="WindowControlButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#888"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E5E5E5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style cho nút Maximize/Restore -->
+        <Style TargetType="Button" x:Key="MaximizeButtonStyle" BasedOn="{StaticResource WindowControlButton}">
+            <Setter Property="Content" Value="&#xE922;"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                    <Setter Property="Content" Value="&#xE923;"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style cho các ô nhập mã OTP -->
+        <Style TargetType="TextBox" x:Key="OtpBoxStyle">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="MaxLength" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#DDDDDD"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" 
+                                CornerRadius="19" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Khi ô được focus, viền sẽ chuyển thành màu gradient -->
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderThickness" Value="1.8"/>
+                                <Setter TargetName="border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="#FF8D4D" Offset="0.0"/>
+                                            <GradientStop Color="#FF4D97" Offset="1.0"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style cho nút Xác nhận -->
+        <Style TargetType="Button" x:Key="ConfirmButtonStyle">
+            <Setter Property="Background" Value="#0575E6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="59"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" CornerRadius="29.5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Style="{StaticResource MainWindowBorderStyle}" Background="White" ClipToBounds="True">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="860*"/>
+                <ColumnDefinition Width="580*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Panel bên trái (giữ nguyên) -->
+            <Grid Grid.Column="0">
+                <Border CornerRadius="10,0,0,10">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="#0575E6" Offset="0.0"/>
+                            <GradientStop Color="#02298A" Offset="0.848"/>
+                            <GradientStop Color="#021B79" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+                <Canvas>
+                    <Ellipse Width="556" Height="556" Stroke="#0575E6" StrokeThickness="1" Opacity="0.3" Canvas.Left="-160" Canvas.Bottom="-350"/>
+                    <Ellipse Width="556" Height="556" Stroke="#0575E6" StrokeThickness="1" Opacity="0.3" Canvas.Left="-250" Canvas.Bottom="-300"/>
+                </Canvas>
+                <Viewbox Stretch="Uniform" Margin="80,0,40,0">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Text="Plumeria Family" FontSize="40" FontWeight="Bold" Foreground="White" TextWrapping="Wrap"/>
+                        <TextBlock Text="Giải pháp số hóa quản lý cho thuê phòng hiệu quả" FontSize="18" FontWeight="Medium" Foreground="White" Margin="0,15,0,0" TextWrapping="Wrap" Opacity="0.9"/>
+                    </StackPanel>
+                </Viewbox>
+            </Grid>
+
+            <!-- Panel bên phải (Form xác thực OTP) -->
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0">
+                    <Button Content="&#xE921;" Style="{StaticResource WindowControlButton}" Click="MinimizeButton_Click"/>
+                    <Button Style="{StaticResource MaximizeButtonStyle}" Click="MaximizeButton_Click"/>
+                    <Button Content="&#xE8BB;" Style="{StaticResource WindowControlButton}" Click="CloseButton_Click"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30">
+                    <!-- Tiêu đề và Phụ đề -->
+                    <TextBlock Text="Mã xác minh" FontSize="30" FontWeight="ExtraBlack" HorizontalAlignment="Center"/>
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="18" Foreground="#B6B6B6" Margin="0,15,0,40">
+                        Chúng tôi vừa gửi mã xác nhận đến
+                        <LineBreak/>
+                        địa chỉ email bạn đã cung cấp
+                    </TextBlock>
+
+                    <!-- Các ô nhập mã OTP -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,25">
+                        <TextBox x:Name="OtpBox1" Style="{StaticResource OtpBoxStyle}" TextChanged="OtpBox_TextChanged" PreviewKeyDown="OtpBox_PreviewKeyDown"/>
+                        <TextBox x:Name="OtpBox2" Style="{StaticResource OtpBoxStyle}" Margin="29,0,0,0" TextChanged="OtpBox_TextChanged" PreviewKeyDown="OtpBox_PreviewKeyDown"/>
+                        <TextBox x:Name="OtpBox3" Style="{StaticResource OtpBoxStyle}" Margin="29,0,0,0" TextChanged="OtpBox_TextChanged" PreviewKeyDown="OtpBox_PreviewKeyDown"/>
+                        <TextBox x:Name="OtpBox4" Style="{StaticResource OtpBoxStyle}" Margin="29,0,0,0" TextChanged="OtpBox_TextChanged" PreviewKeyDown="OtpBox_PreviewKeyDown"/>
+                    </StackPanel>
+
+                    <!-- Link Gửi lại mã -->
+                    <Button x:Name="ResendCodeButton" Content="Gửi lại mã xác minh" 
+                            Background="Transparent" Opacity="0.7" Foreground="#0575E6" 
+                            FontSize="16" Margin="0,0,0,40" BorderThickness="0" Cursor="Hand" 
+                            HorizontalAlignment="Right" Click="ResendCodeButton_Click"/>
+
+                    <!-- Nút Xác nhận -->
+                    <Button Content="Xác nhận" Style="{StaticResource ConfirmButtonStyle}"/>
+
+                    <!-- Thông báo đếm ngược -->
+                    <TextBlock x:Name="CountdownText" TextAlignment="Center" TextWrapping="Wrap" Margin="0,30,0,0" FontSize="18" FontWeight="Light">
+                        <Run Text="Không nhận được mã xác minh?"/>
+                        <LineBreak/>
+                        <Run Text="Vui lòng đợi "/>
+                        <Run x:Name="CountdownTimerRun" Text="60" Foreground="#509FEE"/>
+                        <Run Text=" giây trước khi yêu cầu gửi lại."/>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

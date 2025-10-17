@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.Presentation\App.xaml
-11523117667
+11109870684
 
-6-498368514
+16-1961501233
 2011391287831
-Views\Windows\LoginWindow.xaml;
+Views\Page\UserManagementView.xaml;Views\Shared\HeaderView.xaml;Views\Shared\SidebarSmallView.xaml;Views\Shared\SidebarView.xaml;Views\Windows\ForgotPasswordWindow.xaml;Views\Windows\LoginWindow.xaml;Views\Windows\MainWindow.xaml;Views\Windows\OtpVerificationWindow.xaml;Views\Windows\RegisterWindow.xaml;Views\Windows\ResetPasswordWindow.xaml;Views\Windows\TestWindow.xaml;
 
 False
 
