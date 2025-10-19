@@ -14,7 +14,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- === THAY ĐỔI Ở ĐÂY: Đặt cả 2 sidebar vào cùng một vị trí === -->
 
         <!-- Sidebar lớn (mặc định hiển thị) -->
         <shared:SidebarView x:Name="FullSidebar" Grid.Column="0" Visibility="Visible"/>
@@ -33,7 +32,7 @@
             <shared:HeaderView Grid.Row="0"
                                ToggleSidebarClick="HeaderView_ToggleSidebarClick"/>
 
-            <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+            <Grid x:Name="MainContent" Grid.Row="1"/>
         </Grid>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using RoomManagementSystem.Presentation.Views.Page;
+﻿using RoomManagementSystem.Presentation.Views.Page.TenantManagement;
+using System;
 using System.Windows;
 
 namespace RoomManagementSystem.Presentation.Views.Windows
@@ -8,7 +9,8 @@ namespace RoomManagementSystem.Presentation.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new UserManagementView());
+            // Sử dụng Grid thay vì Frame để tránh lỗi navigation
+            MainContent.Children.Add(new TenantManagementView());
         }
 
         // === LOGIC XỬ LÝ SỰ KIỆN TỪ HEADERVIEW ===

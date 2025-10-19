@@ -2,6 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Views\Page\TenantManagement\EditTenantView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Shared\HeaderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -11,7 +14,7 @@
     <Compile Update="Views\Shared\SidebarView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Page\UserManagementView.xaml.cs">
+    <Compile Update="Views\Page\TenantManagement\TenantManagementView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Windows\ForgotPasswordWindow.xaml.cs">
