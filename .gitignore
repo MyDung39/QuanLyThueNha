@@ -1,54 +1,18 @@
-# Build results
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-
-# Visual Studio files
+# Visual Studio
 .vs/
 *.user
 *.suo
-*.userosscache
-*.sln.docstates
-
-# Test results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
-*.trx
-*.VisualState.xml
-
-# NuGet packages
-*.nupkg
-packages/
-*.snupkg
-*.nuspec
-
-# Other files
 *.cache
 *.db
-*.pdb
-*.tmp
-*.bak
 *.log
-
-# Publish
-publish/
-AppPackages/
-*.Publish.xml
-*.pubxml
-*.pubxml.user
-
-# Backup & temp
-~$*
-*.swp
-*.zip
-*.rar
-
-# OS generated
-.DS_Store
-Thumbs.db
+*.tlog
+*.pdb
+*.dll
+*.exe
+*.obj
+*.bin
+*.json
+*.vscode/
+bin/
+obj/
+TestResults/
