@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.presentation\\views\\windows\\billingwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\billingwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.presentation\\viewmodels\\billingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\viewmodels\\billingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.presentation\\views\\windows\\billingwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\billingwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.presentation\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11C9018F-08D5-4887-A8F1-B4D07C8F68DE}|RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.businesslayer\\dangnhap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11C9018F-08D5-4887-A8F1-B4D07C8F68DE}|RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj|solutionrelative:roommanagementsystem.businesslayer\\dangnhap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.datalayer\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|solutionrelative:roommanagementsystem.datalayer\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|d:\\study\\gk_cnpm\\quanlythuenha\\roommanagementsystem.datalayer\\nguoidungaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,56 +70,67 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BillingViewModel.cs",
+              "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\ViewModels\\BillingViewModel.cs",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\ViewModels\\BillingViewModel.cs",
+              "ToolTip": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\ViewModels\\BillingViewModel.cs",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\ViewModels\\BillingViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-14T04:12:33.602Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "BillingWindow.xaml",
+              "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\Views\\Windows\\BillingWindow.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\BillingWindow.xaml",
+              "ToolTip": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\Views\\Windows\\BillingWindow.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\BillingWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-10-14T04:06:38.119Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\ViewModels\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\ViewModels\\LoginViewModel.cs",
               "ToolTip": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\ViewModels\\LoginViewModel.cs",
               "RelativeToolTip": "RoomManagementSystem.Presentation\\ViewModels\\LoginViewModel.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T16:57:24.594Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "NguoiDung.cs",
-              "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\NguoiDung.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.DataLayer\\NguoiDung.cs",
-              "ToolTip": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\NguoiDung.cs",
-              "RelativeToolTip": "RoomManagementSystem.DataLayer\\NguoiDung.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T16:56:25.764Z"
+              "WhenOpened": "2025-10-12T16:57:24.594Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "DangNhap.cs",
-              "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\DangNhap.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.BusinessLayer\\DangNhap.cs",
-              "ToolTip": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\DangNhap.cs",
-              "RelativeToolTip": "RoomManagementSystem.BusinessLayer\\DangNhap.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAAnAAAAAAAAAA==",
+              "Title": "BillingWindow.xaml.cs",
+              "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\Views\\Windows\\BillingWindow.xaml.cs",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\BillingWindow.xaml.cs",
+              "ToolTip": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\Views\\Windows\\BillingWindow.xaml.cs",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\BillingWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T16:56:47.558Z"
+              "WhenOpened": "2025-10-14T04:09:34.679Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "LoginWindow.xaml.cs",
               "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml.cs",
               "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml.cs",
               "ToolTip": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml.cs",
               "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAAwFkAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-13T03:09:31.323Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "LoginWindow.xaml",
               "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
               "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
@@ -126,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "NguoiDungAccess.cs",
               "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\NguoiDungAccess.cs",
               "RelativeDocumentMoniker": "RoomManagementSystem.DataLayer\\NguoiDungAccess.cs",
@@ -138,7 +153,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "RoomManagementSystem.Presentation.csproj",
               "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj",
               "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj",
@@ -150,7 +165,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\TestLogin\\Program.cs",
               "RelativeDocumentMoniker": "TestLogin\\Program.cs",
@@ -162,7 +177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\TestQLDH\\Program.cs",
               "RelativeDocumentMoniker": "TestQLDH\\Program.cs",
@@ -174,7 +189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "QuanLyNguoiThue.cs",
               "DocumentMoniker": "D:\\STUDY\\GK_CNPM\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\QuanLyNguoiThue.cs",
               "RelativeDocumentMoniker": "RoomManagementSystem.BusinessLayer\\QuanLyNguoiThue.cs",
