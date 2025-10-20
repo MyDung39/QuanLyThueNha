@@ -21,3 +21,14 @@ E:\QuanLyThueNha-main\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManage
 E:\QuanLyThueNha-main\RoomManagementSystem.Utilities\obj\Debug\net8.0\refint\RoomManagementSystem.Utilities.dll
 E:\QuanLyThueNha-main\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.pdb
 E:\QuanLyThueNha-main\RoomManagementSystem.Utilities\obj\Debug\net8.0\ref\RoomManagementSystem.Utilities.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\bin\Debug\net8.0\RoomManagementSystem.Utilities.deps.json
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\bin\Debug\net8.0\RoomManagementSystem.Utilities.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\bin\Debug\net8.0\RoomManagementSystem.Utilities.pdb
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.AssemblyInfoInputs.cache
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.AssemblyInfo.cs
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.csproj.CoreCompileInputs.cache
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\obj\Debug\net8.0\refint\RoomManagementSystem.Utilities.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\obj\Debug\net8.0\RoomManagementSystem.Utilities.pdb
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.Utilities\obj\Debug\net8.0\ref\RoomManagementSystem.Utilities.dll

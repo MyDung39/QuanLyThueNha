@@ -13,7 +13,7 @@ namespace RoomManagementSystem.App
 
             // 1. Test đăng nhập bằng email + password
             Console.WriteLine("\n>> Test login with Email + Password");
-            string email = "admin";   // thay bằng email có trong DB
+            string email = "admin@gmail.com";   // thay bằng email có trong DB
             string password = "admin";          // thay bằng password thật trong DB
             bool loginResult = dn.Login(email, password);
             Console.WriteLine(loginResult ? "Đăng nhập thành công" : "Đăng nhập thất bại");
