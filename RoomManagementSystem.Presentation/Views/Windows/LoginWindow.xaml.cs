@@ -39,8 +39,10 @@ namespace RoomManagementSystem.Presentation.Views.Windows
             Close();
         }
 
+
         private void PasswordInput_PasswordChanged(object sender, RoutedEventArgs e)
         {
+            /*
             if (sender is PasswordBox passwordBox)
             {
                 var placeholder = FindChild<TextBlock>(passwordBox, "PlaceholderText");
@@ -49,8 +51,23 @@ namespace RoomManagementSystem.Presentation.Views.Windows
                     placeholder.Visibility = string.IsNullOrEmpty(passwordBox.Password) ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
+            */
+
+            PlaceholderText.Visibility = string.IsNullOrEmpty(PasswordInput.Password)
+            ? Visibility.Visible
+            : Visibility.Collapsed;
         }
 
+        private void RegisterHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            var registerWindow = new RegisterWindow(); // Tạo một cửa sổ Đăng ký mới
+            registerWindow.WindowState = this.WindowState;
+            registerWindow.Show();                     // Hiển thị cửa sổ Đăng ký
+            this.Close();                              // Đóng cửa sổ Đăng nhập hiện tại
+        }
+
+
+        /*
         public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
         {
             if (parent == null) return null;
@@ -81,10 +98,42 @@ namespace RoomManagementSystem.Presentation.Views.Windows
             }
             return foundChild;
         }
+        */
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        public static T? FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
         {
+            if (parent == null) return null;
 
+            T? foundChild = null;
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is not T)
+                {
+                    foundChild = FindChild<T>(child, childName);
+                    if (foundChild != null)
+                        break;
+                }
+                else if (!string.IsNullOrEmpty(childName))
+                {
+                    if (child is FrameworkElement frameworkElement && frameworkElement.Name == childName)
+                    {
+                        foundChild = (T)child;
+                        break;
+                    }
+                }
+                else
+                {
+                    foundChild = (T)child;
+                    break;
+                }
+            }
+
+            return foundChild;
         }
+
+
+
     }
 }
