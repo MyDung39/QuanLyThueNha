@@ -22,9 +22,28 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
             InitializeComponent();
         }
 
-        private void CloseButton_OnClick(object sender, RoutedEventArgs e)
+        // Sự kiện cho nút Đóng
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             RaiseEvent(new RoutedEventArgs(CloseClickEvent));
+        }
+
+        // Sự kiện cho nút Thêm
+        public static readonly RoutedEvent AddClickEvent = EventManager.RegisterRoutedEvent(
+            name: "AddClick",
+            routingStrategy: RoutingStrategy.Bubble,
+            handlerType: typeof(RoutedEventHandler),
+            ownerType: typeof(AddTenantView));
+
+        public event RoutedEventHandler AddClick
+        {
+            add { AddHandler(AddClickEvent, value); }
+            remove { RemoveHandler(AddClickEvent, value); }
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            RaiseEvent(new RoutedEventArgs(AddClickEvent));
         }
     }
 }

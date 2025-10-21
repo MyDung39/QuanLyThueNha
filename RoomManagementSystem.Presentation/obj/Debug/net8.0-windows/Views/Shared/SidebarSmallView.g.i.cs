@@ -52,8 +52,7 @@ namespace RoomManagementSystem.Presentation.Views.Shared {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;V1.0.0.0;component/views/shared/sidebarsmallvi" +
-                    "ew.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;component/views/shared/sidebarsmallview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Shared\SidebarSmallView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

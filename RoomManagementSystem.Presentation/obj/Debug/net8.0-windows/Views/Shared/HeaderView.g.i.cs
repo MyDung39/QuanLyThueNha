@@ -60,8 +60,7 @@ namespace RoomManagementSystem.Presentation.Views.Shared {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;V1.0.0.0;component/views/shared/headerview.xam" +
-                    "l", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;component/views/shared/headerview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Shared\HeaderView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

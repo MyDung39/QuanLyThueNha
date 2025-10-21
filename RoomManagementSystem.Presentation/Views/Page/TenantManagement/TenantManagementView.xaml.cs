@@ -33,20 +33,12 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
 
         public TenantManagementView()
         {
-            try
-        {
             InitializeComponent();
-                this.SizeChanged += OnSizeChanged;
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show($"A critical error occurred during view initialization: \n{ex.ToString()}");
-                // This is a critical failure, re-throwing might be appropriate depending on the app's error handling strategy.
-                throw;
-            }
+            this.SizeChanged += OnSizeChanged;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        // Đảm bảo handler tồn tại cho XAML Loaded
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Chỉ tải dữ liệu một lần duy nhất
             if (_allTenants.Count == 0)
@@ -55,31 +47,6 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
             }
             // Trì hoãn render đến sau khi visual tree sẵn sàng để đảm bảo các phần tử XAML không null
             Dispatcher.BeginInvoke(new Action(RecalculatePageSizeAndRender), System.Windows.Threading.DispatcherPriority.Loaded);
-        }
-
-        // Đảm bảo handler tồn tại cho XAML Loaded
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Gọi OnLoaded để hợp nhất luồng
-            OnLoaded(sender, e);
-        }
-
-        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (SearchTextBox.Text == "Tìm kiếm...")
-            {
-                SearchTextBox.Text = string.Empty;
-                SearchTextBox.Foreground = (Brush)new BrushConverter().ConvertFromString("#3D3C42");
-            }
-        }
-
-        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
-            {
-                SearchTextBox.Text = "Tìm kiếm...";
-                SearchTextBox.Foreground = (Brush)new BrushConverter().ConvertFromString("#B5B7C0");
-            }
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -193,7 +160,6 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
         {
             if (TenantListDataPanel == null)
             {
-                // UI chưa sẵn sàng; trì hoãn lần render này
                 Dispatcher.BeginInvoke(new Action(() => RenderTenantList(tenants)), System.Windows.Threading.DispatcherPriority.Loaded);
                 return;
             }
@@ -227,7 +193,6 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
 
             if (PageButtonsPanel == null)
             {
-                // UI chưa sẵn sàng; trì hoãn cập nhật phân trang
                 Dispatcher.BeginInvoke(new Action(() => UpdatePaginationControls(totalItems)), System.Windows.Threading.DispatcherPriority.Loaded);
                 return;
             }
@@ -255,7 +220,7 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
                     Content = pageNumber.ToString(),
                     Style = (Style)FindResource("PaginationButton"),
                     Margin = new Thickness(0, 0, 8, 0),
-                    Tag = pageNumber // Lưu số trang vào Tag
+                    Tag = pageNumber
                 };
 
                 if (isActive)
@@ -271,35 +236,21 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
 
             TextBlock CreateEllipsis() => new TextBlock { Text = "...", VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) };
 
-            // Logic hiển thị các nút: 1 ... 5 6 7 ... 50
             if (totalPages <= 5)
             {
-                for (int i = 1; i <= totalPages; i++)
-                {
-                    elements.Add(CreateButton(i));
-                }
+                for (int i = 1; i <= totalPages; i++) elements.Add(CreateButton(i));
             }
             else
             {
                 elements.Add(CreateButton(1));
-                if (currentPage > 3)
-                {
-                    elements.Add(CreateEllipsis());
-                }
+                if (currentPage > 3) elements.Add(CreateEllipsis());
 
                 int start = Math.Max(2, currentPage - 1);
                 int end = Math.Min(totalPages - 1, currentPage + 1);
 
-                for (int i = start; i <= end; i++)
-                {
-                    elements.Add(CreateButton(i));
-                }
+                for (int i = start; i <= end; i++) elements.Add(CreateButton(i));
 
-                if (currentPage < totalPages - 2)
-                {
-                    elements.Add(CreateEllipsis());
-                }
-
+                if (currentPage < totalPages - 2) elements.Add(CreateEllipsis());
                 elements.Add(CreateButton(totalPages));
             }
             return elements;
@@ -344,38 +295,19 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
             var endDateBlock = new TextBlock { Text = tenant.EndDate.ToString("dd/MM/yyyy"), VerticalAlignment = VerticalAlignment.Center };
             Grid.SetColumn(endDateBlock, 5);
 
-            // Status with colored background
             var statusBorder = new Border { CornerRadius = new CornerRadius(8), Padding = new Thickness(10, 4, 10, 4), HorizontalAlignment = HorizontalAlignment.Left };
-            var statusBlock = new TextBlock { Text = tenant.Status.ToString(), VerticalAlignment = VerticalAlignment.Center, FontSize = 12, FontWeight = FontWeights.Medium };
+            var statusBlock = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 12, FontWeight = FontWeights.Medium };
 
-            string statusText;
-            string backgroundColor;
-            string foregroundColor;
-
+            string statusText; string backgroundColor; string foregroundColor;
             switch (tenant.Status)
             {
-                case TenantStatus.Occupied:
-                    statusText = "Đang thuê";
-                    backgroundColor = "#E9F7EF";
-                    foregroundColor = "#00B69B";
-                    break;
-                case TenantStatus.PaidOut:
-                    statusText = "Đã trả phòng";
-                    backgroundColor = "#FFF2F2";
-                    foregroundColor = "#DF0404";
-                    break;
-                case TenantStatus.ScheduledLeave:
-                default:
-                    statusText = "Hẹn trả";
-                    backgroundColor = "#FEF5E6";
-                    foregroundColor = "#FF9500";
-                    break;
+                case TenantStatus.Occupied: statusText = "Đang thuê"; backgroundColor = "#E9F7EF"; foregroundColor = "#00B69B"; break;
+                case TenantStatus.PaidOut: statusText = "Đã trả phòng"; backgroundColor = "#FFF2F2"; foregroundColor = "#DF0404"; break;
+                default: statusText = "Hẹn trả"; backgroundColor = "#FEF5E6"; foregroundColor = "#FF9500"; break;
             }
-
             statusBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(backgroundColor));
             statusBlock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(foregroundColor));
             statusBlock.Text = statusText;
-
             statusBorder.Child = statusBlock;
             Grid.SetColumn(statusBorder, 6);
 
@@ -388,17 +320,34 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
             grid.Children.Add(statusBorder);
 
             border.Child = grid;
+            border.Tag = tenant;
             return border;
         }
 
         #region Event Handlers
+        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SearchTextBox.Text == "Tìm kiếm...")
+            {
+                SearchTextBox.Text = string.Empty;
+                SearchTextBox.Foreground = Brushes.Black;
+            }
+        }
+        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
+            {
+                SearchTextBox.Text = "Tìm kiếm...";
+                SearchTextBox.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#B5B7C0"));
+            }
+        }
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) => UpdateDisplay();
         private void SortMenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (sender is MenuItem item)
             {
                 SortButtonText.Text = item.Header.ToString();
-                _currentPage = 1; // Reset về trang đầu khi sắp xếp
+                _currentPage = 1;
                 UpdateDisplay();
             }
         }
@@ -451,6 +400,10 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
                 sortButton.ContextMenu.IsOpen = true;
             }
         }
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowDeleteConfirmationModal();
+        }
         #endregion
 
         #region Helper Methods
@@ -459,12 +412,12 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
             foreach (Border border in TenantListDataPanel.Children)
             {
                 var checkBox = FindVisualChild<CheckBox>(border);
-                    if (checkBox != null)
-                    {
-                        checkBox.IsChecked = isChecked;
-                    }
+                if (checkBox != null)
+                {
+                    checkBox.IsChecked = isChecked;
                 }
             }
+        }
         private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
             if (parent == null) return null;
@@ -477,6 +430,67 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
             }
             return null;
         }
+        #endregion
+
+        #region Delete Confirmation Modal Events
+
+        // Xử lý sự kiện khi người dùng nhấn "Xác nhận" trên modal xóa
+        private void DeleteConfirmation_ConfirmClick(object sender, RoutedEventArgs e)
+        {
+            var selectedTenants = GetSelectedTenants();
+            if (selectedTenants.Any())
+            {
+                foreach (var tenant in selectedTenants)
+                {
+                    _allTenants.Remove(tenant);
+                }
+                UpdateDisplay();
+                MessageBox.Show($"Đã xóa {selectedTenants.Count} người thuê thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            DeleteConfirmationModal.Visibility = Visibility.Collapsed;
+            ModalOverlay.Visibility = Visibility.Collapsed;
+        }
+
+        // Xử lý sự kiện khi người dùng nhấn "X" (Close) trên modal xóa
+        private void DeleteConfirmation_CloseClick(object sender, RoutedEventArgs e)
+        {
+            DeleteConfirmationModal.Visibility = Visibility.Collapsed;
+            ModalOverlay.Visibility = Visibility.Collapsed;
+        }
+
+        // Hiển thị modal xác nhận xóa
+        private void ShowDeleteConfirmationModal()
+        {
+            var selectedTenants = GetSelectedTenants();
+            if (selectedTenants.Any())
+            {
+                ModalOverlay.Visibility = Visibility.Visible;
+                DeleteConfirmationModal.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một người thuê để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        // Lấy danh sách những người thuê đang được chọn (checked)
+        private List<TenantData> GetSelectedTenants()
+        {
+            var selectedTenants = new List<TenantData>();
+            foreach (Border border in TenantListDataPanel.Children)
+            {
+                var checkBox = FindVisualChild<CheckBox>(border);
+                if (checkBox != null && checkBox.IsChecked == true)
+                {
+                    if (border.Tag is TenantData tenant)
+                    {
+                        selectedTenants.Add(tenant);
+                    }
+                }
+            }
+            return selectedTenants;
+        }
+
         #endregion
     }
 }

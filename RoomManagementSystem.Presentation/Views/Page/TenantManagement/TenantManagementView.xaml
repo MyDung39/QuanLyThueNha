@@ -96,7 +96,7 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/view_details_icon.png" Margin="0,0,10,0" Click="Button_Click"/>
                         <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/edit_icon.png" Margin="0,0,10,0" Click="EditButton_Click"/>
-                        <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/delete_icon.png" Margin="0,0,10,0"/>
+                        <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/delete_icon.png" Margin="0,0,10,0" Click="DeleteButton_Click"/>
                         <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/add_icon.png" Click="AddButton_Click"/>
                     </StackPanel>
                 </Grid>
@@ -145,5 +145,11 @@
         <Border x:Name="ModalOverlay" Background="#000000" Opacity="0.3" Visibility="Collapsed"/>
         <local:EditTenantView x:Name="EditTenantModal" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" CloseClick="CloseEditModal_Click"/>
         <local:AddTenantView x:Name="AddTenantModal" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" CloseClick="CloseAddModal_Click"/>
+        <local:DeleteConfirmationView x:Name="DeleteConfirmationModal" 
+                              Visibility="Collapsed" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center" 
+                              ConfirmClick="DeleteConfirmation_ConfirmClick" 
+                              CloseClick="DeleteConfirmation_CloseClick"/>
     </Grid>
 </UserControl>

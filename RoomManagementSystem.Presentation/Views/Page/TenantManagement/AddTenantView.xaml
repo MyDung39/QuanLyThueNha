@@ -1,6 +1,11 @@
 <UserControl x:Class="RoomManagementSystem.Presentation.Views.Page.TenantManagement.AddTenantView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              Width="535" Height="362"
              FontFamily="Roboto">
 
@@ -9,21 +14,8 @@
     </UserControl.Effect>
 
     <UserControl.Resources>
-        <Style x:Key="IconButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
-                            <Image Source="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"
-                                   Width="16" Height="16" Opacity="0.6" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <!-- Style này không cần thiết nữa vì chúng ta sẽ style trực tiếp trong ControlTemplate -->
+        <!-- <Style x:Key="IconButtonStyle" TargetType="Button"> ... </Style> -->
 
         <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
             <Setter Property="Background" Value="#F9FBFF"/>
@@ -52,12 +44,22 @@
                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                    Text="{Binding Path=SelectedDate, StringFormat='dd/MM/yyyy', RelativeSource={RelativeSource TemplatedParent}}"/>
 
+                                <!-- === SỬA LỖI CÚ PHÁP Ở ĐÂY === -->
                                 <Button x:Name="PART_Button"
                                         Grid.Column="1"
                                         Margin="0,0,10,0"
                                         VerticalAlignment="Center"
-                                        Style="{StaticResource IconButtonStyle}"
-                                        Tag="/Resources/Images/calendar_icon.png"/>
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Cursor="Hand">
+                                    <TextBlock x:Name="Icon"
+                                               Text="📅"
+                                               Foreground="#8A8A8A"
+                                               FontSize="16"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Button>
+                                <!-- === KẾT THÚC SỬA LỖI === -->
 
                                 <Popup x:Name="PART_Popup"
                                        AllowsTransparency="True"
@@ -66,6 +68,11 @@
                                        StaysOpen="False"/>
                             </Grid>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Icon" Property="Foreground" Value="#5A67BA"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -74,18 +81,13 @@
 
     <Border Background="White" CornerRadius="14">
         <Grid>
-            <!-- Nút đóng (X) -->
             <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Margin="0,15,15,0" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="CloseButton_OnClick">
+                    Margin="0,15,15,0" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="CloseButton_Click">
                 <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" Stroke="#565656" StrokeThickness="1.5"/>
             </Button>
 
             <StackPanel Margin="40,40,40,40">
-                <!-- Tiêu đề -->
-                <TextBlock Text="Thêm thông tin người thuê"
-                           FontSize="20"
-                           Foreground="#8A8A8A"
-                           Margin="0,0,0,25"/>
+                <TextBlock Text="Thêm thông tin người thuê" FontSize="20" Foreground="#8A8A8A" Margin="0,0,0,25"/>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -94,9 +96,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Cột bên trái -->
                     <StackPanel Grid.Column="0">
-                        <!-- Tên -->
                         <TextBlock Text="Tên" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF">
                             <TextBox.Resources>
@@ -104,12 +104,7 @@
                                     <Setter Property="CornerRadius" Value="9.5"/>
                                 </Style>
                             </TextBox.Resources>
-                            <TextBox.Tag>
-                                Nhập họ và tên
-                            </TextBox.Tag>
                         </TextBox>
-
-                        <!-- Số điện thoại -->
                         <TextBlock Text="Số điện thoại" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
                         <Grid>
                             <TextBox Padding="50,10,15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF">
@@ -125,9 +120,7 @@
                         </Grid>
                     </StackPanel>
 
-                    <!-- Cột bên phải -->
                     <StackPanel Grid.Column="2">
-                        <!-- Email -->
                         <TextBlock Text="Địa chỉ Email" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF">
                             <TextBox.Resources>
@@ -136,25 +129,22 @@
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-
-                        <!-- Ngày bắt đầu thuê -->
                         <TextBlock Text="Ngày bắt đầu thuê" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
-                        <DatePicker Style="{StaticResource CustomDatePickerStyle}"/>
+                        <DatePicker SelectedDate="{x:Static sys:DateTime.Now}" Style="{StaticResource CustomDatePickerStyle}"/>
                     </StackPanel>
                 </Grid>
 
-                <!-- Hàng nút hành động -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
-                    <Button Content="Hủy"
-                            Background="Transparent" Foreground="#7E7E7E" BorderBrush="#EEEEEE" BorderThickness="1"
-                            Padding="20,10" Margin="0,0,10,0"
-                            Click="CloseButton_OnClick"/>
-                    <Button Content="Thêm"
-                            Background="#707FDD" Foreground="White" BorderThickness="0"
-                            Padding="20,10" Click="CloseButton_OnClick"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                    <Button Content="Thêm" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA"
+                            Width="80" Padding="0,8" Click="AddButton_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </Grid>
     </Border>
 </UserControl>
-

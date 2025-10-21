@@ -52,7 +52,7 @@ namespace RoomManagementSystem.Presentation.Views.Page {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;V1.0.0.0;component/views/page/testview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;component/views/page/testview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Page\TestView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
