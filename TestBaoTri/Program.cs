@@ -4,7 +4,7 @@ using System.Data;
 
 namespace RoomManagementSystem.ConsoleTest
 {
-    internal class Program
+    public class Program
     {
         // Khởi tạo lớp Business Layer
         private static QL_BaoTri qlBaoTri = new QL_BaoTri();
@@ -14,13 +14,10 @@ namespace RoomManagementSystem.ConsoleTest
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
 
-            Console.WriteLine("QUẢN LÝ BẢO TRÌ");
-            Console.WriteLine("=====================================");
-
             bool running = true;
             while (running)
             {
-                Console.WriteLine("\nCHỌN CHỨC NĂNG:");
+                Console.WriteLine("== QUẢN LÝ BẢO TRÌ ==");
                 Console.WriteLine("1. Thêm mới yêu cầu bảo trì");
                 Console.WriteLine("2. Cập nhật trạng thái xử lý");
                 Console.WriteLine("3. Cập nhật chi phí");
@@ -28,7 +25,7 @@ namespace RoomManagementSystem.ConsoleTest
                 Console.WriteLine("5. Tìm yêu cầu theo Mã");
                 Console.WriteLine("6. Xem báo cáo chi phí theo tháng");
                 Console.WriteLine("0. Thoát");
-                Console.Write("Lựa chọn của bạn: ");
+                Console.Write("Chọn chức năng: ");
 
                 string? choice = Console.ReadLine();
 

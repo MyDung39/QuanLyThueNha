@@ -21,6 +21,12 @@ namespace RoomManagementSystem.BusinessLayer
             return nha.updateHouse(MaNha,DiaChi,SoPhong, TongSoPhongHienTai,GhiChu);
         }
 
+        //Tra ve danh sach nha hien co
+        public List<Nha> DanhSachNha()
+        {
+            return nha.getAllHouse();
+        }
+
         //Them thong tin phong 
         PhongDAL p =new PhongDAL();
         

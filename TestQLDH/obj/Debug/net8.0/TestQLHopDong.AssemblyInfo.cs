@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TestQLHopDong")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5239e6d855ed53d421d480548b1eefebcb4149ac")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a1795949504ce4e7305bb07698be546f8afecad")]
 [assembly: System.Reflection.AssemblyProductAttribute("TestQLHopDong")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TestQLHopDong")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
