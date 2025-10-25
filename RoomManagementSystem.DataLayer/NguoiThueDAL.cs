@@ -9,7 +9,7 @@ namespace RoomManagementSystem.DataLayer
 {
     public class NguoiThueDAL
     {
-        private string connect = "Data Source=DESKTOP-4JTJGR2\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         //Nhập thông tin nguoi thue
         public bool ThemNguoiThue(NguoiThue nt)
         {
@@ -100,10 +100,10 @@ namespace RoomManagementSystem.DataLayer
                         SoGiayTo = reader["SoGiayTo"].ToString(),
                         NgayBatDauThue = Convert.ToDateTime(reader["NgayBatDauThue"]),
                         TrangThaiThue = reader["TrangThaiThue"].ToString(),
-                        NgayDonVao =DateTime.Parse(reader["NgayDonVao"].ToString()),
-                        NgayDonRa = DateTime.Parse(reader["NgayDonRa"].ToString()),
-                        NgayTao = DateTime.Parse(reader["NgayTao"].ToString()),
-                        NgayCapNhat = DateTime.Parse(reader["NgayCapNhat"].ToString()),
+                        NgayDonVao = reader["NgayDonVao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayDonVao"]),
+                        NgayDonRa = reader["NgayDonRa"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayDonRa"]),
+                        NgayTao = Convert.ToDateTime(reader["NgayTao"]),
+                        NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"]),
                     };
 
                     ds.Add(nt);
@@ -136,10 +136,14 @@ namespace RoomManagementSystem.DataLayer
                         SoGiayTo = reader["SoGiayTo"].ToString(),
                         NgayBatDauThue = Convert.ToDateTime(reader["NgayBatDauThue"]),
                         TrangThaiThue = reader["TrangThaiThue"].ToString(),
-                        NgayDonVao = Convert.ToDateTime(reader["NgayDonVao"]),
+
+                        // === SỬA LỖI Ở ĐÂY ===
+                        // Phương thức này cũng cần sửa
+                        NgayDonVao = reader["NgayDonVao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayDonVao"]),
                         NgayDonRa = reader["NgayDonRa"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayDonRa"]),
+
                         NgayTao = Convert.ToDateTime(reader["NgayTao"]),
-                        NgayCapNhat = DateTime.Parse(reader["NgayCapNhat"].ToString()),
+                        NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"]),
 
                     };
 

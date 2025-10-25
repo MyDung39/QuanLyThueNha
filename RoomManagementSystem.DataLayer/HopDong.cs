@@ -12,8 +12,9 @@ namespace RoomManagementSystem.DataLayer
         public string? MaPhong { get; set; }
         public string? MaNguoiThue { get; set; }
         public string? ChuNha { get; set; }
-        public float TienCoc { get; set; }
+        public decimal TienCoc { get; set; }
         public DateTime NgayBatDau { get; set; }
+        public int ThoiHan { get; set; }
         public DateTime NgayKetThuc { get; set; }
         public string? FileDinhKem { get; set; }
         public string? TrangThai { get; set; }

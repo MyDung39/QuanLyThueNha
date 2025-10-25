@@ -1,9 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoomManagementSystem.DataLayer
 {
@@ -17,8 +14,9 @@ namespace RoomManagementSystem.DataLayer
             using (SqlConnection c = new SqlConnection(connect))
             {
                 c.Open();
-                string qr = @"INSERT INTO HopDong (MaHopDong, MaPhong, MaNguoiThue, ChuNha, TienCoc, NgayBatDau, NgayKetThuc, FileDinhKem, TrangThai, GhiChu, NgayTao, NgayCapNhat)
-                              VALUES (@MaHopDong, @MaPhong, @MaNguoiThue, @ChuNha, @TienCoc, @NgayBatDau, @NgayKetThuc, @FileDinhKem, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
+                // Sửa đổi: Bỏ NgayKetThuc (cột tính toán), FileDinhKem (không tồn tại). Thêm ThoiHan.
+                string qr = @"INSERT INTO HopDong (MaHopDong, MaPhong, MaNguoiThue, ChuNha, TienCoc, NgayBatDau, ThoiHan, TrangThai, GhiChu, NgayTao, NgayCapNhat)
+                              VALUES (@MaHopDong, @MaPhong, @MaNguoiThue, @ChuNha, @TienCoc, @NgayBatDau, @ThoiHan, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
 
                 SqlCommand cmd = new SqlCommand(qr, c);
                 cmd.Parameters.AddWithValue("@MaHopDong", hopDong.MaHopDong);
@@ -27,8 +25,7 @@ namespace RoomManagementSystem.DataLayer
                 cmd.Parameters.AddWithValue("@ChuNha", hopDong.ChuNha ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@TienCoc", hopDong.TienCoc);
                 cmd.Parameters.AddWithValue("@NgayBatDau", hopDong.NgayBatDau);
-                cmd.Parameters.AddWithValue("@NgayKetThuc", hopDong.NgayKetThuc);
-                cmd.Parameters.AddWithValue("@FileDinhKem", hopDong.FileDinhKem ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@ThoiHan", hopDong.ThoiHan); // Thêm ThoiHan
                 cmd.Parameters.AddWithValue("@TrangThai", hopDong.TrangThai ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@GhiChu", hopDong.GhiChu ?? (object)DBNull.Value);
 
@@ -43,14 +40,14 @@ namespace RoomManagementSystem.DataLayer
             using (SqlConnection c = new SqlConnection(connect))
             {
                 c.Open();
+                // Sửa đổi: Bỏ NgayKetThuc (cột tính toán), FileDinhKem (không tồn tại). Thêm ThoiHan.
                 string qr = @"UPDATE HopDong 
                               SET MaPhong = @MaPhong,
                                   MaNguoiThue = @MaNguoiThue,
                                   ChuNha = @ChuNha,
                                   TienCoc = @TienCoc,
                                   NgayBatDau = @NgayBatDau,
-                                  NgayKetThuc = @NgayKetThuc,
-                                  FileDinhKem = @FileDinhKem,
+                                  ThoiHan = @ThoiHan,
                                   TrangThai = @TrangThai,
                                   GhiChu = @GhiChu,
                                   NgayCapNhat = GETDATE()
@@ -63,8 +60,7 @@ namespace RoomManagementSystem.DataLayer
                 cmd.Parameters.AddWithValue("@ChuNha", hopDong.ChuNha ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@TienCoc", hopDong.TienCoc);
                 cmd.Parameters.AddWithValue("@NgayBatDau", hopDong.NgayBatDau);
-                cmd.Parameters.AddWithValue("@NgayKetThuc", hopDong.NgayKetThuc);
-                cmd.Parameters.AddWithValue("@FileDinhKem", hopDong.FileDinhKem ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@ThoiHan", hopDong.ThoiHan); // Thêm ThoiHan
                 cmd.Parameters.AddWithValue("@TrangThai", hopDong.TrangThai ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@GhiChu", hopDong.GhiChu ?? (object)DBNull.Value);
 
@@ -104,16 +100,16 @@ namespace RoomManagementSystem.DataLayer
                 {
                     HopDong hd = new HopDong()
                     {
-                        MaHopDong = Convert.ToString(reader["MaHopDong"]),
-                        MaPhong = Convert.ToString(reader["MaPhong"]),
-                        MaNguoiThue = Convert.ToString(reader["MaNguoiThue"]),
-                        ChuNha = Convert.ToString(reader["ChuNha"]),
-                        TienCoc = Convert.ToSingle(reader["TienCoc"]),
+                        MaHopDong = reader["MaHopDong"]?.ToString(),
+                        MaPhong = reader["MaPhong"]?.ToString(),
+                        MaNguoiThue = reader["MaNguoiThue"]?.ToString(),
+                        ChuNha = reader["ChuNha"]?.ToString(),
+                        TienCoc = Convert.ToDecimal(reader["TienCoc"]),
                         NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                        ThoiHan = Convert.ToInt32(reader["ThoiHan"]), // Thêm đọc ThoiHan
                         NgayKetThuc = reader["NgayKetThuc"] is DBNull ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
-                        FileDinhKem = Convert.ToString(reader["FileDinhKem"]),
-                        TrangThai = Convert.ToString(reader["TrangThai"]),
-                        GhiChu = Convert.ToString(reader["GhiChu"]),
+                        TrangThai = reader["TrangThai"]?.ToString(),
+                        GhiChu = reader["GhiChu"]?.ToString(),
                         NgayTao = Convert.ToDateTime(reader["NgayTao"]),
                         NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"])
                     };
@@ -139,18 +135,90 @@ namespace RoomManagementSystem.DataLayer
                 {
                     return new HopDong()
                     {
-                        MaHopDong = Convert.ToString(reader["MaHopDong"]),
-                        MaPhong = Convert.ToString(reader["MaPhong"]),
-                        MaNguoiThue = Convert.ToString(reader["MaNguoiThue"]),
-                        ChuNha = Convert.ToString(reader["ChuNha"]),
-                        TienCoc = Convert.ToSingle(reader["TienCoc"]),
+                        MaHopDong = reader["MaHopDong"]?.ToString(),
+                        MaPhong = reader["MaPhong"]?.ToString(),
+                        MaNguoiThue = reader["MaNguoiThue"]?.ToString(),
+                        ChuNha = reader["ChuNha"]?.ToString(),
+                        TienCoc = Convert.ToDecimal(reader["TienCoc"]),
                         NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                        ThoiHan = Convert.ToInt32(reader["ThoiHan"]), // Thêm đọc ThoiHan
                         NgayKetThuc = reader["NgayKetThuc"] is DBNull ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
-                        FileDinhKem = Convert.ToString(reader["FileDinhKem"]),
-                        TrangThai = Convert.ToString(reader["TrangThai"]),
-                        GhiChu = Convert.ToString(reader["GhiChu"]),
+                        TrangThai = reader["TrangThai"]?.ToString(),
+                        GhiChu = reader["GhiChu"]?.ToString(),
                         NgayTao = Convert.ToDateTime(reader["NgayTao"]),
                         NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"])
+                    };
+                }
+                return null;
+            }
+        }
+
+        // Kiểm tra người thuê có phải là chủ hợp đồng không
+        public bool IsChuHopDong(string maNguoiThue)
+        {
+            using (SqlConnection c = new SqlConnection(connect))
+            {
+                c.Open();
+                string qr = "SELECT VaiTro FROM NguoiThue WHERE MaNguoiThue = @MaNguoiThue";
+                SqlCommand cmd = new SqlCommand(qr, c);
+                cmd.Parameters.AddWithValue("@MaNguoiThue", maNguoiThue);
+
+                object result = cmd.ExecuteScalar();
+                if (result != null && result.ToString() == "Chủ hợp đồng")
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+
+        // Lấy thông tin chi tiết của hợp đồng để xuất ra file
+        public HopDongXemIn? GetInHD(string maHopDong)
+        {
+            using (SqlConnection c = new SqlConnection(connect))
+            {
+                c.Open();
+                // Sửa đổi: Thêm hd.ThoiHan vào câu truy vấn
+                string qr = @"SELECT 
+                        nt.HoTen,
+                        nt.SoGiayTo,
+                        nt.NgayDonVao,
+                        hd.NgayBatDau,
+                        hd.NgayKetThuc,
+                        hd.ThoiHan,
+                        hd.TienCoc,
+                        hd.FileDinhKem,
+                        p.GiaThue,
+                        p.DienTich,
+                        n.DiaChi,
+                        n.TongSoPhong
+                      FROM HopDong hd
+                      JOIN NguoiThue nt ON hd.MaNguoiThue = nt.MaNguoiThue
+                      JOIN Phong p ON hd.MaPhong = p.MaPhong
+                      JOIN Nha n ON p.MaNha = n.MaNha
+                      WHERE hd.MaHopDong = @MaHopDong";
+
+                SqlCommand cmd = new SqlCommand(qr, c);
+                cmd.Parameters.AddWithValue("@MaHopDong", maHopDong);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return new HopDongXemIn()
+                    {
+                        TenNguoiThue = reader["HoTen"]?.ToString(),
+                        CccdNguoiThue = reader["SoGiayTo"]?.ToString(),
+                        NgayDonVao = Convert.ToDateTime(reader["NgayDonVao"]),
+                        NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                        NgayKetThuc = reader["NgayKetThuc"] is DBNull ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
+                        ThoiHan = Convert.ToInt32(reader["ThoiHan"]), // Thêm đọc ThoiHan
+                        TienCoc = Convert.ToDecimal(reader["TienCoc"]),
+                        FileDinhKem = reader["FileDinhKem"]?.ToString(),
+                        GiaThue = Convert.ToDecimal(reader["GiaThue"]),
+                        DienTich = Convert.ToDecimal(reader["DienTich"]),
+                        DiaChiNha = reader["DiaChi"]?.ToString(),
+                        TongSoPhong = Convert.ToInt32(reader["TongSoPhong"])
                     };
                 }
                 return null;

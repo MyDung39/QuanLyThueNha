@@ -22,4 +22,19 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="DoanhThuThang.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DoanhThuThang.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DoanhThuThang.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DoanhThuThang.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
 </Project>

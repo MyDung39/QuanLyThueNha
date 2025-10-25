@@ -26,7 +26,7 @@ namespace RoomManagementSystem.BusinessLayer
         }
 
         //Tao OTP khi xac thuc sdt
-        public string otp;
+        public string? otp;
         public string OTP(string sdt)
         {
             if (user.sodienthoai(sdt))

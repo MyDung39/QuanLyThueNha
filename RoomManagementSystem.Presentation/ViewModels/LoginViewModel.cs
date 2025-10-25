@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using RoomManagementSystem.BusinessLayer;
 using System.Windows;
 using System.Windows.Controls; // Cần để dùng PasswordBox
-
 
 namespace RoomManagementSystem.Presentation.ViewModels
 {
@@ -14,6 +12,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
         [ObservableProperty]
         private string _email = string.Empty;
 
+<<<<<<< HEAD
         private readonly DangNhap _dangNhap;
         
 
@@ -40,13 +39,18 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
 
 
+=======
+>>>>>>> origin/an_xuyen
         // Framework sẽ tự động tạo một ICommand tên là "LoginCommand"
         // từ phương thức Login() này.
         [RelayCommand]
         private void Login(PasswordBox passwordBox)
         {
+<<<<<<< HEAD
 
             string email = Email;
+=======
+>>>>>>> origin/an_xuyen
             // Lấy mật khẩu từ PasswordBox được truyền vào
             string password = passwordBox.Password;
 
@@ -57,6 +61,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
             // Ví dụ: var user = _authService.Login(Email, password);
 
             // Hiện tại, chúng ta chỉ hiển thị một thông báo để kiểm tra
+<<<<<<< HEAD
             //MessageBox.Show($"Email: {Email}\nPassword: {password}\n\nAttempting to log in...");
 
             if (_dangNhap.Login(Email, password))
@@ -75,6 +80,9 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 MessageBox.Show("Sai email hoặc mật khẩu!", "Lỗi");
             }
+=======
+            MessageBox.Show($"Email: {Email}\nPassword: {password}\n\nAttempting to log in...");
+>>>>>>> origin/an_xuyen
         }
 
         private void CloseCurrentWindow()
