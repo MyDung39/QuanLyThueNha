@@ -142,7 +142,6 @@
                                      Foreground="Black"
                                      Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
 
-<<<<<<< HEAD
                             <TextBlock Grid.Column="1" Text="Địa chỉ Email" Foreground="#333333" IsHitTestVisible="False" VerticalAlignment="Center" FontSize="14" Opacity="0.5">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
