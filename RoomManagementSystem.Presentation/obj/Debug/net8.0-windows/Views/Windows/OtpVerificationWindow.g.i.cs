@@ -108,8 +108,8 @@ namespace RoomManagementSystem.Presentation.Views.Windows {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;V1.0.0.0;component/views/windows/otpverificati" +
-                    "onwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;component/views/windows/otpverificationwindow." +
+                    "xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Windows\OtpVerificationWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

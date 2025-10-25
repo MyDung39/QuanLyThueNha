@@ -84,8 +84,7 @@ namespace RoomManagementSystem.Presentation.Views.Page {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;V1.0.0.0;component/views/page/usermanagementvi" +
-                    "ew.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RoomManagementSystem.Presentation;component/views/page/usermanagementview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Page\UserManagementView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
