@@ -1,0 +1,230 @@
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\TestQuanLyTaiSan.exe
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\TestQuanLyTaiSan.deps.json
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\TestQuanLyTaiSan.runtimeconfig.json
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\TestQuanLyTaiSan.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\TestQuanLyTaiSan.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Azure.Core.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Azure.Identity.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Bcl.Cryptography.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\System.ClientModel.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\System.Diagnostics.EventLog.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\System.Memory.Data.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\cs\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\de\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\es\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\fr\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\it\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\ja\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\ko\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\pl\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\pt-BR\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\ru\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\tr\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\zh-Hans\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\zh-Hant\Microsoft.Data.SqlClient.resources.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\runtimes\unix\lib\net8.0\Microsoft.Data.SqlClient.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Data.SqlClient.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuanLyTaiSan.csproj.AssemblyReference.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuanLyTaiSan.GeneratedMSBuildEditorConfig.editorconfig
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuanLyTaiSan.AssemblyInfoInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuanLyTaiSan.AssemblyInfo.cs
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuanLyTaiSan.csproj.CoreCompileInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuan.B12DBD50.Up2Date
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuanLyTaiSan.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\refint\TestQuanLyTaiSan.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuanLyTaiSan.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\TestQuanLyTaiSan.genruntimeconfig.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\Test\obj\Debug\net8.0\ref\TestQuanLyTaiSan.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\TestQuanLyTaiSan.exe
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\TestQuanLyTaiSan.deps.json
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\TestQuanLyTaiSan.runtimeconfig.json
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\TestQuanLyTaiSan.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\TestQuanLyTaiSan.pdb
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Azure.Core.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Azure.Identity.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\C1.CalcEngine.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\C1.DataCollection.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\C1.DataCollection.BindingList.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ClosedXML.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ClosedXML.Parser.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\DS.Documents.Imaging.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\DS.Documents.Pdf.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\DS.Documents.Word.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ExcelNumberFormat.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\HarfBuzzSharp.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.Common.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.Dns.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.Groupware.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.Imap4.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.Mail.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.Nntp.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.OpenPGP.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.Pop3.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.Smtp.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ActiveUp.Net.WhoIs.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Bcl.Cryptography.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.ReportViewer.Common.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.ReportViewer.DataVisualization.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.ReportViewer.Design.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.ReportViewer.ProcessingObjectModel.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.ReportViewer.WinForms.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.SqlServer.Types.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\RBush.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\SixLabors.Fonts.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\Spire.Doc.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.ClientModel.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Diagnostics.EventLog.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Drawing.Common.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.IO.Packaging.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.IO.Pipelines.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Memory.Data.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\System.Text.Json.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\C1.CalcEngine.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ko\C1.CalcEngine.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh\C1.CalcEngine.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\DS.Documents.Imaging.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\DS.Documents.Pdf.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\DS.Documents.Word.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\cs\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\de\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\es\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\fr\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\it\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ko\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\pl\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\pt-BR\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ru\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\tr\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-Hans\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-Hant\Microsoft.Data.SqlClient.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\de\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\de\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\de\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\de\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\es\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\es\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\es\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\es\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\fr\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\fr\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\fr\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\fr\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\it\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\it\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\it\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\it\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ja\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ko\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ko\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ko\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ko\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\pt\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\pt\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\pt\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\pt\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ru\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ru\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ru\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\ru\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-CHS\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-CHS\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-CHS\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-CHT\Microsoft.ReportViewer.Common.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-CHT\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-CHT\Microsoft.ReportViewer.Design.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\osx\native\libHarfBuzzSharp.dylib
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win-arm64\native\libHarfBuzzSharp.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win-x64\native\libHarfBuzzSharp.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win-x86\native\libHarfBuzzSharp.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\unix\lib\net8.0\Microsoft.Data.SqlClient.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Data.SqlClient.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\RoomManagementSystem.BusinessLayer.pdb
+E:\QuanLyThueNha-an_xuyen\Test\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuanLyTaiSan.csproj.AssemblyReference.cache
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuanLyTaiSan.GeneratedMSBuildEditorConfig.editorconfig
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuanLyTaiSan.AssemblyInfoInputs.cache
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuanLyTaiSan.AssemblyInfo.cs
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuanLyTaiSan.csproj.CoreCompileInputs.cache
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuan.B12DBD50.Up2Date
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuanLyTaiSan.dll
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\refint\TestQuanLyTaiSan.dll
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuanLyTaiSan.pdb
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\TestQuanLyTaiSan.genruntimeconfig.cache
+E:\QuanLyThueNha-an_xuyen\Test\obj\Debug\net8.0\ref\TestQuanLyTaiSan.dll
