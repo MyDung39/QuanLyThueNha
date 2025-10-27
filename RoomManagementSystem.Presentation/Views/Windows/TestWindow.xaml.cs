@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿//using RoomManagementSystem.Presentation.Views.Page;
+using RoomManagementSystem.Presentation.ViewModels.Windows;
+using System.Windows;
 
 namespace RoomManagementSystem.Presentation.Views.Windows
 {
@@ -10,11 +12,16 @@ namespace RoomManagementSystem.Presentation.Views.Windows
         public TestWindow()
         {
             InitializeComponent();
+
+            this.DataContext = new TestWindowViewModel();
         }
 
         // --- BẠN CÓ THỂ XÓA CÁC PHƯƠNG THỨC "LOADED" CŨ NẾU KHÔNG DÙNG ---
         // private void HeaderView_Loaded(object sender, RoutedEventArgs e) { }
         // private void SidebarView_Loaded(object sender, RoutedEventArgs e) { }
+
+
+        
 
 
         // === Thêm phương thức xử lý sự kiện chuyển đổi sidebar ===

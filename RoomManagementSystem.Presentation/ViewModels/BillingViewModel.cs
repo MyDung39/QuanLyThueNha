@@ -1,46 +1,77 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using RoomManagementSystem.BusinessLayer;
-using System.Windows;
+using RoomManagementSystem.DataLayer;
+using System.Collections.ObjectModel;
+using System.Linq;
+
 namespace RoomManagementSystem.Presentation.ViewModels
 {
-    public partial class BillingViewModel : ViewModelBase
+    public partial class BillingViewModel : ObservableObject
     {
-        [RelayCommand]
-        private void NavigateHome()
+        private readonly QL_TaiSan_Phong _taiSanPhongService;
+
+        [ObservableProperty]
+        private ObservableCollection<NhaPhongViewModel> danhSachNha;
+
+        /*    public BillingViewModel()
+            {
+                _taiSanPhongService = new QL_TaiSan_Phong();
+                LoadData();
+            }
+        */
+
+        public BillingViewModel(QL_TaiSan_Phong taiSanPhongService)
         {
-            // Ví dụ tạm
-            MessageBox.Show("Đi tới trang chính!");
+            _taiSanPhongService = taiSanPhongService; // Chỉ gán, không "new"
+            LoadData();
         }
 
-        [RelayCommand]
-        private void ShowRooms()
+        /*
+        private void LoadData()
         {
-            MessageBox.Show("Hiển thị danh sách phòng!");
+            var dsNha = _taiSanPhongService.DanhSachNha();
+            var dsPhong = _taiSanPhongService.DanhSachPhong();
+
+            var list = dsNha.Select(nha => new NhaPhongViewModel
+            {
+                MaNha = nha.MaNha,
+                TenNha = nha.DiaChi,
+                DanhSachPhong = new ObservableCollection<Phong>(
+                    dsPhong.Where(p => p.MaNha == nha.MaNha)
+                )
+            });
+
+            DanhSachNha = new ObservableCollection<NhaPhongViewModel>(list);
+        }
+        */
+
+        private void LoadData()
+        {
+            var dsNha = _taiSanPhongService.DanhSachNha();
+            var dsPhong = _taiSanPhongService.DanhSachPhong();
+
+            // === TỐI ƯU HÓA ===
+            // 1. Nhóm tất cả phòng theo MaNha (chỉ chạy 1 lần - O(N))
+            var phongTheoNhaLookup = dsPhong.ToLookup(p => p.MaNha);
+
+            // 2. Lặp qua danh sách nhà (O(M))
+            var list = dsNha.Select(nha => new NhaPhongViewModel
+            {
+                MaNha = nha.MaNha,
+                TenNha = nha.DiaChi,
+                // Lấy danh sách phòng từ Lookup (gần như tức thời - O(1))
+                DanhSachPhong = new ObservableCollection<Phong>(phongTheoNhaLookup[nha.MaNha])
+            });
+
+            DanhSachNha = new ObservableCollection<NhaPhongViewModel>(list);
         }
 
-        [RelayCommand]
-        private void ShowBilling()
-        {
-            MessageBox.Show("Trang hóa đơn!");
-        }
+    }
 
-        [RelayCommand]
-        private void ShowReports()
-        {
-            MessageBox.Show("Hiển thị báo cáo!");
-        }
-
-        [RelayCommand]
-        private void Settings()
-        {
-            MessageBox.Show("Cài đặt hệ thống!");
-        }
-
-        [RelayCommand]
-        private void Logout()
-        {
-            MessageBox.Show("Đăng xuất!");
-        }
+    public class NhaPhongViewModel
+    {
+        public string MaNha { get; set; }
+        public string TenNha { get; set; }
+        public ObservableCollection<Phong> DanhSachPhong { get; set; }
     }
 }

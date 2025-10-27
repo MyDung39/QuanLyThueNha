@@ -1,50 +1,108 @@
 ﻿using System;
 using RoomManagementSystem.BusinessLayer;
 
-namespace RoomManagementSystem.App
+namespace RoomManagementSystem.Test
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
             DangNhap dn = new DangNhap();
 
-            Console.WriteLine("=== TEST DANG NHAP ===");
+            Console.WriteLine("====== TEST CHỨC NĂNG ĐĂNG NHẬP & OTP ======\n");
 
-            // 1. Test đăng nhập bằng email + password
-            Console.WriteLine("\n>> Test login with Email + Password");
-            string email = "admin@gmail.com";   // thay bằng email có trong DB
-            string password = "admin";          // thay bằng password thật trong DB
-            bool loginResult = dn.Login(email, password);
-            Console.WriteLine(loginResult ? "Đăng nhập thành công" : "Đăng nhập thất bại");
+            // 1️⃣ Nhập email để kiểm tra
+            Console.Write("Nhập Email người dùng: ");
+            string email = Console.ReadLine();
 
-            // 2. Test OTP bằng SĐT
-            Console.WriteLine("\n>> Test OTP");
-            string sdt = "0908083890";  // thay bằng số điện thoại trong DB
-            string otp = dn.OTP(sdt);
-            if (otp != "Fail")
+            if (!dn.checkMail(email))
             {
-                Console.WriteLine($"OTP đã tạo: {otp}");
-                Console.Write("Nhập OTP vừa nhận: ");
-                string inputOTP = Console.ReadLine();
-                bool otpCheck = dn.verifyOTP(inputOTP);
-                Console.WriteLine(otpCheck ? "OTP hợp lệ" : "OTP sai");
+                Console.WriteLine("❌ Email không tồn tại trong hệ thống!");
+                return;
             }
             else
             {
-                Console.WriteLine("SĐT không tồn tại trong hệ thống!");
+                Console.WriteLine("✅ Email hợp lệ trong hệ thống.");
             }
 
-            // 3. Test cập nhật password
-            Console.WriteLine("\n>> Test Update Password");
-            Console.Write("Nhập mật khẩu mới: ");
-            string newPassword = Console.ReadLine();
-            bool updateResult = dn.UpdatePassword(newPassword);
-            Console.WriteLine(updateResult ? "Cập nhật mật khẩu thành công" : "Cập nhật mật khẩu thất bại");
+            // 2️⃣ Chọn cách đăng nhập
+            Console.WriteLine("\nChọn cách đăng nhập:");
+            Console.WriteLine("1. Đăng nhập bằng mật khẩu");
+            Console.WriteLine("2. Đăng nhập bằng OTP");
+            Console.Write("Lựa chọn của bạn (1/2): ");
+            string choice = Console.ReadLine();
 
-            Console.WriteLine("\nEnd test.");
+            bool loginSuccess = false;
+
+            if (choice == "1")
+            {
+                // Đăng nhập bằng mật khẩu
+                Console.Write("Nhập mật khẩu: ");
+                string password = Console.ReadLine();
+
+                if (dn.Login(email, password))
+                {
+                    Console.WriteLine("✅ Đăng nhập thành công!");
+                    loginSuccess = true;
+                }
+                else
+                {
+                    Console.WriteLine("❌ Sai email hoặc mật khẩu!");
+                }
+            }
+            else if (choice == "2")
+            {
+                // Đăng nhập bằng OTP
+                string otp = dn.OTP();
+                Console.WriteLine($"\n🔐 OTP tạo ra: {otp} (chỉ để test, thực tế sẽ gửi email)");
+
+                // Gửi OTP qua Gmail
+                Console.WriteLine("Đang gửi OTP đến email...");
+                if (dn.SendOTP(email, otp))
+                {
+                    Console.WriteLine("✅ Gửi OTP thành công! Hãy kiểm tra hộp thư đến.");
+                }
+                else
+                {
+                    Console.WriteLine("❌ Không gửi được OTP! Kiểm tra lại cấu hình Gmail hoặc quyền truy cập ứng dụng.");
+                    return;
+                }
+
+                Console.Write("\nNhập OTP bạn nhận được: ");
+                string nhapOtp = Console.ReadLine();
+
+                if (dn.CheckOTP(email, nhapOtp))
+                {
+                    Console.WriteLine("✅ Xác thực OTP thành công!");
+                    loginSuccess = true;
+                }
+                else
+                {
+                    Console.WriteLine("❌ Mã OTP không đúng hoặc đã hết hạn!");
+                }
+            }
+
+            // 3️⃣ Nếu đăng nhập thành công → cho phép đổi mật khẩu
+            if (loginSuccess)
+            {
+                Console.Write("\nBạn có muốn đổi mật khẩu mới không? (y/n): ");
+                string doi = Console.ReadLine();
+                if (doi.ToLower() == "y")
+                {
+                    Console.Write("Nhập mật khẩu mới: ");
+                    string newPass = Console.ReadLine();
+
+                    if (dn.UpdatePassword(newPass))
+                        Console.WriteLine("✅ Đổi mật khẩu thành công!");
+                    else
+                        Console.WriteLine("❌ Đổi mật khẩu thất bại!");
+                }
+            }
+
+            Console.WriteLine("\n=== Kết thúc chương trình test ===");
             Console.ReadKey();
         }
     }
 }
-

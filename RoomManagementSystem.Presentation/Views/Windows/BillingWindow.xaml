@@ -103,7 +103,7 @@
                                            FontSize="16"
                                            Foreground="#1E1E2F"
                                            Margin="0,0,0,12"/>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="12,0,12,12">
+                             <!--   <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="12,0,12,12">
                                     <StackPanel>
                                         <StackPanel Margin="0,0,0,16">
                                             <TextBlock Text="Nhà Nguyễn Trãi" FontSize="14" FontWeight="SemiBold" Foreground="#444" Margin="0,0,0,6"/>
@@ -115,19 +115,65 @@
                                             </Border>
                                         </StackPanel>
                                     </StackPanel>
+                                </ScrollViewer>  -->
+
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="12,0,12,12">
+                                    <ItemsControl ItemsSource="{Binding DanhSachNha}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,0,0,16">
+
+                                                    <!-- Tên Nhà -->
+                                                    <TextBlock Text="{Binding TenNha}"
+                                                               FontSize="14"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="#444"
+                                                               Margin="0,0,0,6"/>
+
+                                                    <!-- Danh sách Phòng -->
+                                                    <Border Background="#F9F8FF"
+                                                            CornerRadius="10"
+                                                            Padding="8"
+                                                            BorderBrush="#ECE9FE"
+                                                            BorderThickness="1">
+                                                        <ItemsControl ItemsSource="{Binding DanhSachPhong}">
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Button Content="{Binding MaPhong}"
+                                                                            FontWeight="Bold"
+                                                                            Background="#F5F3FF"
+                                                                            BorderBrush="#D9D6FE"
+                                                                            BorderThickness="1"
+                                                                            Foreground="#2C2C54"
+                                                                            Margin="0,2,0,2"
+                                                                            Padding="8,4"
+                                                                            HorizontalContentAlignment="Left"
+                                                                            Command="{Binding DataContext.ChonPhongCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                            CommandParameter="{Binding MaPhong}"/>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </Border>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </ScrollViewer>
+
+
+
                             </StackPanel>
                         </Border>
 
                         <!-- Cột 2: Dịch vụ -->
                         <Border Grid.Column="1"
-        Padding="24"
-        CornerRadius="12"
-        Background="White"
-        Margin="12,0,12,0"
-        BorderBrush="#E5E7EB"
-        Width="550"
-        BorderThickness="1">
+                                Padding="24"
+                                CornerRadius="12"
+                                Background="White"
+                                Margin="12,0,12,0"
+                                BorderBrush="#E5E7EB"
+                                Width="550"
+                                BorderThickness="1">
 
                             <StackPanel>
 

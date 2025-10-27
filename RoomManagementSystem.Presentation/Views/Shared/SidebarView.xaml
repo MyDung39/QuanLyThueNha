@@ -120,9 +120,22 @@
                 <RadioButton Content="Dịch vụ" 
                              Style="{StaticResource SidebarRadioButton}"
                              Tag="/Resources/Images/dich_vu_icon.png"/>
-                <RadioButton Content="Thanh toán" 
+             <!--   <RadioButton Content="Thanh toán" 
                              Style="{StaticResource SidebarRadioButton}"
-                             Tag="/Resources/Images/thanh_toan_icon.png"/>
+                             Tag="/Resources/Images/thanh_toan_icon.png"/>  -->
+
+            <!--    <RadioButton Content="Thanh toán" 
+                             Style="{StaticResource SidebarRadioButton}"
+                             Tag="/Resources/Images/thanh_toan_icon.png"
+                             IsChecked="{Binding IsBillingSelected, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             Checked="Billing_Checked"/>  -->
+                
+                <RadioButton Content="Thanh toán" 
+                             Style="{StaticResource SidebarRadioButton}" 
+                             Tag="/Resources/Images/thanh_toan_icon.png"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Billing"/>
+
                 <TextBlock Text="KHÁC" Style="{StaticResource SectionHeader}"/>
                 <RadioButton Content="Báo cáo" 
                              Style="{StaticResource SidebarRadioButton}"

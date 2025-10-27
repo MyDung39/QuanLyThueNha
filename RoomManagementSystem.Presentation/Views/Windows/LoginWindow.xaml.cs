@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using RoomManagementSystem.Presentation.ViewModels;
 
 namespace RoomManagementSystem.Presentation.Views.Windows
 {
@@ -10,6 +11,7 @@ namespace RoomManagementSystem.Presentation.Views.Windows
         public LoginWindow()
         {
             InitializeComponent();
+            this.DataContext = new LoginViewModel();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

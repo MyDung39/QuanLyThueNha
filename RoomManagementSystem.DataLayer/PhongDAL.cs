@@ -9,7 +9,7 @@ namespace RoomManagementSystem.DataLayer
 {
     public class PhongDAL
     {
-        private string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
         // Phương thức mở rộng để xử lý an toàn giá trị từ DB
         private static string ToSafeString(object value)
