@@ -178,7 +178,9 @@
                             HorizontalAlignment="Right" Click="ResendCodeButton_Click"/>
 
                     <!-- Nút Xác nhận -->
-                    <Button Content="Xác nhận" Style="{StaticResource ConfirmButtonStyle}"/>
+                    <Button Content="Xác nhận" 
+                            Style="{StaticResource ConfirmButtonStyle}"
+                            Command="{Binding VerifyOtpCommand}"/>
 
                     <!-- Thông báo đếm ngược -->
                     <TextBlock x:Name="CountdownText" TextAlignment="Center" TextWrapping="Wrap" Margin="0,30,0,0" FontSize="18" FontWeight="Light">

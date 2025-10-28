@@ -1,8 +1,9 @@
-﻿using System;
+﻿using RoomManagementSystem.Presentation.ViewModels; // <-- THÊM DÒNG NÀY
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading; // Cần cho DispatcherTimer
+using System.Windows.Threading;
 
 namespace RoomManagementSystem.Presentation.Views.Windows
 {
@@ -19,16 +20,15 @@ namespace RoomManagementSystem.Presentation.Views.Windows
 
         private void OtpVerificationWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // Bắt đầu đếm ngược ngay khi cửa sổ được tải
             StartCountdown(60);
-            OtpBox1.Focus(); // Tự động focus vào ô đầu tiên
+            OtpBox1.Focus();
         }
 
-        // --- Logic đếm ngược ---
+        // --- Logic đếm ngược (Giữ nguyên code của bạn) ---
         private void StartCountdown(int seconds)
         {
             _countdownSeconds = seconds;
-            ResendCodeButton.IsEnabled = false; // Vô hiệu hóa nút gửi lại
+            ResendCodeButton.IsEnabled = false;
             ResendCodeButton.Opacity = 0.4;
             CountdownText.Visibility = Visibility.Visible;
 
@@ -48,27 +48,32 @@ namespace RoomManagementSystem.Presentation.Views.Windows
             if (_countdownSeconds <= 0)
             {
                 _countdownTimer.Stop();
-                ResendCodeButton.IsEnabled = true; // Kích hoạt lại nút
+                ResendCodeButton.IsEnabled = true;
                 ResendCodeButton.Opacity = 0.7;
-                CountdownText.Visibility = Visibility.Collapsed; // Ẩn thông báo
+                CountdownText.Visibility = Visibility.Collapsed;
             }
         }
 
         private void ResendCodeButton_Click(object sender, RoutedEventArgs e)
         {
-            // Logic gửi lại mã ở đây...
+            // TODO: Lý tưởng nhất, việc này nên gọi một Command trong ViewModel
             MessageBox.Show("Đang gửi lại mã xác minh...");
-            StartCountdown(60); // Bắt đầu đếm ngược lại
+            StartCountdown(60);
         }
 
-        // --- Logic xử lý các ô OTP ---
+        // --- Logic xử lý các ô OTP (ĐÃ SỬA) ---
         private void OtpBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var currentTextBox = sender as TextBox;
-            if (currentTextBox == null || currentTextBox.Text.Length != 1)
+            if (currentTextBox == null) return;
+
+            // --- PHẦN 1: CẬP NHẬT VIEWMODEL (ĐÃ THÊM) ---
+            UpdateViewModelWithCombinedOtp();
+
+            // --- PHẦN 2: TỰ ĐỘNG CHUYỂN FOCUS (Code của bạn) ---
+            if (currentTextBox.Text.Length != 1)
                 return;
 
-            // Tự động chuyển đến ô tiếp theo
             if (currentTextBox == OtpBox1)
                 OtpBox2.Focus();
             else if (currentTextBox == OtpBox2)
@@ -82,7 +87,7 @@ namespace RoomManagementSystem.Presentation.Views.Windows
             var currentTextBox = sender as TextBox;
             if (currentTextBox == null) return;
 
-            // Xử lý phím Backspace để quay lại ô trước đó
+            // Xử lý phím Backspace (Code của bạn)
             if (e.Key == Key.Back && currentTextBox.Text.Length == 0)
             {
                 if (currentTextBox == OtpBox4)
@@ -92,12 +97,28 @@ namespace RoomManagementSystem.Presentation.Views.Windows
                 else if (currentTextBox == OtpBox2)
                     OtpBox1.Focus();
             }
+
+            // --- CẬP NHẬT VIEWMODEL SAU KHI XÓA (ĐÃ THÊM) ---
+            // Dùng Dispatcher để chạy sau khi phím Backspace đã thực sự xóa ký tự
+            Dispatcher.BeginInvoke(new Action(UpdateViewModelWithCombinedOtp), DispatcherPriority.ContextIdle);
         }
 
-        // --- Logic điều khiển cửa sổ (giữ nguyên) ---
+        // --- HÀM "CẦU NỐI" MỚI ---
+        private void UpdateViewModelWithCombinedOtp()
+        {
+            // 1. Lấy ViewModel từ DataContext
+            var viewModel = this.DataContext as OtpVerificationViewModel;
+            if (viewModel == null) return;
+
+            // 2. Gộp giá trị từ 4 ô và gán vào ViewModel
+            viewModel.EnteredOtp = OtpBox1.Text + OtpBox2.Text + OtpBox3.Text + OtpBox4.Text;
+        }
+
+
+        // --- Logic điều khiển cửa sổ (Giữ nguyên code của bạn) ---
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ButtonState == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed) // Sửa lại điều kiện
             {
                 DragMove();
             }

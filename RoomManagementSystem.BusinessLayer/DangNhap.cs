@@ -22,18 +22,25 @@ namespace RoomManagementSystem.BusinessLayer
 
         //Kiem tra dang nhap bang OTP
         string otp;
+        private string _emailDangXuLy;
 
         //Tao OTP
         public string OTP()
         {
             Random rnd = new Random();
-            otp = rnd.Next(100000, 999999).ToString();
+            otp = rnd.Next(1000, 9999).ToString();
             return otp;
         }
         //Kiem tra Mail nguoi dung
         public Boolean checkMail(string Mail)
         {
-            return user.Mail(Mail);
+            bool exists = user.Mail(Mail);
+            if (exists)
+            {
+                // Nếu mail tồn tại, lưu lại để biết chúng ta đang xử lý cho ai
+                _emailDangXuLy = Mail;
+            }
+            return exists;
         }
 
 
@@ -64,13 +71,16 @@ namespace RoomManagementSystem.BusinessLayer
             }
         }
         //Kiem tra Dang nhap bang otp
-        public bool CheckOTP(string email, string otp)
+        public bool CheckOTP( string otp)
         {
             return this.otp == otp;
         }
         //Cap nhat Password nguoi dung (khi da dang nhap bang otp hoac mat khau)
-        public Boolean UpdatePassword(string newPassword)
+        public bool UpdatePassword(string newPassword)
         {
+            // Xóa bỏ kiểm tra "if" đi, vì bạn không dùng _emailDangXuLy
+
+            // Cứ thế gọi DataLayer, vì bạn nói DataLayer tự biết
             return user.UpdatePassword(newPassword);
         }
 

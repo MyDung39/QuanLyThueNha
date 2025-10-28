@@ -142,14 +142,7 @@
                                        VerticalAlignment="Center"
                                        Grid.Column="0"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                <Button Style="{StaticResource IconButtonStyle}">
-                                    <Image Source="/Resources/Images/edit_icon.png" Width="16" Height="16" />
-                                </Button>
-                                <Button Style="{StaticResource IconButtonStyle}" Margin="4,0,0,0">
-                                    <Image Source="/Resources/Images/3dot-icon.png" Width="16" Height="16" />
-                                </Button>
-                            </StackPanel>
+                            
                         </Grid>
 
 

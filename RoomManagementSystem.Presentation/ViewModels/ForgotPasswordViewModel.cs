@@ -23,18 +23,50 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 return;
             }
 
-            bool exists = _dangNhap.checkSDT(Email); // hoặc checkEmail nếu có
+            bool exists = _dangNhap.checkMail(Email);
             if (exists)
             {
-                _dangNhap.OTP(Email);
-                var otpWindow = new OtpVerificationWindow();
-                otpWindow.Show();
+                // 1. Tạo và LẤY mã OTP
+                string generatedOtp = _dangNhap.OTP();
 
-                // Đóng ForgotPasswordWindow hiện tại
-                Application.Current.Windows
-                    .OfType<Window>()
-                    .FirstOrDefault(w => w.DataContext == this)?
-                    .Close();
+                // 2. GỌI HÀM gửi email với mã OTP vừa tạo
+                bool sentSuccessfully = _dangNhap.SendOTP(Email, generatedOtp);
+
+                if (sentSuccessfully)
+                {
+                    // 3. Nếu gửi thành công, mở cửa sổ OTP
+
+                    // ===========================================
+                    // BẮT ĐẦU SỬA LỖI
+                    // ===========================================
+
+                    // a. Tạo OtpVerificationViewModel và truyền dịch vụ DangNhap vào
+                    var otpViewModel = new OtpVerificationViewModel(_dangNhap);
+
+                    // b. Tạo cửa sổ
+                    var otpWindow = new OtpVerificationWindow();
+
+                    // c. GÁN DATACONTEXT (Đây là bước bạn bị thiếu)
+                    otpWindow.DataContext = otpViewModel;
+
+                    // d. Hiển thị cửa sổ
+                    otpWindow.Show();
+
+                    // ===========================================
+                    // KẾT THÚC SỬA LỖI
+                    // ===========================================
+
+                    // Đóng ForgotPasswordWindow hiện tại
+                    Application.Current.Windows
+                        .OfType<Window>()
+                        .FirstOrDefault(w => w.DataContext == this)?
+                        .Close();
+                }
+                else
+                {
+                    // 4. Thông báo lỗi nếu không gửi được mail
+                    MessageBox.Show("Có lỗi xảy ra khi gửi email xác thực. Vui lòng thử lại!");
+                }
             }
             else
             {
