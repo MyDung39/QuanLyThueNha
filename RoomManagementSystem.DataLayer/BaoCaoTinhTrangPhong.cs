@@ -14,7 +14,7 @@ namespace RoomManagementSystem.DataLayer
         // 1. Phòng trống
         public DataTable GetPhongTrong()
         {
-            string sql = "SELECT MaPhong, GiaThue FROM Phong WHERE TrangThai=N'Trống'";
+            string sql = "SELECT * FROM Phong WHERE TrangThai=N'Trống'";
             return dt.ExecuteQuery(sql);
         }
 
@@ -22,7 +22,7 @@ namespace RoomManagementSystem.DataLayer
         public DataTable GetPhongDangThue()
         {
             string sql = @"
-                SELECT p.MaPhong, p.GiaThue, n.HoTen,hd.NgayBatDau, hd.NgayKetThuc
+                SELECT p.*
                 FROM Phong p
                 JOIN HopDong hd ON p.MaPhong = hd.MaPhong
                 JOIN NguoiThue n ON hd.MaNguoiThue = n.MaNguoiThue
@@ -34,7 +34,7 @@ namespace RoomManagementSystem.DataLayer
         public DataTable GetPhongSapTrong()
         {
             string sql = @"
-                SELECT p.MaPhong,n.HoTen, hd.NgayKetThuc
+                SELECT p.*
                 FROM Phong p
                 JOIN HopDong hd ON p.MaPhong = hd.MaPhong
                 JOIN NguoiThue n ON hd.MaNguoiThue = n.MaNguoiThue
@@ -45,7 +45,7 @@ namespace RoomManagementSystem.DataLayer
         // 4. Phòng đang bảo trì
         public DataTable GetPhongBaoTri()
         {
-            string sql = "SELECT MaPhong, GiaThue, GhiChu FROM Phong WHERE TrangThai='BaoTri'";
+            string sql = "SELECT * FROM Phong WHERE TrangThai='BaoTri'";
             return dt.ExecuteQuery(sql);
         }
 

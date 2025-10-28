@@ -10,6 +10,8 @@
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="DS.Documents.Word" Version="8.2.1" />
+    <PackageReference Include="MailSystem.NET" Version="2.0.1" />
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1652.0" />
     <PackageReference Include="Spire.Doc" Version="13.9.10" />
   </ItemGroup>
 

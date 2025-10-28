@@ -1,17 +1,19 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
-using Microsoft.Data.SqlClient;
 
 
 namespace RoomManagementSystem.DataLayer
 {
     public class NguoiDungAccess
     {
-        string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        string connect = "Data Source=DESKTOP-4JTJGR2\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         
         //Kiem tra tai khoan, mat khau
         public Boolean checkDangNhap(string email, string matkhau)
@@ -28,20 +30,20 @@ namespace RoomManagementSystem.DataLayer
             }
         }
 
-        //Kiem tra sdt nguoi dung
-        public Boolean sodienthoai(string sdt)
+        //Kiem tra mail nguoi dung
+        public Boolean Mail(string mail)
         {
             using (SqlConnection c = new SqlConnection(connect))
             {
                 c.Open();
-                string querry = "SELECT COUNT(*) FROM NguoiDung WHERE SoDienThoai=@sdt";
+                string querry = "SELECT COUNT(*) FROM NguoiDung WHERE TenDangNhap=@mail";
                 SqlCommand cmd = new SqlCommand(querry, c);
-                cmd.Parameters.AddWithValue("@sdt", sdt);;
+                cmd.Parameters.AddWithValue("@mail", mail);;
                 int count = (int)cmd.ExecuteScalar(); // Lấy giá trị COUNT(*)
                 return count > 0; // true nếu tìm thấy, false nếu không
             }
         }
-
+        
         //Cap nhat lai du lieu NguoiDung
         public bool UpdatePassword(String matkhau)
         {
@@ -71,6 +73,7 @@ namespace RoomManagementSystem.DataLayer
                         {
                             MaNguoiDung = r["MaNguoiDung"].ToString(),
                             TenDangNhap = r["TenDangNhap"].ToString(),
+                            TenTaiKhoan = r["TenTaiKhoan"].ToString(),
                             MatKhau = r["MatKhau"].ToString(),
                             Sdt = r["Sdt"].ToString(),
                             PhuongThucDN = r["PhuongThucDN"].ToString(),

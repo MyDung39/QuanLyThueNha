@@ -11,7 +11,7 @@ namespace RoomManagementSystem.DataLayer
     public class Database
     {
         private string connectionString =
-            @"Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+            @"Data Source=DESKTOP-4JTJGR2\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
         // Hàm thực thi SELECT, trả về DataTable
         public DataTable ExecuteQuery(string query, SqlParameter[] parameters = null)

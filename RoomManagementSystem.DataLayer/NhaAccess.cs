@@ -10,11 +10,6 @@ namespace RoomManagementSystem.DataLayer
     public class NhaAccess
     {
         string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
-        // Phương thức mở rộng để xử lý an toàn giá trị từ DB
-        private static string ToSafeString(object value)
-        {
-            return value == null || value is DBNull ? string.Empty : value.ToString() ?? string.Empty;
-        }
         //Them thong tin can nha
         public Boolean registerHouse(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
@@ -61,53 +56,6 @@ namespace RoomManagementSystem.DataLayer
                 int result = q.ExecuteNonQuery();
                 return result > 0; // Trả về true nếu  thành công 
             }
-        }
-
-        // Lấy tất cả phòng
-        public List<Nha> getAllHouse()
-        {
-            List<Nha> ds = new List<Nha>();
-
-            using (SqlConnection c = new SqlConnection(connect))
-            {
-                c.Open();
-                string qr = "SELECT MaNha, MaNguoiDung, DiaChi, TongSoPhong, TongSoPhongHienTai, GhiChu, NgayTao, NgayCapNhat FROM Nha";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    // Lấy giá trị an toàn
-                    string maNha = ToSafeString(reader["MaNha"]);
-                    string maNguoiDung = ToSafeString(reader["MaNguoiDung"]);
-                    string diaChi = ToSafeString(reader["DiaChi"]);
-                    string ghiChu = ToSafeString(reader["GhiChu"]);
-
-                    // Xử lý giá trị số và ngày tháng có thể là DBNull
-                    int tongSoPhong = reader["TongSoPhong"] is DBNull ? 0 : int.Parse(reader["TongSoPhong"].ToString()!);
-                    int tongSoPhongHienTai = reader["TongSoPhongHienTai"] is DBNull ? 0 : int.Parse(reader["TongSoPhongHienTai"].ToString()!);
-
-                    // Sử dụng DateTime.TryParse an toàn hơn nếu cột có thể NULL
-                    DateTime ngayTao = reader["NgayTao"] is DBNull ? DateTime.MinValue : DateTime.Parse(reader["NgayTao"].ToString()!);
-                    DateTime ngayCapNhat = reader["NgayCapNhat"] is DBNull ? DateTime.MinValue : DateTime.Parse(reader["NgayCapNhat"].ToString()!);
-
-
-                    Nha n = new Nha()
-                    {
-                        MaNha = maNha,
-                        MaNguoiDung = maNguoiDung,
-                        DiaChi = diaChi,
-                        TongSoPhong = tongSoPhong,
-                        TongSoPhongHienTai = tongSoPhong,
-                        GhiChu = ghiChu,
-                        NgayTao = ngayTao,
-                        NgayCapNhat = ngayCapNhat
-                    };
-                    ds.Add(n);
-                }
-            }
-
-            return ds;
         }
     }
 }

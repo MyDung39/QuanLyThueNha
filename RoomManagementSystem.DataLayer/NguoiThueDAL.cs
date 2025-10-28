@@ -9,7 +9,7 @@ namespace RoomManagementSystem.DataLayer
 {
     public class NguoiThueDAL
     {
-        private string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private string connect = "Data Source=DESKTOP-4JTJGR2\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         //Nhập thông tin nguoi thue
         public bool ThemNguoiThue(NguoiThue nt)
         {

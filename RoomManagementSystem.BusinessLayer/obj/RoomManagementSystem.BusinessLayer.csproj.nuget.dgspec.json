@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj": {}
+    "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj": {}
   },
   "projects": {
-    "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj": {
+    "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
+        "projectUniqueName": "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
         "projectName": "RoomManagementSystem.BusinessLayer",
-        "projectPath": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
-        "packagesPath": "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\",
-        "outputPath": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\obj\\",
+        "projectPath": "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj",
+        "packagesPath": "C:\\Users\\AN\\.nuget\\packages\\",
+        "outputPath": "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.BusinessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\KIM XUYẾN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
-                "projectPath": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj"
+              "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
+                "projectPath": "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj"
               }
             }
           }
@@ -62,6 +63,14 @@
               "target": "Package",
               "version": "[8.2.1, )"
             },
+            "MailSystem.NET": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.ReportingServices.ReportViewerControl.Winforms": {
+              "target": "Package",
+              "version": "[150.1652.0, )"
+            },
             "Spire.Doc": {
               "target": "Package",
               "version": "[13.9.10, )"
@@ -87,20 +96,20 @@
         }
       }
     },
-    "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
+    "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
+        "projectUniqueName": "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
         "projectName": "RoomManagementSystem.DataLayer",
-        "projectPath": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
-        "packagesPath": "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\",
-        "outputPath": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\obj\\",
+        "projectPath": "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
+        "packagesPath": "C:\\Users\\AN\\.nuget\\packages\\",
+        "outputPath": "E:\\QuanLyThueNha-an_xuyen\\RoomManagementSystem.DataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\KIM XUYẾN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -109,6 +118,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

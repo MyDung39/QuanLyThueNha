@@ -14,12 +14,31 @@ namespace RoomManagementSystem.BusinessLayer
         DoanhThuThang dt = new DoanhThuThang();
 
         // Lấy báo cáo tháng 
-        public DataTable LayBaoCaoThang(int thang, int nam)
+        public DataTable LayBaoCaoThang(string thoiky)
         {
-            DataTable dtBaoCao = dt.BaoCaoDoanhThuThang(thang, nam);
-            return dtBaoCao;
+           DataTable doanhthu=dt.BaoCaoDoanhThuThang(thoiky);
+            return doanhthu;
+        }
+        public decimal TongDoanhThuThucThu(DataTable dt)
+        {
+            decimal sum = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["TrangThaiThanhToan"].ToString() == "Đã trả")
+                    sum += Convert.ToDecimal(row["TongTien"]);
+            }
+            return sum;
         }
 
+        public decimal TongDoanhThuDuKien(DataTable dt)
+        {
+            decimal sum = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                sum += Convert.ToDecimal(row["TongTien"]);
+            }
+            return sum;
+        }
         //Xuat Excel
         public void ExportToExcel(DataTable dt, string filePath, string sheetName = "Sheet1")
         {
