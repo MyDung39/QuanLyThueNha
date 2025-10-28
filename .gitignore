@@ -1,2 +1,18 @@
-[Oo]bj/
-[Bb]in/
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.db
+*.log
+*.tlog
+*.pdb
+*.dll
+*.exe
+*.obj
+*.bin
+*.json
+*.vscode/
+bin/
+obj/
+TestResults/
