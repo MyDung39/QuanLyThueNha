@@ -12,6 +12,22 @@ namespace RoomManagementSystem.DataLayer
     {
         string connection = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
+        // Tạo mã bảo trì tự động
+        public string AutoMaBT()
+        {
+            using (SqlConnection c = new SqlConnection(connection))
+            {
+                c.Open();
+                // Lấy số tiếp theo từ SEQUENCE và định dạng nó
+                string qr = "SELECT ISNULL(MAX(CAST(SUBSTRING(MaBaoTri, 3, LEN(MaBaoTri) - 2) AS INT)), 0) + 1 FROM BaoTri"; ;
+                SqlCommand cmd = new SqlCommand(qr, c);
+                int nextNumber = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return "BT" + nextNumber.ToString("D3");
+
+            }
+        }
+
         // Thêm mới yêu cầu bảo trì
         public void Insert(BaoTri baoTri)
         {
@@ -172,6 +188,20 @@ namespace RoomManagementSystem.DataLayer
                 }
             }
             return bt;
+        }
+
+        public string? GetMaNguoiThueBySoGiayTo(string soGiayTo)
+        {
+            using (SqlConnection c = new SqlConnection(connection))
+            {
+                c.Open();
+                string qr = "SELECT MaNguoiThue FROM NguoiThue WHERE SoGiayTo = @SoGiayTo";
+                SqlCommand cmd = new SqlCommand(qr, c);
+                cmd.Parameters.AddWithValue("@SoGiayTo", soGiayTo);
+
+                object result = cmd.ExecuteScalar();
+                return result?.ToString();
+            }
         }
     }
 }

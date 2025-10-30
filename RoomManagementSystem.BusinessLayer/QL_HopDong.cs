@@ -17,18 +17,30 @@ namespace RoomManagementSystem.BusinessLayer
         // Thêm hợp đồng
         public bool ThemHopDong(HopDong hd)
         {
-            if (string.IsNullOrEmpty(hd.MaHopDong) || string.IsNullOrEmpty(hd.MaPhong) || string.IsNullOrEmpty(hd.MaNguoiThue))
+            if (string.IsNullOrEmpty(hd.MaPhong) || string.IsNullOrEmpty(hd.MaNguoiThue))
             {
-                throw new Exception("Mã hợp đồng, phòng hoặc người thuê không được để trống");
+                throw new Exception("Mã phòng hoặc người thuê không được để trống");
             }
 
-            // [Mới] Áp dụng điều kiện: Chỉ 'Chủ hợp đồng' mới được tạo hợp đồng
             if (!hdDAL.IsChuHopDong(hd.MaNguoiThue))
             {
                 throw new Exception("Thêm hợp đồng thất bại: Người thuê không phải là 'Chủ hợp đồng'.");
             }
 
-            return hdDAL.InsertHopDong(hd);
+            hd.ChuNha = "ND001"; // Mặc định chủ nhà là tài khoản người dùng duy nhất
+
+            string newMaHD = hdDAL.AutoMaHD();
+            hd.MaHopDong = newMaHD;
+
+            bool success = hdDAL.InsertHopDong(hd);
+            if (success)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception("Thêm hợp đồng thất bại do lỗi CSDL.");
+            }
         }
 
         // Tra ve danh sach hop dong hien co
@@ -130,6 +142,17 @@ namespace RoomManagementSystem.BusinessLayer
                 Console.WriteLine($"Đã xảy ra lỗi khi xuất file PDF: {ex.Message}");
                 return false;
             }
+        }
+
+        // Tim ma nguoi thue bang so giay to
+        public string? TimMaNguoiThueBangSoGiayTo(string soGiayTo)
+        {
+            if (string.IsNullOrEmpty(soGiayTo))
+            {
+                return null;
+            }
+            // Gọi xuống DAL để thực hiện truy vấn
+            return hdDAL.GetMaNguoiThueBySoGiayTo(soGiayTo);
         }
 
         // Tao thong bao het han neu sap het han (logic: < 30 ngay tu ngay hien tai)

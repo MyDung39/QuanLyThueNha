@@ -8,13 +8,28 @@ namespace RoomManagementSystem.DataLayer
     {
         private string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
+        // Tạo mã hợp đồng tự động
+        public string AutoMaHD()
+        {
+            using (SqlConnection c = new SqlConnection(connect))
+            {
+                c.Open();
+                // Lấy số tiếp theo từ SEQUENCE và định dạng nó
+                string qr = "SELECT ISNULL(MAX(CAST(SUBSTRING(MaHopDong, 3, LEN(MaHopDong) - 2) AS INT)), 0) + 1 FROM HopDong"; ;
+                SqlCommand cmd = new SqlCommand(qr, c);
+                int nextNumber = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return "HD" + nextNumber.ToString("D3");
+
+            }
+        }
+
         // Thêm hợp đồng
         public bool InsertHopDong(HopDong hopDong)
         {
             using (SqlConnection c = new SqlConnection(connect))
             {
                 c.Open();
-                // Sửa đổi: Bỏ NgayKetThuc (cột tính toán), FileDinhKem (không tồn tại). Thêm ThoiHan.
                 string qr = @"INSERT INTO HopDong (MaHopDong, MaPhong, MaNguoiThue, ChuNha, TienCoc, NgayBatDau, ThoiHan, TrangThai, GhiChu, NgayTao, NgayCapNhat)
                               VALUES (@MaHopDong, @MaPhong, @MaNguoiThue, @ChuNha, @TienCoc, @NgayBatDau, @ThoiHan, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
 
@@ -40,7 +55,6 @@ namespace RoomManagementSystem.DataLayer
             using (SqlConnection c = new SqlConnection(connect))
             {
                 c.Open();
-                // Sửa đổi: Bỏ NgayKetThuc (cột tính toán), FileDinhKem (không tồn tại). Thêm ThoiHan.
                 string qr = @"UPDATE HopDong 
                               SET MaPhong = @MaPhong,
                                   MaNguoiThue = @MaNguoiThue,
@@ -179,7 +193,6 @@ namespace RoomManagementSystem.DataLayer
             using (SqlConnection c = new SqlConnection(connect))
             {
                 c.Open();
-                // Sửa đổi: Thêm hd.ThoiHan vào câu truy vấn
                 string qr = @"SELECT 
                         nt.HoTen,
                         nt.SoGiayTo,
@@ -243,6 +256,20 @@ namespace RoomManagementSystem.DataLayer
 
                 int result = cmd.ExecuteNonQuery();
                 return result > 0;
+            }
+        }
+
+        public string? GetMaNguoiThueBySoGiayTo(string soGiayTo)
+        {
+            using (SqlConnection c = new SqlConnection(connect))
+            {
+                c.Open();
+                string qr = "SELECT MaNguoiThue FROM NguoiThue WHERE SoGiayTo = @SoGiayTo";
+                SqlCommand cmd = new SqlCommand(qr, c);
+                cmd.Parameters.AddWithValue("@SoGiayTo", soGiayTo);
+
+                object result = cmd.ExecuteScalar();
+                return result?.ToString();
             }
         }
     }

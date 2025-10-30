@@ -4,7 +4,7 @@ using System.Data;
 
 namespace RoomManagementSystem.ConsoleTest
 {
-    public class Program
+    internal class Program
     {
         // Khởi tạo lớp Business Layer
         private static QL_BaoTri qlBaoTri = new QL_BaoTri();
@@ -14,10 +14,13 @@ namespace RoomManagementSystem.ConsoleTest
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
 
+            Console.WriteLine("QUẢN LÝ BẢO TRÌ");
+            Console.WriteLine("=====================================");
+
             bool running = true;
             while (running)
             {
-                Console.WriteLine("== QUẢN LÝ BẢO TRÌ ==");
+                Console.WriteLine("\nCHỌN CHỨC NĂNG:");
                 Console.WriteLine("1. Thêm mới yêu cầu bảo trì");
                 Console.WriteLine("2. Cập nhật trạng thái xử lý");
                 Console.WriteLine("3. Cập nhật chi phí");
@@ -25,7 +28,7 @@ namespace RoomManagementSystem.ConsoleTest
                 Console.WriteLine("5. Tìm yêu cầu theo Mã");
                 Console.WriteLine("6. Xem báo cáo chi phí theo tháng");
                 Console.WriteLine("0. Thoát");
-                Console.Write("Chọn chức năng: ");
+                Console.Write("Lựa chọn của bạn: ");
 
                 string? choice = Console.ReadLine();
 
@@ -69,9 +72,9 @@ namespace RoomManagementSystem.ConsoleTest
 
                 if (running)
                 {
-                    Console.WriteLine("\nNhấn phím bất kỳ để tiếp tục...");
-                    Console.ReadKey();
-                    Console.Clear(); // Xóa màn hình cho lần lặp mới
+                    Console.WriteLine("\nNhấn Enter để quay lại menu...");
+                    Console.ReadLine();
+                    Console.Clear(); // Xóa màn hình trước khi lặp lại menu
                 }
             }
 
@@ -84,18 +87,24 @@ namespace RoomManagementSystem.ConsoleTest
             Console.WriteLine("\n--- 1. Thêm Mới Yêu Cầu ---");
             BaoTri bt = new BaoTri();
 
-            Console.Write("Nhập Mã Bảo Trì (ví dụ: BT001): ");
-            bt.MaBaoTri = Console.ReadLine();
-
             Console.Write("Nhập Mã Phòng (ví dụ: PHONG001): ");
             bt.MaPhong = Console.ReadLine();
 
-            Console.Write("Nhập Mã Người Thuê (ví dụ: NT001, bỏ trống nếu là chủ nhà): ");
-            bt.MaNguoiThue = Console.ReadLine();
-            if (string.IsNullOrEmpty(bt.MaNguoiThue))
+            Console.Write("Nhập Số Giấy Tờ (CCCD/CMND) của Người Thuê: ");
+            string soGiayTo = Console.ReadLine() ?? "";
+
+            // Gọi BLL để tìm MaNguoiThue
+            string? maNguoiThue = qlBaoTri.TimMaNguoiThueBangSoGiayTo(soGiayTo);
+
+            if (string.IsNullOrEmpty(maNguoiThue))
             {
-                bt.MaNguoiThue = null;
+                // Nếu không tìm thấy, báo lỗi và dừng lại
+                throw new Exception($"Không tìm thấy người thuê nào có Số Giấy Tờ là '{soGiayTo}'.");
             }
+
+            // Nếu tìm thấy, gán vào đối tượng
+            Console.WriteLine($"Đã tìm thấy Mã Người Thuê tương ứng: {maNguoiThue}");
+            bt.MaNguoiThue = maNguoiThue;
 
             Console.Write("Nguồn yêu cầu (Chủ nhà, Người thuê, Kiểm tra định kỳ): ");
             bt.NguonYeuCau = Console.ReadLine();
@@ -108,7 +117,7 @@ namespace RoomManagementSystem.ConsoleTest
 
             qlBaoTri.Insert(bt);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("=> Thêm mới yêu cầu bảo trì thành công!");
+            Console.WriteLine("Thêm mới yêu cầu bảo trì thành công!");
             Console.ResetColor();
         }
 
