@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B0361A9A-01AB-4F15-AD67-67E372D2DEF6}|TestQuanLyNguoiThue\\TestQuanLyNguoiThue.csproj|d:\\project_cnpm_th3\\source\\quanlythuenha\\testquanlynguoithue\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B0361A9A-01AB-4F15-AD67-67E372D2DEF6}|TestQuanLyNguoiThue\\TestQuanLyNguoiThue.csproj|solutionrelative:testquanlynguoithue\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BB3F5E26-9CEE-4CAB-B7FC-BD43B9377E17}|TestBaoTri\\TestBaoTri.csproj|d:\\project_cnpm_th3\\source\\quanlythuenha\\testbaotri\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB3F5E26-9CEE-4CAB-B7FC-BD43B9377E17}|TestBaoTri\\TestBaoTri.csproj|solutionrelative:testbaotri\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|d:\\project_cnpm_th3\\source\\quanlythuenha\\roommanagementsystem.datalayer\\baotridal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|solutionrelative:roommanagementsystem.datalayer\\baotridal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -20,13 +24,26 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\TestQuanLyNguoiThue\\Program.cs",
-              "RelativeDocumentMoniker": "TestQuanLyNguoiThue\\Program.cs",
-              "ToolTip": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\TestQuanLyNguoiThue\\Program.cs",
-              "RelativeToolTip": "TestQuanLyNguoiThue\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4BAAABAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\TestBaoTri\\Program.cs",
+              "RelativeDocumentMoniker": "TestBaoTri\\Program.cs",
+              "ToolTip": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\TestBaoTri\\Program.cs",
+              "RelativeToolTip": "TestBaoTri\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T09:17:18.222Z",
+              "WhenOpened": "2025-11-02T15:11:25.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BaoTriDAL.cs",
+              "DocumentMoniker": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\BaoTriDAL.cs",
+              "RelativeDocumentMoniker": "RoomManagementSystem.DataLayer\\BaoTriDAL.cs",
+              "ToolTip": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\BaoTriDAL.cs",
+              "RelativeToolTip": "RoomManagementSystem.DataLayer\\BaoTriDAL.cs",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAuwKsAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:01:52.298Z",
               "EditorCaption": ""
             }
           ]

@@ -90,24 +90,27 @@ namespace RoomManagementSystem.ConsoleTest
             Console.Write("Nhập Mã Phòng (ví dụ: PHONG001): ");
             bt.MaPhong = Console.ReadLine();
 
-            Console.Write("Nhập Số Giấy Tờ (CCCD/CMND) của Người Thuê: ");
-            string soGiayTo = Console.ReadLine() ?? "";
-
-            // Gọi BLL để tìm MaNguoiThue
-            string? maNguoiThue = qlBaoTri.TimMaNguoiThueBangSoGiayTo(soGiayTo);
-
-            if (string.IsNullOrEmpty(maNguoiThue))
-            {
-                // Nếu không tìm thấy, báo lỗi và dừng lại
-                throw new Exception($"Không tìm thấy người thuê nào có Số Giấy Tờ là '{soGiayTo}'.");
-            }
-
-            // Nếu tìm thấy, gán vào đối tượng
-            Console.WriteLine($"Đã tìm thấy Mã Người Thuê tương ứng: {maNguoiThue}");
-            bt.MaNguoiThue = maNguoiThue;
-
             Console.Write("Nguồn yêu cầu (Chủ nhà, Người thuê, Kiểm tra định kỳ): ");
             bt.NguonYeuCau = Console.ReadLine();
+
+            if (bt.NguonYeuCau == "Người thuê")
+            {
+                Console.Write("Nhập Số Giấy Tờ (CCCD/CMND) của Người Thuê: ");
+                string soGiayTo = Console.ReadLine() ?? "";
+
+                // Gọi BLL để tìm MaNguoiThue
+                string? maNguoiThue = qlBaoTri.TimMaNguoiThueBangSoGiayTo(soGiayTo);
+
+                if (string.IsNullOrEmpty(maNguoiThue))
+                {
+                    // Nếu không tìm thấy, báo lỗi và dừng lại
+                    throw new Exception($"Không tìm thấy người thuê nào có Số Giấy Tờ là '{soGiayTo}'.");
+                }
+
+                // Nếu tìm thấy, gán vào đối tượng
+                Console.WriteLine($"Đã tìm thấy Mã Người Thuê tương ứng: {maNguoiThue}");
+                bt.MaNguoiThue = maNguoiThue;
+            }
 
             Console.Write("Mô tả sự cố (ví dụ: Hỏng vòi nước): ");
             bt.MoTa = Console.ReadLine();
