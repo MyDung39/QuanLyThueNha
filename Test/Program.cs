@@ -82,8 +82,6 @@ namespace RoomManagementApp
             try
             {
                 Console.WriteLine("-- ĐĂNG KÝ NHÀ MỚI --");
-                Console.Write("Nhập Mã nhà (ví dụ: NHA01): ");
-                string maNha = Console.ReadLine() ?? "";
                 Console.Write("Nhập Địa chỉ: ");
                 string diaChi = Console.ReadLine() ?? "";
                 int tongSoPhong = ReadInt("Nhập Tổng số phòng: ");
@@ -91,7 +89,7 @@ namespace RoomManagementApp
                 Console.Write("Nhập Ghi chú (nếu có): ");
                 string ghiChu = Console.ReadLine() ?? "";
 
-                bool result = ql.DangKyThongTinNha(maNha, diaChi, tongSoPhong, tongSoPhongHienTai, ghiChu);
+                bool result = ql.DangKyThongTinNha(diaChi, tongSoPhong, tongSoPhongHienTai, ghiChu);
 
                 if (result)
                 {
@@ -249,9 +247,6 @@ namespace RoomManagementApp
             {
                 Console.WriteLine("-- THÊM PHÒNG MỚI --");
                 Phong p = new Phong();
-
-                Console.Write("Nhập Mã phòng (ví dụ: PHONG001): ");
-                p.MaPhong = Console.ReadLine() ?? "";
                 Console.Write("Nhập Mã nhà (phải tồn tại trong CSDL, ví dụ: NHA001): ");
                 p.MaNha = Console.ReadLine() ?? "";
                 Console.Write("Nhập Loại phòng (Phòng trống, Phòng có đồ cơ bản): ");

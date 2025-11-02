@@ -9,16 +9,18 @@ namespace RoomManagementSystem.BusinessLayer
 {
     public class QL_TaiSan_Phong
     {
-        NhaAccess nha=new NhaAccess();
+        NhaAccess nha = new NhaAccess();
         //Dang ki thong tin nha
-        public Boolean DangKyThongTinNha(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
+        public Boolean DangKyThongTinNha(string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
-            return nha.registerHouse(MaNha, DiaChi, SoPhong, TongSoPhongHienTai, GhiChu);
+            // Gọi hàm tạo mã tự động từ DAL
+            string newMaNha = nha.AutoMaNha();
+            return nha.registerHouse(newMaNha, DiaChi, SoPhong, TongSoPhongHienTai, GhiChu);
         }
         //Cap nhat lai thong tin nha
         public Boolean UpdateNha(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
-            return nha.updateHouse(MaNha,DiaChi,SoPhong, TongSoPhongHienTai,GhiChu);
+            return nha.updateHouse(MaNha, DiaChi, SoPhong, TongSoPhongHienTai, GhiChu);
         }
 
         //Tra ve danh sach nha hien co
@@ -28,13 +30,16 @@ namespace RoomManagementSystem.BusinessLayer
         }
 
         //Them thong tin phong 
-        PhongDAL p =new PhongDAL();
-        
+        PhongDAL p = new PhongDAL();
+
         public Boolean ThemPhong(Phong a)
         {
+            // Gọi hàm tạo mã tự động từ DAL và gán vào đối tượng
+            string newMaPhong = p.AutoMaPhong();
+            a.MaPhong = newMaPhong;
             return p.InsertPhong(a);
         }
-        
+
         //Tra ve danh sach phong hien co
         public List<Phong> DanhSachPhong()
         {
