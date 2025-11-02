@@ -18,6 +18,7 @@ namespace RoomManagementSystem.DataLayer
         public string? TrangThaiThue { get; set; }
         public DateTime? NgayDonVao { get; set; }
         public DateTime? NgayDonRa { get; set; }
+        public string? VaiTro { get; set; }
         public DateTime NgayTao { get; set; }
         public DateTime NgayCapNhat { get; set; }
     }

@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1A489842-C5E1-4B2C-9472-FB6CFEE3AEA6}|Test\\TestQuanLyTaiSan.csproj|d:\\project_cnpm_th3\\source\\quanlythuenha\\test\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A489842-C5E1-4B2C-9472-FB6CFEE3AEA6}|Test\\TestQuanLyTaiSan.csproj|solutionrelative:test\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11C9018F-08D5-4887-A8F1-B4D07C8F68DE}|RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj|d:\\project_cnpm_th3\\source\\quanlythuenha\\roommanagementsystem.businesslayer\\ql_taisan_phong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11C9018F-08D5-4887-A8F1-B4D07C8F68DE}|RoomManagementSystem.BusinessLayer\\RoomManagementSystem.BusinessLayer.csproj|solutionrelative:roommanagementsystem.businesslayer\\ql_taisan_phong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|d:\\project_cnpm_th3\\source\\quanlythuenha\\roommanagementsystem.datalayer\\phongdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|solutionrelative:roommanagementsystem.datalayer\\phongdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|d:\\project_cnpm_th3\\source\\quanlythuenha\\roommanagementsystem.datalayer\\nhaaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3805302-DE4D-488A-BCE4-2E25E4C33F02}|RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj|solutionrelative:roommanagementsystem.datalayer\\nhaaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B0361A9A-01AB-4F15-AD67-67E372D2DEF6}|TestQuanLyNguoiThue\\TestQuanLyNguoiThue.csproj|d:\\project_cnpm_th3\\source\\quanlythuenha\\testquanlynguoithue\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B0361A9A-01AB-4F15-AD67-67E372D2DEF6}|TestQuanLyNguoiThue\\TestQuanLyNguoiThue.csproj|solutionrelative:testquanlynguoithue\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -32,52 +20,13 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\Test\\Program.cs",
-              "RelativeDocumentMoniker": "Test\\Program.cs",
-              "ToolTip": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\Test\\Program.cs",
-              "RelativeToolTip": "Test\\Program.cs",
-              "ViewState": "AgIAADEBAAAAAAAAAAAqwDwBAAAJAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\TestQuanLyNguoiThue\\Program.cs",
+              "RelativeDocumentMoniker": "TestQuanLyNguoiThue\\Program.cs",
+              "ToolTip": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\TestQuanLyNguoiThue\\Program.cs",
+              "RelativeToolTip": "TestQuanLyNguoiThue\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4BAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T08:18:14.596Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PhongDAL.cs",
-              "DocumentMoniker": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\PhongDAL.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.DataLayer\\PhongDAL.cs",
-              "ToolTip": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\PhongDAL.cs",
-              "RelativeToolTip": "RoomManagementSystem.DataLayer\\PhongDAL.cs",
-              "ViewState": "AgIAAIcAAAAAAAAAAAAqwLUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T08:18:09.618Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "NhaAccess.cs",
-              "DocumentMoniker": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\NhaAccess.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.DataLayer\\NhaAccess.cs",
-              "ToolTip": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\NhaAccess.cs",
-              "RelativeToolTip": "RoomManagementSystem.DataLayer\\NhaAccess.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T08:18:08.807Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "QL_TaiSan_Phong.cs",
-              "DocumentMoniker": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\QL_TaiSan_Phong.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.BusinessLayer\\QL_TaiSan_Phong.cs",
-              "ToolTip": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.BusinessLayer\\QL_TaiSan_Phong.cs",
-              "RelativeToolTip": "RoomManagementSystem.BusinessLayer\\QL_TaiSan_Phong.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA8wDsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T08:18:04.329Z",
+              "WhenOpened": "2025-11-02T09:17:18.222Z",
               "EditorCaption": ""
             }
           ]
