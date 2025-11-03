@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,8 @@ namespace RoomManagementSystem.DataLayer
 {
     public class PhongDAL
     {
-
-        private string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
-
+        // Thay bằng một đối tượng của lớp Database
+        Database db = new Database();
 
         // Phương thức mở rộng để xử lý an toàn giá trị từ DB
         private static string ToSafeString(object value)
@@ -19,166 +19,164 @@ namespace RoomManagementSystem.DataLayer
             return value == null || value is DBNull ? string.Empty : value.ToString() ?? string.Empty;
         }
 
+        // Tạo mã phòng tự động
+        public string AutoMaPhong()
+        {
+            string qr = "SELECT ISNULL(MAX(CAST(SUBSTRING(MaPhong, 6, LEN(MaPhong) - 5) AS INT)), 0) + 1 FROM Phong";
+            int nextNumber = Convert.ToInt32(db.ExecuteScalar(qr));
+            return "PHONG" + nextNumber.ToString("D3");
+        }
+
         // Thêm phòng
         public bool InsertPhong(Phong phong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
+            string qr = @"INSERT INTO Phong (MaPhong,MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, GhiChu, NgayTao, NgayCapNhat)
+                          VALUES (@MaPhong,@MaNha, @LoaiPhong, @DienTich, @GiaThue, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
+
+            // Tạo mảng SqlParameter
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                c.Open();
-                string qr = @"INSERT INTO Phong (MaPhong,MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, GhiChu, NgayTao, NgayCapNhat)
-                              VALUES (@MaPhong,@MaNha, @LoaiPhong, @DienTich, @GiaThue, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
+                new SqlParameter("@MaPhong", phong.MaPhong ?? (object)DBNull.Value),
+                new SqlParameter("@MaNha", phong.MaNha ?? (object)DBNull.Value),
+                new SqlParameter("@LoaiPhong", phong.LoaiPhong ?? (object)DBNull.Value),
+                new SqlParameter("@DienTich", phong.DienTich),
+                new SqlParameter("@GiaThue", phong.GiaThue),
+                new SqlParameter("@TrangThai", phong.TrangThai ?? (object)DBNull.Value),
+                new SqlParameter("@GhiChu", phong.GhiChu ?? (object)DBNull.Value)
+            };
 
-                SqlCommand cmd = new SqlCommand(qr, c);
-                // Đảm bảo không truyền null cho tham số SQL
-                cmd.Parameters.AddWithValue("@MaPhong", phong.MaPhong ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@MaNha", phong.MaNha ?? (object)DBNull.Value); 
-                cmd.Parameters.AddWithValue("@LoaiPhong", phong.LoaiPhong ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@DienTich", phong.DienTich); 
-                cmd.Parameters.AddWithValue("@GiaThue", phong.GiaThue); 
-                cmd.Parameters.AddWithValue("@TrangThai", phong.TrangThai ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@GhiChu", phong.GhiChu ?? (object)DBNull.Value);
-
-                int result = cmd.ExecuteNonQuery();
-                return result > 0;
-            }
+            // Gọi ExecuteNonQuery từ lớp Database
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0;
         }
 
         // Cập nhật phòng
         public bool UpdatePhong(Phong phong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
+            string qr = @"UPDATE Phong 
+                          SET LoaiPhong = @LoaiPhong,
+                              DienTich = @DienTich,
+                              GiaThue = @GiaThue,
+                              TrangThai = @TrangThai,
+                              GhiChu = @GhiChu,
+                              NgayCapNhat = GETDATE()
+                          WHERE MaPhong = @MaPhong";
+
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                c.Open();
-                string qr = @"UPDATE Phong 
-                              SET LoaiPhong = @LoaiPhong,
-                                  DienTich = @DienTich,
-                                  GiaThue = @GiaThue,
-                                  TrangThai = @TrangThai,
-                                  GhiChu = @GhiChu,
-                                  NgayCapNhat = GETDATE()
-                              WHERE MaPhong = @MaPhong";
+                new SqlParameter("@MaPhong", phong.MaPhong ?? (object)DBNull.Value),
+                new SqlParameter("@LoaiPhong", phong.LoaiPhong ?? (object)DBNull.Value),
+                new SqlParameter("@DienTich", phong.DienTich),
+                new SqlParameter("@GiaThue", phong.GiaThue),
+                new SqlParameter("@TrangThai", phong.TrangThai ?? (object)DBNull.Value),
+                new SqlParameter("@GhiChu", phong.GhiChu ?? (object)DBNull.Value)
+            };
 
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaPhong", phong.MaPhong ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@LoaiPhong", phong.LoaiPhong ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@DienTich", phong.DienTich);
-                cmd.Parameters.AddWithValue("@GiaThue", phong.GiaThue);
-                cmd.Parameters.AddWithValue("@TrangThai", phong.TrangThai ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@GhiChu", phong.GhiChu ?? (object)DBNull.Value);
-
-                int result = cmd.ExecuteNonQuery();
-                return result > 0;
-            }
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0;
         }
 
         // Xóa phòng
         public bool DeletePhong(string maPhong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
+            string qr = "DELETE FROM Phong WHERE MaPhong = @MaPhong";
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                c.Open();
-                string qr = "DELETE FROM Phong WHERE MaPhong = @MaPhong";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaPhong", maPhong ?? (object)DBNull.Value);
+                new SqlParameter("@MaPhong", maPhong ?? (object)DBNull.Value)
+            };
 
-                int result = cmd.ExecuteNonQuery();
-                return result > 0;
-            }
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0;
         }
 
         // Lấy tất cả phòng
         public List<Phong> GetAllPhong()
         {
             List<Phong> ds = new List<Phong>();
+            string qr = "SELECT MaPhong, MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, SoNguoiHienTai, GhiChu, NgayTao, NgayCapNhat FROM Phong";
 
-            using (SqlConnection c = new SqlConnection(connect))
+            // Dùng ExecuteQuery và nhận về DataTable
+            DataTable dt = db.ExecuteQuery(qr);
+
+            // Duyệt qua DataTable để đọc dữ liệu
+            foreach (DataRow row in dt.Rows)
             {
-                c.Open();
-                string qr = "SELECT MaPhong, MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, SoNguoiHienTai, GhiChu, NgayTao, NgayCapNhat FROM Phong";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                SqlDataReader reader = cmd.ExecuteReader();
+                string maPhong = ToSafeString(row["MaPhong"]);
+                string maNha = ToSafeString(row["MaNha"]);
+                string loaiPhong = ToSafeString(row["LoaiPhong"]);
+                string trangThai = ToSafeString(row["TrangThai"]);
+                string ghiChu = ToSafeString(row["GhiChu"]);
 
-                while (reader.Read())
+                // Dùng Convert.To... để an toàn hơn khi lấy từ DataRow
+                float dienTich = row["DienTich"] is DBNull ? 0.0f : Convert.ToSingle(row["DienTich"]);
+                float giaThue = row["GiaThue"] is DBNull ? 0.0f : Convert.ToSingle(row["GiaThue"]);
+                int soNguoiHienTai = row["SoNguoiHienTai"] is DBNull ? 0 : Convert.ToInt32(row["SoNguoiHienTai"]);
+
+                DateTime ngayTao = row["NgayTao"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayTao"]);
+                DateTime ngayCapNhat = row["NgayCapNhat"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayCapNhat"]);
+
+                Phong p = new Phong()
                 {
-                    // Lấy giá trị an toàn
-                    string maPhong = ToSafeString(reader["MaPhong"]);
-                    string maNha = ToSafeString(reader["MaNha"]);
-                    string loaiPhong = ToSafeString(reader["LoaiPhong"]);
-                    string trangThai = ToSafeString(reader["TrangThai"]);
-                    string ghiChu = ToSafeString(reader["GhiChu"]);
-
-                    // Xử lý giá trị số và ngày tháng có thể là DBNull
-                    float dienTich = reader["DienTich"] is DBNull ? 0.0f : float.Parse(reader["DienTich"].ToString()!);
-                    float giaThue = reader["GiaThue"] is DBNull ? 0.0f : float.Parse(reader["GiaThue"].ToString()!);
-                    int soNguoiHienTai = reader["SoNguoiHienTai"] is DBNull ? 0 : int.Parse(reader["SoNguoiHienTai"].ToString()!);
-
-                    // Sử dụng DateTime.TryParse an toàn hơn nếu cột có thể NULL
-                    DateTime ngayTao = reader["NgayTao"] is DBNull ? DateTime.MinValue : DateTime.Parse(reader["NgayTao"].ToString()!);
-                    DateTime ngayCapNhat = reader["NgayCapNhat"] is DBNull ? DateTime.MinValue : DateTime.Parse(reader["NgayCapNhat"].ToString()!);
-
-
-                    Phong p = new Phong()
-                    {
-                        MaPhong = maPhong,
-                        MaNha = maNha, 
-                        LoaiPhong = loaiPhong,
-                        DienTich = dienTich,
-                        GiaThue = giaThue,
-                        TrangThai = trangThai,
-                        SoNguoiHienTai = soNguoiHienTai,
-                        GhiChu = ghiChu,
-                        NgayTao = ngayTao,
-                        NgayCapNhat = ngayCapNhat
-                    };
-                    ds.Add(p);
-                }
+                    MaPhong = maPhong,
+                    MaNha = maNha,
+                    LoaiPhong = loaiPhong,
+                    DienTich = dienTich,
+                    GiaThue = giaThue,
+                    TrangThai = trangThai,
+                    SoNguoiHienTai = soNguoiHienTai,
+                    GhiChu = ghiChu,
+                    NgayTao = ngayTao,
+                    NgayCapNhat = ngayCapNhat
+                };
+                ds.Add(p);
             }
 
             return ds;
         }
 
         // Lấy phòng theo mã
-        public Phong? GetPhongById(string maPhong) 
+        public Phong? GetPhongById(string maPhong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
+            string qr = "SELECT MaPhong, MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, SoNguoiHienTai, GhiChu, NgayTao, NgayCapNhat FROM Phong WHERE MaPhong = @MaPhong";
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                c.Open();
-                string qr = "SELECT MaPhong, MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, SoNguoiHienTai, GhiChu, NgayTao, NgayCapNhat FROM Phong WHERE MaPhong = @MaPhong";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaPhong", maPhong ?? (object)DBNull.Value);
+                new SqlParameter("@MaPhong", maPhong ?? (object)DBNull.Value)
+            };
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
+            DataTable dt = db.ExecuteQuery(qr, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0]; // Lấy dòng đầu tiên
+
+                string maPhongResult = ToSafeString(row["MaPhong"]);
+                string maNha = ToSafeString(row["MaNha"]);
+                string loaiPhong = ToSafeString(row["LoaiPhong"]);
+                string trangThai = ToSafeString(row["TrangThai"]);
+                string ghiChu = ToSafeString(row["GhiChu"]);
+
+                float dienTich = row["DienTich"] is DBNull ? 0.0f : Convert.ToSingle(row["DienTich"]);
+                float giaThue = row["GiaThue"] is DBNull ? 0.0f : Convert.ToSingle(row["GiaThue"]);
+                int soNguoiHienTai = row["SoNguoiHienTai"] is DBNull ? 0 : Convert.ToInt32(row["SoNguoiHienTai"]);
+
+                DateTime ngayTao = row["NgayTao"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayTao"]);
+                DateTime ngayCapNhat = row["NgayCapNhat"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayCapNhat"]);
+
+                return new Phong()
                 {
-                    string maPhongResult = ToSafeString(reader["MaPhong"]);
-                    string maNha = ToSafeString(reader["MaNha"]);
-                    string loaiPhong = ToSafeString(reader["LoaiPhong"]);
-                    string trangThai = ToSafeString(reader["TrangThai"]);
-                    string ghiChu = ToSafeString(reader["GhiChu"]);
-
-                    float dienTich = reader["DienTich"] is DBNull ? 0.0f : float.Parse(reader["DienTich"].ToString()!);
-                    float giaThue = reader["GiaThue"] is DBNull ? 0.0f : float.Parse(reader["GiaThue"].ToString()!);
-                    int soNguoiHienTai = reader["SoNguoiHienTai"] is DBNull ? 0 : int.Parse(reader["SoNguoiHienTai"].ToString()!);
-
-                    DateTime ngayTao = reader["NgayTao"] is DBNull ? DateTime.MinValue : DateTime.Parse(reader["NgayTao"].ToString()!);
-                    DateTime ngayCapNhat = reader["NgayCapNhat"] is DBNull ? DateTime.MinValue : DateTime.Parse(reader["NgayCapNhat"].ToString()!);
-
-                    return new Phong()
-                    {
-                        MaPhong = maPhongResult,
-                        MaNha = maNha,
-                        LoaiPhong = loaiPhong,
-                        DienTich = dienTich,
-                        GiaThue = giaThue,
-                        TrangThai = trangThai,
-                        SoNguoiHienTai = soNguoiHienTai,
-                        GhiChu = ghiChu,
-                        NgayTao = ngayTao,
-                        NgayCapNhat = ngayCapNhat
-                    };
-                }
-                return null;
+                    MaPhong = maPhongResult,
+                    MaNha = maNha,
+                    LoaiPhong = loaiPhong,
+                    DienTich = dienTich,
+                    GiaThue = giaThue,
+                    TrangThai = trangThai,
+                    SoNguoiHienTai = soNguoiHienTai,
+                    GhiChu = ghiChu,
+                    NgayTao = ngayTao,
+                    NgayCapNhat = ngayCapNhat
+                };
             }
+            return null;
         }
     }
 }

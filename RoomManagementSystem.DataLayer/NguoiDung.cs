@@ -10,9 +10,6 @@ namespace RoomManagementSystem.DataLayer
     {
         public string? MaNguoiDung { get; set; }
         public string? TenDangNhap { get; set; }
-
-        public string? TenTaiKhoan {  get; set; }
-
         public string? MatKhau { get; set; }
         public string? Sdt { get; set; }
         public string? PhuongThucDN { get; set; }
@@ -22,6 +19,4 @@ namespace RoomManagementSystem.DataLayer
         public DateTime NgayCapNhat { get; set; }
 
     }
-
 }
-

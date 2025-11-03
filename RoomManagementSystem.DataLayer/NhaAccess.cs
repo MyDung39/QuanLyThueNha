@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,112 +10,119 @@ namespace RoomManagementSystem.DataLayer
 {
     public class NhaAccess
     {
+        // Thêm đối tượng Database
+        Database db = new Database();
 
-        string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
-
-
+        // Phương thức mở rộng để xử lý an toàn giá trị từ DB
         private static string ToSafeString(object value)
         {
             return value == null || value is DBNull ? string.Empty : value.ToString() ?? string.Empty;
         }
 
+        // Tạo mã nhà tự động
+        public string AutoMaNha()
+        {
+            string qr = "SELECT ISNULL(MAX(CAST(SUBSTRING(MaNha, 4, LEN(MaNha) - 3) AS INT)), 0) + 1 FROM Nha";
+            int nextNumber = Convert.ToInt32(db.ExecuteScalar(qr));
+            return "NHA" + nextNumber.ToString("D3");
+        }
 
         //Them thong tin can nha
         public Boolean registerHouse(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
-            //Them thong tin vao Table Nha trong csdl
-            using (SqlConnection c = new SqlConnection(connect))
-            {
-                c.Open();
-                string a = "SELECT MaNguoiDung FROM NguoiDung";
-                SqlCommand b = new SqlCommand(a, c);
-                var MaNguoiDung = b.ExecuteScalar();
+            // Dùng ExecuteScalar để lấy MaNguoiDung
+            string a = "SELECT MaNguoiDung FROM NguoiDung"; // Lưu ý: Câu query này sẽ lấy MaNguoiDung ĐẦU TIÊN tìm thấy. Hãy đảm bảo đây là logic bạn muốn.
+            var MaNguoiDung = db.ExecuteScalar(a);
 
-                string qr = @"INSERT INTO Nha (MaNguoiDung,MaNha, DiaChi, TongSoPhong, TongSoPhongHienTai, GhiChu, NgayTao, NgayCapNhat) 
-                          VALUES (@MaNguoiDung,@MaNha, @DiaChi, @TongSoPhong, @TongSoPhongHienTai, @GhiChu, GETDATE(), GETDATE())";
-                SqlCommand q = new SqlCommand(qr, c);
-                q.Parameters.AddWithValue("@MaNguoiDung", MaNguoiDung.ToString());
-                q.Parameters.AddWithValue("@MaNha", MaNha);
-                q.Parameters.AddWithValue("@DiaChi", DiaChi);
-                q.Parameters.AddWithValue("@TongSoPhong", SoPhong);
-                q.Parameters.AddWithValue("@TongSoPhongHienTai", TongSoPhongHienTai);
-                q.Parameters.AddWithValue("@GhiChu", GhiChu);
-                
-                int result = q.ExecuteNonQuery();
-                return result > 0; // Trả về true nếu thêm thành công 
+            // Nếu không tìm thấy người dùng, có thể trả về false
+            if (MaNguoiDung == null)
+            {
+                return false;
             }
+
+            string qr = @"INSERT INTO Nha (MaNguoiDung,MaNha, DiaChi, TongSoPhong, TongSoPhongHienTai, GhiChu, NgayTao, NgayCapNhat) 
+                          VALUES (@MaNguoiDung,@MaNha, @DiaChi, @TongSoPhong, @TongSoPhongHienTai, @GhiChu, GETDATE(), GETDATE())";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaNguoiDung", MaNguoiDung.ToString()),
+                new SqlParameter("@MaNha", MaNha),
+                new SqlParameter("@DiaChi", DiaChi),
+                new SqlParameter("@TongSoPhong", SoPhong),
+                new SqlParameter("@TongSoPhongHienTai", TongSoPhongHienTai),
+                new SqlParameter("@GhiChu", GhiChu)
+            };
+
+            // Dùng ExecuteNonQuery
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0; // Trả về true nếu thêm thành công 
         }
+
         //Cap nhat thong tin can nha
         public Boolean updateHouse(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
-            using (SqlConnection c = new SqlConnection(connect))
-            {
-                c.Open();
-                string a = "SELECT MaNguoiDung FROM NguoiDung";
-                SqlCommand b = new SqlCommand(a, c);
-                var MaNguoiDung = b.ExecuteScalar();
+            string a = "SELECT MaNguoiDung FROM NguoiDung"; // Tương tự, đây là MaNguoiDung đầu tiên
+            var MaNguoiDung = db.ExecuteScalar(a);
 
-                string qr = @"UPDATE Nha SET MaNguoiDung = @MaNguoiDung,DiaChi = @DiaChi,TongSoPhong = @TongSoPhong,TongSoPhongHienTai = @TongSoPhongHienTai,GhiChu = @GhiChu,NgayCapNhat = GETDATE()  WHERE MaNha = @MaNha";
-                SqlCommand q = new SqlCommand(qr, c);
-                q.Parameters.AddWithValue("@MaNguoiDung", MaNguoiDung.ToString());
-                q.Parameters.AddWithValue("@MaNha", MaNha);
-                q.Parameters.AddWithValue("@DiaChi", DiaChi);
-                q.Parameters.AddWithValue("@TongSoPhong", SoPhong);
-                q.Parameters.AddWithValue("@TongSoPhongHienTai", TongSoPhongHienTai);
-                q.Parameters.AddWithValue("@GhiChu", GhiChu);
-                int result = q.ExecuteNonQuery();
-                return result > 0; // Trả về true nếu  thành công 
+            if (MaNguoiDung == null)
+            {
+                return false;
             }
+
+            string qr = @"UPDATE Nha SET MaNguoiDung = @MaNguoiDung,DiaChi = @DiaChi,TongSoPhong = @TongSoPhong,TongSoPhongHienTai = @TongSoPhongHienTai,GhiChu = @GhiChu,NgayCapNhat = GETDATE()  WHERE MaNha = @MaNha";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaNguoiDung", MaNguoiDung.ToString()),
+                new SqlParameter("@MaNha", MaNha),
+                new SqlParameter("@DiaChi", DiaChi),
+                new SqlParameter("@TongSoPhong", SoPhong),
+                new SqlParameter("@TongSoPhongHienTai", TongSoPhongHienTai),
+                new SqlParameter("@GhiChu", GhiChu)
+            };
+
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0; // Trả về true nếu thành công 
         }
 
-
-        // Lấy tất cả phòng
+        // Lấy tất cả nhà
         public List<Nha> getAllHouse()
         {
             List<Nha> ds = new List<Nha>();
+            string qr = "SELECT MaNha, MaNguoiDung, DiaChi, TongSoPhong, TongSoPhongHienTai, GhiChu, NgayTao, NgayCapNhat FROM Nha";
 
-            using (SqlConnection c = new SqlConnection(connect))
+            // Dùng ExecuteQuery và DataTable
+            DataTable dt = db.ExecuteQuery(qr);
+
+            foreach (DataRow row in dt.Rows)
             {
-                c.Open();
-                string qr = "SELECT MaNha, MaNguoiDung, DiaChi, TongSoPhong, TongSoPhongHienTai, GhiChu, NgayTao, NgayCapNhat FROM Nha";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                SqlDataReader reader = cmd.ExecuteReader();
+                string maNha = ToSafeString(row["MaNha"]);
+                string maNguoiDung = ToSafeString(row["MaNguoiDung"]);
+                string diaChi = ToSafeString(row["DiaChi"]);
+                string ghiChu = ToSafeString(row["GhiChu"]);
 
-                while (reader.Read())
+                int tongSoPhong = row["TongSoPhong"] is DBNull ? 0 : Convert.ToInt32(row["TongSoPhong"]);
+                int tongSoPhongHienTai = row["TongSoPhongHienTai"] is DBNull ? 0 : Convert.ToInt32(row["TongSoPhongHienTai"]);
+
+                DateTime ngayTao = row["NgayTao"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayTao"]);
+                DateTime ngayCapNhat = row["NgayCapNhat"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayCapNhat"]);
+
+                Nha n = new Nha()
                 {
-                    // Lấy giá trị an toàn
-                    string maNha = ToSafeString(reader["MaNha"]);
-                    string maNguoiDung = ToSafeString(reader["MaNguoiDung"]);
-                    string diaChi = ToSafeString(reader["DiaChi"]);
-                    string ghiChu = ToSafeString(reader["GhiChu"]);
-
-                    // Xử lý giá trị số và ngày tháng có thể là DBNull
-                    int tongSoPhong = reader["TongSoPhong"] is DBNull ? 0 : int.Parse(reader["TongSoPhong"].ToString()!);
-                    int tongSoPhongHienTai = reader["TongSoPhongHienTai"] is DBNull ? 0 : int.Parse(reader["TongSoPhongHienTai"].ToString()!);
-
-                    // Sử dụng DateTime.TryParse an toàn hơn nếu cột có thể NULL
-                    DateTime ngayTao = reader["NgayTao"] is DBNull ? DateTime.MinValue : DateTime.Parse(reader["NgayTao"].ToString()!);
-                    DateTime ngayCapNhat = reader["NgayCapNhat"] is DBNull ? DateTime.MinValue : DateTime.Parse(reader["NgayCapNhat"].ToString()!);
-
-
-                    Nha n = new Nha()
-                    {
-                        MaNha = maNha,
-                        MaNguoiDung = maNguoiDung,
-                        DiaChi = diaChi,
-                        TongSoPhong = tongSoPhong,
-                        TongSoPhongHienTai = tongSoPhong,
-                        GhiChu = ghiChu,
-                        NgayTao = ngayTao,
-                        NgayCapNhat = ngayCapNhat
-                    };
-                    ds.Add(n);
-                }
+                    MaNha = maNha,
+                    MaNguoiDung = maNguoiDung,
+                    DiaChi = diaChi,
+                    TongSoPhong = tongSoPhong,
+                    // Sửa lỗi logic nhỏ: Gán đúng biến tongSoPhongHienTai
+                    TongSoPhongHienTai = tongSoPhongHienTai,
+                    GhiChu = ghiChu,
+                    NgayTao = ngayTao,
+                    NgayCapNhat = ngayCapNhat
+                };
+                ds.Add(n);
             }
 
             return ds;
         }
-
-
     }
 }

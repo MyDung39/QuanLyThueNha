@@ -14,12 +14,12 @@ namespace RoomManagementSystem.DataLayer
         public string? Sdt { get; set; }
         public string? Email { get; set; }
         public string? SoGiayTo { get; set; }
-        public DateTime? NgayBatDauThue { get; set; }
+        public DateTime NgayBatDauThue { get; set; }
         public string? TrangThaiThue { get; set; }
         public DateTime? NgayDonVao { get; set; }
         public DateTime? NgayDonRa { get; set; }
+        public string? VaiTro { get; set; }
         public DateTime NgayTao { get; set; }
         public DateTime NgayCapNhat { get; set; }
-        public string? VaiTro { get; set; }
     }
 }

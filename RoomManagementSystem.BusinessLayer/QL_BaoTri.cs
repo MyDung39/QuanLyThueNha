@@ -30,9 +30,6 @@ namespace RoomManagementSystem.BusinessLayer
         public void Insert(BaoTri baoTri)
         {
             // Kiểm tra nghiệp vụ
-            if (string.IsNullOrEmpty(baoTri.MaBaoTri))
-                throw new Exception("Mã bảo trì không được để trống!");
-
             if (string.IsNullOrEmpty(baoTri.MaPhong))
                 throw new Exception("Mã phòng không được để trống!");
 
@@ -48,6 +45,9 @@ namespace RoomManagementSystem.BusinessLayer
             // Mặc định trạng thái khi tạo mới
             baoTri.TrangThaiXuLy = "Chưa xử lý";
             baoTri.ChiPhi = 0; // Chi phí ban đầu là 0
+
+            string newMaBT = dal.AutoMaBT();
+            baoTri.MaBaoTri = newMaBT;
 
             dal.Insert(baoTri);
         }
@@ -107,6 +107,17 @@ namespace RoomManagementSystem.BusinessLayer
                 throw new Exception("Năm không hợp lệ!");
 
             return dal.GetBaoCaoChiPhiThang(thang, nam);
+        }
+
+        // Tim ma nguoi thue bang so giay to
+        public string? TimMaNguoiThueBangSoGiayTo(string soGiayTo)
+        {
+            if (string.IsNullOrEmpty(soGiayTo))
+            {
+                return null;
+            }
+            // Gọi xuống DAL để thực hiện truy vấn
+            return dal.GetMaNguoiThueBySoGiayTo(soGiayTo);
         }
     }
 }

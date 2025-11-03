@@ -1,186 +1,191 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace RoomManagementSystem.DataLayer
 {
     public class HopDongDAL
     {
-        private string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        // Khởi tạo đối tượng Database để sử dụng các hàm của nó
+        Database db = new Database();
+
+        // Tạo mã hợp đồng tự động
+        public string AutoMaHD()
+        {
+            // Gọi hàm ExecuteScalar từ lớp Database
+            string qr = "SELECT ISNULL(MAX(CAST(SUBSTRING(MaHopDong, 3, LEN(MaHopDong) - 2) AS INT)), 0) + 1 FROM HopDong";
+            int nextNumber = Convert.ToInt32(db.ExecuteScalar(qr)); // Không cần tham số
+
+            return "HD" + nextNumber.ToString("D3");
+        }
 
         // Thêm hợp đồng
         public bool InsertHopDong(HopDong hopDong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
+            string qr = @"INSERT INTO HopDong (MaHopDong, MaPhong, MaNguoiThue, ChuNha, TienCoc, NgayBatDau, ThoiHan, TrangThai, GhiChu, NgayTao, NgayCapNhat)
+                          VALUES (@MaHopDong, @MaPhong, @MaNguoiThue, @ChuNha, @TienCoc, @NgayBatDau, @ThoiHan, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
+
+            // Chuẩn bị mảng SqlParameter
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                c.Open();
-                // Sửa đổi: Bỏ NgayKetThuc (cột tính toán), FileDinhKem (không tồn tại). Thêm ThoiHan.
-                string qr = @"INSERT INTO HopDong (MaHopDong, MaPhong, MaNguoiThue, ChuNha, TienCoc, NgayBatDau, ThoiHan, TrangThai, GhiChu, NgayTao, NgayCapNhat)
-                              VALUES (@MaHopDong, @MaPhong, @MaNguoiThue, @ChuNha, @TienCoc, @NgayBatDau, @ThoiHan, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
+                new SqlParameter("@MaHopDong", hopDong.MaHopDong),
+                new SqlParameter("@MaPhong", hopDong.MaPhong),
+                new SqlParameter("@MaNguoiThue", hopDong.MaNguoiThue),
+                new SqlParameter("@ChuNha", hopDong.ChuNha ?? (object)DBNull.Value),
+                new SqlParameter("@TienCoc", hopDong.TienCoc),
+                new SqlParameter("@NgayBatDau", hopDong.NgayBatDau),
+                new SqlParameter("@ThoiHan", hopDong.ThoiHan),
+                new SqlParameter("@TrangThai", hopDong.TrangThai ?? (object)DBNull.Value),
+                new SqlParameter("@GhiChu", hopDong.GhiChu ?? (object)DBNull.Value)
+            };
 
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaHopDong", hopDong.MaHopDong);
-                cmd.Parameters.AddWithValue("@MaPhong", hopDong.MaPhong);
-                cmd.Parameters.AddWithValue("@MaNguoiThue", hopDong.MaNguoiThue);
-                cmd.Parameters.AddWithValue("@ChuNha", hopDong.ChuNha ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@TienCoc", hopDong.TienCoc);
-                cmd.Parameters.AddWithValue("@NgayBatDau", hopDong.NgayBatDau);
-                cmd.Parameters.AddWithValue("@ThoiHan", hopDong.ThoiHan); // Thêm ThoiHan
-                cmd.Parameters.AddWithValue("@TrangThai", hopDong.TrangThai ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@GhiChu", hopDong.GhiChu ?? (object)DBNull.Value);
-
-                int result = cmd.ExecuteNonQuery();
-                return result > 0;
-            }
+            // Gọi hàm ExecuteNonQuery từ lớp Database
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0;
         }
 
         // Cập nhật hợp đồng
         public bool UpdateHopDong(HopDong hopDong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
+            string qr = @"UPDATE HopDong 
+                          SET MaPhong = @MaPhong,
+                              MaNguoiThue = @MaNguoiThue,
+                              ChuNha = @ChuNha,
+                              TienCoc = @TienCoc,
+                              NgayBatDau = @NgayBatDau,
+                              ThoiHan = @ThoiHan,
+                              TrangThai = @TrangThai,
+                              GhiChu = @GhiChu,
+                              NgayCapNhat = GETDATE()
+                          WHERE MaHopDong = @MaHopDong";
+
+            // Chuẩn bị mảng SqlParameter
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                c.Open();
-                // Sửa đổi: Bỏ NgayKetThuc (cột tính toán), FileDinhKem (không tồn tại). Thêm ThoiHan.
-                string qr = @"UPDATE HopDong 
-                              SET MaPhong = @MaPhong,
-                                  MaNguoiThue = @MaNguoiThue,
-                                  ChuNha = @ChuNha,
-                                  TienCoc = @TienCoc,
-                                  NgayBatDau = @NgayBatDau,
-                                  ThoiHan = @ThoiHan,
-                                  TrangThai = @TrangThai,
-                                  GhiChu = @GhiChu,
-                                  NgayCapNhat = GETDATE()
-                              WHERE MaHopDong = @MaHopDong";
+                new SqlParameter("@MaHopDong", hopDong.MaHopDong),
+                new SqlParameter("@MaPhong", hopDong.MaPhong),
+                new SqlParameter("@MaNguoiThue", hopDong.MaNguoiThue),
+                new SqlParameter("@ChuNha", hopDong.ChuNha ??(object) DBNull.Value),
+                new SqlParameter("@TienCoc", hopDong.TienCoc),
+                new SqlParameter("@NgayBatDau", hopDong.NgayBatDau),
+                new SqlParameter("@ThoiHan", hopDong.ThoiHan),
+                new SqlParameter("@TrangThai", hopDong.TrangThai ??(object) DBNull.Value),
+                new SqlParameter("@GhiChu", hopDong.GhiChu ??(object) DBNull.Value)
+            };
 
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaHopDong", hopDong.MaHopDong);
-                cmd.Parameters.AddWithValue("@MaPhong", hopDong.MaPhong);
-                cmd.Parameters.AddWithValue("@MaNguoiThue", hopDong.MaNguoiThue);
-                cmd.Parameters.AddWithValue("@ChuNha", hopDong.ChuNha ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@TienCoc", hopDong.TienCoc);
-                cmd.Parameters.AddWithValue("@NgayBatDau", hopDong.NgayBatDau);
-                cmd.Parameters.AddWithValue("@ThoiHan", hopDong.ThoiHan); // Thêm ThoiHan
-                cmd.Parameters.AddWithValue("@TrangThai", hopDong.TrangThai ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@GhiChu", hopDong.GhiChu ?? (object)DBNull.Value);
-
-                int result = cmd.ExecuteNonQuery();
-                return result > 0;
-            }
+            // Gọi hàm ExecuteNonQuery từ lớp Database
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0;
         }
 
         // Xóa hợp đồng
         public bool DeleteHopDong(string maHopDong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
-            {
-                c.Open();
-                string qr = "DELETE FROM HopDong WHERE MaHopDong = @MaHopDong";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaHopDong", maHopDong);
+            string qr = "DELETE FROM HopDong WHERE MaHopDong = @MaHopDong";
 
-                int result = cmd.ExecuteNonQuery();
-                return result > 0;
-            }
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaHopDong", maHopDong)
+            };
+
+            // Gọi hàm ExecuteNonQuery từ lớp Database
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0;
         }
 
-        // Lấy tất cả hợp đồng
+        // Lấy tất cả hợp đồng (Chuyển sang dùng DataTable)
         public List<HopDong> GetAllHopDong()
         {
             List<HopDong> ds = new List<HopDong>();
+            string qr = "SELECT * FROM HopDong";
 
-            using (SqlConnection c = new SqlConnection(connect))
+            // Gọi hàm ExecuteQuery để lấy về DataTable
+            DataTable dt = db.ExecuteQuery(qr);
+
+            // Duyệt qua DataTable (thay vì SqlDataReader)
+            foreach (DataRow reader in dt.Rows)
             {
-                c.Open();
-                string qr = "SELECT * FROM HopDong";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                HopDong hd = new HopDong()
                 {
-                    HopDong hd = new HopDong()
-                    {
-                        MaHopDong = reader["MaHopDong"]?.ToString(),
-                        MaPhong = reader["MaPhong"]?.ToString(),
-                        MaNguoiThue = reader["MaNguoiThue"]?.ToString(),
-                        ChuNha = reader["ChuNha"]?.ToString(),
-                        TienCoc = Convert.ToDecimal(reader["TienCoc"]),
-                        NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
-                        ThoiHan = Convert.ToInt32(reader["ThoiHan"]), // Thêm đọc ThoiHan
-                        NgayKetThuc = reader["NgayKetThuc"] is DBNull ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
-                        TrangThai = reader["TrangThai"]?.ToString(),
-                        GhiChu = reader["GhiChu"]?.ToString(),
-                        NgayTao = Convert.ToDateTime(reader["NgayTao"]),
-                        NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"])
-                    };
-                    ds.Add(hd);
-                }
+                    MaHopDong = reader["MaHopDong"]?.ToString(),
+                    MaPhong = reader["MaPhong"]?.ToString(),
+                    MaNguoiThue = reader["MaNguoiThue"]?.ToString(),
+                    ChuNha = reader["ChuNha"]?.ToString(),
+                    TienCoc = Convert.ToDecimal(reader["TienCoc"]),
+                    NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                    ThoiHan = Convert.ToInt32(reader["ThoiHan"]),
+                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
+                    TrangThai = reader["TrangThai"]?.ToString(),
+                    GhiChu = reader["GhiChu"]?.ToString(),
+                    NgayTao = Convert.ToDateTime(reader["NgayTao"]),
+                    NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"])
+                };
+                ds.Add(hd);
             }
 
             return ds;
         }
 
-        // Lấy hợp đồng theo mã
+        // Lấy hợp đồng theo mã (Chuyển sang dùng DataTable)
         public HopDong? GetHopDongById(string maHopDong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
-            {
-                c.Open();
-                string qr = "SELECT * FROM HopDong WHERE MaHopDong = @MaHopDong";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaHopDong", maHopDong);
+            string qr = "SELECT * FROM HopDong WHERE MaHopDong = @MaHopDong";
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaHopDong", maHopDong)
+            };
+
+            // Lấy về DataTable
+            DataTable dt = db.ExecuteQuery(qr, parameters);
+
+            // Kiểm tra xem DataTable có dữ liệu không
+            if (dt.Rows.Count > 0)
+            {
+                DataRow reader = dt.Rows[0]; // Lấy dòng đầu tiên
+                return new HopDong()
                 {
-                    return new HopDong()
-                    {
-                        MaHopDong = reader["MaHopDong"]?.ToString(),
-                        MaPhong = reader["MaPhong"]?.ToString(),
-                        MaNguoiThue = reader["MaNguoiThue"]?.ToString(),
-                        ChuNha = reader["ChuNha"]?.ToString(),
-                        TienCoc = Convert.ToDecimal(reader["TienCoc"]),
-                        NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
-                        ThoiHan = Convert.ToInt32(reader["ThoiHan"]), // Thêm đọc ThoiHan
-                        NgayKetThuc = reader["NgayKetThuc"] is DBNull ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
-                        TrangThai = reader["TrangThai"]?.ToString(),
-                        GhiChu = reader["GhiChu"]?.ToString(),
-                        NgayTao = Convert.ToDateTime(reader["NgayTao"]),
-                        NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"])
-                    };
-                }
-                return null;
+                    MaHopDong = reader["MaHopDong"]?.ToString(),
+                    MaPhong = reader["MaPhong"]?.ToString(),
+                    MaNguoiThue = reader["MaNguoiThue"]?.ToString(),
+                    ChuNha = reader["ChuNha"]?.ToString(),
+                    TienCoc = Convert.ToDecimal(reader["TienCoc"]),
+                    NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                    ThoiHan = Convert.ToInt32(reader["ThoiHan"]),
+                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
+                    TrangThai = reader["TrangThai"]?.ToString(),
+                    GhiChu = reader["GhiChu"]?.ToString(),
+                    NgayTao = Convert.ToDateTime(reader["NgayTao"]),
+                    NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"])
+                };
             }
+            return null;
         }
 
         // Kiểm tra người thuê có phải là chủ hợp đồng không
         public bool IsChuHopDong(string maNguoiThue)
         {
-            using (SqlConnection c = new SqlConnection(connect))
-            {
-                c.Open();
-                string qr = "SELECT VaiTro FROM NguoiThue WHERE MaNguoiThue = @MaNguoiThue";
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaNguoiThue", maNguoiThue);
+            string qr = "SELECT VaiTro FROM NguoiThue WHERE MaNguoiThue = @MaNguoiThue";
 
-                object result = cmd.ExecuteScalar();
-                if (result != null && result.ToString() == "Chủ hợp đồng")
-                {
-                    return true;
-                }
-                return false;
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaNguoiThue", maNguoiThue)
+            };
+
+            // Gọi hàm ExecuteScalar
+            object result = db.ExecuteScalar(qr, parameters);
+            if (result != null && result.ToString() == "Chủ hợp đồng")
+            {
+                return true;
             }
+            return false;
         }
 
-
-        // Lấy thông tin chi tiết của hợp đồng để xuất ra file
+        // Lấy thông tin chi tiết của hợp đồng để xuất ra file (Chuyển sang dùng DataTable)
         public HopDongXemIn? GetInHD(string maHopDong)
         {
-            using (SqlConnection c = new SqlConnection(connect))
-            {
-                c.Open();
-                // Sửa đổi: Thêm hd.ThoiHan vào câu truy vấn
-                string qr = @"SELECT 
+            string qr = @"SELECT 
                         nt.HoTen,
                         nt.SoGiayTo,
                         nt.NgayDonVao,
@@ -199,51 +204,68 @@ namespace RoomManagementSystem.DataLayer
                       JOIN Nha n ON p.MaNha = n.MaNha
                       WHERE hd.MaHopDong = @MaHopDong";
 
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaHopDong", maHopDong);
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaHopDong", maHopDong)
+            };
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
+            // Lấy về DataTable
+            DataTable dt = db.ExecuteQuery(qr, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow reader = dt.Rows[0]; // Lấy dòng đầu tiên
+                return new HopDongXemIn()
                 {
-                    return new HopDongXemIn()
-                    {
-                        TenNguoiThue = reader["HoTen"]?.ToString(),
-                        CccdNguoiThue = reader["SoGiayTo"]?.ToString(),
-                        NgayDonVao = Convert.ToDateTime(reader["NgayDonVao"]),
-                        NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
-                        NgayKetThuc = reader["NgayKetThuc"] is DBNull ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
-                        ThoiHan = Convert.ToInt32(reader["ThoiHan"]), // Thêm đọc ThoiHan
-                        TienCoc = Convert.ToDecimal(reader["TienCoc"]),
-                        FileDinhKem = reader["FileDinhKem"]?.ToString(),
-                        GiaThue = Convert.ToDecimal(reader["GiaThue"]),
-                        DienTich = Convert.ToDecimal(reader["DienTich"]),
-                        DiaChiNha = reader["DiaChi"]?.ToString(),
-                        TongSoPhong = Convert.ToInt32(reader["TongSoPhong"])
-                    };
-                }
-                return null;
+                    TenNguoiThue = reader["HoTen"]?.ToString(),
+                    CccdNguoiThue = reader["SoGiayTo"]?.ToString(),
+                    NgayDonVao = Convert.ToDateTime(reader["NgayDonVao"]),
+                    NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
+                    ThoiHan = Convert.ToInt32(reader["ThoiHan"]),
+                    TienCoc = Convert.ToDecimal(reader["TienCoc"]),
+                    FileDinhKem = reader["FileDinhKem"]?.ToString(),
+                    GiaThue = Convert.ToDecimal(reader["GiaThue"]),
+                    DienTich = Convert.ToDecimal(reader["DienTich"]),
+                    DiaChiNha = reader["DiaChi"]?.ToString(),
+                    TongSoPhong = Convert.ToInt32(reader["TongSoPhong"])
+                };
             }
+            return null;
         }
 
         // Tạo thông báo hết hạn (cho ThongBaoHan)
         public bool InsertThongBaoHan(string maThongBao, string maHopDong, string noiDung, DateTime ngayThongBao, string trangThai)
         {
-            using (SqlConnection c = new SqlConnection(connect))
+            string qr = @"INSERT INTO ThongBaoHan (MaThongBao, MaHopDong, NoiDung, NgayThongBao, TrangThai, NgayTao)
+                          VALUES (@MaThongBao, @MaHopDong, @NoiDung, @NgayThongBao, @TrangThai, GETDATE())";
+
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                c.Open();
-                string qr = @"INSERT INTO ThongBaoHan (MaThongBao, MaHopDong, NoiDung, NgayThongBao, TrangThai, NgayTao)
-                              VALUES (@MaThongBao, @MaHopDong, @NoiDung, @NgayThongBao, @TrangThai, GETDATE())";
+                new SqlParameter("@MaThongBao", maThongBao),
+                new SqlParameter("@MaHopDong", maHopDong),
+                new SqlParameter("@NoiDung", noiDung),
+                new SqlParameter("@NgayThongBao", ngayThongBao),
+                new SqlParameter("@TrangThai", trangThai)
+            };
 
-                SqlCommand cmd = new SqlCommand(qr, c);
-                cmd.Parameters.AddWithValue("@MaThongBao", maThongBao);
-                cmd.Parameters.AddWithValue("@MaHopDong", maHopDong);
-                cmd.Parameters.AddWithValue("@NoiDung", noiDung);
-                cmd.Parameters.AddWithValue("@NgayThongBao", ngayThongBao);
-                cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+            // Gọi hàm ExecuteNonQuery
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0;
+        }
 
-                int result = cmd.ExecuteNonQuery();
-                return result > 0;
-            }
+        public string? GetMaNguoiThueBySoGiayTo(string soGiayTo)
+        {
+            string qr = "SELECT MaNguoiThue FROM NguoiThue WHERE SoGiayTo = @SoGiayTo";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@SoGiayTo", soGiayTo)
+            };
+
+            // Gọi hàm ExecuteScalar
+            object result = db.ExecuteScalar(qr, parameters);
+            return result?.ToString();
         }
     }
 }
