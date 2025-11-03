@@ -4,22 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:shared="clr-namespace:RoomManagementSystem.Presentation.Views.Shared"
+        
         xmlns:page="clr-namespace:RoomManagementSystem.Presentation.Views.Page"
+        
+        xmlns:tenant="clr-namespace:RoomManagementSystem.Presentation.Views.Page.TenantManagement"
         
         xmlns:viewModel="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
         
         mc:Ignorable="d"
-        Title="Test - User Management" Height="720" Width="1280"
+        Title="Test - Tenant Management" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModel:UserManagementViewModel}">
-            <page:UserManagementView />
+
+        <DataTemplate DataType="{x:Type viewModel:TenantManagementViewModel}">
+            <tenant:TenantManagementView />
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type viewModel:BillingViewModel}">
             <page:BillingView />
         </DataTemplate>
+
     </Window.Resources>
 
     <Grid>

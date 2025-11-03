@@ -390,3 +390,16 @@ VALUES
 GO
 
 
+-- DỮ LIỆU BẮT BUỘC PHẢI CÓ CHO BẢNG ChiTietHoaDon
+INSERT INTO ChiTietHoaDon (MaChiTietHoaDon, MaHoaDon, MaDichVu, DVT, DonGia, SoLuong)
+VALUES
+-- Chi tiết cho hóa đơn HDN001 (Phòng PHONG001)
+('CTHD001', 'HDN001', 'DV8', N'tháng', 2500000, 1), -- Tiền thuê phòng
+('CTHD002', 'HDN001', 'DV1', N'kWh', 3500, 80),      -- Tiền điện
+('CTHD003', 'HDN001', 'DV2', N'm3', 15000, 15),      -- Tiền nước
+
+-- Chi tiết cho hóa đơn HDN002 (Phòng PHONG002)
+('CTHD004', 'HDN002', 'DV8', N'tháng', 3500000, 1), -- Tiền thuê phòng
+('CTHD005', 'HDN002', 'DV1', N'kWh', 3500, 90),      -- Tiền điện
+('CTHD006', 'HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
+GO

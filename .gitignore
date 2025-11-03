@@ -15,4 +15,8 @@
 *.vscode/
 bin/
 obj/
+<<<<<<< HEAD
 TestResults/
+=======
+TestResults/
+>>>>>>> origin/main

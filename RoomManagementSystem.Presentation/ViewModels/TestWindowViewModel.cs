@@ -12,17 +12,18 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
         [ObservableProperty]
         private object _currentViewModel;
 
-        // 2. Khai báo các service
+        // 2. Khai báo các service ĐÚNG
         private readonly QL_TaiSan_Phong _taiSanPhongService;
-        // (Thêm các service khác nếu UserManagementViewModel cần)
+        private readonly XuatBienLai _xuatBienLaiService; // <-- Đã khai báo service đúng
 
         public TestWindowViewModel()
         {
-            // 3. Khởi tạo các service
+            // 3. Khởi tạo các service ĐÚNG
             _taiSanPhongService = new QL_TaiSan_Phong();
+            _xuatBienLaiService = new XuatBienLai(); // <-- Đã khởi tạo service đúng
 
             // 4. Khởi tạo ViewModel mặc định
-            CurrentViewModel = new UserManagementViewModel();
+            CurrentViewModel = new TenantManagementViewModel();
         }
 
         // 5. Command điều hướng (tự động tạo 'NavigateCommand')
@@ -34,11 +35,11 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
             switch (pageKey)
             {
                 case "Tenant":
-                    CurrentViewModel = new UserManagementViewModel();
+                    CurrentViewModel = new TenantManagementViewModel();
                     break;
                 case "Billing":
-                    // Truyền service vào BillingViewModel
-                    CurrentViewModel = new BillingViewModel(_taiSanPhongService);
+                    // Truyền các service ĐÚNG vào BillingViewModel
+                    CurrentViewModel = new BillingViewModel(_taiSanPhongService, _xuatBienLaiService);
                     break;
                 case "Contract":
                     // CurrentViewModel = new ContractViewModel();

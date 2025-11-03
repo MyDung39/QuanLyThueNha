@@ -9,21 +9,45 @@ namespace RoomManagementSystem.DataLayer
 {
     public class NguoiThueDAL
     {
-        private string connect = "Data Source=LAPTOP-5FKFDEEM;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         //Nhập thông tin nguoi thue
-        public bool ThemNguoiThue(NguoiThue nt)
+        public string TaoMaNguoiThueMoi()
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
+                string sql = @"SELECT TOP 1 MaNguoiThue 
+                       FROM NguoiThue 
+                       ORDER BY MaNguoiThue DESC";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                object result = cmd.ExecuteScalar();
+
+                if (result == null)
+                    return "NT0001";
+
+                string lastCode = result.ToString(); // NT0005
+                int number = int.Parse(lastCode.Substring(2)); // lấy 0005 -> 5
+                number++;
+
+                return "NT" + number.ToString("D3"); // tạo NT0006
+            }
+        }
+
+        public bool ThemNguoiThue(NguoiThue nt)
+        {
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                nt.MaNguoiThue = TaoMaNguoiThueMoi();
+                conn.Open();
                 string sql = @"INSERT INTO NguoiThue
-                               (MaNguoiThue, MaPhong, HoTen, SoDienThoai, Email, SoGiayTo,
-                                NgayBatDauThue, TrangThaiThue, 
-                                NgayDonVao, NgayDonRa, NgayTao, NgayCapNhat)
-                               VALUES
-                               (@MaNguoiThue, @MaPhong, @HoTen, @SoDienThoai, @Email, @SoGiayTo,
-                                @NgayBatDauThue, @TrangThaiThue, 
-                                @NgayDonVao, @NgayDonRa, @NgayTao, GETDATE())";
+               (MaNguoiThue, MaPhong, HoTen, SoDienThoai, Email, SoGiayTo,
+                NgayBatDauThue, TrangThaiThue, 
+                NgayDonVao, NgayDonRa, VaiTro, NgayTao, NgayCapNhat)
+               VALUES
+               (@MaNguoiThue, @MaPhong, @HoTen, @SoDienThoai, @Email, @SoGiayTo,
+                @NgayBatDauThue, @TrangThaiThue, 
+                @NgayDonVao, @NgayDonRa, @VaiTro, @NgayTao, GETDATE())";
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 cmd.Parameters.AddWithValue("@MaNguoiThue", nt.MaNguoiThue);
@@ -37,6 +61,7 @@ namespace RoomManagementSystem.DataLayer
                 cmd.Parameters.AddWithValue("@NgayDonVao", nt.NgayDonVao);
                 cmd.Parameters.AddWithValue("@NgayDonRa", (object?)nt.NgayDonRa ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@NgayTao", nt.NgayTao);
+                cmd.Parameters.AddWithValue("@VaiTro", nt.VaiTro);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
@@ -55,6 +80,7 @@ namespace RoomManagementSystem.DataLayer
                                SoGiayTo=@SoGiayTo,
                                NgayBatDauThue=@NgayBatDauThue,
                                TrangThaiThue=@TrangThaiThue,
+                               VaiTro=@VaiTro,
                                NgayDonVao= @NgayDonVao, 
                                NgayDonRa=@NgayDonRa, 
                                NgayTao= @NgayTao, 
@@ -73,6 +99,7 @@ namespace RoomManagementSystem.DataLayer
                 cmd.Parameters.AddWithValue("@NgayDonVao", nt.NgayDonVao);
                 cmd.Parameters.AddWithValue("@NgayDonRa", (object?)nt.NgayDonRa ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@NgayTao", nt.NgayTao);
+                cmd.Parameters.AddWithValue("@VaiTro", nt.VaiTro);
                 conn.Open();
                 return cmd.ExecuteNonQuery() > 0;
             }
@@ -98,8 +125,9 @@ namespace RoomManagementSystem.DataLayer
                         Sdt = reader["SoDienThoai"].ToString(),
                         Email = reader["Email"].ToString(),
                         SoGiayTo = reader["SoGiayTo"].ToString(),
-                        NgayBatDauThue = Convert.ToDateTime(reader["NgayBatDauThue"]),
+                        NgayBatDauThue = reader["NgayBatDauThue"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayBatDauThue"]),
                         TrangThaiThue = reader["TrangThaiThue"].ToString(),
+                        VaiTro = reader["VaiTro"].ToString(),
                         NgayDonVao = reader["NgayDonVao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayDonVao"]),
                         NgayDonRa = reader["NgayDonRa"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayDonRa"]),
                         NgayTao = Convert.ToDateTime(reader["NgayTao"]),
@@ -134,14 +162,14 @@ namespace RoomManagementSystem.DataLayer
                         Sdt = reader["SoDienThoai"].ToString(),
                         Email = reader["Email"].ToString(),
                         SoGiayTo = reader["SoGiayTo"].ToString(),
-                        NgayBatDauThue = Convert.ToDateTime(reader["NgayBatDauThue"]),
+                        NgayBatDauThue = reader["NgayBatDauThue"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayBatDauThue"]),
                         TrangThaiThue = reader["TrangThaiThue"].ToString(),
 
                         // === SỬA LỖI Ở ĐÂY ===
                         // Phương thức này cũng cần sửa
                         NgayDonVao = reader["NgayDonVao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayDonVao"]),
                         NgayDonRa = reader["NgayDonRa"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["NgayDonRa"]),
-
+                        VaiTro = reader["VaiTro"].ToString(),
                         NgayTao = Convert.ToDateTime(reader["NgayTao"]),
                         NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"]),
 

@@ -9,12 +9,16 @@ namespace RoomManagementSystem.DataLayer
 {
     public class NhaAccess
     {
+
         string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
-        // Phương thức mở rộng để xử lý an toàn giá trị từ DB
+
+
         private static string ToSafeString(object value)
         {
             return value == null || value is DBNull ? string.Empty : value.ToString() ?? string.Empty;
         }
+
+
         //Them thong tin can nha
         public Boolean registerHouse(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
@@ -63,6 +67,7 @@ namespace RoomManagementSystem.DataLayer
             }
         }
 
+
         // Lấy tất cả phòng
         public List<Nha> getAllHouse()
         {
@@ -109,5 +114,7 @@ namespace RoomManagementSystem.DataLayer
 
             return ds;
         }
+
+
     }
 }

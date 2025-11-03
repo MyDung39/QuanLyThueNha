@@ -12,26 +12,28 @@ namespace RoomManagementSystem.DataLayer
     {
         Database db = new Database();
 
-        public DataTable BaoCaoDoanhThuThang(int thang, int nam)
+
+        public DataTable BaoCaoDoanhThuThang(string thoiKy)
         {
             string sql = @"
                 SELECT 
-                    p.MaPhong,
-                    p.GiaThue,
-                    p.TrangThai,
-                    t.TrangThai,
-                    t.NgayhanThanhToan,
-                    nt.HoTen
+                    p.MaPhong, 
+                    nt.HoTen AS NguoiThue,
+                    p.GiaThue AS TienThue,
+
+                    tt.TrangThai AS TrangThaiThanhToan,
+                    ISNULL(tt.TongCongNo, 0) AS TongTien
                 FROM Phong p
-                LEFT JOIN NguoiThue nt ON p.MaPhong = nt.MaPhong
-                LEFT JOIN ThanhToan t ON p.MaPhong = t.MaPhong 
-                       AND MONTH(t.NgayHanThanhToan) = @Thang AND YEAR(t.NgayHanThanhToan) = @Nam
-                ";
+                JOIN NguoiThue nt ON nt.MaPhong = p.MaPhong AND nt.VaiTro = N'Chủ hợp đồng'
+                LEFT JOIN ThanhToan tt ON tt.MaPhong = p.MaPhong AND tt.TrangThai IN (N'Đã trả', N'Chưa trả', N'Trả một phần')
+                WHERE p.TrangThai = N'Đang thuê' AND tt.MaHoaDon IN (
+                    SELECT MaHoaDon FROM HoaDon WHERE ThoiKy = @ThoiKy
+                )";
 
             SqlParameter[] parameters = {
-                new SqlParameter("@Thang", thang),
-                new SqlParameter("@Nam", nam)
-            };
+                new SqlParameter("@ThoiKy", thoiKy)
+                };
+
 
             return db.ExecuteQuery(sql, parameters);
         }

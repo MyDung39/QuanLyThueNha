@@ -1,0 +1,110 @@
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.deps.json
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfoInputs.cache
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfo.cs
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.CoreCompileInputs.cache
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.sourcelink.json
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\refint\RoomManagementSystem.DataLayer.dll
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\Cong_nghe_phan_mem\NetworkManagementApp\RoomManagementSystem.DataLayer\obj\Debug\net8.0\ref\RoomManagementSystem.DataLayer.dll
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.deps.json
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfoInputs.cache
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfo.cs
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.CoreCompileInputs.cache
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.sourcelink.json
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\refint\RoomManagementSystem.DataLayer.dll
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.DataLayer\obj\Debug\net8.0\ref\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.AssemblyReference.cache
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\Interop.ADOX.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.ResolveComReference.cache
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfoInputs.cache
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfo.cs
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.CoreCompileInputs.cache
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.deps.json
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\refint\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+E:\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\ref\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.deps.json
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.AssemblyReference.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\Interop.ADOX.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.ResolveComReference.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfoInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfo.cs
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.CoreCompileInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\refint\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha-main\RoomManagementSystem.DataLayer\obj\Debug\net8.0\ref\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.deps.json
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.AssemblyReference.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\Interop.ADOX.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.ResolveComReference.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfoInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfo.cs
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.CoreCompileInputs.cache
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.sourcelink.json
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\refint\RoomManagementSystem.DataLayer.dll
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\ĐỀ TÀI THỰC HÀNH CMPM\source\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\ref\RoomManagementSystem.DataLayer.dll
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.deps.json
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.AssemblyReference.cache
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\Interop.ADOX.dll
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.ResolveComReference.cache
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfoInputs.cache
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfo.cs
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.CoreCompileInputs.cache
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\refint\RoomManagementSystem.DataLayer.dll
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\Project_CNPM_TH3\source\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\ref\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.deps.json
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.AssemblyReference.cache
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\Interop.ADOX.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.ResolveComReference.cache
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfoInputs.cache
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfo.cs
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.CoreCompileInputs.cache
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\refint\RoomManagementSystem.DataLayer.dll
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+E:\QuanLyThueNha-an_xuyen\RoomManagementSystem.DataLayer\obj\Debug\net8.0\ref\RoomManagementSystem.DataLayer.dll
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.deps.json
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\bin\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.AssemblyReference.cache
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\Interop.ADOX.dll
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.ResolveComReference.cache
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfoInputs.cache
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.AssemblyInfo.cs
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.csproj.CoreCompileInputs.cache
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.sourcelink.json
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.dll
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\refint\RoomManagementSystem.DataLayer.dll
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\RoomManagementSystem.DataLayer.pdb
+D:\STUDY\GK_CNPM\QuanLyThueNha\RoomManagementSystem.DataLayer\obj\Debug\net8.0\ref\RoomManagementSystem.DataLayer.dll

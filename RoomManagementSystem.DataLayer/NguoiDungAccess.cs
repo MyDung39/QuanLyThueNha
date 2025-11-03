@@ -1,24 +1,32 @@
-﻿using System;
+
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
-using Microsoft.Data.SqlClient;
+
 
 
 namespace RoomManagementSystem.DataLayer
 {
     public class NguoiDungAccess
     {
+
         string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+
 
         //Kiem tra tai khoan, mat khau
         public Boolean checkDangNhap(string email, string matkhau)
         {
             using (SqlConnection c = new SqlConnection(connect))
             {
+
                 c.Open();
+
                 string querry = "SELECT COUNT(*) FROM NguoiDung WHERE TenDangNhap=@email AND MatKhau=matkhau";
                 SqlCommand cmd = new SqlCommand(querry, c);
                 cmd.Parameters.AddWithValue("@email", email);
@@ -36,7 +44,9 @@ namespace RoomManagementSystem.DataLayer
                 c.Open();
                 string querry = "SELECT COUNT(*) FROM NguoiDung WHERE TenDangNhap=@mail";
                 SqlCommand cmd = new SqlCommand(querry, c);
-                cmd.Parameters.AddWithValue("@mail", mail); ;
+
+                cmd.Parameters.AddWithValue("@mail", mail);;
+
                 int count = (int)cmd.ExecuteScalar(); // Lấy giá trị COUNT(*)
                 return count > 0; // true nếu tìm thấy, false nếu không
             }
@@ -87,4 +97,6 @@ namespace RoomManagementSystem.DataLayer
         }
 
     }
+
 }
+
