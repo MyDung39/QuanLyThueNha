@@ -47,5 +47,10 @@ namespace RoomManagementSystem.Presentation.Views.Page.TenantManagement
             // Sau khi xử lý xong, phát tín hiệu "đóng"
             RaiseEvent(new RoutedEventArgs(CloseClickEvent));
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
