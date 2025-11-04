@@ -34,17 +34,31 @@ namespace RoomManagementSystem.BusinessLayer
                 row++;
 
                 ws.Cell(row, 1).Value = "[Khách hàng]";
-                ws.Cell(row, 2).Value = first.HoTen;
+                ws.Cell(row, 2).Value = first.DanhSachKhach;   // Danh sách khách
                 ws.Cell(row, 5).Value = "Phòng:";
                 ws.Cell(row, 6).Value = first.MaPhong;
                 row++;
 
                 ws.Cell(row, 1).Value = "[Điện thoại]";
-                ws.Cell(row, 2).Value = first.Sdt;
+                ws.Cell(row, 2).Value = first.DanhSachSDT;     // Danh sách SĐT
                 ws.Cell(row, 5).Value = "Số người lưu trú";
                 ws.Cell(row, 6).Value = first.SoNguoiHienTai;
                 row += 2;
+                // Thêm địa chỉ và tên chủ nhà
+                ws.Cell(row, 1).Value = "[Địa chỉ nhà]";
+                ws.Cell(row, 2).Value = first.DiaChi;
+                row++;
+                // Ngày thanh toán
+                ws.Cell(row, 1).Value = "[Ngày thanh toán]";
+                ws.Cell(row, 2).Value = first.NgayThanhToan.ToString("dd/MM/yyyy");
+                row++;
 
+                
+
+                
+                ws.Cell(row, 1).Value = "[Tên chủ nhà]";
+                ws.Cell(row, 2).Value = first.HoTenChuNha;
+                row += 2;
                 // ======= HEADER BẢNG DỊCH VỤ =======
                 ws.Cell(row, 1).Value = "STT";
                 ws.Cell(row, 2).Value = "Nội dung chi tiết";

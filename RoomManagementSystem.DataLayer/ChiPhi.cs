@@ -22,7 +22,7 @@ namespace RoomManagementSystem.DataLayer
     public class BaoCaoChiPhiDAL
     {
         private string connectionString =
-            @"Data Source=DESKTOP-4JTJGR2\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+            @"Data Source=LAPTOP-JH9IJG9F\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
         public DataTable GetChiPhiThang(string thoiKy)
         {

@@ -4,14 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             Width="535" Height="362"
-             FontFamily="Roboto">
+             Width="535" Height="Auto" 
+    FontFamily="Roboto">
 
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="1" BlurRadius="5" Color="Black" Opacity="0.14"/>
     </UserControl.Effect>
 
     <UserControl.Resources>
+        <!-- Style của bạn giữ nguyên, không cần thay đổi -->
         <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
             <Setter Property="Background" Value="#F9FBFF"/>
             <Setter Property="BorderBrush" Value="#F0EEEE"/>
@@ -47,25 +48,38 @@
 
     <Border Background="White" CornerRadius="14">
         <Grid>
-            <!-- Nút đóng - SỬA LẠI COMMAND -->
+            <!-- Nút đóng -->
             <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,15,0" Background="Transparent" BorderThickness="0" Cursor="Hand"
                     Command="{Binding CancelAddCommand}">
                 <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" Stroke="#565656" StrokeThickness="1.5"/>
             </Button>
 
-            <StackPanel Margin="40,40,40,40">
-                <TextBlock Text="Thêm thông tin người thuê" FontSize="20" Foreground="#8A8A8A" Margin="0,0,0,25"/>
-                <Grid>
+            <StackPanel Margin="40">
+                <TextBlock Text="Thêm thông tin người thuê" FontSize="20" Foreground="#8A8A8A" Margin="0,0,0,20"/>
+
+                <!-- ✅ DÒNG 1: CHỌN PHÒNG -->
+                <TextBlock Text="Chọn phòng *" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                <ComboBox ItemsSource="{Binding AvailableRooms}"
+                          SelectedItem="{Binding SelectedRoomForNewTenant}"
+                          DisplayMemberPath="MaPhong"
+                          Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF">
+                    <ComboBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="9.5"/>
+                        </Style>
+                    </ComboBox.Resources>
+                </ComboBox>
+
+                <!-- ✅ DÒNG 2: TÊN VÀ EMAIL -->
+                <Grid Margin="0,15,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="30"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Cột trái -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Tên" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <!-- SỬA LẠI BINDING -->
+                        <TextBlock Text="Tên người thuê *" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF" Text="{Binding NewTenantName, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.Resources>
                                 <Style TargetType="Border">
@@ -73,10 +87,31 @@
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
+                    </StackPanel>
 
-                        <TextBlock Text="Số điện thoại" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Địa chỉ Email" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF" Text="{Binding NewTenantEmail, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="9.5"/>
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                    </StackPanel>
+                </Grid>
+
+                <!-- ✅ DÒNG 3: SỐ ĐIỆN THOẠI VÀ SỐ GIẤY TỜ -->
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Số điện thoại" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <Grid>
-                            <!-- SỬA LẠI BINDING -->
                             <TextBox Padding="50,10,15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF" Text="{Binding NewTenantPhone, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.Resources>
                                     <Style TargetType="Border">
@@ -90,26 +125,23 @@
                         </Grid>
                     </StackPanel>
 
-                    <!-- Cột phải -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Địa chỉ Email" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <!-- SỬA LẠI BINDING -->
-                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF" Text="{Binding NewTenantEmail, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBlock Text="Số giấy tờ (CCCD/CMND) *" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF" Text="{Binding NewTenantIdCard, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="9.5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-
-                        <TextBlock Text="Ngày bắt đầu thuê" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
-                        <!-- SỬA LẠI BINDING -->
-                        <DatePicker Style="{StaticResource CustomDatePickerStyle}" SelectedDate="{Binding NewTenantStartDate, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </Grid>
 
+                <!-- ✅ DÒNG 4: NGÀY BẮT ĐẦU THUÊ -->
+                <TextBlock Text="Ngày bắt đầu thuê *" FontSize="13" Foreground="#292D32" Margin="0,15,0,8"/>
+                <DatePicker Style="{StaticResource CustomDatePickerStyle}" SelectedDate="{Binding NewTenantStartDate, UpdateSourceTrigger=PropertyChanged}" />
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
-                    <!-- Nút Thêm - SỬA LẠI COMMAND -->
                     <Button Content="Thêm" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA" Width="80" Padding="0,8"
                             Command="{Binding SaveNewTenantCommand}">
                         <Button.Resources>
