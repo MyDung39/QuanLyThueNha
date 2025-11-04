@@ -81,7 +81,7 @@
             </Button>
 
             <StackPanel Margin="40,40,40,40">
-                <TextBlock Text="Thêm thông tin người thuê" FontSize="20" Foreground="#8A8A8A" Margin="0,0,0,25"/>
+                <TextBlock FontSize="20" Foreground="#8A8A8A" Margin="0,0,0,25"><Run Language="vi-vn" Text="Chỉnh"/><Run Text=" "/><Run Language="vi-vn" Text="sửa "/><Run Text="thông tin người thuê"/></TextBlock>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -92,7 +92,7 @@
 
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="Tên" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF">
+                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF" TextChanged="TextBox_TextChanged">
                             <TextBox.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="9.5"/>

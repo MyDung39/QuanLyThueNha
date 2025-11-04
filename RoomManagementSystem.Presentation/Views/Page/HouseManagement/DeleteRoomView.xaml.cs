@@ -2,26 +2,21 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace RoomManagementSystem.Presentation.Views.Shared
+namespace RoomManagementSystem.Presentation.Views.Page.HouseManagement
 {
-    public partial class DeleteConfirmationModal : UserControl
+    public partial class DeleteRoomView : UserControl
     {
         public event EventHandler? ConfirmDelete;
-        public event EventHandler? CancelDelete;
+        public event EventHandler? Canceled;
 
-        public DeleteConfirmationModal()
+        public DeleteRoomView()
         {
             InitializeComponent();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            CancelDelete?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            CancelDelete?.Invoke(this, EventArgs.Empty);
+            Canceled?.Invoke(this, EventArgs.Empty);
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -30,4 +25,5 @@ namespace RoomManagementSystem.Presentation.Views.Shared
         }
     }
 }
+
 
