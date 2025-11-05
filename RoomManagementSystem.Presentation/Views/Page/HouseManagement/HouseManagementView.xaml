@@ -186,16 +186,23 @@
                             </Style>
                         </StackPanel.Style>
                         <ToggleButton x:Name="SearchToggleButton" Style="{StaticResource SearchToggleButtonStyle}" Tag="../../../Resources/Images/search_icon.png"/>
-                        <Button x:Name="EditHouseButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/edit_icon.png" Margin="22,0,0,0" Click="EditHouseButton_Click"/>
-                        <Button x:Name="DeleteHouseButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png" Margin="21,0,0,0" Click="DeleteHouseButton_Click"/>
-                        <Button x:Name="AddHouseButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png" Margin="21,0,0,0" Click="AddHouseButton_Click"/>
+                        <Button Command="{Binding EditHouseCommand}" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/edit_icon.png" Margin="22,0,0,0" Click="EditHouseButton_Click"/>
+                        <Button Command="{Binding DeleteHouseCommand}" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png" Margin="21,0,0,0" Click="DeleteHouseButton_Click"/>
+                        <Button Command="{Binding AddHouseCommand}" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png" Margin="21,0,0,0" Click="AddHouseButton_Click"/>
                     </StackPanel>
                 </Grid>
 
-                <ListBox x:Name="HouseListBox" Grid.Row="2" BorderThickness="0" Background="Transparent" 
+
+
+                <ListBox Grid.Row="2" 
+                         ItemsSource="{Binding DanhSachNha}"
+                         SelectedItem="{Binding SelectedNha, Mode=TwoWay}"
+                         DisplayMemberPath="DiaChi"
+                         BorderThickness="0" Background="Transparent" 
                          ItemContainerStyle="{StaticResource HouseListItemStyle}"
-                         Margin="0,10,0,0">
-                </ListBox>
+                         Margin="0,10,0,0"/>
+
+
             </Grid>
 
             <Grid Grid.Column="2" Margin="0,15,0,0">
@@ -221,21 +228,21 @@
                     <Border Grid.Column="0" Background="#F0EDFF" Opacity="0.5" CornerRadius="15" Padding="20" MinHeight="110">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Image Source="../../../Resources/Images/location_icon.png" Width="38" Height="38" Margin="0,0,0,10"/>
-                            <TextBlock Text="123 đường Nguyễn Trãi,&#10;phường Thanh Xuân, Hà Nội" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
+                            <TextBlock Text="{Binding SelectedNha.DiaChi}" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
                         </StackPanel>
                     </Border>
 
                     <Border Grid.Column="2" Background="#F0EDFF" Opacity="0.5" CornerRadius="15" Padding="20" MinHeight="110">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Image Source="../../../Resources/Images/total_rooms_icon.png" Width="38" Height="38" Margin="0,0,0,10"/>
-                            <TextBlock Text="50 phòng" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="{Binding SelectedNha.TongSoPhong, StringFormat='{}{0} phòng'}" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
                         </StackPanel>
                     </Border>
 
                     <Border Grid.Column="4" Background="#F0EDFF" Opacity="0.5" CornerRadius="15" Padding="20" MinHeight="110">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Image Source="../../../Resources/Images/amenities_icon.png" Width="38" Height="38" Margin="0,0,0,10"/>
-                            <TextBlock Text="Dùng chung nhà bếp,&#10;có chỗ để xe" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
+                            <TextBlock Text="{Binding SelectedNha.GhiChu}" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
                         </StackPanel>
                     </Border>
                 </Grid>

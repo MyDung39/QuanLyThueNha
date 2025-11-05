@@ -5,14 +5,15 @@
              Background="#F0EDFF">
 
     <UserControl.Resources>
-        <!-- Style cho các nút bấm chỉ chứa icon -->
+        <!-- Style của bạn giữ nguyên, không cần thay đổi -->
         <Style TargetType="RadioButton" x:Key="SidebarIconButton">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Height" Value="42"/>
             <Setter Property="Margin" Value="0,2,0,2"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="GroupName" Value="SidebarSmallMenuItems"/>
+            <Setter Property="GroupName" Value="SidebarMenuItems"/>
+            <!-- ✅ ĐÃ THÊM GROUPNAME ĐỂ ĐỒNG BỘ -->
             <Setter Property="ToolTipService.ShowOnDisabled" Value="False"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -49,8 +50,6 @@
         </Style>
     </UserControl.Resources>
 
-    <!-- === THAY ĐỔI CẤU TRÚC Ở ĐÂY === -->
-    <!-- Cấu trúc 2 hàng: Header cố định + nội dung cuộn -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -59,10 +58,7 @@
 
         <!-- Header/Logo cố định -->
         <Grid Grid.Row="0">
-            <Image Source="../../../Resources/Images/logo.png" 
-                   Width="32" 
-                   Height="32"
-                   Stretch="UniformToFill">
+            <Image Source="../../../Resources/Images/logo.png" Width="32" Height="32" Stretch="UniformToFill">
                 <Image.OpacityMask>
                     <VisualBrush>
                         <VisualBrush.Visual>
@@ -77,27 +73,46 @@
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,15,0,0">
                 <!-- Tổng quan -->
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tong_quan_icon.png" ToolTip="Tổng quan" />
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tong_quan_icon.png" ToolTip="Tổng quan"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Overview"/>
 
-                <!-- Khoảng trống khớp với tiêu đề "QUẢN LÝ" -->
+                <!-- Khoảng trống -->
                 <Border Height="48" />
 
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tai_san_icon.png" ToolTip="Tài sản"/>
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/nguoi_thue_icon.png" ToolTip="Người thuê" IsChecked="True"/>
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/hop_dong_icon.png" ToolTip="Hợp đồng"/>
+                <!-- Tài sản -->
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tai_san_icon.png" ToolTip="Tài sản"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="HouseManagement"/>
+                <!-- Người thuê -->
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/nguoi_thue_icon.png" ToolTip="Người thuê" IsChecked="True"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Tenant"/>
+                <!-- Hợp đồng -->
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/hop_dong_icon.png" ToolTip="Hợp đồng"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Contract"/>
+                <!-- Lịch -->
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/lich_icon.png" ToolTip="Lịch"/>
 
-                <!-- Khoảng trống khớp với tiêu đề "TÁC VỤ" -->
+                <!-- Khoảng trống -->
                 <Border Height="48" />
 
+                <!-- Bảo trì -->
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/bao_tri_icon.png" ToolTip="Bảo trì"/>
+                <!-- Dịch vụ -->
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/dich_vu_icon.png" ToolTip="Dịch vụ"/>
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/thanh_toan_icon.png" ToolTip="Thanh toán"/>
+                <!-- Thanh toán -->
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/thanh_toan_icon.png" ToolTip="Thanh toán"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Billing"/>
 
-                <!-- Khoảng trống khớp với tiêu đề "KHÁC" -->
+                <!-- Khoảng trống -->
                 <Border Height="48" />
 
+                <!-- Báo cáo -->
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/bao_cao_icon.png" ToolTip="Báo cáo"/>
+                <!-- Trợ giúp -->
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tro_giup_icon.png" ToolTip="Trợ giúp"/>
             </StackPanel>
         </ScrollViewer>

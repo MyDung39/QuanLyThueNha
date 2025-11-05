@@ -34,6 +34,10 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
 
             switch (pageKey)
             {
+
+                case "HouseManagement":
+                    CurrentViewModel = new HouseManagementViewModel();
+                    break;
                 case "Tenant":
                     CurrentViewModel = new TenantManagementViewModel();
                     break;
