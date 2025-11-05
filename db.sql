@@ -198,15 +198,15 @@ GO
 
 -- Bảng Chi Tiết Hóa Đơn (Invoice Detail)
 CREATE TABLE ChiTietHoaDon (
-    MaChiTietHoaDon VARCHAR(20) PRIMARY KEY,
-    MaHoaDon VARCHAR(20) NOT NULL FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon),
-    MaDichVu VARCHAR(20) NOT NULL FOREIGN KEY (MaDichVu) REFERENCES DichVu(MaDichVu),
+    MaHoaDon VARCHAR(20) NOT NULL FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon) ON DELETE CASCADE,
+    MaDichVu VARCHAR(20) NOT NULL FOREIGN KEY (MaDichVu) REFERENCES DichVu(MaDichVu) ON DELETE CASCADE,
     DVT NVARCHAR(50) NOT NULL,
     DonGia DECIMAL(15,2) NOT NULL CHECK (DonGia >= 0),
     SoLuong DECIMAL(18,2) NOT NULL DEFAULT 0 CHECK (SoLuong >= 0),
     ThanhTien AS (DonGia * SoLuong) PERSISTED,
     NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
     NgayCapNhat DATETIME NOT NULL DEFAULT GETDATE()
+	PRIMARY KEY (MaHoaDon, MaDichVu),
 );
 GO
 
@@ -400,17 +400,15 @@ VALUES
 ('TT002', 'PHONG002', 'HDN002', 'HD002', 'TBP002', 3500000 + (90*3500) + (20*15000) + 50000, '2025-10-10', N'Tiền mặt', N'Chưa trả');
 GO
 
-
--- DỮ LIỆU BẮT BUỘC PHẢI CÓ CHO BẢNG ChiTietHoaDon
-INSERT INTO ChiTietHoaDon (MaChiTietHoaDon, MaHoaDon, MaDichVu, DVT, DonGia, SoLuong)
+INSERT INTO ChiTietHoaDon (MaHoaDon, MaDichVu, DVT, DonGia, SoLuong)
 VALUES
 -- Chi tiết cho hóa đơn HDN001 (Phòng PHONG001)
-('CTHD001', 'HDN001', 'DV8', N'tháng', 2500000, 1), -- Tiền thuê phòng
-('CTHD002', 'HDN001', 'DV1', N'kWh', 3500, 80),      -- Tiền điện
-('CTHD003', 'HDN001', 'DV2', N'm3', 15000, 15),      -- Tiền nước
+-- Tiền thuê phòng lấy tự động từ bảng phòng
+('HDN001', 'DV1', N'kWh', 3500, 80),      -- Tiền điện
+('HDN001', 'DV2', N'm3', 15000, 15),      -- Tiền nước
 
 -- Chi tiết cho hóa đơn HDN002 (Phòng PHONG002)
-('CTHD004', 'HDN002', 'DV8', N'tháng', 3500000, 1), -- Tiền thuê phòng
-('CTHD005', 'HDN002', 'DV1', N'kWh', 3500, 90),      -- Tiền điện
-('CTHD006', 'HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
+-- Tiền thuê phòng lấy tự động từ bảng phòng
+('HDN002', 'DV1', N'kWh', 3500, 90),      -- Tiền điện
+('HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
 GO
