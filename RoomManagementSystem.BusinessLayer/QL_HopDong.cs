@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
-using GrapeCity.Documents.Word;
 using Spire.Doc;
 using Spire.Doc.Documents;
 
@@ -14,39 +13,62 @@ namespace RoomManagementSystem.BusinessLayer
     {
         HopDongDAL hdDAL = new HopDongDAL();
 
-        // Thêm hợp đồng
-        public bool ThemHopDong(HopDong hd)
+        public bool ThemHopDong(HopDong hd, string maChuHopDong)
         {
-            if (string.IsNullOrEmpty(hd.MaPhong) || string.IsNullOrEmpty(hd.MaNguoiThue))
+            if (string.IsNullOrEmpty(hd.MaPhong))
             {
-                throw new Exception("Mã phòng hoặc người thuê không được để trống");
+                throw new Exception("Mã phòng không được để trống");
+            }
+            if (string.IsNullOrEmpty(maChuHopDong))
+            {
+                throw new Exception("Mã chủ hợp đồng không được để trống");
             }
 
-            if (!hdDAL.IsChuHopDong(hd.MaNguoiThue))
-            {
-                throw new Exception("Thêm hợp đồng thất bại: Người thuê không phải là 'Chủ hợp đồng'.");
-            }
-
-            hd.ChuNha = "ND001"; // Mặc định chủ nhà là tài khoản người dùng duy nhất
-
+            hd.ChuNha = "ND001"; // Mặc định
             string newMaHD = hdDAL.AutoMaHD();
             hd.MaHopDong = newMaHD;
 
+            // 1. Thêm hợp đồng chính
             bool success = hdDAL.InsertHopDong(hd);
-            if (success)
+            if (!success)
             {
-                return true;
+                throw new Exception("Thêm hợp đồng thất bại do lỗi CSDL (Bảng HopDong).");
             }
-            else
+
+            // 2. Thêm chủ hợp đồng vào bảng trung gian
+            HopDong_NguoiThue ct = new HopDong_NguoiThue
             {
-                throw new Exception("Thêm hợp đồng thất bại do lỗi CSDL.");
+                MaHopDong = hd.MaHopDong,
+                MaNguoiThue = maChuHopDong,
+                VaiTro = "Chủ hợp đồng",
+                TrangThaiThue = "Đang ở",
+                NgayDonVao = hd.NgayBatDau, // Ngày dọn vào = ngày bắt đầu HĐ
+                NgayBatDauThue = hd.NgayBatDau
+            };
+
+            bool successCT = hdDAL.InsertHopDongNguoiThue(ct);
+            if (!successCT)
+            {
+                throw new Exception("Thêm hợp đồng thất bại do lỗi CSDL (Bảng HopDong_NguoiThue).");
             }
+
+            return true;
         }
 
         // Tra ve danh sach hop dong hien co
         public List<HopDong> DanhSachHopDong()
         {
             return hdDAL.GetAllHopDong();
+        }
+
+        // Tìm hợp đồng theo mã phòng
+        public List<HopDong> TimHopDongTheoPhong(string maPhong)
+        {
+            if (string.IsNullOrEmpty(maPhong))
+            {
+                throw new Exception("Mã phòng không được để trống");
+            }
+            return hdDAL.GetHopDongByMaPhong(maPhong);
         }
 
         // Cap nhat hop dong (trang thai, ngay ket thuc,...)
@@ -67,6 +89,18 @@ namespace RoomManagementSystem.BusinessLayer
                 throw new Exception("Mã hợp đồng không được để trống");
             }
             return hdDAL.DeleteHopDong(maHopDong);
+        }
+
+        // Lay thong tin chi tiet cua hop dong
+        public HopDongXemIn? LayChiTietHopDong(string maHopDong)
+        {
+            if (string.IsNullOrEmpty(maHopDong))
+            {
+                throw new Exception("Mã hợp đồng không được để trống");
+            }
+
+            // Gọi hàm GetInHD đã được viết lại trong DAL
+            return hdDAL.GetInHD(maHopDong);
         }
 
         // Xuat hop dong ra file PDF
@@ -123,13 +157,66 @@ namespace RoomManagementSystem.BusinessLayer
                     { "{{TienCoc}}", data.TienCoc.ToString("N0", culture) },
                     { "{{GiaThue}}", data.GiaThue.ToString("N0", culture) },
                     { "{{DienTich}}", data.DienTich.ToString("N2", culture) },
-                    { "{{ThoiHan}}", $"{data.ThoiHan} tháng" }
+                    { "{{ThoiHan}}", $"{data.ThoiHan} tháng" },
+                    { "{{MaHD}}", data.MaHopDong ?? "N/A" },
+                    { "{{MaPhong}}", data.MaPhong ?? "N/A" },
+                    { "{{SoNguoiHienTai}}", (data.ThanhVien.Count + 1).ToString() } // +1 (chủ hợp đồng)
                 };
 
                 // Thay thế tất cả các placeholder trong văn bản
                 foreach (var item in replacements)
                 {
                     document.Replace(item.Key, item.Value, false, true);
+                }
+                // Điền dữ liệu vào Bảng trong Phụ Lục
+                if (document.Sections[0].Tables.Count > 1)
+                {
+                    // Lấy bảng từ Section đầu tiên
+                    Table table = document.Sections[0].Tables[1] as Table;
+                    var roommates = data.ThanhVien;
+
+                    int dataRowTemplateCount = 3; // 3 dòng trống có sẵn trong mẫu
+                    int dataRowStartIndex = 1;    // Dòng 0 là header
+
+                    for (int i = 0; i < roommates.Count; i++)
+                    {
+                        var roommate = roommates[i];
+                        TableRow dataRow;
+
+                        if (i < dataRowTemplateCount)
+                        {
+                            // Sử dụng các dòng trống có sẵn
+                            dataRow = table.Rows[dataRowStartIndex + i];
+                            // Xóa văn bản trống (nếu có) trước khi thêm
+                            dataRow.Cells[0].Paragraphs[0].Text = "";
+                            dataRow.Cells[1].Paragraphs[0].Text = "";
+                            dataRow.Cells[2].Paragraphs[0].Text = "";
+                        }
+                        else
+                        {
+                            // Thêm dòng mới nếu nhiều hơn 3 người
+                            dataRow = table.AddRow(true); // true = sao chép định dạng
+                        }
+
+                        // Điền dữ liệu
+                        dataRow.Cells[0].Paragraphs[0].AppendText((i + 1).ToString());
+                        dataRow.Cells[1].Paragraphs[0].AppendText(roommate.HoTen ?? "");
+                        dataRow.Cells[2].Paragraphs[0].AppendText(roommate.Cccd ?? "");
+                    }
+
+                    // Xóa các dòng mẫu không sử dụng (nếu số người < 3)
+                    if (roommates.Count < dataRowTemplateCount)
+                    {
+                        // Lặp ngược để tránh lỗi index
+                        for (int i = dataRowTemplateCount - 1; i >= roommates.Count; i--)
+                        {
+                            table.Rows.RemoveAt(dataRowStartIndex + i);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cảnh báo: Bảng Phụ lục sẽ không được điền.");
+                    }
                 }
 
                 // 4. Lưu tài liệu ra file PDF (Spire.Doc có phương thức riêng cho việc này)

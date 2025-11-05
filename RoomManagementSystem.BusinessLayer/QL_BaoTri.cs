@@ -10,19 +10,20 @@ namespace RoomManagementSystem.BusinessLayer
 {
     public class QL_BaoTri
     {
-        private BaoTriDAL dal = new BaoTriDAL();
-        private List<string> validTrangThai = new List<string> { "Chưa xử lý", "Đang xử lý", "Hoàn tất" };
-        private List<string> validNguonYeuCau = new List<string> { "Chủ nhà", "Người thuê", "Kiểm tra định kỳ" };
+        BaoTriDAL dal = new BaoTriDAL();
+        public List<string> ValidTrangThai { get; } = new List<string> { "Chưa xử lý", "Đang xử lý", "Hoàn tất" };
 
         // Lấy tất cả yêu cầu bảo trì
         public List<BaoTri> GetAll()
         {
+            // Thay đổi ở DAL và Model đã tự động thêm TenNguoiThue vào đây
             return dal.GetAll();
         }
 
         // Lấy 1 yêu cầu theo Mã
         public BaoTri? GetById(string maBaoTri)
         {
+            // Thay đổi ở DAL và Model đã tự động thêm TenNguoiThue vào đây
             return dal.GetById(maBaoTri);
         }
 
@@ -35,9 +36,6 @@ namespace RoomManagementSystem.BusinessLayer
 
             if (string.IsNullOrEmpty(baoTri.MoTa))
                 throw new Exception("Mô tả sự cố không được để trống!");
-
-            if (string.IsNullOrEmpty(baoTri.NguonYeuCau) || !validNguonYeuCau.Contains(baoTri.NguonYeuCau))
-                throw new Exception("Nguồn yêu cầu không hợp lệ!");
 
             if (baoTri.NgayYeuCau > DateTime.Now)
                 throw new Exception("Ngày yêu cầu không hợp lệ!");
@@ -58,8 +56,8 @@ namespace RoomManagementSystem.BusinessLayer
             if (string.IsNullOrEmpty(maBaoTri))
                 throw new Exception("Mã bảo trì không được để trống!");
 
-            if (string.IsNullOrEmpty(trangThai) || !validTrangThai.Contains(trangThai))
-                throw new Exception("Trạng thái xử lý không hợp lệ!");
+            if (string.IsNullOrEmpty(trangThai) || !ValidTrangThai.Contains(trangThai))
+                throw new Exception($"Trạng thái xử lý không hợp lệ! Phải là một trong: {string.Join(", ", ValidTrangThai)}");
 
             BaoTri? existing = dal.GetById(maBaoTri);
             if (existing == null)
@@ -109,15 +107,24 @@ namespace RoomManagementSystem.BusinessLayer
             return dal.GetBaoCaoChiPhiThang(thang, nam);
         }
 
-        // Tim ma nguoi thue bang so giay to
-        public string? TimMaNguoiThueBangSoGiayTo(string soGiayTo)
+        public Dictionary<string, string> GetNguoiThueDangOByPhong(string maPhong)
         {
-            if (string.IsNullOrEmpty(soGiayTo))
+            if (string.IsNullOrEmpty(maPhong))
             {
-                return null;
+                throw new Exception("Mã phòng không được để trống!");
             }
-            // Gọi xuống DAL để thực hiện truy vấn
-            return dal.GetMaNguoiThueBySoGiayTo(soGiayTo);
+
+            // Gọi xuống DAL
+            DataTable dt = dal.GetNguoiThueByPhong(maPhong);
+
+            // Chuyển đổi DataTable thành Dictionary để UI dễ sử dụng
+            Dictionary<string, string> tenants = new Dictionary<string, string>();
+            foreach (DataRow row in dt.Rows)
+            {
+                tenants[row["MaNguoiThue"].ToString()] = row["HoTen"].ToString();
+            }
+
+            return tenants;
         }
     }
 }

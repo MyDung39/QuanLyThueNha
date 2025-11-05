@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RoomManagementSystem.Utilities")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a60a53e60cfdd95172bfc1a43a98e7bd2dfdc08")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4a01708d00bcfb8e62b133d621b78e60e6be384")]
 [assembly: System.Reflection.AssemblyProductAttribute("RoomManagementSystem.Utilities")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RoomManagementSystem.Utilities")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

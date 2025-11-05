@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tnbpM5pwdfM=",
+  "dgSpecHash": "MV041UjHMlI=",
   "success": true,
-  "projectFilePath": "D:\\Project_CNPM_TH3\\source\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
+  "projectFilePath": "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

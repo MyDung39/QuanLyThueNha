@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="RoomManagementSystem.Presentation.Views.Shared.HeaderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="60" 
+             FontFamily="Roboto"
+             Background="#F7F5FF">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <!-- Cột cho nút Menu -->
+            <ColumnDefinition Width="*"/>
+            <!-- Cột trống để đẩy các mục sang phải -->
+            <ColumnDefinition Width="Auto"/>
+            <!-- Cột cho thông tin người dùng -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Nút Menu (Toggle Sidebar) - Cột 0 -->
+        <Button x:Name="MenuButton" Grid.Column="0" 
+                Click="MenuButton_Click" 
+                    Width="48" Height="48" 
+                Background="Transparent" 
+                BorderThickness="0" 
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Cursor="Hand">
+            <Image Source="/Resources/Images/menu_icon.png" Width="24" Height="24" Opacity="0.5"/>
+        </Button> 
+
+        <!-- Thông tin người dùng và thông báo - Cột 2 -->
+        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,30,0">
+
+            <!-- 1. Avatar (Đầu tiên) -->
+            <Grid Width="32" Height="32" Margin="0,0,10,0">
+                <Ellipse Fill="#FFE6CC"/>
+                <TextBlock Text="N"
+                           FontFamily="Poppins"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Foreground="#1F384C"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Margin="0,-1,0,0"/>
+            </Grid>
+
+            <!-- 2. Tên người dùng -->
+            <TextBlock Text="Trần Thanh Nhã"
+                       Foreground="#1F384C"
+                       FontSize="13"
+                       FontWeight="Medium"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"/>
+
+            <!-- 3. Nút mũi tên dropdown -->
+            <Button Background="Transparent" BorderThickness="0" Cursor="Hand">
+                <Image Source="/Resources/Images/chevron_down_icon.png" Width="20" Height="20" Opacity="0.5"/>
+            </Button>
+
+            <!-- 4. Nút Thông báo (Cuối cùng) -->
+            <Button Background="Transparent" BorderThickness="0" Cursor="Hand" Margin="25,0,0,0">
+                <Grid>
+                    <Image Source="/Resources/Images/notification_icon.png" Width="24" Height="24" Opacity="0.6"/>
+                    <!-- Dấu chấm đỏ thông báo mới -->
+                    <Ellipse Width="10" Height="10" 
+                             Fill="#EC5252" 
+                             Stroke="White" StrokeThickness="1.5"
+                             HorizontalAlignment="Right" VerticalAlignment="Top"
+                             Margin="0,-2,-2,0"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+
+        <!-- Đường kẻ phân cách ở dưới cùng -->
+        <Border Grid.ColumnSpan="3"
+                Height="1"
+                Background="#E0E0E0"
+                VerticalAlignment="Bottom"/>
+    </Grid>
+</UserControl>

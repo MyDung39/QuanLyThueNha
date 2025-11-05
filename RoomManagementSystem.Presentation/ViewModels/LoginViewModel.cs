@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows;
+using RoomManagementSystem.BusinessLayer;
 using System.Windows.Controls; // Cần để dùng PasswordBox
 
 namespace RoomManagementSystem.Presentation.ViewModels
@@ -12,20 +13,85 @@ namespace RoomManagementSystem.Presentation.ViewModels
         [ObservableProperty]
         private string _email = string.Empty;
 
+
+        private readonly DangNhap _dangNhap;
+        
+
+
+
+        public LoginViewModel()
+        {
+            _dangNhap = new DangNhap();
+            
+        }
+
+
+
+        [RelayCommand]
+        private void ForgotPassword()
+        {
+            // Mở cửa sổ quên mật khẩu
+            var forgotPasswordWindow = new RoomManagementSystem.Presentation.Views.Windows.ForgotPasswordWindow();
+            forgotPasswordWindow.Show();
+
+            // (Tùy chọn) đóng cửa sổ đăng nhập hiện tại
+            Application.Current.Windows[0]?.Close();
+        }
+
+
+
+
         // Framework sẽ tự động tạo một ICommand tên là "LoginCommand"
         // từ phương thức Login() này.
         [RelayCommand]
         private void Login(PasswordBox passwordBox)
         {
+
+
+            string email = Email;
+
             // Lấy mật khẩu từ PasswordBox được truyền vào
             string password = passwordBox.Password;
+
+
 
             // ===== LOGIC ĐĂNG NHẬP Ở ĐÂY =====
             // Trong tương lai, bạn sẽ gọi một service từ BusinessLayer
             // Ví dụ: var user = _authService.Login(Email, password);
 
             // Hiện tại, chúng ta chỉ hiển thị một thông báo để kiểm tra
-            MessageBox.Show($"Email: {Email}\nPassword: {password}\n\nAttempting to log in...");
+
+            //MessageBox.Show($"Email: {Email}\nPassword: {password}\n\nAttempting to log in...");
+
+            if (_dangNhap.Login(Email, password))
+            {
+                // Hiển thị thông báo thành công
+                //MessageBox.Show("Đăng nhập thành công!", "Thông báo");
+
+                // Mở MainWindow
+                //var mainWindow = new RoomManagementSystem.Presentation.Views.Windows.MainWindow();
+                //mainWindow.Show();
+
+                var testWindow = new RoomManagementSystem.Presentation.Views.Windows.TestWindow();
+                testWindow.Show();
+
+                // Đóng LoginWindow hiện tại
+                CloseCurrentWindow();
+            }
+            else
+            {
+                MessageBox.Show("Sai email hoặc mật khẩu!", "Lỗi");
+            }
+
         }
+
+        private void CloseCurrentWindow()
+        {
+            var window = Application.Current.Windows
+                         .OfType<Window>()
+                         .FirstOrDefault(w => w.DataContext == this);
+            window?.Close();
+        }
+
     }
 }
