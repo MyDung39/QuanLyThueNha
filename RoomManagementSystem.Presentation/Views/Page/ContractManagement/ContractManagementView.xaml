@@ -1,0 +1,219 @@
+<UserControl x:Class="RoomManagementSystem.Presentation.Views.Page.ContractManagement.ContractManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="794" d:DesignWidth="1302"
+             FontFamily="Roboto"
+             Background="White">
+
+    <UserControl.Resources>
+        <!-- Style cho các nút Tab ở header -->
+        <Style x:Key="HeaderTabRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#586A84"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border x:Name="BottomBar" Height="2" Background="#FFB27D" VerticalAlignment="Bottom" Visibility="Collapsed"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="#FFB27D"/>
+                                <Setter TargetName="BottomBar" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style cho các nút action nhỏ (Thêm, Xóa) -->
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F0EDFF"/>
+            <Setter Property="Opacity" Value="0.5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="38"/>
+            <Setter Property="Height" Value="37"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                            <Image Source="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}" 
+                                   Width="20" Height="20"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Margin="8,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="357"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- =================== CỘT BÊN TRÁI - DANH SÁCH HỢP ĐỒNG ================= -->
+        <Grid Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Danh sách hợp đồng" FontSize="15" FontWeight="Bold" Foreground="#969696" Margin="26,30,0,15"/>
+
+                <Border Grid.Row="1" Background="#F0EDFF" Opacity="0.5" CornerRadius="10" Height="38" Margin="21,0,21,20">
+                    <Grid>
+                        <Image Source="../../../Resources/Images/search_icon.png" Width="18" Height="18" HorizontalAlignment="Left" Margin="12,0,0,0" Opacity="0.6" VerticalAlignment="Center"/>
+                        <TextBox x:Name="searchTextBox" 
+                                 Background="Transparent" 
+                                 BorderThickness="0" 
+                                 FontSize="12" 
+                                 VerticalContentAlignment="Center"
+                                 Margin="40,0,10,0"
+                                 TextChanged="SearchTextBox_TextChanged"
+                                 GotFocus="SearchTextBox_GotFocus"
+                                 LostFocus="SearchTextBox_LostFocus">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="Foreground" Value="#000000"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="Text" Value="">
+                                            <Setter Property="Foreground" Value="#B5B7C0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        <TextBlock x:Name="searchPlaceholder" 
+                                   Text="Tìm kiếm theo tên người thuê" 
+                                   Foreground="#B5B7C0" 
+                                   FontSize="12" 
+                                   IsHitTestVisible="False" 
+                                   VerticalAlignment="Center" 
+                                   Margin="40,0,0,0"/>
+                    </Grid>
+                </Border>
+
+                <ListBox x:Name="contractsListBox" 
+                         Grid.Row="2" 
+                         Background="Transparent" 
+                         BorderThickness="0" 
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                         SelectionChanged="ListBox_SelectionChanged">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="FontWeight" Value="Medium"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Grid Height="60">
+                                            <Border x:Name="background" Background="Transparent" CornerRadius="10" Margin="5,0"/>
+                                            <ContentPresenter VerticalAlignment="Center" Margin="20,0"/>
+                                            <Line Stroke="#000000" StrokeThickness="1" Opacity="0.12" 
+                                                  X1="15" X2="315" VerticalAlignment="Bottom"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="background" Property="Background" Value="#1F666666"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+
+                <Grid Grid.Row="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="15"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="1" Background="White" CornerRadius="15" Height="60" Margin="22,0">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+                                    <Button x:Name="DeleteContractButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png" Click="DeleteContractButton_Click"/>
+                                    <TextBlock Text="Xóa hợp đồng" Foreground="#969696" FontSize="13" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+                                    <Button x:Name="AddContractButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png" Click="AddContractButton_Click"/>
+                                    <TextBlock Text="Thêm hợp đồng" Foreground="#969696" FontSize="13" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Border Background="#F0EDFF" Opacity="0.3" CornerRadius="15,0,0,15"/>
+            <Grid Margin="18,17,18,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Thanh Tabs -->
+                <Border Grid.Row="0" Background="White" CornerRadius="10" Height="62">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Grid.Column="0" 
+                                     x:Name="viewTab" 
+                                     Style="{StaticResource HeaderTabRadioButtonStyle}" 
+                                     Content="Xem" 
+                                     IsChecked="True"
+                                     Checked="ViewTab_Checked"/>
+                        <RadioButton Grid.Column="1" 
+                                     x:Name="infoTab" 
+                                     Style="{StaticResource HeaderTabRadioButtonStyle}" 
+                                     Content="Thông tin"
+                                     Checked="InfoTab_Checked"/>
+                        <RadioButton Grid.Column="2" 
+                                     x:Name="editTab" 
+                                     Style="{StaticResource HeaderTabRadioButtonStyle}" 
+                                     Content="Chỉnh sửa"
+                                     Checked="EditTab_Checked"/>
+                        <RadioButton Grid.Column="3" 
+                                     x:Name="notificationTab" 
+                                     Style="{StaticResource HeaderTabRadioButtonStyle}" 
+                                     Content="Thông báo"
+                                     Checked="NotificationTab_Checked"/>
+                    </Grid>
+                </Border>
+
+                <!-- Content area cho các tab -->
+                <ContentControl x:Name="tabContentControl" Grid.Row="2"/>
+
+            </Grid>
+        </Grid>
+        <!-- Modal overlay host -->
+        <Grid x:Name="ModalLayer" Grid.ColumnSpan="2" Visibility="Collapsed" Panel.ZIndex="1000" Background="#80000000"/>
+    </Grid>
+</UserControl>

@@ -192,6 +192,10 @@
               "target": "Package",
               "version": "[8.4.0, )"
             },
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
             "MaterialDesignThemes": {
               "target": "Package",
               "version": "[5.3.0, )"

@@ -14,6 +14,28 @@
           }
         }
       },
+      "DocumentFormat.OpenXml/3.3.0": {
+        "dependencies": {
+          "DocumentFormat.OpenXml.Framework": "3.3.0"
+        },
+        "runtime": {
+          "lib/net8.0/DocumentFormat.OpenXml.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.0.0"
+          }
+        }
+      },
+      "DocumentFormat.OpenXml.Framework/3.3.0": {
+        "dependencies": {
+          "System.IO.Packaging": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/DocumentFormat.OpenXml.Framework.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.0.0"
+          }
+        }
+      },
       "MaterialDesignColors/5.3.0": {
         "runtime": {
           "lib/net8.0-windows7.0/MaterialDesignColors.dll": {
@@ -41,6 +63,14 @@
             "fileVersion": "1.1.77.27830"
           }
         }
+      },
+      "System.IO.Packaging/8.0.1": {
+        "runtime": {
+          "lib/net8.0/System.IO.Packaging.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
       }
     }
   },
@@ -51,6 +81,20 @@
       "sha512": "sha512-tqVU8yc/ADO9oiTRyTnwhFN68hCwvkliMierptWOudIAvWY1mWCh5VFh+guwHJmpMwfg0J0rY+yyd5Oy7ty9Uw==",
       "path": "communitytoolkit.mvvm/8.4.0",
       "hashPath": "communitytoolkit.mvvm.8.4.0.nupkg.sha512"
+    },
+    "DocumentFormat.OpenXml/3.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JogRPJNiE6kKvbuCqVRX691pPWeGMqdQgjrUwRYkdpfkMmtElfqAgcRR73geYj7OtBeEpstldZXXzJw27LUI9w==",
+      "path": "documentformat.openxml/3.3.0",
+      "hashPath": "documentformat.openxml.3.3.0.nupkg.sha512"
+    },
+    "DocumentFormat.OpenXml.Framework/3.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R5CLzEoeyr7XDB7g3NTxRobcU19agaxVAhGZm+fZUShJGiU4bw8oUgnA2BNFepigJckfFMayOBMAbV3kDXNInA==",
+      "path": "documentformat.openxml.framework/3.3.0",
+      "hashPath": "documentformat.openxml.framework.3.3.0.nupkg.sha512"
     },
     "MaterialDesignColors/5.3.0": {
       "type": "package",
@@ -72,6 +116,13 @@
       "sha512": "sha512-MCu674ZETgU18EbxfwIlRpUPJ02YbZenLsMCXTkpeA7KUBpXfFaOUDlEO+7UWu5AFnUoydg+aQENJkuaZPheMQ==",
       "path": "microsoft.xaml.behaviors.wpf/1.1.77",
       "hashPath": "microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512"
+    },
+    "System.IO.Packaging/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KYkIOAvPexQOLDxPO2g0BVoWInnQhPpkFzRqvNrNrMhVT6kqhVr0zEb6KCHlptLFukxnZrjuMVAnxK7pOGUYrw==",
+      "path": "system.io.packaging/8.0.1",
+      "hashPath": "system.io.packaging.8.0.1.nupkg.sha512"
     }
   }
 }

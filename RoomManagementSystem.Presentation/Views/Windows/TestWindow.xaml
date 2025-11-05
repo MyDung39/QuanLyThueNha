@@ -34,7 +34,7 @@
             <Frame x:Name="MainFrame" 
                    Grid.Row="1" 
                    NavigationUIVisibility="Hidden"
-                   Source="/Views/Page/HouseManagement/HouseManagementView.xaml"/>
+                   Source="/Views/Page/MaintenanceManagement/MaintenanceManagementView.xaml"/>
 
         </Grid>
     </Grid>

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 D:\Cong_nghe_phan_mem\RoomManagementSystem\RoomManagementSystem.Presentation\App.xaml
-22-1245004255
+33-1219609621
 22-2116283656
-29706963768
-204746185961
-Views\Page\HouseManagement\AddHouseView.xaml;Views\Page\HouseManagement\AddRoomView.xaml;Views\Page\HouseManagement\DeleteHouseView.xaml;Views\Page\HouseManagement\DeleteRoomView.xaml;Views\Page\HouseManagement\EditHouseView.xaml;Views\Page\HouseManagement\EditRoomView.xaml;Views\Page\HouseManagement\HouseManagementView.xaml;Views\Page\TenantManagement\AddTenantView.xaml;Views\Page\TenantManagement\DeleteConfirmationView.xaml;Views\Page\TenantManagement\EditTenantView.xaml;Views\Page\TenantManagement\TenantManagementView.xaml;Views\Page\TestView.xaml;Views\Shared\HeaderView.xaml;Views\Shared\SidebarSmallView.xaml;Views\Shared\SidebarView.xaml;Views\Windows\ForgotPasswordWindow.xaml;Views\Windows\LoginWindow.xaml;Views\Windows\MainWindow.xaml;Views\Windows\OtpVerificationWindow.xaml;Views\Windows\RegisterWindow.xaml;Views\Windows\ResetPasswordWindow.xaml;Views\Windows\TestWindow.xaml;
+40-341045581
+206738829464
+Views\Page\ContractManagement\AddContractView.xaml;Views\Page\ContractManagement\ContractManagementView.xaml;Views\Page\ContractManagement\DeleteContractView.xaml;Views\Page\ContractManagement\EditContractView.xaml;Views\Page\ContractManagement\InformationContractView.xaml;Views\Page\ContractManagement\NotificationContractView.xaml;Views\Page\ContractManagement\ViewContractView.xaml;Views\Page\HouseManagement\AddHouseView.xaml;Views\Page\HouseManagement\AddRoomView.xaml;Views\Page\HouseManagement\DeleteHouseView.xaml;Views\Page\HouseManagement\DeleteRoomView.xaml;Views\Page\HouseManagement\EditHouseView.xaml;Views\Page\HouseManagement\EditRoomView.xaml;Views\Page\HouseManagement\HouseManagementView.xaml;Views\Page\MaintenanceManagement\AddMaintenanceView.xaml;Views\Page\MaintenanceManagement\DeleteMaintenanceView.xaml;Views\Page\MaintenanceManagement\EditMaintenanceView.xaml;Views\Page\MaintenanceManagement\MaintenanceManagementView.xaml;Views\Page\TenantManagement\AddTenantView.xaml;Views\Page\TenantManagement\DeleteConfirmationView.xaml;Views\Page\TenantManagement\EditTenantView.xaml;Views\Page\TenantManagement\TenantManagementView.xaml;Views\Page\TestView.xaml;Views\Shared\HeaderView.xaml;Views\Shared\SidebarSmallView.xaml;Views\Shared\SidebarView.xaml;Views\Windows\ForgotPasswordWindow.xaml;Views\Windows\LoginWindow.xaml;Views\Windows\MainWindow.xaml;Views\Windows\OtpVerificationWindow.xaml;Views\Windows\RegisterWindow.xaml;Views\Windows\ResetPasswordWindow.xaml;Views\Windows\TestWindow.xaml;
 
-True
+False
 

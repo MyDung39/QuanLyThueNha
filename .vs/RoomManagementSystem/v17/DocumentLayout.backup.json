@@ -3,139 +3,40 @@
   "WorkspaceRootPath": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\addroomview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\addroomview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\maintenancemanagement\\editmaintenanceview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\maintenancemanagement\\editmaintenanceview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\deletehouseview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\deletehouseview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\maintenancemanagement\\addmaintenanceview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\maintenancemanagement\\addmaintenanceview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\addhouseview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\addhouseview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\maintenancemanagement\\maintenancemanagementview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\maintenancemanagement\\maintenancemanagementview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\deleteroomview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\deleteroomview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\maintenancemanagement\\deletemaintenanceview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\maintenancemanagement\\deletemaintenanceview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\editroomview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\editroomview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\deletehouseview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\deletehouseview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\addhouseview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\addhouseview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\tenantmanagement\\addtenantview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\tenantmanagement\\addtenantview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\edithouseview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\edithouseview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\housemanagement\\housemanagementview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\housemanagement\\housemanagementview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\tenantmanagement\\deleteconfirmationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\tenantmanagement\\deleteconfirmationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\tenantmanagement\\tenantmanagementview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\tenantmanagement\\tenantmanagementview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\tenantmanagement\\edittenantview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\tenantmanagement\\edittenantview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\resetpasswordwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\resetpasswordwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\shared\\headerview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\shared\\headerview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\testview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\testview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\testwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\testwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\thanhnha\\AppData\\Local\\Temp\\.vsdbgsrc\\6b2dfb9d5e4949b718ee78fa9415cabf37518e9447a2764ba224d240518b710f\\ResourcePart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\contractmanagement\\deletecontractview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\contractmanagement\\deletecontractview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\tenantmanagement\\tenantmanagementview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\tenantmanagement\\tenantmanagementview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\contractmanagement\\notificationcontractview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\contractmanagement\\notificationcontractview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\testwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\testwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\tenantmanagement\\edittenantview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\tenantmanagement\\edittenantview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\otpverificationwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\otpverificationwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\registerwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\registerwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\shared\\headerview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\shared\\headerview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\shared\\sidebarsmallview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\shared\\sidebarsmallview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\shared\\sidebarsmallview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\shared\\sidebarsmallview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\windows\\forgotpasswordwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\windows\\forgotpasswordwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\shared\\sidebarview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\shared\\sidebarview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\tenantmanagement\\addtenantview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\tenantmanagement\\addtenantview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\tenantmanagement\\deleteconfirmationview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\tenantmanagement\\deleteconfirmationview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|d:\\cong_nghe_phan_mem\\roommanagementsystem\\roommanagementsystem.presentation\\views\\page\\contractmanagement\\editcontractview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{729431D1-259C-4B50-B5CD-A0C11DEBBD01}|RoomManagementSystem.Presentation\\RoomManagementSystem.Presentation.csproj|solutionrelative:roommanagementsystem.presentation\\views\\page\\contractmanagement\\editcontractview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -144,420 +45,119 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "DockedWidth": 581,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 1059,
-          "SelectedChildIndex": 5,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "EditRoomView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\EditRoomView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\EditRoomView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\EditRoomView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\EditRoomView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-04T10:42:55.05Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DeleteRoomView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteRoomView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteRoomView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteRoomView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteRoomView.xaml",
+              "DocumentIndex": 2,
+              "Title": "MaintenanceManagementView.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\MaintenanceManagementView.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\MaintenanceManagementView.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\MaintenanceManagementView.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\MaintenanceManagementView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-04T10:42:47.002Z",
+              "WhenOpened": "2025-11-05T18:46:07.521Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "DeleteHouseView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteHouseView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteHouseView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteHouseView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteHouseView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-04T04:24:28.1Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AddHouseView.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddHouseView.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddHouseView.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddHouseView.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddHouseView.xaml.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAvwDMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-04T10:35:15.339Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AddHouseView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddHouseView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddHouseView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddHouseView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddHouseView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-04T04:24:42.591Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AddRoomView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddRoomView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddRoomView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddRoomView.xaml*",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\AddRoomView.xaml*",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-04T10:43:00.289Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DeleteHouseView.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteHouseView.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteHouseView.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteHouseView.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\DeleteHouseView.xaml.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAvwBYAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-04T04:45:49.734Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "HouseManagementView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\HouseManagementView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\HouseManagementView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\HouseManagementView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\HouseManagementView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-03T09:11:06.893Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "EditHouseView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\EditHouseView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\EditHouseView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\EditHouseView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\HouseManagement\\EditHouseView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-04T04:24:30.956Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AddTenantView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\AddTenantView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\AddTenantView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\AddTenantView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\AddTenantView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-21T03:22:13.573Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "DeleteConfirmationView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\DeleteConfirmationView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\DeleteConfirmationView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\DeleteConfirmationView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\DeleteConfirmationView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-21T04:20:48.836Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "TenantManagementView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\TenantManagementView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\TenantManagementView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\TenantManagementView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\TenantManagementView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-03T12:15:54.951Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "EditTenantView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\EditTenantView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\EditTenantView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\EditTenantView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\EditTenantView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-21T03:31:19.115Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ResetPasswordWindow.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\ResetPasswordWindow.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\ResetPasswordWindow.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\ResetPasswordWindow.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\ResetPasswordWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:33:34.803Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "HeaderView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\HeaderView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Shared\\HeaderView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\HeaderView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Shared\\HeaderView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:27:33.22Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
               "Title": "TestWindow.xaml",
               "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\TestWindow.xaml",
               "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\TestWindow.xaml",
               "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\TestWindow.xaml",
               "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\TestWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:33:52.54Z"
+              "WhenOpened": "2025-11-05T18:44:07.824Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "TestWindow.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\TestWindow.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\TestWindow.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\TestWindow.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\TestWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-03T09:19:17.739Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ResourcePart.cs",
-              "DocumentMoniker": "C:\\Users\\thanhnha\\AppData\\Local\\Temp\\.vsdbgsrc\\6b2dfb9d5e4949b718ee78fa9415cabf37518e9447a2764ba224d240518b710f\\ResourcePart.cs",
-              "ToolTip": "C:\\Users\\thanhnha\\AppData\\Local\\Temp\\.vsdbgsrc\\6b2dfb9d5e4949b718ee78fa9415cabf37518e9447a2764ba224d240518b710f\\ResourcePart.cs [Read Only]",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAewCcAAAAEAAAAAQAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-03T09:22:38.509Z",
-              "EditorCaption": " [Read Only]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "TenantManagementView.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\TenantManagementView.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\TenantManagementView.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\TenantManagementView.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\TenantManagementView.xaml.cs",
-              "ViewState": "AgIAAC8BAAAAAAAAAAAcwO8BAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T04:13:57.961Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\MainWindow.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\MainWindow.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\MainWindow.xaml",
+              "DocumentIndex": 1,
+              "Title": "AddMaintenanceView.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\AddMaintenanceView.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\AddMaintenanceView.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\AddMaintenanceView.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\AddMaintenanceView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:29:37.628Z"
+              "WhenOpened": "2025-11-05T18:46:15.498Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\MainWindow.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\MainWindow.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T17:04:42.487Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "EditTenantView.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\EditTenantView.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\EditTenantView.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\EditTenantView.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\EditTenantView.xaml.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAIA6wDQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T03:20:34.123Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "RegisterWindow.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\RegisterWindow.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\RegisterWindow.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\RegisterWindow.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\RegisterWindow.xaml",
+              "DocumentIndex": 0,
+              "Title": "EditMaintenanceView.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\EditMaintenanceView.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\EditMaintenanceView.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\EditMaintenanceView.xaml*",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\EditMaintenanceView.xaml*",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:33:31.413Z"
+              "WhenOpened": "2025-11-05T18:52:36.882Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "OtpVerificationWindow.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\OtpVerificationWindow.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\OtpVerificationWindow.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\OtpVerificationWindow.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\OtpVerificationWindow.xaml",
+              "DocumentIndex": 3,
+              "Title": "DeleteMaintenanceView.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\DeleteMaintenanceView.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\DeleteMaintenanceView.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\DeleteMaintenanceView.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\MaintenanceManagement\\DeleteMaintenanceView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:33:27.938Z"
+              "WhenOpened": "2025-11-05T18:52:32.852Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "LoginWindow.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\LoginWindow.xaml",
+              "DocumentIndex": 4,
+              "Title": "TestView.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TestView.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TestView.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TestView.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TestView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:33:21.828Z"
+              "WhenOpened": "2025-11-05T18:51:08.217Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "HeaderView.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\HeaderView.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Shared\\HeaderView.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\HeaderView.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Shared\\HeaderView.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-24T07:34:29.404Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "SidebarSmallView.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\SidebarSmallView.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Shared\\SidebarSmallView.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\SidebarSmallView.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Shared\\SidebarSmallView.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T17:05:43.933Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "SidebarSmallView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\SidebarSmallView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Shared\\SidebarSmallView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\SidebarSmallView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Shared\\SidebarSmallView.xaml",
+              "DocumentIndex": 6,
+              "Title": "DeleteContractView.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\DeleteContractView.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\DeleteContractView.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\DeleteContractView.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\DeleteContractView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:27:25.708Z"
+              "WhenOpened": "2025-11-05T18:24:37.57Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "ForgotPasswordWindow.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\ForgotPasswordWindow.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Windows\\ForgotPasswordWindow.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Windows\\ForgotPasswordWindow.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Windows\\ForgotPasswordWindow.xaml",
+              "DocumentIndex": 7,
+              "Title": "NotificationContractView.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\NotificationContractView.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\NotificationContractView.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\NotificationContractView.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\NotificationContractView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:33:46.994Z"
+              "WhenOpened": "2025-11-05T18:12:51.04Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "SidebarView.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\SidebarView.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Shared\\SidebarView.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Shared\\SidebarView.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Shared\\SidebarView.xaml",
+              "DocumentIndex": 8,
+              "Title": "EditContractView.xaml",
+              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\EditContractView.xaml",
+              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\EditContractView.xaml",
+              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\EditContractView.xaml",
+              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\ContractManagement\\EditContractView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-24T07:27:20.416Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "App.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\App.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\App.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\App.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\App.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-24T07:25:51.554Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "DeleteConfirmationView.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\DeleteConfirmationView.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\DeleteConfirmationView.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\DeleteConfirmationView.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\DeleteConfirmationView.xaml.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAIwDwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T04:34:48.844Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "AddTenantView.xaml.cs",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\AddTenantView.xaml.cs",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\AddTenantView.xaml.cs",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\AddTenantView.xaml.cs",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\Views\\Page\\TenantManagement\\AddTenantView.xaml.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAwwDIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T03:40:07.847Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "App.xaml",
-              "DocumentMoniker": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\App.xaml",
-              "RelativeDocumentMoniker": "RoomManagementSystem.Presentation\\App.xaml",
-              "ToolTip": "D:\\Cong_nghe_phan_mem\\RoomManagementSystem\\RoomManagementSystem.Presentation\\App.xaml",
-              "RelativeToolTip": "RoomManagementSystem.Presentation\\App.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-21T03:27:28.49Z",
+              "WhenOpened": "2025-11-05T17:23:19.951Z",
               "EditorCaption": ""
             }
           ]
