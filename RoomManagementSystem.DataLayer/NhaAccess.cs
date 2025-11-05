@@ -27,25 +27,11 @@ namespace RoomManagementSystem.DataLayer
             return "NHA" + nextNumber.ToString("D3");
         }
 
-        public int SoPhongHienCo(string MaNha)
-        {
-            string qr = "SELECT COUNT(*) FROM Phong WHERE MaNha=@MaNha";
-            int count = Convert.ToInt32(db.ExecuteScalar(qr));
-            return count;
-        }
-        public int SoPhongTrong(string MaNha)
-        {
-            string qr = "SELECT COUNT(*) FROM Phong WHERE MaNha=@MaNha AND TrangThai=N'Trống'";
-            int count = Convert.ToInt32(db.ExecuteScalar(qr));
-            return count;
-        }
         //Them thong tin can nha
-        public Boolean registerHouse(string MaNha, string DiaChi, string GhiChu)
+        public Boolean registerHouse(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
-            int SoPhong = SoPhongHienCo(MaNha);
-            int TongSoPhongHienTai=SoPhongTrong(MaNha);
             // Dùng ExecuteScalar để lấy MaNguoiDung
-            string a = "SELECT MaNguoiDung FROM NguoiDung"; // Lưu ý: Câu query này sẽ lấy MaNguoiDung ĐẦU TIÊN tìm thấy. Hãy đảm bảo đây là logic bạn muốn.
+            string a = "SELECT MaNguoiDung FROM NguoiDung";
             var MaNguoiDung = db.ExecuteScalar(a);
 
             // Nếu không tìm thấy người dùng, có thể trả về false
@@ -73,11 +59,9 @@ namespace RoomManagementSystem.DataLayer
         }
 
         //Cap nhat thong tin can nha
-        public Boolean updateHouse(string MaNha, string DiaChi, string GhiChu)
+        public Boolean updateHouse(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
-            int SoPhong = SoPhongHienCo(MaNha);
-            int TongSoPhongHienTai = SoPhongTrong(MaNha);
-            string a = "SELECT MaNguoiDung FROM NguoiDung"; // Tương tự, đây là MaNguoiDung đầu tiên
+            string a = "SELECT MaNguoiDung FROM NguoiDung";
             var MaNguoiDung = db.ExecuteScalar(a);
 
             if (MaNguoiDung == null)
@@ -105,7 +89,7 @@ namespace RoomManagementSystem.DataLayer
         public List<Nha> getAllHouse()
         {
             List<Nha> ds = new List<Nha>();
-            string qr = "SELECT* FROM Nha";
+            string qr = "SELECT MaNha, MaNguoiDung, DiaChi, TongSoPhong, TongSoPhongHienTai, GhiChu, NgayTao, NgayCapNhat FROM Nha";
 
             // Dùng ExecuteQuery và DataTable
             DataTable dt = db.ExecuteQuery(qr);

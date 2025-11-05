@@ -26,37 +26,10 @@ namespace RoomManagementSystem.DataLayer
             int nextNumber = Convert.ToInt32(db.ExecuteScalar(qr));
             return "PHONG" + nextNumber.ToString("D3");
         }
-        //Lấy trạng thái từ Hợp đồng
-        public string TrangThaiPhong(string maPhong)
-        {
-            string qr = @"SELECT COUNT(*) 
-                  FROM HopDong 
-                  WHERE MaPhong = @maphong 
-                    AND (NgayKetThuc IS NULL OR NgayKetThuc > GETDATE())";
 
-            SqlParameter[] parameters = { new SqlParameter("@maphong", maPhong) };
-            object? result = db.ExecuteScalar(qr, parameters);
-
-            int count = Convert.ToInt32(result);
-
-            return count > 0 ? "Đang thuê" : "Trống";
-        }
-        //Lấy số người hiện tại trong phòng
-        public int SoNguoiHienTai(string maPhong)
-        {
-            string qr = @"SELECT COUNT(*) 
-                  FROM NguoiThue 
-                  WHERE MaPhong = @maphong 
-                    AND (NgayDonRa IS NULL OR NgayDonRa > GETDATE())";
-            SqlParameter[] parameters = { new SqlParameter("@maphong", maPhong) };
-            object? result = db.ExecuteScalar(qr, parameters);
-            int count = Convert.ToInt32(result);
-            return count;
-        }
         // Thêm phòng
         public bool InsertPhong(Phong phong)
         {
-            string TrangThai=TrangThaiPhong(phong.MaPhong);
             string qr = @"INSERT INTO Phong (MaPhong,MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, GhiChu, NgayTao, NgayCapNhat)
                           VALUES (@MaPhong,@MaNha, @LoaiPhong, @DienTich, @GiaThue, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
 
@@ -68,7 +41,7 @@ namespace RoomManagementSystem.DataLayer
                 new SqlParameter("@LoaiPhong", phong.LoaiPhong ?? (object)DBNull.Value),
                 new SqlParameter("@DienTich", phong.DienTich),
                 new SqlParameter("@GiaThue", phong.GiaThue),
-                new SqlParameter("@TrangThai", "Trống"), // gán mặc định,
+                new SqlParameter("@TrangThai", phong.TrangThai ?? (object)DBNull.Value),
                 new SqlParameter("@GhiChu", phong.GhiChu ?? (object)DBNull.Value)
             };
 
@@ -85,20 +58,17 @@ namespace RoomManagementSystem.DataLayer
                               DienTich = @DienTich,
                               GiaThue = @GiaThue,
                               TrangThai = @TrangThai,
-                              SoNguoiHienTai = @sn,
                               GhiChu = @GhiChu,
                               NgayCapNhat = GETDATE()
                           WHERE MaPhong = @MaPhong";
-            string TrangThai = TrangThaiPhong(phong.MaPhong);
-            int sn = SoNguoiHienTai(phong.MaPhong);
+
             SqlParameter[] parameters = new SqlParameter[]
             {
                 new SqlParameter("@MaPhong", phong.MaPhong ?? (object)DBNull.Value),
                 new SqlParameter("@LoaiPhong", phong.LoaiPhong ?? (object)DBNull.Value),
                 new SqlParameter("@DienTich", phong.DienTich),
                 new SqlParameter("@GiaThue", phong.GiaThue),
-                new SqlParameter("@TrangThai",TrangThai ?? (object)DBNull.Value),
-                new SqlParameter("@sn", sn),
+                new SqlParameter("@TrangThai", phong.TrangThai ?? (object)DBNull.Value),
                 new SqlParameter("@GhiChu", phong.GhiChu ?? (object)DBNull.Value)
             };
 
@@ -119,17 +89,14 @@ namespace RoomManagementSystem.DataLayer
             return result > 0;
         }
 
-        // Lấy tất cả phòng trong nha
-        public List<Phong> GetAllPhong(string MaNha)
+        // Lấy tất cả phòng
+        public List<Phong> GetAllPhong()
         {
             List<Phong> ds = new List<Phong>();
-            string qr = "SELECT * FROM Phong WHERE MaNha=@Manha";
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@Manha", MaNha ?? (object)DBNull.Value)
-            };
+            string qr = "SELECT MaPhong, MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, SoNguoiHienTai, GhiChu, NgayTao, NgayCapNhat FROM Phong";
+
             // Dùng ExecuteQuery và nhận về DataTable
-            DataTable dt = db.ExecuteQuery(qr,parameters);
+            DataTable dt = db.ExecuteQuery(qr);
 
             // Duyệt qua DataTable để đọc dữ liệu
             foreach (DataRow row in dt.Rows)

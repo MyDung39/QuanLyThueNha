@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {}
+    "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {}
   },
   "projects": {
-    "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
+    "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
+        "projectUniqueName": "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
         "projectName": "RoomManagementSystem.DataLayer",
-        "projectPath": "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
+        "projectPath": "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\RoomManagementSystem.DataLayer.csproj",
         "packagesPath": "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\",
-        "outputPath": "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\obj\\",
+        "outputPath": "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.DataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

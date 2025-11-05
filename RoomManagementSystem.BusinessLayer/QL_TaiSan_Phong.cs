@@ -11,16 +11,16 @@ namespace RoomManagementSystem.BusinessLayer
     {
         NhaAccess nha = new NhaAccess();
         //Dang ki thong tin nha
-        public Boolean DangKyThongTinNha(string DiaChi,string GhiChu)
+        public Boolean DangKyThongTinNha(string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
             // Gọi hàm tạo mã tự động từ DAL
             string newMaNha = nha.AutoMaNha();
-            return nha.registerHouse(newMaNha, DiaChi, GhiChu);
+            return nha.registerHouse(newMaNha, DiaChi, SoPhong, TongSoPhongHienTai, GhiChu);
         }
         //Cap nhat lai thong tin nha
-        public Boolean UpdateNha(string MaNha, string DiaChi, string GhiChu)
+        public Boolean UpdateNha(string MaNha, string DiaChi, int SoPhong, int TongSoPhongHienTai, string GhiChu)
         {
-            return nha.updateHouse(MaNha, DiaChi,GhiChu);
+            return nha.updateHouse(MaNha, DiaChi, SoPhong, TongSoPhongHienTai, GhiChu);
         }
 
         //Tra ve danh sach nha hien co
@@ -41,9 +41,9 @@ namespace RoomManagementSystem.BusinessLayer
         }
 
         //Tra ve danh sach phong hien co
-        public List<Phong> DanhSachPhong(string manha)
+        public List<Phong> DanhSachPhong()
         {
-            return p.GetAllPhong(manha);
+            return p.GetAllPhong();
         }
 
         //Cap nhat gia, trang thai,...

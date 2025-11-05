@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj": {}
+    "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj": {}
   },
   "projects": {
-    "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj": {
+    "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj",
+        "projectUniqueName": "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj",
         "projectName": "RoomManagementSystem.Utilities",
-        "projectPath": "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj",
+        "projectPath": "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.Utilities\\RoomManagementSystem.Utilities.csproj",
         "packagesPath": "C:\\Users\\KIM XUYẾN\\.nuget\\packages\\",
-        "outputPath": "D:\\Project_CNPM_TH3\\QuanLyThueNha\\RoomManagementSystem.Utilities\\obj\\",
+        "outputPath": "D:\\Project_CNPM_TH3\\src_logic\\QuanLyThueNha\\RoomManagementSystem.Utilities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
