@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RoomManagementSystem.BusinessLayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1cf3a5adeb03087f1b36c8f23b7889e8728c1ce")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ecb24a046ada5e218e26b6e6043e11027c8eea3e")]
 [assembly: System.Reflection.AssemblyProductAttribute("RoomManagementSystem.BusinessLayer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RoomManagementSystem.BusinessLayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

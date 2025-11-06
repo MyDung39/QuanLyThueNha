@@ -1,12 +1,32 @@
 <UserControl x:Class="RoomManagementSystem.Presentation.Views.Page.TestView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:shared="clr-namespace:RoomManagementSystem.Presentation.Views.Shared"
              Background="#F7F8FC">
     <Grid>
-        <TextBlock Text="Test View - This works!" 
-                   FontSize="24" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar lớn -->
+        <shared:SidebarView x:Name="FullSidebar" Grid.Column="0" Visibility="Visible"/>
+
+        <!-- Sidebar nhỏ -->
+        <shared:SidebarSmallView x:Name="SmallSidebar" Grid.Column="0" Visibility="Collapsed"/>
+
+        <!-- Nội dung chính -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Thanh điều khiển thử nghiệm (ẩn lược, chỉ giữ vùng nội dung) -->
+            <Border Grid.Row="0" Background="Transparent" Height="0"/>
+
+            <Grid x:Name="MainContent" Grid.Row="1"/>
+        </Grid>
     </Grid>
 </UserControl>
 

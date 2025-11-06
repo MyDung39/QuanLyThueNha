@@ -52,20 +52,12 @@
                        Margin="0,0,10,0"/>
 
             <!-- 3. Nút mũi tên dropdown -->
-            <Button Background="Transparent" BorderThickness="0" Cursor="Hand">
-                <Image Source="/Resources/Images/chevron_down_icon.png" Width="20" Height="20" Opacity="0.5"/>
-            </Button>
+            <Button Background="Transparent" BorderThickness="0" Cursor="Hand"/>
 
             <!-- 4. Nút Thông báo (Cuối cùng) -->
             <Button Background="Transparent" BorderThickness="0" Cursor="Hand" Margin="25,0,0,0">
                 <Grid>
-                    <Image Source="/Resources/Images/notification_icon.png" Width="24" Height="24" Opacity="0.6"/>
                     <!-- Dấu chấm đỏ thông báo mới -->
-                    <Ellipse Width="10" Height="10" 
-                             Fill="#EC5252" 
-                             Stroke="White" StrokeThickness="1.5"
-                             HorizontalAlignment="Right" VerticalAlignment="Top"
-                             Margin="0,-2,-2,0"/>
                 </Grid>
             </Button>
         </StackPanel>

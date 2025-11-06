@@ -1,4 +1,6 @@
-﻿using RoomManagementSystem.Presentation.Views.Page.TenantManagement;
+using RoomManagementSystem.Presentation.Views.Page.TenantManagement;
+using RoomManagementSystem.Presentation.Views.Page.ServiceManagement;
+using RoomManagementSystem.Presentation.Views;
 using System;
 using System.Windows;
 
@@ -11,6 +13,47 @@ namespace RoomManagementSystem.Presentation.Views.Windows
             InitializeComponent();
             // Sử dụng Grid thay vì Frame để tránh lỗi navigation
             MainContent.Children.Add(new TenantManagementView());
+
+            // Đăng ký sự kiện điều hướng từ sidebar
+            FullSidebar.Loaded += (_, __) =>
+            {
+                FullSidebar.NavigationRequested += Sidebar_NavigationRequested;
+                SetActiveMenu("tenants");
+            };
+            SmallSidebar.Loaded += (_, __) =>
+            {
+                SmallSidebar.NavigationRequested += Sidebar_NavigationRequested;
+            };
+        }
+
+        private void Sidebar_NavigationRequested(object? sender, string key)
+        {
+            NavigateTo(key);
+            SetActiveMenu(key);
+        }
+
+        private void NavigateTo(string key)
+        {
+            MainContent.Children.Clear();
+            switch (key)
+            {
+                case "dashboard":
+                    MainContent.Children.Add(new DashboardView());
+                    break;
+                case "services":
+                    MainContent.Children.Add(new ServiceManagementView());
+                    break;
+                case "tenants":
+                default:
+                    MainContent.Children.Add(new TenantManagementView());
+                    break;
+            }
+        }
+
+        private void SetActiveMenu(string key)
+        {
+            FullSidebar.SetActive(key);
+            SmallSidebar.SetActive(key);
         }
 
         // === LOGIC XỬ LÝ SỰ KIỆN TỪ HEADERVIEW ===

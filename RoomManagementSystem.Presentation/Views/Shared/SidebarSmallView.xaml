@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="RoomManagementSystem.Presentation.Views.Shared.SidebarSmallView"
+<UserControl x:Class="RoomManagementSystem.Presentation.Views.Shared.SidebarSmallView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Width="59"
@@ -77,13 +77,19 @@
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,15,0,0">
                 <!-- Tổng quan -->
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tong_quan_icon.png" ToolTip="Tổng quan" />
+                <RadioButton x:Name="DashboardItem"
+                             Style="{StaticResource SidebarIconButton}"
+                             Tag="../../../Resources/Images/tong_quan_icon.png" ToolTip="Tổng quan"
+                             Checked="OnDashboardChecked"/>
 
                 <!-- Khoảng trống khớp với tiêu đề "QUẢN LÝ" -->
                 <Border Height="48" />
 
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tai_san_icon.png" ToolTip="Tài sản"/>
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/nguoi_thue_icon.png" ToolTip="Người thuê" IsChecked="True"/>
+                <RadioButton x:Name="TenantsItem"
+                             Style="{StaticResource SidebarIconButton}"
+                             Tag="../../../Resources/Images/nguoi_thue_icon.png" ToolTip="Người thuê"
+                             Checked="OnTenantsChecked"/>
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/hop_dong_icon.png" ToolTip="Hợp đồng"/>
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/lich_icon.png" ToolTip="Lịch"/>
 
@@ -91,7 +97,10 @@
                 <Border Height="48" />
 
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/bao_tri_icon.png" ToolTip="Bảo trì"/>
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/dich_vu_icon.png" ToolTip="Dịch vụ"/>
+                <RadioButton x:Name="ServicesItem"
+                             Style="{StaticResource SidebarIconButton}"
+                             Tag="../../../Resources/Images/dich_vu_icon.png" ToolTip="Dịch vụ"
+                             Checked="OnServicesChecked"/>
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/thanh_toan_icon.png" ToolTip="Thanh toán"/>
 
                 <!-- Khoảng trống khớp với tiêu đề "KHÁC" -->
