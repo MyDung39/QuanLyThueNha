@@ -1,0 +1,137 @@
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using RoomManagementSystem.Presentation.ViewModels;
+
+namespace RoomManagementSystem.Presentation.Views.Windows
+{
+    public partial class LoginWindow : Window
+    {
+        public LoginWindow()
+        {
+            InitializeComponent();
+            this.DataContext = new LoginViewModel();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+
+        private void PasswordInput_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            /*
+            if (sender is PasswordBox passwordBox)
+            {
+                var placeholder = FindChild<TextBlock>(passwordBox, "PlaceholderText");
+                if (placeholder != null)
+                {
+                    placeholder.Visibility = string.IsNullOrEmpty(passwordBox.Password) ? Visibility.Visible : Visibility.Collapsed;
+                }
+            }
+            */
+
+            PlaceholderText.Visibility = string.IsNullOrEmpty(PasswordInput.Password)
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+        }
+
+        private void RegisterHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            var registerWindow = new RegisterWindow(); // Tạo một cửa sổ Đăng ký mới
+            registerWindow.WindowState = this.WindowState;
+            registerWindow.Show();                     // Hiển thị cửa sổ Đăng ký
+            this.Close();                              // Đóng cửa sổ Đăng nhập hiện tại
+        }
+
+
+        /*
+        public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+        {
+            if (parent == null) return null;
+            T foundChild = null;
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (!(child is T))
+                {
+                    foundChild = FindChild<T>(child, childName);
+                    if (foundChild != null) break;
+                }
+                else if (!string.IsNullOrEmpty(childName))
+                {
+                    var frameworkElement = child as FrameworkElement;
+                    if (frameworkElement != null && frameworkElement.Name == childName)
+                    {
+                        foundChild = (T)child;
+                        break;
+                    }
+                }
+                else
+                {
+                    foundChild = (T)child;
+                    break;
+                }
+            }
+            return foundChild;
+        }
+        */
+
+        public static T? FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+        {
+            if (parent == null) return null;
+
+            T? foundChild = null;
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is not T)
+                {
+                    foundChild = FindChild<T>(child, childName);
+                    if (foundChild != null)
+                        break;
+                }
+                else if (!string.IsNullOrEmpty(childName))
+                {
+                    if (child is FrameworkElement frameworkElement && frameworkElement.Name == childName)
+                    {
+                        foundChild = (T)child;
+                        break;
+                    }
+                }
+                else
+                {
+                    foundChild = (T)child;
+                    break;
+                }
+            }
+
+            return foundChild;
+        }
+
+
+
+    }
+}

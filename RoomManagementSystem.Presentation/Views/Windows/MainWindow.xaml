@@ -1,0 +1,38 @@
+﻿<Window x:Class="RoomManagementSystem.Presentation.Views.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:shared="clr-namespace:RoomManagementSystem.Presentation.Views.Shared"
+        mc:Ignorable="d"
+        Title="Hệ thống quản lý phòng trọ" Height="720" Width="1280"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Đặt tên cho cột để có thể thay đổi độ rộng -->
+            <ColumnDefinition x:Name="SidebarColumn" Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Sidebar lớn (mặc định hiển thị) -->
+        <shared:SidebarView x:Name="FullSidebar" Grid.Column="0" Visibility="Visible"/>
+
+        <!-- Sidebar nhỏ (mặc định ẩn) -->
+        <shared:SidebarSmallView x:Name="SmallSidebar" Grid.Column="0" Visibility="Collapsed"/>
+
+        <!-- Khu vực nội dung chính -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- === THAY ĐỔI Ở ĐÂY: "Lắng nghe" sự kiện từ HeaderView === -->
+            <shared:HeaderView Grid.Row="0"
+                               ToggleSidebarClick="HeaderView_ToggleSidebarClick"/>
+
+            <Grid x:Name="MainContent" Grid.Row="1"/>
+        </Grid>
+    </Grid>
+</Window>
