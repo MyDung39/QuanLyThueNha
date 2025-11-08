@@ -1,69 +1,139 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RoomManagementSystem.DataLayer;
 
 namespace RoomManagementSystem.BusinessLayer
 {
     public class QL_TaiSan_Phong
     {
-        NhaAccess nha = new NhaAccess();
-        //Dang ki thong tin nha
-        public Boolean DangKyThongTinNha(string DiaChi, string GhiChu)
+        // Khởi tạo tất cả các lớp DAL cần thiết ở đây.
+        private readonly NhaAccess nha = new NhaAccess();
+        private readonly PhongDAL p = new PhongDAL();
+        // ✅ 1. KHỞI TẠO BAOTRIDAL
+        private readonly BaoTriDAL _baoTriDAL = new BaoTriDAL();
+        private readonly HopDongDAL _hopDongDAL = new HopDongDAL();
+
+        // --- QUẢN LÝ NHÀ (Giữ nguyên) ---
+
+        public bool DangKyThongTinNha(string DiaChi, string GhiChu)
         {
-            // Gọi hàm tạo mã tự động từ DAL
             string newMaNha = nha.AutoMaNha();
             return nha.registerHouse(newMaNha, DiaChi, GhiChu);
         }
-        //Cap nhat lai thong tin nha
-        public Boolean UpdateNha(string MaNha, string DiaChi, string GhiChu)
+
+        public bool UpdateNha(string MaNha, string DiaChi, string GhiChu)
         {
             return nha.updateHouse(MaNha, DiaChi, GhiChu);
         }
 
-
-        //Xoa thong tin nha
-        public Boolean XoaNha(string MaNha)
+        public bool XoaNha(string MaNha)
         {
-            // Tạm thời để rỗng và trả về false
-            // Chúng ta sẽ thêm logic xóa ở DataLayer sau
-            return false;
+            int soLuongPhong = p.GetRoomCountByHouse(MaNha);
+            if (soLuongPhong > 0)
+            {
+                return false;
+            }
+            return nha.DeleteHouse(MaNha);
         }
 
-
-        //Tra ve danh sach nha hien co
         public List<Nha> DanhSachNha()
         {
             return nha.getAllHouse();
         }
 
-        //Them thong tin phong 
-        PhongDAL p = new PhongDAL();
 
-        public Boolean ThemPhong(Phong a)
+        // --- QUẢN LÝ PHÒNG ---
+
+        public bool ThemPhong(Phong a)
         {
-            // Gọi hàm tạo mã tự động từ DAL và gán vào đối tượng
             string newMaPhong = p.AutoMaPhong();
             a.MaPhong = newMaPhong;
             return p.InsertPhong(a);
         }
 
-        //Tra ve danh sach phong hien co
+        // ✅ 2. SỬA LẠI HOÀN TOÀN PHƯƠNG THỨC NÀY ĐỂ THÊM CẢ 2 LOGIC
+        /// <summary>
+        /// Lấy danh sách phòng của một nhà và tổng hợp thông tin ngày bảo trì, ngày có sẵn.
+        /// </summary>
         public List<Phong> DanhSachPhong(string manha)
         {
-            return p.GetAllPhong(manha);
+            // --- BƯỚC 1: LẤY TẤT CẢ DỮ LIỆU GỐC ---
+            List<Phong> danhSachPhong = p.GetAllPhong(manha);
+
+            if (danhSachPhong == null || !danhSachPhong.Any())
+            {
+                return new List<Phong>();
+            }
+
+            // Lấy dữ liệu từ các bảng liên quan trong MỘT lần gọi để tối ưu
+            List<BaoTri> allMaintenanceRecords = _baoTriDAL.GetAll();
+            List<HopDong> allContracts = _hopDongDAL.GetAllHopDong();
+
+            // --- BƯỚC 2: TỐI ƯU HÓA TRUY XUẤT ---
+            // Chuyển danh sách hợp đồng thành Dictionary để tra cứu nhanh theo MaPhong
+            // Chỉ lấy các hợp đồng đang 'Hiệu lực'
+            var activeContractsDict = allContracts
+                .Where(c => c.TrangThai == "Hiệu lực")
+                .GroupBy(c => c.MaPhong) // Nhóm theo mã phòng
+                .ToDictionary(g => g.Key, g => g.OrderByDescending(c => c.NgayBatDau).First()); // Lấy hợp đồng mới nhất cho mỗi phòng
+
+            // --- BƯỚC 3: XỬ LÝ VÀ LÀM GIÀU DỮ LIỆU ---
+            foreach (var phong in danhSachPhong)
+            {
+                // --- Logic cho "Ngày bảo trì" (giữ nguyên) ---
+                var latestPendingMaintenance = allMaintenanceRecords
+                    .Where(bt => bt.MaPhong == phong.MaPhong &&
+                                 (bt.TrangThaiXuLy == "Chưa xử lý" || bt.TrangThaiXuLy == "Đang xử lý"))
+                    .OrderByDescending(bt => bt.NgayYeuCau)
+                    .FirstOrDefault();
+
+                phong.NgayBaoTriHienTai = latestPendingMaintenance?.NgayYeuCau;
+
+                // --- Logic cho "Ngày có sẵn" ---
+                // Chỉ xử lý nếu phòng đang ở trạng thái 'Đang thuê'
+                if (phong.TrangThai == "Đang thuê")
+                {
+                    // Tra cứu trong Dictionary đã tạo
+                    if (activeContractsDict.TryGetValue(phong.MaPhong, out HopDong contract))
+                    {
+                        // Nếu tìm thấy hợp đồng hiệu lực, ngày có sẵn là ngày kết thúc của hợp đồng đó
+                        phong.NgayCoSan = contract.NgayKetThuc;
+                    }
+                    else
+                    {
+                        // Trường hợp lạ: Phòng "Đang thuê" nhưng không tìm thấy HĐ hiệu lực? -> Để trống
+                        phong.NgayCoSan = null;
+                    }
+                }
+                else if (phong.TrangThai == "Trống")
+                {
+                    // Nếu phòng trống, ngày có sẵn chính là ngày hôm nay.
+                    phong.NgayCoSan = DateTime.Today;
+                }
+                else
+                {
+                    // Nếu phòng không ở trạng thái 'Đang thuê', nó đã có sẵn -> Để trống
+                    phong.NgayCoSan = null;
+                }
+            }
+
+            // --- BƯỚC 4: TRẢ VỀ KẾT QUẢ ---
+            return danhSachPhong;
         }
 
-        //Cap nhat gia, trang thai,...
-        public Boolean CapNhatPhong(Phong a)
+        public bool CapNhatPhong(Phong a)
         {
             if (string.IsNullOrEmpty(a.MaPhong))
             {
                 throw new Exception("Mã phòng không được để trống");
             }
             return p.UpdatePhong(a);
+        }
+
+        public bool XoaPhong(string MaPhong)
+        {
+            return p.DeletePhong(MaPhong);
         }
     }
 }

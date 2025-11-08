@@ -1,0 +1,88 @@
+<UserControl x:Class="RoomManagementSystem.Presentation.Views.Page.ReportManagement.ReportManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="794" d:DesignWidth="1302"
+             FontFamily="Roboto"
+             Background="White">
+
+    <UserControl.Resources>
+        <Style x:Key="HeaderTabRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#586A84"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border x:Name="BottomBar" Height="2" Background="#FFB27D" VerticalAlignment="Bottom" Visibility="Collapsed"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="#FFB27D"/>
+                                <Setter TargetName="BottomBar" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="18,17,18,16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Tabs header -->
+        <Border Grid.Row="0" Background="White" CornerRadius="10" Height="62">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <RadioButton Grid.Column="0"
+                             x:Name="revenueTab"
+                             Style="{StaticResource HeaderTabRadioButtonStyle}"
+                             Content="Doanh thu tháng"
+                             IsChecked="True"
+                             Checked="RevenueTab_Checked"/>
+                <RadioButton Grid.Column="1"
+                             x:Name="expenseTab"
+                             Style="{StaticResource HeaderTabRadioButtonStyle}"
+                             Content="Chi phí tháng"
+                             Checked="ExpenseTab_Checked"/>
+                <RadioButton Grid.Column="2"
+                             x:Name="profitTab"
+                             Style="{StaticResource HeaderTabRadioButtonStyle}"
+                             Content="Lợi nhuận tháng"
+                             Checked="ProfitTab_Checked"/>
+                <RadioButton Grid.Column="3"
+                             x:Name="roomListTab"
+                             Style="{StaticResource HeaderTabRadioButtonStyle}"
+                             Content="Danh sách phòng"
+                             Checked="RoomListTab_Checked"/>
+                <RadioButton Grid.Column="4"
+                             x:Name="debtListTab"
+                             Style="{StaticResource HeaderTabRadioButtonStyle}"
+                             Content="Công nợ"
+                             Checked="DebtListTab_Checked"/>
+            </Grid>
+        </Border>
+
+        <!-- Tab content -->
+        <ContentControl x:Name="tabContentControl" Grid.Row="2"/>
+    </Grid>
+</UserControl>

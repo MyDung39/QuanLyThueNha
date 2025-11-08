@@ -1,0 +1,76 @@
+<UserControl x:Class="RoomManagementSystem.Presentation.Views.Page.ServiceManagement.ServiceManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="794" d:DesignWidth="1302"
+             FontFamily="Roboto"
+             Background="White">
+
+    <UserControl.Resources>
+        <Style x:Key="HeaderTabRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#586A84"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border x:Name="BottomBar" Height="2" Background="#FFB27D" VerticalAlignment="Bottom" Visibility="Collapsed"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="#FFB27D"/>
+                                <Setter TargetName="BottomBar" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="18,17,18,16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Tabs header -->
+        <Border Grid.Row="0" Background="White" CornerRadius="10" Height="62">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <RadioButton Grid.Column="0"
+                             x:Name="electricTab"
+                             Style="{StaticResource HeaderTabRadioButtonStyle}"
+                             Content="Điện"
+                             IsChecked="True"
+                             Checked="ElectricTab_Checked"/>
+                <RadioButton Grid.Column="1"
+                             x:Name="waterTab"
+                             Style="{StaticResource HeaderTabRadioButtonStyle}"
+                             Content="Nước"
+                             Checked="WaterTab_Checked"/>
+                <RadioButton Grid.Column="2"
+                             x:Name="otherTab"
+                             Style="{StaticResource HeaderTabRadioButtonStyle}"
+                             Content="Khác"
+                             Checked="OtherTab_Checked"/>
+            </Grid>
+        </Border>
+
+        <!-- Tab content -->
+        <ContentControl x:Name="tabContentControl" Grid.Row="2"/>
+    </Grid>
+</UserControl>

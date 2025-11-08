@@ -43,14 +43,15 @@ namespace RoomManagementSystem.BusinessLayer
         }
 
         //Tra ve danh sach nguoi thue
-    /*    public List<NguoiThue> getAll()
-        {
-            return nt.getAllNguoiThue();
-        }
-    */
+        /*    public List<NguoiThue> getAll()
+            {
+                return nt.getAllNguoiThue();
+            }
+        */
 
 
         // ✅ VIẾT LẠI HOÀN TOÀN PHƯƠNG THỨC NÀY
+        /*
         public List<NguoiThue> getAll()
         {
             // 1. Lấy tất cả dữ liệu gốc
@@ -81,6 +82,55 @@ namespace RoomManagementSystem.BusinessLayer
                 }
             }
             return allTenants; // Trả về danh sách đã được bổ sung thông tin
+        }
+        */
+
+        public List<NguoiThue> getAll()
+        {
+            // 1. Lấy tất cả dữ liệu gốc từ DAL
+            List<NguoiThue> allTenants = _nguoiThueDAL.getAllNguoiThue();
+            List<HopDong> allContracts = _hopDongDAL.GetAllHopDong();
+            List<HopDong_NguoiThue> allContractDetails = _hopDongDAL.GetAllHopDongNguoiThue();
+
+            if (allTenants == null || !allTenants.Any())
+            {
+                return new List<NguoiThue>();
+            }
+
+            // 2. Tối ưu việc tra cứu hợp đồng bằng Dictionary
+            var contractDict = allContracts.ToDictionary(c => c.MaHopDong);
+
+            // 3. Lặp qua từng người thuê để điền thông tin
+            foreach (var tenant in allTenants)
+            {
+                var latestRentalDetail = allContractDetails
+                    .Where(cd => cd.MaNguoiThue == tenant.MaNguoiThue)
+                    .OrderByDescending(cd => cd.NgayBatDauThue)
+                    .FirstOrDefault();
+
+                if (latestRentalDetail != null)
+                {
+                    if (contractDict.TryGetValue(latestRentalDetail.MaHopDong, out HopDong contract))
+                    {
+                        tenant.NgayBatDauThue = contract.NgayBatDau;
+
+                        // ✅ THAY ĐỔI QUAN TRỌNG: TÍNH TOÁN NGÀY KẾT THÚC BẰNG CODE C#
+                        // Lấy ngày bắt đầu cộng với số tháng trong thời hạn hợp đồng.
+                        tenant.NgayDonRa = contract.NgayBatDau.AddMonths(contract.ThoiHan);
+
+                        tenant.TrangThaiThue = latestRentalDetail.TrangThaiThue;
+                    }
+                    else
+                    {
+                        tenant.TrangThaiThue = "HĐ không tồn tại";
+                    }
+                }
+                else
+                {
+                    tenant.TrangThaiThue = "Chưa có hợp đồng";
+                }
+            }
+            return allTenants;
         }
 
 

@@ -2,9 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using RoomManagementSystem.BusinessLayer;
 using RoomManagementSystem.DataLayer;
+using RoomManagementSystem.Presentation.ViewModels; // Đảm bảo có using này
 using System;
 using System.Collections.ObjectModel;
-using System.Linq; // Cần cho .Where()
+using System.Linq;
 using System.Windows;
 
 namespace RoomManagementSystem.Presentation.ViewModels
@@ -12,81 +13,87 @@ namespace RoomManagementSystem.Presentation.ViewModels
     public partial class TenantManagementViewModel : ViewModelBase
     {
         private readonly QuanLyNguoiThue _nguoiThueService;
-        private readonly QL_TaiSan_Phong _taiSanPhongService; // ✅ Thêm service để lấy danh sách phòng
+        private readonly QL_TaiSan_Phong _taiSanPhongService;
 
+        // ✅ ĐÃ SỬA: Kiểu của danh sách là TenantWrapperViewModel
         [ObservableProperty]
-        private ObservableCollection<NguoiThue> _danhSachNguoiThue;
+        private ObservableCollection<TenantWrapperViewModel> _danhSachNguoiThue;
 
-
-        // ✅ THÊM THUỘC TÍNH NÀY
-        // Dùng để binding với CheckBox "Chọn tất cả"
         [ObservableProperty]
         private bool _isAllSelected;
 
-        
-
-        // --- BẮT ĐẦU PHẦN ĐIỀU KHIỂN POPUP ---
-
-        [ObservableProperty]
-        private bool _isAddPopupVisible;
-        [ObservableProperty]
-        private bool _isDeleteConfirmationVisible;
-
-        [ObservableProperty]
-        private bool _isEditPopupVisible;
-
-        // Dùng để lưu trữ thông tin của người thuê đang được sửa
-        [ObservableProperty]
-        private NguoiThue _editingTenant;
-
-        // CÁC THUỘC TÍNH DỮ LIỆU CHO POPUP
+        // --- Các thuộc tính điều khiển Popup ---
+        [ObservableProperty] private bool _isAddPopupVisible;
+        [ObservableProperty] private bool _isDeleteConfirmationVisible;
+        [ObservableProperty] private bool _isEditPopupVisible;
+        [ObservableProperty] private NguoiThue _editingTenant; // Dùng để binding với popup sửa
         [ObservableProperty] private string _newTenantName = "";
         [ObservableProperty] private string _newTenantEmail = "";
         [ObservableProperty] private string _newTenantPhone = "";
-        [ObservableProperty] private string _newTenantIdCard = ""; // ✅ Thêm thuộc tính cho SoGiayTo
+        [ObservableProperty] private string _newTenantIdCard = "";
         [ObservableProperty] private DateTime? _newTenantStartDate = DateTime.Now;
-
-        // CÁC THUỘC TÍNH ĐỂ HIỂN THỊ DANH SÁCH PHÒNG TRỐNG
         [ObservableProperty] private ObservableCollection<Phong> _availableRooms;
-        [ObservableProperty] private Phong _selectedRoomForNewTenant; // ✅ Thêm thuộc tính cho MaPhong
+        [ObservableProperty] private Phong _selectedRoomForNewTenant;
 
-        // --- KẾT THÚC PHẦN ĐIỀU KHIỂN POPUP ---
-
-        // ✅ THÊM COMMAND NÀY
-        [RelayCommand]
-        private void ToggleSelectAll()
-        {
-            foreach (var tenant in DanhSachNguoiThue)
-            {
-                tenant.IsSelected = IsAllSelected;
-            }
-        }
-
-
+        // --- Constructor ---
         public TenantManagementViewModel()
         {
             _nguoiThueService = new QuanLyNguoiThue();
-            _taiSanPhongService = new QL_TaiSan_Phong(); // ✅ Khởi tạo service
-            _danhSachNguoiThue = new ObservableCollection<NguoiThue>();
+            _taiSanPhongService = new QL_TaiSan_Phong();
+            _danhSachNguoiThue = new ObservableCollection<TenantWrapperViewModel>();
             _availableRooms = new ObservableCollection<Phong>();
             LoadData();
         }
 
+        // --- Logic Tải Dữ Liệu ---
         private void LoadData()
         {
-            var danhSach = _nguoiThueService.getAll();
-            DanhSachNguoiThue.Clear();
-            foreach (var nguoiThue in danhSach)
+            try
             {
-                DanhSachNguoiThue.Add(nguoiThue);
+                var danhSach = _nguoiThueService.getAll();
+                DanhSachNguoiThue.Clear();
+                foreach (var nguoiThue in danhSach)
+                {
+                    // ✅ SỬA LỖI: Bọc đối tượng NguoiThue trong TenantWrapperViewModel trước khi thêm
+                    DanhSachNguoiThue.Add(new TenantWrapperViewModel(nguoiThue));
+                }
+                UpdateSelectionState(); // Cập nhật lại trạng thái checkbox "chọn tất cả"
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Không thể tải danh sách người thuê: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        
-        
+        // --- Logic Xử Lý Checkbox ---
+        partial void OnIsAllSelectedChanged(bool value)
+        {
+            foreach (var tenantVM in DanhSachNguoiThue)
+            {
+                tenantVM.IsSelected = value;
+            }
+        }
 
-        // --- CÁC LỆNH (COMMANDS) ---
+        [RelayCommand]
+        private void TenantSelectionChanged()
+        {
+            UpdateSelectionState();
+        }
 
+        private void UpdateSelectionState()
+        {
+            if (DanhSachNguoiThue.Any())
+            {
+                var allSelected = DanhSachNguoiThue.All(t => t.IsSelected);
+                SetProperty(ref _isAllSelected, allSelected, nameof(IsAllSelected));
+            }
+            else
+            {
+                SetProperty(ref _isAllSelected, false, nameof(IsAllSelected));
+            }
+        }
+
+        // --- Logic Thêm Người Thuê ---
         [RelayCommand]
         private void OpenAddPopup()
         {
@@ -94,12 +101,9 @@ namespace RoomManagementSystem.Presentation.ViewModels
             NewTenantName = "";
             NewTenantEmail = "";
             NewTenantPhone = "";
-            NewTenantIdCard = ""; // Reset
+            NewTenantIdCard = "";
             NewTenantStartDate = DateTime.Now;
-            SelectedRoomForNewTenant = null; // Reset
-
-            
-
+            SelectedRoomForNewTenant = null;
             IsAddPopupVisible = true;
         }
 
@@ -110,57 +114,99 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 var nguoiThueMoi = new NguoiThue
                 {
-                    
-
                     HoTen = NewTenantName,
                     Email = NewTenantEmail,
                     Sdt = NewTenantPhone,
-
-                    // Lấy số giấy tờ từ TextBox
                     SoGiayTo = NewTenantIdCard,
-
-                   
                 };
 
-                // Gọi đến lớp Business Layer đã được cập nhật
                 if (_nguoiThueService.ThemNguoiThue(nguoiThueMoi))
                 {
                     MessageBox.Show("Thêm người thuê thành công!");
-                    LoadData(); // Tải lại danh sách người thuê
-                    IsAddPopupVisible = false; // Đóng popup
+                    LoadData();
+                    IsAddPopupVisible = false;
                 }
-                // (Không cần else, vì nếu thất bại, lớp Business sẽ ném ra exception)
             }
             catch (Exception ex)
             {
-                // Hiển thị các lỗi nghiệp vụ từ lớp Business
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         [RelayCommand]
-        private void CancelAdd()
+        private void CancelAdd() { IsAddPopupVisible = false; }
+
+        // --- Logic Sửa Người Thuê ---
+        [RelayCommand]
+        private void OpenEditTenantDialog()
         {
-            IsAddPopupVisible = false;
+            var selectedTenants = DanhSachNguoiThue.Where(t => t.IsSelected).ToList();
+
+            if (selectedTenants.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một người thuê để sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            if (selectedTenants.Count > 1)
+            {
+                MessageBox.Show("Chỉ có thể chỉnh sửa một người thuê tại một thời điểm.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var tenantWrapperToEdit = selectedTenants.First();
+            // ✅ SỬA LỖI: Lấy đối tượng NguoiThue gốc từ thuộc tính .Tenant
+            var tenantToEdit = tenantWrapperToEdit.Tenant;
+
+            // Tạo một BẢN SAO để chỉnh sửa, tránh thay đổi dữ liệu gốc nếu người dùng nhấn Hủy
+            EditingTenant = new NguoiThue
+            {
+                MaNguoiThue = tenantToEdit.MaNguoiThue,
+                HoTen = tenantToEdit.HoTen,
+                Email = tenantToEdit.Email,
+                Sdt = tenantToEdit.Sdt,
+                SoGiayTo = tenantToEdit.SoGiayTo,
+                NgayBatDauThue = tenantToEdit.NgayBatDauThue,
+                NgayTao = tenantToEdit.NgayTao,
+            };
+
+            IsEditPopupVisible = true;
         }
 
+        [RelayCommand]
+        private void SaveEdit()
+        {
+            if (EditingTenant == null) return;
+            try
+            {
+                if (_nguoiThueService.CapNhatNguoiThue(EditingTenant))
+                {
+                    MessageBox.Show("Cập nhật thành công!");
+                    LoadData();
+                    IsEditPopupVisible = false;
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật thất bại!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi cập nhật: {ex.Message}");
+            }
+        }
 
-        // ✅ THÊM CÁC COMMAND MỚI CHO LOGIC XÓA
+        [RelayCommand]
+        private void CancelEdit() { IsEditPopupVisible = false; }
 
-        // Thay thế Command trống cũ bằng Command có logic này
+        // --- Logic Xóa Người Thuê ---
         [RelayCommand]
         private void OpenDeleteTenantDialog()
         {
-            // Tìm những người thuê đang được chọn
-            var selectedTenants = DanhSachNguoiThue.Where(t => t.IsSelected).ToList();
-
-            if (!selectedTenants.Any())
+            if (!DanhSachNguoiThue.Any(t => t.IsSelected))
             {
                 MessageBox.Show("Vui lòng chọn ít nhất một người thuê để xóa.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-
-           
             IsDeleteConfirmationVisible = true;
         }
 
@@ -169,12 +215,11 @@ namespace RoomManagementSystem.Presentation.ViewModels
         {
             try
             {
-                var selectedTenants = DanhSachNguoiThue.Where(t => t.IsSelected).ToList();
+                var selectedTenantsVMs = DanhSachNguoiThue.Where(t => t.IsSelected).ToList();
                 int successCount = 0;
-
-                foreach (var tenant in selectedTenants)
+                foreach (var tenantVM in selectedTenantsVMs)
                 {
-                    if (_nguoiThueService.XoaNguoiThue(tenant.MaNguoiThue))
+                    if (_nguoiThueService.XoaNguoiThue(tenantVM.Tenant.MaNguoiThue))
                     {
                         successCount++;
                     }
@@ -193,86 +238,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
         }
 
         [RelayCommand]
-        private void CancelDelete()
-        {
-            IsDeleteConfirmationVisible = false;
-        }
-
-
-
-
-        // --- ✅ LOGIC MỚI CHO VIỆC SỬA ---
-
-        [RelayCommand]
-        private void OpenEditTenantDialog()
-        {
-            // 1. Lấy danh sách TẤT CẢ những người thuê đang được chọn
-            var selectedTenants = DanhSachNguoiThue.Where(t => t.IsSelected).ToList();
-
-            // 2. Kiểm tra số lượng người được chọn
-            if (selectedTenants.Count == 0)
-            {
-                MessageBox.Show("Vui lòng chọn một người thuê để sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            if (selectedTenants.Count > 1)
-            {
-                MessageBox.Show("Chỉ có thể chỉnh sửa thông tin của một người thuê tại một thời điểm.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // 3. Nếu chỉ có MỘT người được chọn, tiếp tục
-            var tenantToEdit = selectedTenants.First();
-
-            // Tạo một BẢN SAO của người thuê để chỉnh sửa.
-            // Điều này rất quan trọng: nếu người dùng nhấn "Hủy", dữ liệu gốc trong danh sách sẽ không bị thay đổi.
-            EditingTenant = new NguoiThue
-            {
-                MaNguoiThue = tenantToEdit.MaNguoiThue,
-                HoTen = tenantToEdit.HoTen,
-                Email = tenantToEdit.Email,
-                Sdt = tenantToEdit.Sdt,
-                SoGiayTo = tenantToEdit.SoGiayTo,
-                NgayBatDauThue = tenantToEdit.NgayBatDauThue,
-                NgayTao = tenantToEdit.NgayTao,
-            };
-
-            // 4. Hiển thị popup Sửa
-            IsEditPopupVisible = true;
-        }
-
-        [RelayCommand]
-        private void SaveEdit()
-        {
-            if (EditingTenant == null) return;
-
-            try
-            {
-                // Gọi service để cập nhật thông tin
-                if (_nguoiThueService.CapNhatNguoiThue(EditingTenant))
-                {
-                    MessageBox.Show("Cập nhật thành công!");
-                    LoadData(); // Tải lại danh sách
-                    IsEditPopupVisible = false; // Đóng popup
-                }
-                else
-                {
-                    MessageBox.Show("Cập nhật thất bại!");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi cập nhật: {ex.Message}");
-            }
-        }
-
-        [RelayCommand]
-        private void CancelEdit()
-        {
-            IsEditPopupVisible = false;
-        }
-
-        
+        private void CancelDelete() { IsDeleteConfirmationVisible = false; }
     }
 }
