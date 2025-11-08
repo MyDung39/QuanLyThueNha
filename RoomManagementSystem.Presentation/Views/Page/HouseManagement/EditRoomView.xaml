@@ -44,7 +44,7 @@
                                Foreground="#8A8A8A"/>
 
                     <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand" Click="CloseButton_Click">
+                            Background="Transparent" BorderThickness="0" Cursor="Hand" Command="{Binding CancelEditRoomCommand}">
                         <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" Stroke="#565656" StrokeThickness="1.5"/>
                     </Button>
                 </Grid>
@@ -61,7 +61,7 @@
                         <TextBlock Text="Số phòng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
                             <TextBox x:Name="RoomNumberTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
-                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"/>
+                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32" Text="{Binding EditingRoomNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </Border>
                     </StackPanel>
 
@@ -74,7 +74,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBox x:Name="AreaTextBox" Grid.Column="0" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
-                                         VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"/>
+                                         VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32" Text="{Binding EditingRoomArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Grid.Column="1" Text="m²" VerticalAlignment="Center" Margin="0,0,12,0" FontFamily="Poppins" FontSize="12"/>
                             </Grid>
                         </Border>
@@ -93,7 +93,7 @@
                         <TextBlock Text="Chi phí theo tháng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
                             <TextBox x:Name="MonthlyCostTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
-                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"/>
+                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32" Text="{Binding EditingRoomCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </Border>
                     </StackPanel>
 
@@ -101,7 +101,7 @@
                         <TextBlock Text="Ghi chú" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
                             <TextBox x:Name="NotesTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
-                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"/>
+                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32" Text="{Binding EditingRoomNotes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </Border>
                     </StackPanel>
                 </Grid>
@@ -109,7 +109,7 @@
                 <!-- Save Button -->
                 <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="SaveButton" Content="Lưu" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA"
-                            Width="80" Padding="0,8" Click="SaveButton_Click">
+                            Width="80" Padding="0,8" Command="{Binding SaveEditRoomCommand}">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="10"/>

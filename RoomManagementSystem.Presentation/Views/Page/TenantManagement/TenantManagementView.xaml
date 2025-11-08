@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
              xmlns:local="clr-namespace:RoomManagementSystem.Presentation.Views.Page.TenantManagement"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=vm:TenantManagementViewModel}"
              FontFamily="Roboto"
@@ -43,9 +44,40 @@
         <!-- LỚP 1: NỘI DUNG CHÍNH -->
         <ScrollViewer>
             <StackPanel Margin="30">
+                <TextBlock Text="Quản lý người thuê" FontSize="24" FontWeight="Bold" Foreground="#1F384C" Margin="0,0,0,20"/>
                 <Grid Margin="0,0,0,20">
+
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Border Background="White" CornerRadius="10" BorderBrush="#EEEEEE" BorderThickness="1" Padding="10,8">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="../../../Resources/Images/search_icon.png" Width="16" Height="16"/>
+                                <TextBox Text="{Binding TenantSearchKeyword, UpdateSourceTrigger=PropertyChanged}" Foreground="#B5B7C0" BorderThickness="0" Background="Transparent" VerticalAlignment="Center" Margin="10,0,0,0" Width="150" FontSize="12"/>
+                            </StackPanel>
+                        </Border>
+                        <Button Name="SortButton" Margin="20,0,0,0" BorderThickness="0" Background="Transparent" Cursor="Hand">
+                            <Border Background="White" CornerRadius="10" BorderBrush="#EEEEEE" BorderThickness="1" Padding="15,8">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Sắp xếp theo : " Foreground="#7E7E7E" VerticalAlignment="Center" FontSize="12"/>
+                                    <TextBlock Text="{Binding SelectedSortOption}" Foreground="#3D3C42" FontWeight="SemiBold" VerticalAlignment="Center" FontSize="12"/>
+                                    <Path Data="M 0 0 L 4.5 4.5 L 9 0" Stroke="#7E7E7E" StrokeThickness="1.5" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            <Button.ContextMenu>
+                                <ContextMenu ItemsSource="{Binding SortOptions}">
+                                    <ContextMenu.ItemContainerStyle>
+                                        <Style TargetType="MenuItem">
+                                            <Setter Property="Command" Value="{Binding DataContext.SortCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                            <Setter Property="CommandParameter" Value="{Binding}"/>
+                                        </Style>
+                                    </ContextMenu.ItemContainerStyle>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </StackPanel>
+
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/view_details_icon.png" Margin="0,0,10,0"/>
+                    <!--    <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/view_details_icon.png" Margin="0,0,10,0"/>  -->
                         <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/edit_icon.png" Margin="0,0,10,0"
                                 Command="{Binding OpenEditTenantDialogCommand}"/>
                         <Button Style="{StaticResource ActionButton}" Tag="../../../Resources/Images/delete_icon.png" Margin="0,0,10,0"
@@ -68,7 +100,13 @@
                                 <ColumnDefinition Width="1.5*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox x:Name="SelectAllCheckBox" Grid.Column="0" VerticalAlignment="Center" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked"/>
+                            <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsAllSelected, Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding ToggleSelectAllCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </CheckBox>
                             <TextBlock Grid.Column="1" Text="Tên người thuê" Foreground="#B5B7C0" FontWeight="Medium" FontSize="14"/>
                             <TextBlock Grid.Column="2" Text="Số điện thoại" Foreground="#B5B7C0" FontWeight="Medium" FontSize="14"/>
                             <TextBlock Grid.Column="3" Text="Email" Foreground="#B5B7C0" FontWeight="Medium" FontSize="14"/>
@@ -90,7 +128,15 @@
                                                 <ColumnDefinition Width="1.5*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                            <CheckBox Grid.Column="0" VerticalAlignment="Center" 
+                                                      IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                                <!-- Optional: Có thể thêm trigger để cập nhật nút Xóa/Sửa ngay lập tức -->
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.TenantSelectionChangedCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </CheckBox>
                                             <TextBlock Grid.Column="1" Text="{Binding HoTen}" FontWeight="Medium" FontSize="14"/>
                                             <TextBlock Grid.Column="2" Text="{Binding Sdt}" FontWeight="Medium" FontSize="14"/>
                                             <TextBlock Grid.Column="3" Text="{Binding Email}" FontWeight="Medium" FontSize="14"/>
@@ -117,5 +163,16 @@
         <local:AddTenantView HorizontalAlignment="Center" VerticalAlignment="Center"
                              Visibility="{Binding IsAddPopupVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Collapsed}"
                              DataContext="{Binding}"/>
+
+
+        <local:DeleteConfirmationView HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Visibility="{Binding IsDeleteConfirmationVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Collapsed}"
+                                      DataContext="{Binding}"/>
+
+        <!-- POPUP SỬA -->
+        <local:EditTenantView HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Visibility="{Binding IsEditPopupVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Collapsed}"
+                              DataContext="{Binding}"/>
+
     </Grid>
 </UserControl>

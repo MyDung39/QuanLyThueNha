@@ -69,8 +69,8 @@
 
             <!-- Close Button (acts as Cancel) -->
             <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
-            Margin="0,15,15,0" Background="Transparent" BorderThickness="0" Cursor="Hand"
-            Click="CloseButton_Click">
+                    Margin="0,15,15,0" Background="Transparent" BorderThickness="0" Cursor="Hand"
+                    Command="{Binding CancelDeleteCommand}">
                 <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" Stroke="#565656" StrokeThickness="1.5"/>
             </Button>
 
@@ -80,11 +80,14 @@
             <!-- Content -->
             <TextBlock Grid.Row="1" Text="Bạn có muốn xóa những người dùng này không?" FontSize="13" Foreground="#6F6F6F" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
+
+            
+
             <!-- Confirm Button -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,25">
                 <Button Content="Xác nhận" Width="88" Height="37"
                         Style="{StaticResource ConfirmButtonStyle}"
-                        Click="ConfirmButton_Click"/>
+                        Command="{Binding ConfirmDeleteCommand}"/>
             </StackPanel>
         </Grid>
     </Border>

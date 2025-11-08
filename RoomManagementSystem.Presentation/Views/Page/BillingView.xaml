@@ -94,7 +94,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Margin="0,0,0,16">
-                                            <TextBlock Text="{Binding TenNha}"
+                                            <TextBlock Text="{Binding DiaChi}"
                                                        FontSize="14"
                                                        FontWeight="SemiBold"
                                                        Foreground="#444"
@@ -163,14 +163,7 @@
                            FontSize="18"
                            FontWeight="Bold"
                            Foreground="#1E1E2F"/>
-                                <TextBlock Text="Trần Thanh Nhã"
-                           Foreground="#555"
-                           FontSize="13"
-                           Margin="0,2,0,0"/>
-                                <TextBlock Text="Đại học Tôn Đức Thắng, Tân Hưng, TP.HCM"
-                           Foreground="#777"
-                           FontSize="12"
-                           Margin="0,2,0,0"/>
+                                
                                 <TextBlock Text="+84 9 0808 3890 | plumeriafamily@outlook.com"
                            Foreground="#777"
                            FontSize="12"/>
@@ -178,20 +171,9 @@
 
                             <!-- BÊN PHẢI -->
                             <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                                <TextBlock Text="#HD/2014/APPLE-001"
-                           FontSize="12"
-                           Foreground="#777"
-                           TextAlignment="Right"/>
-                                <TextBlock Text="Tổng số tiền"
-                           FontSize="13"
-                           Foreground="#444"
-                           Margin="0,4,0,0"
-                           TextAlignment="Right"/>
-                                <TextBlock Text="3,550,000 VND"
-                           FontSize="22"
-                           FontWeight="Bold"
-                           Foreground="#1E1E2F"
-                           TextAlignment="Right"/>
+                                <TextBlock Text="{Binding SelectedBillInfo.MaHoaDon, StringFormat='#{0}'}" FontSize="12" Foreground="#777" TextAlignment="Right"/>
+                                <TextBlock Text="Tổng số tiền" FontSize="13" Foreground="#444" Margin="0,4,0,0" TextAlignment="Right"/>
+                                <TextBlock Text="{Binding SelectedBillInfo.TongTien, StringFormat='{}{0:N0} VN'}" FontSize="22" FontWeight="Bold" Foreground="#1E1E2F" TextAlignment="Right"/>
                             </StackPanel>
                         </Grid>
 
@@ -211,26 +193,21 @@
                                 <!-- CỘT TRÁI -->
                                 <StackPanel Grid.Column="0" Margin="0,0,12,0">
                                     <TextBlock Text="Ngày lập hóa đơn" FontSize="12" Foreground="#777"/>
-                                    <TextBlock Text="05/05/2025" FontSize="13" FontWeight="SemiBold" Foreground="#1E1E2F" Margin="0,2,0,6"/>
+                                    <TextBlock Text="{Binding SelectedBillInfo.NgayLapHoaDon, StringFormat='dd/MM/yyyy'}" FontSize="13" FontWeight="SemiBold" Foreground="#1E1E2F" Margin="0,2,0,6"/>
                                     <TextBlock Text="Ngày gửi thông báo" FontSize="12" Foreground="#777"/>
-                                    <TextBlock Text="06/05/2025" FontSize="13" FontWeight="SemiBold" Margin="0,2,0,6"/>
+                                    <TextBlock Text="{Binding SelectedBillInfo.NgayGuiThongBao, StringFormat='dd/MM/yyyy'}" FontSize="13" FontWeight="SemiBold" Margin="0,2,0,6"/>
                                     <TextBlock Text="Thời gian thanh toán" FontSize="12" Foreground="#777"/>
                                     <TextBlock Text="Trong vòng 15 ngày" FontSize="13" FontWeight="SemiBold" Margin="0,2,0,6"/>
                                     <TextBlock Text="Ngày hạn thanh toán" FontSize="12" Foreground="#777"/>
-                                    <TextBlock Text="20/05/2025" FontSize="13" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding SelectedBillInfo.NgayHanThanhToan, StringFormat='dd/MM/yyyy'}" FontSize="13" FontWeight="SemiBold"/>
                                 </StackPanel>
 
                                 <!-- CỘT PHẢI -->
                                 <StackPanel Grid.Column="1" Margin="12,0,0,0">
                                     <TextBlock Text="Phòng cần thanh toán" FontSize="12" Foreground="#777"/>
                                     <TextBlock Text="{Binding SelectedBillInfo.MaPhong}" FontSize="13" FontWeight="SemiBold" Margin="0,2,0,6"/>
-                                    <TextBlock Text="{Binding SelectedBillInfo.DiaChi, StringFormat='Nhà: {0}'}" />
-                                    <TextBlock Text="{Binding SelectedBillInfo.DanhSachKhach, StringFormat='Khách: {0}'}"
-                                       TextWrapping="Wrap"
-                                       FontSize="12"
-                                       Foreground="#555"
-                                       Margin="0,0,0,6"/>
-
+                                    <TextBlock Text="{Binding SelectedBillInfo.TenNha, StringFormat='Nhà: {0}'}" FontSize="12" Foreground="#555"/>
+                                    <TextBlock Text="{Binding SelectedBillInfo.DanhSachNguoiThue, StringFormat='Đến: {0}'}" TextWrapping="Wrap" FontSize="12" Foreground="#555" Margin="0,0,0,6"/>
                                     <TextBlock Text="{Binding SelectedBillInfo.SoNguoiHienTai, StringFormat='Số người lưu trú: {0}'}" FontSize="12" Foreground="#555" Margin="0,0,0,6"/>
                                     <TextBlock Text="Ghi chú" FontSize="12" Foreground="#777" Margin="0,4,0,2"/>
                                     <TextBlock Text="Cảm ơn quý khách đã lưu trú tại đây. Hóa đơn này áp dụng cho thời gian từ 04/06/2025 đến 05/06/2025. Vui lòng thanh toán trước ngày 16/10/2025."

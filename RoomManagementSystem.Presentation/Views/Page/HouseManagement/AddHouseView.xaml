@@ -4,233 +4,53 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="362" d:DesignWidth="535"
+             d:DesignHeight="370" d:DesignWidth="535"
+             Width="535" 
+             Height="370"
              FontFamily="Roboto">
 
-    <UserControl.Resources>
-        <DropShadowEffect x:Key="DropShadowEffect" 
-                          Color="Black" 
-                          Direction="135" 
-                          ShadowDepth="2.7" 
-                          BlurRadius="5.4" 
-                          Opacity="0.14"/>
-    </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect ShadowDepth="1" BlurRadius="5" Color="Black" Opacity="0.14"/>
+    </UserControl.Effect>
 
-    <Grid>
-        <!-- Modal Overlay -->
-        <Rectangle Fill="#80000000" />
+    <Border Background="White" CornerRadius="14">
+        <Grid>
+            <!-- Nút đóng -->
+            <Button Command="{Binding CancelAddHouseCommand}" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,15,0" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" Stroke="#565656" StrokeThickness="1.5"/>
+            </Button>
 
-        <!-- Modal Content -->
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!-- Modal Background -->
-            <Border Background="White" 
-                    CornerRadius="14" 
-                    Width="535" 
-                    Height="362"
-                    Effect="{StaticResource DropShadowEffect}">
+            <StackPanel Margin="40">
+                <TextBlock Text="Thêm thông tin nhà" FontSize="20" Foreground="#8A8A8A" Margin="0,0,0,25"/>
 
-                <Grid Margin="40,22,40,34">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- Title and Close Button -->
-                    <Grid Grid.Row="0" Margin="0,0,0,20">
-                        <TextBlock Text="Thêm thông tin nhà" 
-                                   FontFamily="Poppins" 
-                                   FontSize="20" 
-                                   Foreground="#8A8A8A" 
-                                   VerticalAlignment="Top" Margin="0,16,0,0"/>
-
-                        <Button x:Name="CloseButton" 
-                                Width="30" 
-                                Height="30" 
-                                HorizontalAlignment="Left" 
-                                VerticalAlignment="Top"
-                                Margin="427,9,0,0"
-                                Background="Transparent" 
-                                BorderThickness="0" 
-                                Cursor="Hand"
-                                Click="CloseButton_Click">
-                            <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" 
-                                  Stroke="#565656" 
-                                  StrokeThickness="1.5"/>
+                <!-- Ô NHẬP ĐỊA CHỈ -->
+                <TextBlock Text="Địa chỉ *" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
+                    <Grid>
+                        <TextBox Text="{Binding NewHouseAddress, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" Padding="15,0,40,0" VerticalContentAlignment="Center" FontSize="12"/>
+                        <Button Grid.Column="1" Width="23" Height="23" Margin="0,0,10,0" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <!--        <Image Source="../../../Resources/Images/map_icon.png" Width="23" Height="23"/>  -->
                         </Button>
                     </Grid>
+                </Border>
 
-                    <!-- Address Input -->
-                    <StackPanel Grid.Row="1" Margin="0,0,0,20">
-                        <TextBlock Text="Địa chỉ" 
-                                   FontSize="13" 
-                                   Foreground="#292D32" 
-                                   Margin="0,0,0,10"/>
+                <!-- Ô NHẬP GHI CHÚ -->
+                <TextBlock Text="Ghi chú" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
+                <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="68">
+                    <TextBox Text="{Binding NewHouseNotes, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" Padding="15,10" FontSize="12" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                </Border>
 
-                        <Border Background="#F9FBFF" 
-                                BorderBrush="#F0EEEE" 
-                                BorderThickness="1" 
-                                CornerRadius="9.5" 
-                                Height="36">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox x:Name="AddressTextBox" 
-                                         Grid.Column="0"
-                                         Background="Transparent" 
-                                         BorderThickness="0" 
-                                         Padding="15,0,10,0"
-                                         VerticalContentAlignment="Center"
-                                         FontSize="12"
-                                         Foreground="#B5B7C0" TextChanged="AddressTextBox_TextChanged">
-                                    <TextBox.Style>
-                                        <Style TargetType="TextBox">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="TextBox">
-                                                        <Border Background="{TemplateBinding Background}" 
-                                                                BorderThickness="{TemplateBinding BorderThickness}">
-                                                            <Grid>
-                                                                <ScrollViewer x:Name="PART_ContentHost" 
-                                                                              Margin="{TemplateBinding Padding}"/>
-                                                                <TextBlock Text="Nhập địa chỉ hoặc chọn vị trí trên bản đồ" 
-                                                                           Foreground="#B5B7C0" 
-                                                                           IsHitTestVisible="False"
-                                                                           VerticalAlignment="Center" 
-                                                                           Margin="{TemplateBinding Padding}"
-                                                                           FontSize="12">
-                                                                    <TextBlock.Style>
-                                                                        <Style TargetType="TextBlock">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                                            <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}" Value="">
-                                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                                </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}" Value="{x:Null}">
-                                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                                </DataTrigger>
-                                                                            </Style.Triggers>
-                                                                        </Style>
-                                                                    </TextBlock.Style>
-                                                                </TextBlock>
-                                                            </Grid>
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </TextBox.Style>
-                                </TextBox>
-
-                                <Button Grid.Column="1" 
-                                        Width="23" 
-                                        Height="23" 
-                                        Margin="0,0,10,0"
-                                        Background="Transparent" 
-                                        BorderThickness="0"
-                                        Cursor="Hand"
-                                        Click="MapButton_Click">
-                                    <Image Source="../../../Resources/Images/map_icon.png" 
-                                           Width="23" 
-                                           Height="23"/>
-                                </Button>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-
-                    <!-- Notes Input -->
-                    <StackPanel Grid.Row="2" Margin="0,0,0,20">
-                        <TextBlock Text="Ghi chú" 
-                                   FontSize="13" 
-                                   Foreground="#292D32" 
-                                   Margin="0,0,0,10"/>
-
-                        <Border Background="#F9FBFF" 
-                                BorderBrush="#F0EEEE" 
-                                BorderThickness="1" 
-                                CornerRadius="9.5" 
-                                Height="68">
-                            <TextBox x:Name="NotesTextBox" 
-                                     Background="Transparent" 
-                                     BorderThickness="0" 
-                                     Padding="15,10"
-                                     FontSize="12"
-                                     Foreground="#B5B7C0"
-                                     TextWrapping="Wrap"
-                                     AcceptsReturn="True"
-                                     VerticalScrollBarVisibility="Auto">
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="TextBox">
-                                                    <Border Background="{TemplateBinding Background}" 
-                                                            BorderThickness="{TemplateBinding BorderThickness}">
-                                                        <Grid>
-                                                            <ScrollViewer x:Name="PART_ContentHost" 
-                                                                          Margin="{TemplateBinding Padding}"/>
-                                                            <TextBlock Text="Viết ghi chú tại đây" 
-                                                                       Foreground="#B5B7C0" 
-                                                                       IsHitTestVisible="False"
-                                                                       VerticalAlignment="Top" 
-                                                                       Margin="{TemplateBinding Padding}"
-                                                                       FontSize="12">
-                                                                <TextBlock.Style>
-                                                                    <Style TargetType="TextBlock">
-                                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}" Value="">
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}" Value="{x:Null}">
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </TextBlock.Style>
-                                                            </TextBlock>
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                        </Border>
-                    </StackPanel>
-
-                    <!-- Spacer -->
-                    <Grid Grid.Row="3"/>
-
-                    <!-- Add Button -->
-                    <StackPanel Grid.Row="4" 
-                                Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-                        <Button x:Name="AddButton" 
-                                Content="Thêm" 
-                                FontSize="14" 
-                                FontWeight="Medium" 
-                                Foreground="White" 
-                                Background="#5A67BA"
-                                Width="80" 
-                                Padding="0,8" 
-                                Click="AddButton_Click">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="10"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-            </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                    <!-- NÚT THÊM -->
+                    <Button Content="Thêm" Command="{Binding SaveNewHouseCommand}" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA" Width="80" Padding="0,8">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>
-

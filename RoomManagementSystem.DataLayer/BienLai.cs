@@ -4,57 +4,80 @@ using System.Collections.Generic;
 
 namespace RoomManagementSystem.DataLayer
 {
+    // Lớp BienLai này đã được cập nhật để chứa tất cả các thông tin cần thiết
     public class BienLai
     {
-        public string HoTenChuNha { get; set; }
+        public string MaHoaDon { get; set; }
+        public decimal TongTien { get; set; }
         public string MaPhong { get; set; }
-        public string DiaChi { get; set; }
-        public string DanhSachKhach { get; set; }
-        public string DanhSachSDT { get; set; }
-        public string SoNguoiHienTai { get; set; }
+        public string TenNha { get; set; }
+        public string DanhSachNguoiThue { get; set; }
+        public int SoNguoiHienTai { get; set; }
         public string TenDichVu { get; set; }
-        public decimal SoLuong { get; set; }
         public string DVT { get; set; }
+        public decimal SoLuong { get; set; }
         public decimal DonGia { get; set; }
         public decimal ThanhTien { get; set; }
+        public string DanhSachSDT { get; set; }
         public DateTime NgayThanhToan { get; set; }
+        public string DiaChi { get; set; }
+        public string TenTaiKhoan { get; set; }
+
+        // ✅ BỔ SUNG 3 THUỘC TÍNH NÀY VÀO
+        public DateTime? NgayLapHoaDon { get; set; }
+        public DateTime? NgayGuiThongBao { get; set; }
+        public DateTime? NgayHanThanhToan { get; set; }
     }
 
     public class BienLaiDAL
     {
         string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
-        public List<BienLai> GetBienLaiByPhong(string maPhong)
+        public List<BienLai> GetBienLaiTheoMaPhong(string maPhong)
         {
             List<BienLai> lst = new List<BienLai>();
             using (SqlConnection con = new SqlConnection(connect))
             {
-                // ✅ ĐÃ XÓA CÁC CỘT KHÔNG TỒN TẠI
+                // ✅ ĐÂY LÀ CÂU TRUY VẤN ĐÃ CHẠY THÀNH CÔNG TRONG SSMS
                 string query = @"
-                    SELECT 
-                        us.TenTaiKhoan AS HoTenChuNha,
-                        p.MaPhong,
-                        n.DiaChi,
+                    DECLARE @MaHoaDon VARCHAR(20);
+                    SELECT TOP 1 @MaHoaDon = MaHoaDon 
+                    FROM HoaDon 
+                    WHERE MaPhong = @MaPhong 
+                    ORDER BY NgayTao DESC;
 
-                        (SELECT STRING_AGG(nt.HoTen, ', ') FROM NguoiThue nt WHERE nt.MaPhong = p.MaPhong) AS DanhSachKhach,
-                        (SELECT STRING_AGG(nt.SoDienThoai, ', ') FROM NguoiThue nt WHERE nt.MaPhong = p.MaPhong) AS DanhSachSDT,
-
-                        p.SoNguoiHienTai,
-                        dv.TenDichVu,
-                        cthd.SoLuong,
-                        dv.DVT,
-                        cthd.DonGia,
-                        cthd.ThanhTien,
-                        tt.NgayTao AS NgayThanhToan
-                    FROM HoaDon hd
-                    JOIN ThanhToan tt ON tt.MaHoaDon = hd.MaHoaDon
-                    JOIN ChiTietHoaDon cthd ON hd.MaHoaDon = cthd.MaHoaDon
-                    JOIN DichVu dv ON cthd.MaDichVu = dv.MaDichVu
-                    JOIN Phong p ON tt.MaPhong = p.MaPhong
-                    JOIN HopDong hop ON hop.MaPhong = p.MaPhong
-                    JOIN Nha n ON hop.ChuNha = n.MaNguoiDung
-                    JOIN NguoiDung us ON n.MaNguoiDung = us.MaNguoiDung
-                    WHERE p.MaPhong = @MaPhong";
+                    IF @MaHoaDon IS NOT NULL
+                    BEGIN
+                        SELECT 
+                            hd.MaHoaDon,
+                            hd.NgayTao AS NgayLapHoaDon,
+                            tbp.NgayGui AS NgayGuiThongBao,
+                            tt.NgayHanThanhToan,
+                            p.MaPhong,
+                            nha.DiaChi AS TenNha,
+                            (SELECT STRING_AGG(nt.HoTen, ', ') 
+                             FROM HopDong_NguoiThue h_nt
+                             JOIN NguoiThue nt ON h_nt.MaNguoiThue = nt.MaNguoiThue
+                             JOIN HopDong h ON h_nt.MaHopDong = h.MaHopDong
+                             WHERE h.MaPhong = p.MaPhong AND h_nt.TrangThaiThue = N'Đang ở') AS DanhSachNguoiThue,
+                            p.SoNguoiHienTai,
+                            (SELECT SUM(cthd_sum.ThanhTien) FROM ChiTietHoaDon cthd_sum WHERE cthd_sum.MaHoaDon = hd.MaHoaDon) AS TongTien,
+                            
+                            dv.TenDichVu,
+                            cthd.DVT,
+                            cthd.SoLuong,
+                            cthd.DonGia,
+                            cthd.ThanhTien
+                        FROM HoaDon hd
+                        LEFT JOIN Phong p ON hd.MaPhong = p.MaPhong
+                        LEFT JOIN Nha nha ON p.MaNha = nha.MaNha
+                        LEFT JOIN HopDong h ON p.MaPhong = h.MaPhong AND h.TrangThai = N'Hiệu lực'
+                        LEFT JOIN ChiTietHoaDon cthd ON hd.MaHoaDon = cthd.MaHoaDon
+                        LEFT JOIN DichVu dv ON cthd.MaDichVu = dv.MaDichVu
+                        LEFT JOIN ThanhToan tt ON hd.MaHoaDon = tt.MaHoaDon
+                        LEFT JOIN ThongBaoPhi tbp ON tt.MaThongBaoPhi = tbp.MaThongBaoPhi
+                        WHERE hd.MaHoaDon = @MaHoaDon;
+                    END";
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@MaPhong", maPhong);
@@ -63,20 +86,25 @@ namespace RoomManagementSystem.DataLayer
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
+                    // Phần đọc dữ liệu này đã được cập nhật để khớp với câu SELECT
                     lst.Add(new BienLai()
                     {
-                        HoTenChuNha = dr["HoTenChuNha"]?.ToString(),
+                        MaHoaDon = dr["MaHoaDon"]?.ToString(),
+                        NgayLapHoaDon = dr["NgayLapHoaDon"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dr["NgayLapHoaDon"]),
+                        NgayGuiThongBao = dr["NgayGuiThongBao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dr["NgayGuiThongBao"]),
+                        NgayHanThanhToan = dr["NgayHanThanhToan"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dr["NgayHanThanhToan"]),
+                        TongTien = dr["TongTien"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["TongTien"]),
+
                         MaPhong = dr["MaPhong"]?.ToString(),
-                        DiaChi = dr["DiaChi"]?.ToString(),
-                        DanhSachKhach = dr["DanhSachKhach"]?.ToString(),
-                        DanhSachSDT = dr["DanhSachSDT"]?.ToString(),
-                        SoNguoiHienTai = dr["SoNguoiHienTai"]?.ToString(),
+                        TenNha = dr["TenNha"]?.ToString(),
+                        DanhSachNguoiThue = dr["DanhSachNguoiThue"]?.ToString(),
+                        SoNguoiHienTai = dr["SoNguoiHienTai"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SoNguoiHienTai"]),
+
                         TenDichVu = dr["TenDichVu"]?.ToString(),
-                        SoLuong = dr["SoLuong"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["SoLuong"]),
                         DVT = dr["DVT"]?.ToString(),
+                        SoLuong = dr["SoLuong"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["SoLuong"]),
                         DonGia = dr["DonGia"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["DonGia"]),
-                        ThanhTien = dr["ThanhTien"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["ThanhTien"]),
-                        NgayThanhToan = dr["NgayThanhToan"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["NgayThanhToan"])
+                        ThanhTien = dr["ThanhTien"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["ThanhTien"])
                     });
                 }
             }

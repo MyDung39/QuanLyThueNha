@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:RoomManagementSystem.Presentation.Views.Page.HouseManagement"
+             xmlns:vm="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              FontFamily="Roboto"
-             d:DesignHeight="779" d:DesignWidth="1293"
+             d:DataContext="{d:DesignInstance Type=vm:HouseManagementViewModel}"
              Background="White">
 
     <UserControl.Resources>
@@ -140,6 +142,8 @@
             <Setter Property="Margin" Value="3,0"/>
         </Style>
 
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        
     </UserControl.Resources>
 
     <Grid>
@@ -161,46 +165,30 @@
 
                 <Border Grid.Row="1" Grid.RowSpan="2" Background="#F0EDFF" Opacity="0.5" CornerRadius="15"/>
                 <Grid Grid.Row="1" Margin="10,15" Height="37" VerticalAlignment="Top">
-                    <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox" BasedOn="{StaticResource SearchBoxStyle}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecked, ElementName=SearchToggleButton}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-
-                    <StackPanel x:Name="ActionButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <StackPanel.Style>
-                            <Style TargetType="StackPanel">
-                                <Setter Property="Visibility" Value="Visible"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecked, ElementName=SearchToggleButton}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Style>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <ToggleButton x:Name="SearchToggleButton" Style="{StaticResource SearchToggleButtonStyle}" Tag="../../../Resources/Images/search_icon.png"/>
-                        <Button Command="{Binding EditHouseCommand}" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/edit_icon.png" Margin="22,0,0,0" Click="EditHouseButton_Click"/>
-                        <Button Command="{Binding DeleteHouseCommand}" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png" Margin="21,0,0,0" Click="DeleteHouseButton_Click"/>
-                        <Button Command="{Binding AddHouseCommand}" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png" Margin="21,0,0,0" Click="AddHouseButton_Click"/>
+                        <!-- ✅ ĐÃ THAY THẾ CLICK BẰNG COMMAND -->
+                        <Button Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/edit_icon.png" Margin="22,0,0,0" Command="{Binding EditHouseCommand}"/>
+                        <Button Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png" Margin="21,0,0,0" Command="{Binding DeleteHouseCommand}"/>
+                        <Button Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png" Margin="21,0,0,0" Command="{Binding AddHouseCommand}"/>
                     </StackPanel>
                 </Grid>
 
 
 
                 <ListBox Grid.Row="2" 
-                         ItemsSource="{Binding DanhSachNha}"
-                         SelectedItem="{Binding SelectedNha, Mode=TwoWay}"
-                         DisplayMemberPath="DiaChi"
-                         BorderThickness="0" Background="Transparent" 
-                         ItemContainerStyle="{StaticResource HouseListItemStyle}"
-                         Margin="0,10,0,0"/>
+         ItemsSource="{Binding DanhSachNha}"
+         SelectedItem="{Binding SelectedNha, Mode=TwoWay}"
+         BorderThickness="0" Background="Transparent" 
+         ItemContainerStyle="{StaticResource HouseListItemStyle}"
+         Margin="0,10,0,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Sử dụng TextBlock để binding vào thuộc tính MaNha -->
+                            <TextBlock Text="{Binding MaNha}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
 
             </Grid>
@@ -249,40 +237,37 @@
 
                 <Grid Grid.Row="2" Margin="0,20,0,15">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <TextBox x:Name="RoomsSearchTextBox" Style="{StaticResource SearchBoxStyle}" Width="216" Height="37" TextChanged="RoomsSearchTextBox_TextChanged"/>
+                        <!-- TextBox này sẽ binding vào thuộc tính 'RoomSearchKeyword' trong ViewModel -->
+                        <TextBox Style="{StaticResource SearchBoxStyle}" Width="216" Height="37"
+                                 Text="{Binding RoomSearchKeyword, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Button Name="RoomsSortButton" Margin="20,0,0,0" BorderThickness="0" Background="Transparent" Cursor="Hand" Click="RoomsSortButton_Click">
+                        <!-- Nút Sắp xếp này sẽ binding vào một Command và một thuộc tính 'SelectedSortOption' -->
+                        <Button Name="RoomsSortButton" Margin="20,0,0,0" BorderThickness="0" Background="Transparent" Cursor="Hand">
                             <Border Background="#F0EDFF" CornerRadius="10" Padding="15,0">
                                 <Grid Height="37" Width="171">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="10"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="Sắp xếp theo: " VerticalAlignment="Center" Foreground="#7E7E7E"/>
-                                    <TextBlock x:Name="RoomsSortButtonText" Text="Mới nhất" VerticalAlignment="Center" FontWeight="Bold" Foreground="Black" Grid.ColumnSpan="2" Margin="2,0,22,0" Grid.Column="1"/>
-                                    <Path Grid.Column="2" Data="M0,0 L4.5,4.3 L9,0" Stroke="#3D3C42" StrokeThickness="1.5"
-                                          HorizontalAlignment="Left" VerticalAlignment="Center" Margin="76,0,0,0" RenderTransformOrigin="2.113,0.685"/>
+                                    <TextBlock Text="Sắp xếp theo: " VerticalAlignment="Center" Foreground="#7E7E7E"/>
+                                    <TextBlock Text="{Binding SelectedSortOption}" VerticalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="90,0,0,0"/>
+                                    <Path Data="M0,0 L4.5,4.3 L9,0" Stroke="#3D3C42" StrokeThickness="1.5" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                 </Grid>
                             </Border>
                             <Button.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Mới nhất" Click="RoomsSortMenuItem_Click"/>
-                                    <MenuItem Header="Số phòng" Click="RoomsSortMenuItem_Click"/>
-                                    <MenuItem Header="Diện tích" Click="RoomsSortMenuItem_Click"/>
-                                    <MenuItem Header="Chi phí" Click="RoomsSortMenuItem_Click"/>
-                                    <MenuItem Header="Ngày bảo trì" Click="RoomsSortMenuItem_Click"/>
-                                    <MenuItem Header="Ngày có sẵn" Click="RoomsSortMenuItem_Click"/>
-                                    <MenuItem Header="Trạng thái" Click="RoomsSortMenuItem_Click"/>
+                                <ContextMenu ItemsSource="{Binding SortOptions}">
+                                    <ContextMenu.ItemContainerStyle>
+                                        <Style TargetType="MenuItem">
+                                            <!-- Command này sẽ nhận mục được chọn làm CommandParameter -->
+                                            <Setter Property="Command" Value="{Binding DataContext.SortCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                            <Setter Property="CommandParameter" Value="{Binding}"/>
+                                        </Style>
+                                    </ContextMenu.ItemContainerStyle>
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="EditRoomButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/edit_icon.png" Margin="0,0,10,0" Click="EditRoomButton_Click"/>
-                        <Button x:Name="DeleteRoomButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png" Margin="0,0,10,0" Click="DeleteRoomButton_Click"/>
-                        <Button x:Name="AddRoomButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png" Click="AddRoomButton_Click"/>
+                        <Button Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/edit_icon.png" Margin="0,0,10,0" Command="{Binding EditRoomCommand}"/>
+                        <Button Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png" Margin="0,0,10,0" Command="{Binding DeleteRoomCommand}"/>
+                        <Button Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png" Command="{Binding AddRoomCommand}"/>
                     </StackPanel>
                 </Grid>
 
@@ -298,7 +283,7 @@
                                 <ColumnDefinition Width="1.5*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox x:Name="RoomsSelectAllCheckBox" Grid.Column="0" VerticalAlignment="Center" Checked="RoomsSelectAll_Checked" Unchecked="RoomsSelectAll_Unchecked"/>
+                            <CheckBox Grid.Column="0" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="Số phòng" Foreground="#B5B7C0" FontWeight="Medium" FontSize="14"/>
                             <TextBlock Grid.Column="2" Text="Diện tích" Foreground="#B5B7C0" FontWeight="Medium" FontSize="14"/>
                             <TextBlock Grid.Column="3" Text="Chi phí theo tháng" Foreground="#B5B7C0" FontWeight="Medium" FontSize="14"/>
@@ -307,11 +292,59 @@
                             <TextBlock Grid.Column="6" Text="Trạng thái" Foreground="#B5B7C0" FontWeight="Medium" FontSize="14"/>
                         </Grid>
 
-                        <StackPanel x:Name="RoomListDataPanel"/>
+                        <ListBox ItemsSource="{Binding DanhSachPhongHienThi}"
+         SelectedItem="{Binding SelectedPhong, Mode=TwoWay}"
+         Background="Transparent"
+         BorderThickness="0"
+         HorizontalContentAlignment="Stretch">
+
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <Border Background="Transparent">
+                                                    <ContentPresenter />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#EEEEEE" BorderThickness="0,1,0,0" Padding="10">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="1.5*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1.5*"/>
+                                                <ColumnDefinition Width="1.5*"/>
+                                                <ColumnDefinition Width="1.5*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox Grid.Column="0" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding MaPhong}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding DienTich, StringFormat='{}{0:0.0} m²'}" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="3" Text="{Binding GiaThue, StringFormat='{}{0:n0} đ'}" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="4" Text="" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="5" Text="" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="6" Text="{Binding TrangThai}" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+
                     </StackPanel>
                 </Border>
 
-                <Grid Grid.Row="4" Margin="0,20,10,0">
+             <!--   <Grid Grid.Row="4" Margin="0,20,10,0">
                     <TextBlock x:Name="RoomsPaginationInfoText" VerticalAlignment="Center" Foreground="#B5B7C0" FontSize="14" FontWeight="Medium"/>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -319,25 +352,22 @@
                         <StackPanel x:Name="RoomsPageButtonsPanel" Orientation="Horizontal"/>
                         <Button x:Name="RoomsNextPageButton" Style="{StaticResource PaginationButtonStyle}" Content=">" Margin="0,0,0,0" Click="RoomsNextPageButton_Click"/>
                     </StackPanel>
-                </Grid>
+                </Grid>  -->
             </Grid>
         </Grid>
 
-        <Border x:Name="ClickAwayBorder" Background="Transparent" MouseDown="ClickAwayBorder_MouseDown">
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=SearchToggleButton}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
+    <!--    <Border Background="Transparent" 
+                Visibility="{Binding IsSearchVisible, Converter={StaticResource BoolToVis}}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDown">
+                    <i:InvokeCommandAction Command="{Binding CloseSearchCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </Border>
+        -->
 
         <!-- Dialog Views -->
-        <views:AddHouseView x:Name="AddHouseDialog" Visibility="Collapsed" 
+    <!--    <views:AddHouseView x:Name="AddHouseDialog" Visibility="Collapsed" 
                             HouseAdded="AddHouseDialog_HouseAdded" 
                             Canceled="AddHouseDialog_Canceled"/>
         <views:EditHouseView x:Name="EditHouseDialog" Visibility="Collapsed" 
@@ -346,16 +376,57 @@
         <views:DeleteHouseView x:Name="DeleteHouseDialog" Visibility="Collapsed" 
                                ConfirmDelete="DeleteHouseDialog_ConfirmDelete" 
                                Canceled="DeleteHouseDialog_Canceled"/>
-        
+      -->
         <!-- Room Dialogs -->
-        <views:AddRoomView x:Name="AddRoomDialog" Visibility="Collapsed" 
-                           RoomAdded="AddRoomDialog_RoomAdded"
-                           Canceled="AddRoomDialog_Canceled"/>
-        <views:EditRoomView x:Name="EditRoomDialog" Visibility="Collapsed" 
-                            RoomUpdated="EditRoomDialog_RoomUpdated"
-                            Canceled="EditRoomDialog_Canceled"/>
-        <views:DeleteRoomView x:Name="DeleteRoomDialog" Visibility="Collapsed" 
-                              ConfirmDelete="DeleteRoomDialog_ConfirmDelete" 
-                              Canceled="DeleteRoomDialog_Canceled"/>
+        <!-- LỚP PHỦ CHO POPUP -->
+        <Border Background="#80000000"
+            Visibility="{Binding IsAddHousePopupVisible, Converter={StaticResource BoolToVis}}"/>
+
+        <Border Background="#80000000"
+        Visibility="{Binding IsEditHousePopupVisible, Converter={StaticResource BoolToVis}}"/>
+
+        <Border Background="#80000000"
+        Visibility="{Binding IsDeleteHousePopupVisible, Converter={StaticResource BoolToVis}}"/>
+
+        <Border Background="#80000000"
+        Visibility="{Binding IsAddRoomPopupVisible, Converter={StaticResource BoolToVis}}"/>
+
+        <Border Background="#80000000"
+        Visibility="{Binding IsEditRoomPopupVisible, Converter={StaticResource BoolToVis}}"/>
+
+
+        <!-- POPUP THÊM NHÀ -->
+        <!-- ✅ SỬA LẠI DATACONTEXT -->
+        <views:AddHouseView Visibility="{Binding IsAddHousePopupVisible, Converter={StaticResource BoolToVis}}"
+                        DataContext="{Binding}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+        
+
+        <views:EditHouseView Visibility="{Binding IsEditHousePopupVisible, Converter={StaticResource BoolToVis}}"
+                             DataContext="{Binding}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+        
+        <views:DeleteHouseView Visibility="{Binding IsDeleteHousePopupVisible, Converter={StaticResource BoolToVis}}"
+                               DataContext="{Binding}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+
+
+        
+
+        <views:AddRoomView Visibility="{Binding IsAddRoomPopupVisible, Converter={StaticResource BoolToVis}}"
+                           DataContext="{Binding}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+        
+
+        <views:EditRoomView Visibility="{Binding IsEditRoomPopupVisible, Converter={StaticResource BoolToVis}}"
+                            DataContext="{Binding}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+
     </Grid>
 </UserControl>

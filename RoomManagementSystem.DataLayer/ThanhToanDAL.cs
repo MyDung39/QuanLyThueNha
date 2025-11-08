@@ -128,5 +128,58 @@ namespace RoomManagementSystem.DataLayer
             }
         }
 
+
+
+        // Hàm helper để chuyển 1 dòng DataRow thành đối tượng ThanhToan
+        private ThanhToan RowToThanhToan(DataRow row)
+        {
+            return new ThanhToan
+            {
+                MaThanhToan = row["MaThanhToan"].ToString(),
+                MaPhong = row["MaPhong"].ToString(),
+                MaHoaDon = row["MaHoaDon"]?.ToString(),
+                MaHopDong = row["MaHopDong"]?.ToString(),
+                MaThongBaoPhi = row["MaThongBaoPhi"]?.ToString(),
+                TongCongNo = Convert.ToDecimal(row["TongCongNo"]),
+                SoTienDaThanhToan = Convert.ToDecimal(row["SoTienDaThanhToan"]),
+                NgayHanThanhToan = row["NgayHanThanhToan"] == DBNull.Value ? null : Convert.ToDateTime(row["NgayHanThanhToan"]),
+                PhuongThucThanhToan = row["PhuongThucThanhToan"]?.ToString(),
+                TrangThai = row["TrangThai"]?.ToString(),
+                NgayTao = Convert.ToDateTime(row["NgayTao"]),
+                NgayCapNhat = Convert.ToDateTime(row["NgayCapNhat"])
+            };
+        }
+
+
+
+        // Lấy thông tin thanh toán (hóa đơn) mới nhất của phòng
+        // (Giả sử 1 phòng chỉ có 1 hóa đơn 'Chưa trả' tại 1 thời điểm)
+        public ThanhToan GetThanhToanHienTaiByPhong(string maPhong)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // Lấy cái thanh toán chưa trả, hoặc cái mới nhất
+                string query = @"SELECT TOP 1 * FROM ThanhToan 
+                                 WHERE MaPhong = @MaPhong 
+                                 ORDER BY TrangThai, NgayTao DESC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaPhong", maPhong);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    return RowToThanhToan(dt.Rows[0]);
+                }
+
+                return null; // Không tìm thấy thanh toán nào
+            }
+        }
+
+
+
     }
 }

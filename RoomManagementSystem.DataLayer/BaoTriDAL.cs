@@ -27,11 +27,11 @@ namespace RoomManagementSystem.DataLayer
         public void Insert(BaoTri baoTri)
         {
             string query = @"INSERT INTO BaoTri
-                                (MaBaoTri, MaPhong, MaNguoiThue, NguonYeuCau, MoTa, 
+                                (MaBaoTri, MaPhong, MaNguoiThue, MoTa, 
                                  TrangThaiXuLy, NgayYeuCau, NgayHoanThanh, ChiPhi, 
                                  NgayTao, NgayCapNhat)
                                 VALUES 
-                                (@MaBaoTri, @MaPhong, @MaNguoiThue, @NguonYeuCau, @MoTa, 
+                                (@MaBaoTri, @MaPhong, @MaNguoiThue, @MoTa, 
                                  @TrangThaiXuLy, @NgayYeuCau, @NgayHoanThanh, @ChiPhi, 
                                  GETDATE(), GETDATE())";
 
@@ -40,8 +40,7 @@ namespace RoomManagementSystem.DataLayer
             {
                 new SqlParameter("@MaBaoTri", baoTri.MaBaoTri),
                 new SqlParameter("@MaPhong", baoTri.MaPhong),
-                new SqlParameter("@MaNguoiThue", baoTri.MaNguoiThue ??(object) DBNull.Value),
-                new SqlParameter("@NguonYeuCau", baoTri.NguonYeuCau),
+                new SqlParameter("@MaNguoiThue", baoTri.MaNguoiThue ??(object) DBNull.Value), // Xử lý nếu MaNguoiThue là null
                 new SqlParameter("@MoTa", baoTri.MoTa),
                 new SqlParameter("@TrangThaiXuLy", baoTri.TrangThaiXuLy),
                 new SqlParameter("@NgayYeuCau", baoTri.NgayYeuCau),
@@ -57,7 +56,13 @@ namespace RoomManagementSystem.DataLayer
         public List<BaoTri> GetAll()
         {
             List<BaoTri> list = new List<BaoTri>();
-            string sql = "SELECT * FROM BaoTri ORDER BY NgayYeuCau DESC";
+            string sql = @"
+                SELECT 
+                    bt.*, 
+                    nt.HoTen AS TenNguoiThue 
+                FROM BaoTri bt
+                LEFT JOIN NguoiThue nt ON bt.MaNguoiThue = nt.MaNguoiThue
+                ORDER BY bt.NgayYeuCau DESC";
 
             // Gọi hàm ExecuteQuery để lấy về DataTable
             DataTable dt = db.ExecuteQuery(sql);
@@ -70,7 +75,7 @@ namespace RoomManagementSystem.DataLayer
                     MaBaoTri = reader["MaBaoTri"].ToString(),
                     MaPhong = reader["MaPhong"].ToString(),
                     MaNguoiThue = reader["MaNguoiThue"] == DBNull.Value ? null : reader["MaNguoiThue"].ToString(),
-                    NguonYeuCau = reader["NguonYeuCau"].ToString(),
+                    TenNguoiThue = reader["TenNguoiThue"] == DBNull.Value ? null : reader["TenNguoiThue"].ToString(),
                     MoTa = reader["MoTa"].ToString(),
                     TrangThaiXuLy = reader["TrangThaiXuLy"].ToString(),
                     NgayYeuCau = Convert.ToDateTime(reader["NgayYeuCau"]),
@@ -147,7 +152,13 @@ namespace RoomManagementSystem.DataLayer
         public BaoTri? GetById(string maBaoTri)
         {
             BaoTri? bt = null;
-            string sql = "SELECT * FROM BaoTri WHERE MaBaoTri = @MaBaoTri";
+            string sql = @"
+                SELECT 
+                    bt.*, 
+                    nt.HoTen AS TenNguoiThue 
+                FROM BaoTri bt
+                LEFT JOIN NguoiThue nt ON bt.MaNguoiThue = nt.MaNguoiThue
+                WHERE bt.MaBaoTri = @MaBaoTri";
 
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -166,7 +177,7 @@ namespace RoomManagementSystem.DataLayer
                     MaBaoTri = reader["MaBaoTri"].ToString(),
                     MaPhong = reader["MaPhong"].ToString(),
                     MaNguoiThue = reader["MaNguoiThue"] == DBNull.Value ? null : reader["MaNguoiThue"].ToString(),
-                    NguonYeuCau = reader["NguonYeuCau"].ToString(),
+                    TenNguoiThue = reader["TenNguoiThue"] == DBNull.Value ? null : reader["TenNguoiThue"].ToString(),
                     MoTa = reader["MoTa"].ToString(),
                     TrangThaiXuLy = reader["TrangThaiXuLy"].ToString(),
                     NgayYeuCau = Convert.ToDateTime(reader["NgayYeuCau"]),
@@ -179,18 +190,26 @@ namespace RoomManagementSystem.DataLayer
             return bt;
         }
 
-        public string? GetMaNguoiThueBySoGiayTo(string soGiayTo)
+        public DataTable GetNguoiThueByPhong(string maPhong)
         {
-            string qr = "SELECT MaNguoiThue FROM NguoiThue WHERE SoGiayTo = @SoGiayTo";
+            string query = @"
+                SELECT 
+                    nt.MaNguoiThue, 
+                    nt.HoTen 
+                FROM NguoiThue nt
+                JOIN HopDong_NguoiThue hdnt ON nt.MaNguoiThue = hdnt.MaNguoiThue
+                JOIN HopDong hd ON hdnt.MaHopDong = hd.MaHopDong
+                WHERE 
+                    hd.MaPhong = @MaPhong 
+                    AND hd.TrangThai = N'Hiệu lực' 
+                    AND hdnt.TrangThaiThue = N'Đang ở'";
 
             SqlParameter[] parameters = new SqlParameter[]
             {
-                new SqlParameter("@SoGiayTo", soGiayTo)
+                new SqlParameter("@MaPhong", maPhong)
             };
 
-            // Gọi hàm ExecuteScalar
-            object result = db.ExecuteScalar(qr, parameters);
-            return result?.ToString();
+            return db.ExecuteQuery(query, parameters);
         }
     }
 }

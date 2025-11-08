@@ -57,22 +57,16 @@ CREATE TABLE Phong (
 );
 GO
 
--- Bảng Người Thuê (Tenant)
+-- Bảng Người Thuê (Tenant) - CHỈ CHỨA THÔNG TIN CÁ NHÂN
 CREATE TABLE NguoiThue (
     MaNguoiThue VARCHAR(20) PRIMARY KEY,
-    MaPhong VARCHAR(20) NOT NULL FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong),
     HoTen NVARCHAR(100) NOT NULL,
     SoDienThoai VARCHAR(20) NULL,
     Email VARCHAR(100) NULL,
     SoGiayTo VARCHAR(50) NULL, --CCCD/CMND, Hộ chiếu,...
-    NgayBatDauThue DATE NULL,
-    TrangThaiThue NVARCHAR(50) NOT NULL DEFAULT N'Đang ở' CHECK (TrangThaiThue IN (N'Đang ở', N'Đã trả phòng', N'Lịch hẹn trả')),
-    NgayDonVao DATE NULL,
-    NgayDonRa DATE NULL,
-    VaiTro NVARCHAR(20) NOT NULL CHECK (VaiTro IN (N'Chủ hợp đồng', N'Người ở cùng')),
     NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
-    NgayCapNhat DATETIME NOT NULL DEFAULT GETDATE(),
-    CONSTRAINT CK_NguoiThue_NgayDonRa CHECK (NgayDonRa IS NULL OR NgayDonRa >= NgayDonVao)
+    NgayCapNhat DATETIME NOT NULL DEFAULT GETDATE()
+    -- ĐÃ XÓA MaPhong, NgayBatDauThue, TrangThaiThue, NgayDonVao, NgayDonRa, VaiTro
 );
 GO
 
@@ -80,17 +74,31 @@ GO
 CREATE TABLE HopDong (
     MaHopDong VARCHAR(20) PRIMARY KEY,
     MaPhong VARCHAR(20) NOT NULL FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong),
-    MaNguoiThue VARCHAR(20) NOT NULL FOREIGN KEY (MaNguoiThue) REFERENCES NguoiThue(MaNguoiThue),
+    -- ĐÃ XÓA MaNguoiThue
     ChuNha VARCHAR(20) NOT NULL FOREIGN KEY (ChuNha) REFERENCES NguoiDung(MaNguoiDung),
     TienCoc DECIMAL(15,2) NOT NULL DEFAULT 0 CHECK (TienCoc >= 0),
     NgayBatDau DATE NOT NULL,
-    ThoiHan INT NOT NULL, -- Bsung để làm HĐ, tính theo tháng
+    ThoiHan INT NOT NULL DEFAULT 12, -- Bsung để làm HĐ, tính theo tháng
     NgayKetThuc AS (DATEADD(month, ThoiHan, NgayBatDau)) PERSISTED,
     FileDinhKem AS 'mau-hop-dong-thue-nha-o.docx',
     TrangThai NVARCHAR(50) NOT NULL DEFAULT N'Hiệu lực' CHECK (TrangThai IN (N'Hiệu lực', N'Hết hạn')),
     GhiChu NVARCHAR(MAX) NULL,
     NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
     NgayCapNhat DATETIME NOT NULL DEFAULT GETDATE()
+);
+GO
+
+-- Bảng Chi tiết người thuê trong hợp đồng (Contract_Tennant Detail) --> ĐƯỢC THÊM MỚI
+CREATE TABLE HopDong_NguoiThue (
+    MaHopDong VARCHAR(20) NOT NULL FOREIGN KEY (MaHopDong) REFERENCES HopDong(MaHopDong) ON DELETE CASCADE,
+    MaNguoiThue VARCHAR(20) NOT NULL FOREIGN KEY (MaNguoiThue) REFERENCES NguoiThue(MaNguoiThue) ON DELETE CASCADE,
+    VaiTro NVARCHAR(20) NOT NULL CHECK (VaiTro IN (N'Chủ hợp đồng', N'Người ở cùng')),
+    TrangThaiThue NVARCHAR(50) NOT NULL DEFAULT N'Đang ở' CHECK (TrangThaiThue IN (N'Đang ở', N'Đã trả phòng', N'Lịch hẹn trả')),
+    NgayDonVao DATE NULL,
+    NgayDonRa DATE NULL,
+    NgayBatDauThue DATE NULL,
+    PRIMARY KEY (MaHopDong, MaNguoiThue),
+    CONSTRAINT CK_HopDongNguoiThue_NgayDonRa CHECK (NgayDonRa IS NULL OR NgayDonRa >= NgayDonVao)
 );
 GO
 
@@ -190,15 +198,15 @@ GO
 
 -- Bảng Chi Tiết Hóa Đơn (Invoice Detail)
 CREATE TABLE ChiTietHoaDon (
-    MaChiTietHoaDon VARCHAR(20) PRIMARY KEY,
-    MaHoaDon VARCHAR(20) NOT NULL FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon),
-    MaDichVu VARCHAR(20) NOT NULL FOREIGN KEY (MaDichVu) REFERENCES DichVu(MaDichVu),
+    MaHoaDon VARCHAR(20) NOT NULL FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon) ON DELETE CASCADE,
+    MaDichVu VARCHAR(20) NOT NULL FOREIGN KEY (MaDichVu) REFERENCES DichVu(MaDichVu) ON DELETE CASCADE,
     DVT NVARCHAR(50) NOT NULL,
     DonGia DECIMAL(15,2) NOT NULL CHECK (DonGia >= 0),
     SoLuong DECIMAL(18,2) NOT NULL DEFAULT 0 CHECK (SoLuong >= 0),
     ThanhTien AS (DonGia * SoLuong) PERSISTED,
     NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
     NgayCapNhat DATETIME NOT NULL DEFAULT GETDATE()
+	PRIMARY KEY (MaHoaDon, MaDichVu)
 );
 GO
 
@@ -276,7 +284,6 @@ CREATE TABLE BaoTri (
     MaBaoTri VARCHAR(20) PRIMARY KEY,
     MaPhong VARCHAR(20) NOT NULL FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong),
     MaNguoiThue VARCHAR(20) NULL FOREIGN KEY (MaNguoiThue) REFERENCES NguoiThue(MaNguoiThue),
-    NguonYeuCau NVARCHAR(100) NOT NULL CHECK (NguonYeuCau IN (N'Chủ nhà', N'Người thuê', N'Kiểm tra định kỳ')), -- Bsung để làm rõ người yêu cầu
     MoTa NVARCHAR(MAX) NOT NULL,
     TrangThaiXuLy NVARCHAR(50) NOT NULL DEFAULT N'Chưa xử lý' CHECK (TrangThaiXuLy IN (N'Chưa xử lý', N'Đang xử lý', N'Hoàn tất')),
     NgayYeuCau DATE NOT NULL,
@@ -318,7 +325,7 @@ CREATE TABLE BaoCaoTrangThai (
 );
 GO
 
--- DỮ LIỆU THÊM SẴN
+-- DỮ LIỆU THÊM SẴN (ĐÃ CẬP NHẬT)
 INSERT INTO NguoiDung (MaNguoiDung, TenDangNhap, MatKhau, TenTaiKhoan, SoDienThoai, PhuongThucDN, TrangThai)
 VALUES ('ND001', 'admin@gmail.com', 'admin', 'Vanila', '0908083890', N'MatKhau', N'Hoạt động');
 GO
@@ -331,9 +338,7 @@ VALUES
 ('DV4', N'Rác', N'phòng/tháng', 30000), 
 ('DV5', N'Gửi xe máy', N'xe/tháng', 100000), 
 ('DV6', N'Phí trễ hạn', N'ngày', 20000),
-('DV7', N'Phí giặt máy', N'người/tháng', 35000),
-('DV8', N'Tiền thuê phòng', N'tháng', 0),
-('DV9', N'Tiền bảo trì phòng', N'tháng', 0);
+('DV7', N'Phí giặt máy', N'người/tháng', 35000);
 GO
 
 INSERT INTO Nha (MaNha, MaNguoiDung, DiaChi, TongSoPhong, TongSoPhongHienTai, GhiChu)
@@ -347,28 +352,34 @@ VALUES
 ('PHONG003', 'NHA001', N'Phòng trống', 18.0, 2300000, N'Trống', 0, N'Đang sơn lại');
 GO
 
-INSERT INTO NguoiThue (MaNguoiThue, MaPhong, HoTen, SoDienThoai, Email, SoGiayTo, NgayBatDauThue, NgayDonVao, VaiTro)
+INSERT INTO NguoiThue (MaNguoiThue, HoTen, SoDienThoai, Email, SoGiayTo)
 VALUES
-('NT001', 'PHONG001', N'Nguyễn Vân Anh', '0909000111', 'vananh@gmail.com', '123456789', '2025-01-01', '2025-01-01', N'Chủ hợp đồng'),
-('NT002', 'PHONG002', N'Lê Thị Bích', '0909000222', 'lebich@gmail.com', '987654321', '2025-02-01', '2025-02-01', N'Chủ hợp đồng'),
-('NT003', 'PHONG002', N'Trần Ngọc Minh Châu', '0909000333', 'minhchau@gmail.com', '647812058', '2025-02-01', '2025-02-01', N'Người ở cùng');
+('NT001', N'Nguyễn Vân Anh', '0909000111', 'vananh@gmail.com', '123456789'),
+('NT002', N'Lê Thị Bích', '0909000222', 'lebich@gmail.com', '987654321'),
+('NT003', N'Trần Ngọc Minh Châu', '0909000333', 'minhchau@gmail.com', '647812058'),
+('NT004', N'Tạ Minh Ngọc Hân', '0567789995', 'ngochanta@gmail.com', '047751236');
+
 GO
 
-INSERT INTO HopDong (MaHopDong, MaPhong, MaNguoiThue, ChuNha, TienCoc, NgayBatDau, ThoiHan, TrangThai)
+INSERT INTO HopDong (MaHopDong, MaPhong, ChuNha, TienCoc, NgayBatDau, ThoiHan, TrangThai)
 VALUES
-('HD001', 'PHONG001', 'NT001', 'ND001', 2500000, '2025-01-01', 12, N'Hiệu lực'), 
-('HD002', 'PHONG002', 'NT002', 'ND001', 3500000, '2025-02-01', 12, N'Hiệu lực');
+('HD001', 'PHONG001', 'ND001', 2500000, '2025-01-01', 12, N'Hiệu lực'),
+('HD002', 'PHONG002', 'ND001', 3500000, '2025-02-01', 12, N'Hiệu lực');
 GO
 
-INSERT INTO ThongBaoHan (MaThongBao, MaHopDong, NoiDung, NgayThongBao, TrangThai)
-VALUES ('TBH001', 'HD001', N'Hợp đồng sắp hết hạn trong 30 ngày', '2025-12-01', N'Chưa thông báo');
+INSERT INTO HopDong_NguoiThue (MaHopDong, MaNguoiThue, VaiTro, TrangThaiThue, NgayDonVao, NgayBatDauThue)
+VALUES
+('HD001', 'NT001', N'Chủ hợp đồng', N'Đang ở', '2025-01-01', '2025-01-01'),
+('HD002', 'NT002', N'Chủ hợp đồng', N'Đang ở', '2025-02-01', '2025-02-01'),
+('HD002', 'NT003', N'Người ở cùng', N'Đang ở', '2025-02-01', '2025-02-01'),
+('HD002', 'NT004', N'Người ở cùng', N'Đang ở', '2025-02-01', '2025-02-01');
 GO
 
-INSERT INTO BaoTri (MaBaoTri, MaPhong, MaNguoiThue, NguonYeuCau, MoTa, TrangThaiXuLy, NgayYeuCau, NgayHoanThanh, ChiPhi) 
+
+INSERT INTO BaoTri (MaBaoTri, MaPhong, MaNguoiThue, MoTa, TrangThaiXuLy, NgayYeuCau, NgayHoanThanh, ChiPhi) 
 VALUES 
-('BT001', 'PHONG001', 'NT001', N'Người thuê', N'Vòi nước bồn rửa mặt bị rò rỉ.', N'Hoàn tất', '2025-03-10', '2025-03-11', 150000),
-('BT002', 'PHONG002', 'NT002', N'Người thuê', N'Bóng đèn chính của phòng bị cháy.', N'Đang xử lý', '2025-04-01', NULL, 0),
-('BT003', 'PHONG003', NULL, N'Chủ nhà', N'Sơn lại tường phòng 003 để chuẩn bị cho khách mới.', N'Chưa xử lý', '2025-04-05', NULL, 0);
+('BT001', 'PHONG001', 'NT001', N'Vòi nước bồn rửa mặt bị rò rỉ.', N'Hoàn tất', '2025-03-10', '2025-03-11', 150000),
+('BT002', 'PHONG002', 'NT002', N'Bóng đèn chính của phòng bị cháy.', N'Đang xử lý', '2025-04-01', NULL, 0);
 GO
 
 INSERT INTO ThongBaoPhi (MaThongBaoPhi, MaPhong, ThoiKy, TongTien, FileDinhKem, NgayGui, TrangThai)
@@ -389,17 +400,13 @@ VALUES
 ('TT002', 'PHONG002', 'HDN002', 'HD002', 'TBP002', 3500000 + (90*3500) + (20*15000) + 50000, '2025-10-10', N'Tiền mặt', N'Chưa trả');
 GO
 
-
--- DỮ LIỆU BẮT BUỘC PHẢI CÓ CHO BẢNG ChiTietHoaDon
-INSERT INTO ChiTietHoaDon (MaChiTietHoaDon, MaHoaDon, MaDichVu, DVT, DonGia, SoLuong)
+INSERT INTO ChiTietHoaDon (MaHoaDon, MaDichVu, DVT, DonGia, SoLuong)
 VALUES
 -- Chi tiết cho hóa đơn HDN001 (Phòng PHONG001)
-('CTHD001', 'HDN001', 'DV8', N'tháng', 2500000, 1), -- Tiền thuê phòng
-('CTHD002', 'HDN001', 'DV1', N'kWh', 3500, 80),      -- Tiền điện
-('CTHD003', 'HDN001', 'DV2', N'm3', 15000, 15),      -- Tiền nước
+-- Tiền thuê phòng lấy tự động từ bảng phòng
+('HDN001', 'DV1', N'kWh', 3500, 80),      -- Tiền điện
+('HDN001', 'DV2', N'm3', 15000, 15),      -- Tiền nước
+('HDN002', 'DV1', N'kWh', 3500, 90),      -- Tiền điện
+('HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
 
--- Chi tiết cho hóa đơn HDN002 (Phòng PHONG002)
-('CTHD004', 'HDN002', 'DV8', N'tháng', 3500000, 1), -- Tiền thuê phòng
-('CTHD005', 'HDN002', 'DV1', N'kWh', 3500, 90),      -- Tiền điện
-('CTHD006', 'HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
 GO

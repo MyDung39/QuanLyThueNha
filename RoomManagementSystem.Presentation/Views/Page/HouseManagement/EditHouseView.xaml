@@ -55,7 +55,7 @@
                                 Background="Transparent" 
                                 BorderThickness="0" 
                                 Cursor="Hand"
-                                Click="CloseButton_Click">
+                               Command="{Binding CancelEditHouseCommand}">
                             <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" 
                                   Stroke="#565656" 
                                   StrokeThickness="1.5"/>
@@ -88,7 +88,7 @@
                                          VerticalContentAlignment="Center"
                                          FontSize="12"
                                          Foreground="#292D32"
-                                         Text="123 đường Nguyễn Trãi, phường Thanh Xuân, Hà Nội"/>
+                                         Text="{Binding EditingHouseAddress, Mode=TwoWay}"/>
 
                                 <Button Grid.Column="1" 
                                         Width="23" 
@@ -96,8 +96,7 @@
                                         Margin="0,0,10,0"
                                         Background="Transparent" 
                                         BorderThickness="0"
-                                        Cursor="Hand"
-                                        Click="MapButton_Click">
+                                        Cursor="Hand">
                                     <Image Source="../../../Resources/Images/map_icon.png" 
                                            Width="23" 
                                            Height="23"/>
@@ -127,7 +126,7 @@
                                      TextWrapping="Wrap"
                                      AcceptsReturn="True"
                                      VerticalScrollBarVisibility="Auto"
-                                     Text="Dùng chung nhà bếp, có khu vực để xe" Height="66" VerticalAlignment="Top"/>
+                                     Text="{Binding EditingHouseNotes, Mode=TwoWay}" Height="66" VerticalAlignment="Top"/>
                         </Border>
                     </StackPanel>
 
@@ -146,7 +145,7 @@
                                 Background="#5A67BA"
                                 Width="80" 
                                 Padding="0,8" 
-                                Click="SaveButton_Click">
+                               Command="{Binding SaveEditHouseCommand}">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="10"/>

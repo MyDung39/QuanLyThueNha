@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             Width="535" Height="362"
+             Width="535" Height="Auto"
              FontFamily="Roboto">
 
     <UserControl.Effect>
@@ -14,6 +13,7 @@
     </UserControl.Effect>
 
     <UserControl.Resources>
+        <!-- Style của bạn giữ nguyên, không cần thay đổi -->
         <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
             <Setter Property="Background" Value="#F9FBFF"/>
             <Setter Property="BorderBrush" Value="#F0EEEE"/>
@@ -23,42 +23,17 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="DatePicker">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="9.5">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="9.5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-
-                                <DatePickerTextBox x:Name="PART_TextBox"
-                                                   Grid.Column="0"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   BorderThickness="0"
-                                                   Background="Transparent"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Text="{Binding Path=SelectedDate, StringFormat='dd/MM/yyyy', RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                                <Button x:Name="PART_Button"
-                                        Grid.Column="1"
-                                        Margin="0,0,10,0"
-                                        VerticalAlignment="Center"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Cursor="Hand">
-                                    <materialDesign:PackIcon Kind="Calendar" 
-                                                             x:Name="Icon"
-                                                             Foreground="#8A8A8A"
-                                                             Width="18" Height="18" />
+                                <DatePickerTextBox x:Name="PART_TextBox" Grid.Column="0" Padding="{TemplateBinding Padding}" BorderThickness="0" Background="Transparent" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Text="{Binding Path=SelectedDate, StringFormat='dd/MM/yyyy', RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Button x:Name="PART_Button" Grid.Column="1" Margin="0,0,10,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <materialDesign:PackIcon Kind="Calendar" x:Name="Icon" Foreground="#8A8A8A" Width="18" Height="18" />
                                 </Button>
-
-                                <Popup x:Name="PART_Popup"
-                                       AllowsTransparency="True"
-                                       Placement="Bottom"
-                                       PlacementTarget="{Binding ElementName=PART_TextBox}"
-                                       StaysOpen="False"/>
+                                <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_TextBox}" StaysOpen="False"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -74,14 +49,13 @@
 
     <Border Background="White" CornerRadius="14">
         <Grid>
-            <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Margin="0,15,15,0" Background="Transparent" BorderThickness="0" Cursor="Hand"
-                    Click="CloseButton_Click">
+            <!-- Nút đóng -->
+            <Button Command="{Binding CancelEditCommand}" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,15,0" Background="Transparent" BorderThickness="0" Cursor="Hand">
                 <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" Stroke="#565656" StrokeThickness="1.5"/>
             </Button>
 
-            <StackPanel Margin="40,40,40,40">
-                <TextBlock FontSize="20" Foreground="#8A8A8A" Margin="0,0,0,25"><Run Language="vi-vn" Text="Chỉnh"/><Run Text=" "/><Run Language="vi-vn" Text="sửa "/><Run Text="thông tin người thuê"/></TextBlock>
+            <StackPanel Margin="40">
+                <TextBlock Text="Chỉnh sửa thông tin người thuê" FontSize="20" Foreground="#8A8A8A" Margin="0,0,0,25"/>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -90,18 +64,22 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Cột trái -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Tên" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF" TextChanged="TextBox_TextChanged">
+                        <TextBlock Text="Tên *" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF"
+                                 Text="{Binding EditingTenant.HoTen, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="9.5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
+
                         <TextBlock Text="Số điện thoại" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
                         <Grid>
-                            <TextBox Padding="50,10,15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF">
+                            <TextBox Padding="50,10,15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF"
+                                     Text="{Binding EditingTenant.Sdt, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="9.5"/>
@@ -114,24 +92,36 @@
                         </Grid>
                     </StackPanel>
 
+                    <!-- Cột phải -->
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Địa chỉ Email" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF">
+                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF"
+                                 Text="{Binding EditingTenant.Email, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="9.5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <TextBlock Text="Ngày bắt đầu thuê" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
-                        <DatePicker SelectedDate="{x:Static sys:DateTime.Now}" Style="{StaticResource CustomDatePickerStyle}"/>
+
+                        <TextBlock Text="Số giấy tờ (CCCD/CMND) *" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
+                        <TextBox Padding="15,10" BorderThickness="1" BorderBrush="#F0EEEE" Background="#F9FBFF"
+                                 Text="{Binding EditingTenant.SoGiayTo, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="9.5"/>
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
                     </StackPanel>
                 </Grid>
 
+                <TextBlock Text="Ngày bắt đầu thuê *" FontSize="13" Foreground="#292D32" Margin="0,20,0,8"/>
+                <DatePicker Style="{StaticResource CustomDatePickerStyle}" 
+            SelectedDate="{Binding EditingTenant.NgayBatDauThue, UpdateSourceTrigger=PropertyChanged}" />
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
-                    <!-- === SỬA LỖI Ở ĐÂY: Click="AddButton_Click" === -->
-                    <Button Content="Lưu" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA"
-                            Width="80" Padding="0,8" Click="SaveButton_Click">
+                    <Button Content="Lưu" Command="{Binding SaveEditCommand}" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA" Width="80" Padding="0,8">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="10"/>

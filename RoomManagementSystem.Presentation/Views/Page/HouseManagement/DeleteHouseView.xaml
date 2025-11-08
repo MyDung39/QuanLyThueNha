@@ -71,7 +71,7 @@
                             Background="Transparent" 
                             BorderThickness="0" 
                             Cursor="Hand"
-                            Click="CloseButton_Click">
+                            Command="{Binding CancelDeleteHouseCommand}">
                         <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" 
                               StrokeThickness="1.5">
                             <Path.Stroke>
@@ -103,7 +103,7 @@
                         Height="37"
                         HorizontalAlignment="Right"
                         Style="{StaticResource ConfirmButtonStyle}"
-                        Click="ConfirmButton_Click"/>
+                        Command="{Binding ConfirmDeleteHouseCommand}"/>
             </Grid>
         </Border>
     </Grid>

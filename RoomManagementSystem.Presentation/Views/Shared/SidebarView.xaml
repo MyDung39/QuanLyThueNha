@@ -102,9 +102,11 @@
                 <TextBlock Text="QUẢN LÝ" Style="{StaticResource SectionHeader}"/>
                 <RadioButton Content="Tài sản" 
                              Style="{StaticResource SidebarRadioButton}"
+
                              Tag="/Resources/Images/tai_san_icon.png"
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                              CommandParameter="HouseManagement"/>
+
                 
                 
             <!--    <RadioButton Content="Người thuê" 

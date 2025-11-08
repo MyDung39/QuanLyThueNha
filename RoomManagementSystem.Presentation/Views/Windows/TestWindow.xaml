@@ -9,8 +9,9 @@
         
         xmlns:tenant="clr-namespace:RoomManagementSystem.Presentation.Views.Page.TenantManagement"
         
+
         xmlns:house="clr-namespace:RoomManagementSystem.Presentation.Views.Page.HouseManagement"
-        
+
         xmlns:viewModel="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
         
         mc:Ignorable="d"
@@ -27,9 +28,11 @@
             <page:BillingView />
         </DataTemplate>
 
+
         <DataTemplate DataType="{x:Type viewModel:HouseManagementViewModel}">
             <house:HouseManagementView />
         </DataTemplate>
+
 
     </Window.Resources>
 

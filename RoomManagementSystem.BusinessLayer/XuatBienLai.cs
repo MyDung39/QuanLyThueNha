@@ -14,7 +14,7 @@ namespace RoomManagementSystem.BusinessLayer
         BienLaiDAL bienLai = new BienLaiDAL();
         public List<BienLai> GetBienLai(string MTT)
         {
-            return bienLai.GetBienLaiByPhong(MTT);
+            return bienLai.GetBienLaiTheoMaPhong(MTT);
         }
         public void XuatBienLaiExcel(List<BienLai> bienLais, string filePath)
         {
@@ -34,7 +34,7 @@ namespace RoomManagementSystem.BusinessLayer
                 row++;
 
                 ws.Cell(row, 1).Value = "[Khách hàng]";
-                ws.Cell(row, 2).Value = first.DanhSachKhach;   // Danh sách khách
+                ws.Cell(row, 2).Value = first.DanhSachNguoiThue;   // Danh sách khách
                 ws.Cell(row, 5).Value = "Phòng:";
                 ws.Cell(row, 6).Value = first.MaPhong;
                 row++;
@@ -57,7 +57,7 @@ namespace RoomManagementSystem.BusinessLayer
 
                 
                 ws.Cell(row, 1).Value = "[Tên chủ nhà]";
-                ws.Cell(row, 2).Value = first.HoTenChuNha;
+                ws.Cell(row, 2).Value = first.TenTaiKhoan;
                 row += 2;
                 // ======= HEADER BẢNG DỊCH VỤ =======
                 ws.Cell(row, 1).Value = "STT";

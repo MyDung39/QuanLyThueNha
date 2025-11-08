@@ -35,15 +35,18 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
             switch (pageKey)
             {
 
+
                 case "HouseManagement":
                     CurrentViewModel = new HouseManagementViewModel();
                     break;
+
                 case "Tenant":
                     CurrentViewModel = new TenantManagementViewModel();
                     break;
                 case "Billing":
                     // Truyền các service ĐÚNG vào BillingViewModel
-                    CurrentViewModel = new BillingViewModel(_taiSanPhongService, _xuatBienLaiService);
+                    //CurrentViewModel = new BillingViewModel(_taiSanPhongService, _xuatBienLaiService);
+                    CurrentViewModel = new BillingViewModel();
                     break;
                 case "Contract":
                     // CurrentViewModel = new ContractViewModel();
