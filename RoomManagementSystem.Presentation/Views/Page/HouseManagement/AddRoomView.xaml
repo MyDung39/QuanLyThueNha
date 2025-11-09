@@ -4,31 +4,117 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="362" d:DesignWidth="535"
+             d:DesignHeight="420" d:DesignWidth="535"
              FontFamily="Roboto">
     <UserControl.Resources>
         <DropShadowEffect x:Key="DropShadowEffect" Color="Black" Direction="135" ShadowDepth="1" BlurRadius="5.4" Opacity="0.14"/>
+
+        <!-- Style cho ComboBox để trông giống TextBox -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#F9FBFF"/>
+            <Setter Property="BorderBrush" Value="#F0EEEE"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#292D32"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border x:Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="9.5">
+                                <Grid>
+                                    <ContentPresenter x:Name="ContentSite"
+                                                      IsHitTestVisible="False"
+                                                      Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                      Margin="{TemplateBinding Padding}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                    <ToggleButton x:Name="ToggleButton"
+                                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                  Grid.Column="2"
+                                                  Focusable="false"
+                                                  ClickMode="Press"
+                                                  Foreground="#565656"
+                                                  HorizontalAlignment="Right"
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,10,0">
+                                        <ToggleButton.Template>
+                                            <ControlTemplate TargetType="ToggleButton">
+                                                <Border Background="Transparent">
+                                                    <Path Data="M 0 0 L 4 4 L 8 0 Z"
+                                                          Stroke="{TemplateBinding Foreground}"
+                                                          StrokeThickness="1.5"
+                                                          Fill="Transparent"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </ToggleButton.Template>
+                                    </ToggleButton>
+                                </Grid>
+                            </Border>
+                            <Popup x:Name="Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Slide">
+                                <Border x:Name="DropDownBorder"
+                                        Background="White"
+                                        BorderThickness="1"
+                                        BorderBrush="#F0EEEE"
+                                        CornerRadius="9.5"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                        MinWidth="{TemplateBinding ActualWidth}"
+                                        Margin="0,5,0,0">
+                                    <ScrollViewer CanContentScroll="True">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
         <Rectangle Fill="#80000000"/>
 
-        <Border Background="White" CornerRadius="14" Width="535" Height="362"
+        <!-- ✅ SỬA: Tăng Height để chứa ComboBox mới -->
+        <Border Background="White" CornerRadius="14" Width="535" Height="420"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Effect="{StaticResource DropShadowEffect}" Padding="40,18,40,37">
 
             <Grid Margin="0,32,0,7">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <!-- 0: Title -->
                     <RowDefinition Height="Auto"/>
+                    <!-- 1: Số phòng, Diện tích -->
                     <RowDefinition Height="Auto"/>
+                    <!-- 2: Chi phí, Ghi chú -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- 3: (MỚI) Loại phòng -->
                     <RowDefinition Height="*"/>
+                    <!-- 4: Spacer -->
                     <RowDefinition Height="Auto"/>
+                    <!-- 5: Button -->
                 </Grid.RowDefinitions>
 
+                <!-- Title and Close -->
                 <Grid Grid.Row="0" Margin="0,0,0,20">
                     <TextBlock Text="Thêm phòng mới" FontSize="20" Foreground="#8A8A8A"/>
 
+                    <!-- ✅ SỬA: Dùng Command -->
                     <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
                             Background="Transparent" BorderThickness="0" Cursor="Hand" 
                             Command="{Binding CancelAddRoomCommand}">
@@ -36,6 +122,7 @@
                     </Button>
                 </Grid>
 
+                <!-- Row 1: Room number and area -->
                 <Grid Grid.Row="1" Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -46,6 +133,7 @@
                     <StackPanel>
                         <TextBlock Text="Số phòng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
+                            <!-- ✅ SỬA: Binding Text -->
                             <TextBox x:Name="RoomNumberTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
                                      VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
                                      Text="{Binding NewRoomNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -60,6 +148,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
+                                <!-- ✅ SỬA: Binding Text -->
                                 <TextBox x:Name="AreaTextBox" Grid.Column="0" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
                                          VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
                                          Text="{Binding NewRoomArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -69,6 +158,7 @@
                     </StackPanel>
                 </Grid>
 
+                <!-- Row 2: Monthly cost and notes -->
                 <Grid Grid.Row="2" Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -79,6 +169,7 @@
                     <StackPanel>
                         <TextBlock Text="Chi phí theo tháng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
+                            <!-- ✅ SỬA: Binding Text -->
                             <TextBox x:Name="MonthlyCostTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
                                      VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
                                      Text="{Binding NewRoomCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -88,6 +179,7 @@
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Ghi chú" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
+                            <!-- ✅ SỬA: Binding Text -->
                             <TextBox x:Name="NotesTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
                                      VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
                                      Text="{Binding NewRoomNotes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -95,7 +187,19 @@
                     </StackPanel>
                 </Grid>
 
-                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                <!-- ✅ HÀNG MỚI: ComboBox Loại phòng -->
+                <StackPanel Grid.Row="3" Margin="0,0,0,16">
+                    <TextBlock Text="Loại phòng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                    <Border CornerRadius="9.5" Height="36" BorderBrush="#F0EEEE" BorderThickness="1">
+                        <ComboBox ItemsSource="{Binding LoaiPhongOptions}"
+                                  SelectedItem="{Binding NewRoomLoaiPhong, Mode=TwoWay}"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Add Button -->
+                <!-- ✅ SỬA: Chuyển sang Grid.Row="5" -->
+                <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <!-- ✅ SỬA: Dùng Command -->
                     <Button x:Name="AddButton" Content="Thêm" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA"
                             Width="80" Padding="0,8" 
                             Command="{Binding SaveNewRoomCommand}">

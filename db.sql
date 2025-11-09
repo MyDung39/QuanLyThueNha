@@ -206,7 +206,7 @@ CREATE TABLE ChiTietHoaDon (
     ThanhTien AS (DonGia * SoLuong) PERSISTED,
     NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
     NgayCapNhat DATETIME NOT NULL DEFAULT GETDATE()
-	PRIMARY KEY (MaHoaDon, MaDichVu)
+	PRIMARY KEY (MaHoaDon, MaDichVu),
 );
 GO
 
@@ -225,20 +225,30 @@ CREATE TABLE ThongBaoPhi (
 GO
 
 -- Bảng Thanh Toán (Payment)
-CREATE TABLE ThanhToan (
-    MaThanhToan VARCHAR(20) PRIMARY KEY,
-    MaPhong VARCHAR(20) NOT NULL FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong),
-    MaHoaDon VARCHAR(20) NULL FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon),
-    MaHopDong VARCHAR(20) NULL FOREIGN KEY (MaHopDong) REFERENCES HopDong(MaHopDong),
-    MaThongBaoPhi VARCHAR(20) NULL FOREIGN KEY (MaThongBaoPhi) REFERENCES ThongBaoPhi(MaThongBaoPhi),
-    TongCongNo DECIMAL(18,2) NOT NULL CHECK (TongCongNo >= 0),
-    NgayHanThanhToan DATE NULL,
-    PhuongThucThanhToan NVARCHAR(50) NOT NULL DEFAULT N'Tiền mặt' CHECK (PhuongThucThanhToan IN (N'Tiền mặt', N'Chuyển khoản')),
-    TrangThai NVARCHAR(50) NOT NULL DEFAULT N'Chưa trả' CHECK (TrangThai IN (N'Đã trả', N'Chưa trả', N'Trả một phần')),
-    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
-    NgayCapNhat DATETIME NOT NULL DEFAULT GETDATE()
+CREATE TABLE [dbo].[ThanhToan] (
+    [MaThanhToan]         VARCHAR (20)    NOT NULL,
+    [MaPhong]             VARCHAR (20)    NOT NULL,
+    [MaHoaDon]            VARCHAR (20)    NULL,
+    [MaHopDong]           VARCHAR (20)    NULL,
+    [MaThongBaoPhi]       VARCHAR (20)    NULL,
+    [TongCongNo]          DECIMAL (18, 2) NOT NULL,
+    [SoTienDaThanhToan]   DECIMAL (18, 2) DEFAULT ((0)) NOT NULL,
+    [SoTienConLai]        AS              ([TongCongNo]-[SoTienDaThanhToan]),
+    [NgayHanThanhToan]    DATE            NULL,
+    [PhuongThucThanhToan] NVARCHAR (50)   DEFAULT (N'Tiền mặt') NOT NULL,
+    [TrangThai]           NVARCHAR (50)   DEFAULT (N'Chưa trả') NOT NULL,
+    [NgayTao]             DATETIME        DEFAULT (getdate()) NOT NULL,
+    [NgayCapNhat]         DATETIME        DEFAULT (getdate()) NOT NULL,
+    PRIMARY KEY CLUSTERED ([MaThanhToan] ASC),
+    FOREIGN KEY ([MaPhong]) REFERENCES [dbo].[Phong] ([MaPhong]),
+    FOREIGN KEY ([MaHoaDon]) REFERENCES [dbo].[HoaDon] ([MaHoaDon]),
+    FOREIGN KEY ([MaHopDong]) REFERENCES [dbo].[HopDong] ([MaHopDong]),
+    FOREIGN KEY ([MaThongBaoPhi]) REFERENCES [dbo].[ThongBaoPhi] ([MaThongBaoPhi]),
+    CHECK ([TongCongNo]>=(0)),
+    CHECK ([SoTienDaThanhToan]>=(0)),
+    CHECK ([PhuongThucThanhToan]=N'Chuyển khoản' OR [PhuongThucThanhToan]=N'Tiền mặt'),
+    CHECK ([TrangThai]=N'Trả một phần' OR [TrangThai]=N'Chưa trả' OR [TrangThai]=N'Đã trả')
 );
-GO
 
 -- Bảng Xe Máy (Vehicle)
 CREATE TABLE XeMay (
@@ -394,10 +404,18 @@ VALUES
 ('HDN002', 'PHONG002', '10/2025');
 GO
 
-INSERT INTO ThanhToan (MaThanhToan, MaPhong, MaHoaDon, MaHopDong, MaThongBaoPhi, TongCongNo, NgayHanThanhToan, PhuongThucThanhToan, TrangThai)
+INSERT INTO ThanhToan 
+(MaThanhToan, MaPhong, MaHoaDon, MaHopDong, MaThongBaoPhi, TongCongNo, SoTienDaThanhToan, NgayHanThanhToan, PhuongThucThanhToan, TrangThai)
 VALUES
-('TT001', 'PHONG001', 'HDN001', 'HD001', 'TBP001', 2500000 + (80*3500) + (15*15000) + 50000, '2025-10-10', N'Chuyển khoản', N'Đã trả'),
-('TT002', 'PHONG002', 'HDN002', 'HD002', 'TBP002', 3500000 + (90*3500) + (20*15000) + 50000, '2025-10-10', N'Tiền mặt', N'Chưa trả');
+('TT001', 'PHONG001', 'HDN001', 'HD001', 'TBP001', 
+  2500000 + (80 * 3500) + (15 * 15000) + 50000, 
+  2500000 + (80 * 3500) + (15 * 15000) + 50000,   -- Đã trả đủ
+  '2025-10-10', N'Chuyển khoản', N'Đã trả'),
+
+('TT002', 'PHONG002', 'HDN002', 'HD002', 'TBP002', 
+  3500000 + (90 * 3500) + (20 * 15000) + 50000, 
+  0,                                              -- Chưa trả đồng nào
+  '2025-10-10', N'Tiền mặt', N'Chưa trả');
 GO
 
 INSERT INTO ChiTietHoaDon (MaHoaDon, MaDichVu, DVT, DonGia, SoLuong)
@@ -406,7 +424,9 @@ VALUES
 -- Tiền thuê phòng lấy tự động từ bảng phòng
 ('HDN001', 'DV1', N'kWh', 3500, 80),      -- Tiền điện
 ('HDN001', 'DV2', N'm3', 15000, 15),      -- Tiền nước
+
+-- Chi tiết cho hóa đơn HDN002 (Phòng PHONG002)
+-- Tiền thuê phòng lấy tự động từ bảng phòng
 ('HDN002', 'DV1', N'kWh', 3500, 90),      -- Tiền điện
 ('HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
-
 GO

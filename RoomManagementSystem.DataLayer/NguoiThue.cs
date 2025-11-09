@@ -22,6 +22,6 @@ namespace RoomManagementSystem.DataLayer
         public DateTime? NgayDonRa { get; set; }
         public string TrangThaiThue { get; set; }
         // ✅ THUỘC TÍNH QUAN TRỌNG CHO CHECKBOX
-        public bool IsSelected { get; set; }
+        //public bool IsSelected { get; set; }
     }
 }

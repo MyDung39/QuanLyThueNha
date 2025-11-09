@@ -48,9 +48,9 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    <TextBlock Text="Xóa phòng trong Nhà Nguyễn Trãi" FontFamily="Poppins" FontSize="20" Foreground="#8A8A8A"/>
+                    <TextBlock Text="Xác nhận xóa phòng" FontFamily="Poppins" FontSize="20" Foreground="#8A8A8A"/>
                     <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand" Click="CloseButton_Click">
+                            Background="Transparent" BorderThickness="0" Cursor="Hand" Command="{Binding CancelDeleteRoomCommand}">
                         <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" StrokeThickness="1.5">
                             <Path.Stroke>
                                 <SolidColorBrush Color="#565656" Opacity="0.34"/>
@@ -70,7 +70,7 @@
                 </Grid>
 
                 <Button Grid.Row="2" Content="Xác nhận" Width="88" Height="37" HorizontalAlignment="Right"
-                        Style="{StaticResource ConfirmButtonStyle}" Click="ConfirmButton_Click"/>
+                        Style="{StaticResource ConfirmButtonStyle}" Command="{Binding ConfirmDeleteRoomCommand}"/>
             </Grid>
         </Border>
     </Grid>

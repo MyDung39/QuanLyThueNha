@@ -135,5 +135,17 @@ namespace RoomManagementSystem.BusinessLayer
         {
             return p.DeletePhong(MaPhong);
         }
+
+
+
+        public List<Phong> GetAvailableRooms()
+        {
+            // Giả sử 'p' là biến PhongDAL của bạn
+            return p.GetAvailableRooms(); // Bạn cần tạo phương thức này trong PhongDAL
+        }
+
+
+
+
     }
 }

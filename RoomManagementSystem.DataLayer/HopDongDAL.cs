@@ -359,5 +359,21 @@ namespace RoomManagementSystem.DataLayer
             return ds;
         }
 
+
+        public List<HopDong_NguoiThue> GetActiveContractDetails()
+        {
+            List<HopDong_NguoiThue> list = new List<HopDong_NguoiThue>();
+            string sql = @"SELECT hnt.MaNguoiThue 
+                   FROM HopDong_NguoiThue hnt
+                   JOIN HopDong h ON hnt.MaHopDong = h.MaHopDong
+                   WHERE h.TrangThai = N'Hiệu lực'";
+            DataTable dt = db.ExecuteQuery(sql);
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new HopDong_NguoiThue { MaNguoiThue = row["MaNguoiThue"].ToString() });
+            }
+            return list;
+        }
+
     }
 }

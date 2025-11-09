@@ -22,10 +22,13 @@
             <Setter Property="FontFamily" Value="Roboto"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <!-- Thêm Cursor Hand -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="#0FE00000" CornerRadius="10">
+                        <!-- Sửa lại: Dùng TemplateBinding để Style linh hoạt hơn -->
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -35,7 +38,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <!-- Fullscreen overlay -->
+        <!-- Lớp phủ này sẽ bị che bởi Border ở View cha, nhưng vẫn giữ lại theo code gốc của bạn -->
         <Rectangle Fill="#80000000"/>
 
         <!-- Modal -->
@@ -61,16 +64,10 @@
                                Foreground="#8A8A8A" 
                                VerticalAlignment="Center"/>
 
-                    <Button x:Name="CloseButton" 
-                            Width="30" 
-                            Height="30" 
-                            HorizontalAlignment="Right" 
-                            VerticalAlignment="Top"
-                            Margin="0,-10,-10,0"
-                            Background="Transparent" 
-                            BorderThickness="0" 
-                            Cursor="Hand"
-                            Click="CloseButton_Click">
+                    <!-- ✅ THAY CLICK BẰNG COMMAND -->
+                    <Button Command="{Binding CancelDeleteContractCommand}"
+                            Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Margin="0,-10,-10,0" Background="Transparent" BorderThickness="0" Cursor="Hand">
                         <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" StrokeThickness="1.5">
                             <Path.Stroke>
                                 <SolidColorBrush Color="#565656" Opacity="0.34"/>
@@ -81,12 +78,8 @@
 
                 <!-- Warning -->
                 <Grid Grid.Row="1">
-                    <TextBlock FontSize="14" 
-                               Foreground="#6F6F6F"
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center">
+                    <TextBlock FontSize="14" Foreground="#6F6F6F" TextWrapping="Wrap"
+                               TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Run Text="⚠️"/>
                         <Run Text="  Xóa hợp đồng này sẽ xóa vĩnh viễn toàn bộ dữ liệu liên quan"/>
                         <LineBreak/>
@@ -95,13 +88,13 @@
                 </Grid>
 
                 <!-- Confirm button -->
+                <!-- ✅ THAY CLICK BẰNG COMMAND -->
                 <Button Grid.Row="2"
                         Content="Xác nhận" 
-                        Width="88" 
-                        Height="37"
+                        Width="88" Height="37"
                         HorizontalAlignment="Right"
                         Style="{StaticResource ConfirmButtonStyle}"
-                        Click="ConfirmButton_Click"/>
+                        Command="{Binding ConfirmDeleteContractCommand}"/>
             </Grid>
         </Border>
     </Grid>

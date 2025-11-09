@@ -1,27 +1,15 @@
-using System;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace RoomManagementSystem.Presentation.Views.Page.ContractManagement
 {
+    /// <summary>
+    /// Interaction logic for DeleteContractView.xaml
+    /// </summary>
     public partial class DeleteContractView : UserControl
     {
-        public event EventHandler Confirmed;
-        public event EventHandler Closed;
-
         public DeleteContractView()
         {
             InitializeComponent();
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            Confirmed?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            Closed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -2,8 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using RoomManagementSystem.BusinessLayer;
 using RoomManagementSystem.DataLayer;
+using RoomManagementSystem.Presentation.ViewModels; // ✅ THÊM using này để nhận diện RoomItemViewModel
 using System;
-using System.Collections.Generic; // Cần cho List<T>
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -14,13 +14,10 @@ namespace RoomManagementSystem.Presentation.ViewModels
     {
         private readonly QL_TaiSan_Phong _service;
 
+        // Các thuộc tính cho việc quản lý Nhà
         [ObservableProperty]
         private ObservableCollection<Nha> _danhSachNha;
 
-        [ObservableProperty]
-        private ObservableCollection<Phong> _danhSachPhongHienThi;
-
-        // ✅ VIẾT LẠI THUỘC TÍNH NÀY MỘT CÁCH THỦ CÔNG ĐỂ ĐẢM BẢO HOẠT ĐỘNG
         private Nha _selectedNha;
         public Nha SelectedNha
         {
@@ -29,97 +26,63 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 if (SetProperty(ref _selectedNha, value))
                 {
-                    OnSelectedNhaChanged(value); // Gọi logic cập nhật thủ công
+                    OnSelectedNhaChanged(value);
                 }
             }
         }
 
-        private List<Phong> _allRooms = new List<Phong>();
-
-
-        // --- ✅ BẮT ĐẦU PHẦN ĐIỀU KHIỂN POPUP THÊM NHÀ ---
-
+        // ✅ THAY ĐỔI: Danh sách phòng bây giờ là một tập hợp các RoomItemViewModel
         [ObservableProperty]
-        private bool _isAddHousePopupVisible;
+        private ObservableCollection<RoomItemViewModel> _danhSachPhongHienThi;
 
-        // Các thuộc tính để binding với các ô TextBox trong popup
+        // ✅ THÊM: Thuộc tính để binding với Checkbox "Chọn Tất Cả" trên giao diện
         [ObservableProperty]
-        private string _newHouseAddress;
+        private bool _isAllSelected;
 
+        // --- Các thuộc tính điều khiển Popup (Giữ nguyên) ---
+        [ObservableProperty] private bool _isAddHousePopupVisible;
+        [ObservableProperty] private string _newHouseAddress;
+        [ObservableProperty] private string _newHouseNotes;
+        [ObservableProperty] private bool _isEditHousePopupVisible;
+        [ObservableProperty] private string _editingHouseAddress;
+        [ObservableProperty] private string _editingHouseNotes;
+        [ObservableProperty] private bool _isDeleteHousePopupVisible;
+        [ObservableProperty] private bool _isAddRoomPopupVisible;
+        [ObservableProperty] private string _newRoomNumber;
+        [ObservableProperty] private decimal _newRoomArea;
+        [ObservableProperty] private decimal _newRoomCost;
+        [ObservableProperty] private string _newRoomNotes;
+        [ObservableProperty] private ObservableCollection<string> _loaiPhongOptions;
+        [ObservableProperty] private string _newRoomLoaiPhong;
+        [ObservableProperty] private bool _isEditRoomPopupVisible;
+        [ObservableProperty] private string _editingRoomNumber;
+        [ObservableProperty] private decimal _editingRoomArea;
+        [ObservableProperty] private decimal _editingRoomCost;
+        [ObservableProperty] private string _editingRoomNotes;
+
+        // ✅ THAY ĐỔI: Thuộc tính này sẽ điều khiển popup xác nhận xóa phòng
         [ObservableProperty]
-        private string _newHouseNotes;
+        private bool _isDeleteRoomPopupVisible;
 
-        // --- ✅ KẾT THÚC PHẦN ĐIỀU KHIỂN POPUP THÊM NHÀ ---
+        // ✅ THÊM: Một thuộc tính để lưu trữ phòng đang được sửa
+        private RoomItemViewModel _roomBeingEdited;
 
-
-        // --- ✅ BẮT ĐẦU PHẦN ĐIỀU KHIỂN POPUP SỬA NHÀ ---
-
-        [ObservableProperty]
-        private bool _isEditHousePopupVisible;
-
-        // Các thuộc tính để binding với các ô TextBox trong popup "Sửa"
-        [ObservableProperty]
-        private string _editingHouseAddress;
-
-        [ObservableProperty]
-        private string _editingHouseNotes;
-
-        // --- ✅ KẾT THÚC PHẦN ĐIỀU KHIỂN POPUP SỬA NHÀ ---
-
-
-        [ObservableProperty]
-        private bool _isDeleteHousePopupVisible;
-
-
-        // --- ✅ BẮT ĐẦU PHẦN ĐIỀU KHIỂN POPUP THÊM PHÒNG ---
-        [ObservableProperty]
-        private bool _isAddRoomPopupVisible;
-
-        // Các thuộc tính để binding với các ô TextBox trong popup "Thêm Phòng"
-        [ObservableProperty]
-        private string _newRoomNumber;
-
-        [ObservableProperty]
-        private decimal _newRoomArea;
-
-        [ObservableProperty]
-        private decimal _newRoomCost;
-
-        [ObservableProperty]
-        private string _newRoomNotes;
-        // --- ✅ KẾT THÚC PHẦN ĐIỀU KHIỂN POPUP THÊM PHÒNG ---
-
-
-        [ObservableProperty]
-        private Phong _selectedPhong;
-
-        // --- ✅ BẮT ĐẦU PHẦN ĐIỀU KHIỂN POPUP SỬA PHÒNG ---
-        [ObservableProperty]
-        private bool _isEditRoomPopupVisible;
-
-        // Các thuộc tính để binding với các ô TextBox trong popup "Sửa Phòng"
-        [ObservableProperty]
-        private string _editingRoomNumber;
-
-        [ObservableProperty]
-        private decimal _editingRoomArea;
-
-        [ObservableProperty]
-        private decimal _editingRoomCost;
-
-        [ObservableProperty]
-        private string _editingRoomNotes;
-        // --- ✅ KẾT THÚC PHẦN ĐIỀU KHIỂN POPUP SỬA PHÒNG ---
-
+        // --- Constructor ---
         public HouseManagementViewModel()
         {
             _service = new QL_TaiSan_Phong();
             _danhSachNha = new ObservableCollection<Nha>();
-            _danhSachPhongHienThi = new ObservableCollection<Phong>();
+
+            // ✅ THAY ĐỔI: Khởi tạo đúng kiểu danh sách
+            _danhSachPhongHienThi = new ObservableCollection<RoomItemViewModel>();
+
+            _loaiPhongOptions = new ObservableCollection<string> { "Phòng trống", "Phòng có đồ cơ bản" };
+            _newRoomLoaiPhong = _loaiPhongOptions.FirstOrDefault();
+
             LoadHouseData();
         }
 
-        // Đổi tên hàm, bây giờ chỉ tải danh sách nhà
+        // --- Logic tải dữ liệu ---
         private void LoadHouseData()
         {
             try
@@ -130,7 +93,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 {
                     DanhSachNha.Add(house);
                 }
-
                 if (DanhSachNha.Any())
                 {
                     SelectedNha = DanhSachNha.First();
@@ -142,19 +104,19 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
+        // ✅ THAY ĐỔI: Cập nhật hàm này để làm việc với RoomItemViewModel
         private void OnSelectedNhaChanged(Nha value)
         {
             DanhSachPhongHienThi.Clear();
-
             if (value != null)
             {
                 try
                 {
-                    // ✅ GỌI ĐÚNG PHƯƠNG THỨC VỚI THAM SỐ LÀ MaNha CỦA NHÀ ĐƯỢC CHỌN
                     var roomsInHouse = _service.DanhSachPhong(value.MaNha);
                     foreach (var room in roomsInHouse)
                     {
-                        DanhSachPhongHienThi.Add(room);
+                        // Thay vì thêm `Phong`, ta tạo một `RoomItemViewModel` để bọc nó lại rồi mới thêm vào danh sách
+                        DanhSachPhongHienThi.Add(new RoomItemViewModel(room));
                     }
                 }
                 catch (Exception ex)
@@ -162,10 +124,95 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     MessageBox.Show($"Lỗi tải danh sách phòng: {ex.Message}");
                 }
             }
+            // Cập nhật lại trạng thái của checkbox "Chọn tất cả" mỗi khi tải lại danh sách
+            UpdateSelectionState();
         }
 
-        // CÁC COMMAND CHO CÁC NÚT BẤM (tạm thời hiển thị MessageBox)
-        // THAY THẾ LỆNH GIẢ 'AddHouse' BẰNG LỆNH CÓ LOGIC NÀY
+        // --- Logic xử lý Checkbox ---
+
+        // ✅ THÊM: Logic này được CommunityToolkit.Mvvm tự động gọi khi thuộc tính IsAllSelected thay đổi (do người dùng tick vào)
+        partial void OnIsAllSelectedChanged(bool value)
+        {
+            // Duyệt qua tất cả các phòng và gán trạng thái IsSelected của chúng bằng với giá trị mới của checkbox cha
+            foreach (var item in DanhSachPhongHienThi)
+            {
+                item.IsSelected = value;
+            }
+        }
+
+        // ✅ THÊM: Command này được gọi mỗi khi một checkbox của phòng riêng lẻ được click
+        [RelayCommand]
+        private void UpdateSelectionState()
+        {
+            // Kiểm tra xem: có phòng nào trong danh sách KHÔNG và tất cả chúng đều đang được chọn
+            var allSelected = DanhSachPhongHienThi.Any() && DanhSachPhongHienThi.All(item => item.IsSelected);
+
+            // Cập nhật thuộc tính IsAllSelected một cách "thầm lặng" để không kích hoạt lại vòng lặp vô hạn từ OnIsAllSelectedChanged
+            SetProperty(ref _isAllSelected, allSelected, nameof(IsAllSelected));
+        }
+
+        // --- Logic Xóa Phòng (Một, Nhiều, Tất Cả) ---
+
+        // ✅ THAY ĐỔI: Nút xóa chính giờ sẽ kiểm tra và mở popup
+        [RelayCommand]
+        private void DeleteRoom()
+        {
+            // Kiểm tra xem có bất kỳ phòng nào đang được chọn không
+            var anySelected = DanhSachPhongHienThi.Any(item => item.IsSelected);
+            if (!anySelected)
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một phòng để xóa.", "Chưa chọn phòng", MessageBoxButton.OK, MessageBoxImage.Information);
+                return; // Không làm gì nếu chưa chọn
+            }
+
+            // Nếu có ít nhất một phòng được chọn, mở popup xác nhận
+            IsDeleteRoomPopupVisible = true;
+        }
+
+        // ✅ THÊM: Command cho nút "Xác nhận" trên popup xóa
+        [RelayCommand]
+        private void ConfirmDeleteRoom()
+        {
+            // Dùng LINQ để lấy danh sách tất cả các phòng đã được chọn
+            var selectedItems = DanhSachPhongHienThi.Where(item => item.IsSelected).ToList();
+
+            try
+            {
+                int successCount = 0;
+                foreach (var item in selectedItems)
+                {
+                    // Gọi hàm xóa với MaPhong từ đối tượng Phong gốc bên trong wrapper
+                    if (_service.XoaPhong(item.Phong.MaPhong))
+                    {
+                        successCount++;
+                    }
+                }
+
+                MessageBox.Show($"Đã xóa thành công {successCount}/{selectedItems.Count} phòng.", "Hoàn tất", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Tải lại danh sách phòng của nhà hiện tại để cập nhật giao diện
+                OnSelectedNhaChanged(SelectedNha);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi trong quá trình xóa: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Luôn đóng popup sau khi hoàn tất
+                IsDeleteRoomPopupVisible = false;
+            }
+        }
+
+        // ✅ THÊM: Command cho nút "Hủy" hoặc "Đóng" trên popup xóa
+        [RelayCommand]
+        private void CancelDeleteRoom()
+        {
+            IsDeleteRoomPopupVisible = false;
+        }
+
+        // --- Các Command khác (Giữ nguyên logic của bạn) ---
+
         [RelayCommand]
         private void AddHouse()
         {
@@ -174,7 +221,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             IsAddHousePopupVisible = true;
         }
 
-        // ✅ THÊM CÁC COMMAND MỚI
         [RelayCommand]
         private void SaveNewHouse()
         {
@@ -210,6 +256,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
             IsAddHousePopupVisible = false;
         }
 
+
         [RelayCommand]
         private void EditHouse()
         {
@@ -227,10 +274,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             // 3. Hiển thị popup
             IsEditHousePopupVisible = true;
         }
-
-
-
-
 
         [RelayCommand]
         private void SaveEditHouse()
@@ -266,14 +309,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
+
         [RelayCommand]
         private void CancelEditHouse()
         {
             IsEditHousePopupVisible = false;
         }
-
-
-
 
 
         [RelayCommand]
@@ -287,6 +328,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
             // Mở popup xác nhận xóa
             IsDeleteHousePopupVisible = true;
         }
+
 
         [RelayCommand]
         private void ConfirmDeleteHouse()
@@ -304,7 +346,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 }
                 else
                 {
-                    MessageBox.Show("Xóa nhà thất bại!");
+                    MessageBox.Show("Xóa nhà thất bại! Hãy xóa hết phòng của nhà");
                 }
             }
             catch (Exception ex)
@@ -313,14 +355,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
+
         [RelayCommand]
         private void CancelDeleteHouse()
         {
             IsDeleteHousePopupVisible = false;
         }
-
-
-
 
 
         [RelayCommand]
@@ -338,10 +378,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
             NewRoomArea = 0;
             NewRoomCost = 0;
             NewRoomNotes = string.Empty;
+            NewRoomLoaiPhong = LoaiPhongOptions.FirstOrDefault(); // ✅ ĐẶT LẠI GIÁ TRỊ MẶC ĐỊNH
 
             // Hiển thị popup
             IsAddRoomPopupVisible = true;
         }
+
 
         [RelayCommand]
         private void SaveNewRoom()
@@ -361,10 +403,11 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 {
                     MaNha = SelectedNha.MaNha,
                     MaPhong = NewRoomNumber, // Mã phòng này sẽ được gán tự động ở BLL
-                    DienTich = (float)NewRoomArea,  // ✅ ĐÃ SỬA: Ép kiểu sang float
-                    GiaThue = (float)NewRoomCost,   // ✅ ĐÃ SỬA: Ép kiểu sang float
+                    DienTich = NewRoomArea,  // ✅ ĐÃ SỬA: Ép kiểu sang float
+                    GiaThue = NewRoomCost,   // ✅ ĐÃ SỬA: Ép kiểu sang float
                     GhiChu = NewRoomNotes,
-                    TrangThai = "Trống" // Mặc định là trống
+                    TrangThai = "Trống", // Mặc định là trống
+                    LoaiPhong = NewRoomLoaiPhong // ✅ SỬA LỖI: Lấy giá trị từ ComboBox
                 };
 
                 // Gọi hàm ThemPhong từ BusinessLayer (bạn đã có)
@@ -385,6 +428,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
+
         [RelayCommand]
         private void CancelAddRoom()
         {
@@ -392,31 +436,49 @@ namespace RoomManagementSystem.Presentation.ViewModels
         }
 
 
-
         [RelayCommand]
+        // ✅ SỬA LẠI: Logic cho nút Sửa Phòng
+        
         private void EditRoom()
         {
-            if (SelectedPhong == null)
+            var selectedRooms = DanhSachPhongHienThi.Where(r => r.IsSelected).ToList();
+
+            if (selectedRooms.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn một phòng để chỉnh sửa.");
+                MessageBox.Show("Vui lòng chọn một phòng để chỉnh sửa.", "Chưa chọn phòng", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            // Tải dữ liệu từ phòng đã chọn vào các thuộc tính "Editing"
-            EditingRoomNumber = SelectedPhong.MaPhong;
-            EditingRoomArea = (decimal)SelectedPhong.DienTich; // Ép kiểu ngược lại
-            EditingRoomCost = (decimal)SelectedPhong.GiaThue;   // Ép kiểu ngược lại
-            EditingRoomNotes = SelectedPhong.GhiChu;
+            if (selectedRooms.Count > 1)
+            {
+                MessageBox.Show("Chỉ có thể chỉnh sửa một phòng mỗi lần.", "Chọn quá nhiều", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            // Lấy phòng duy nhất đã được chọn
+            _roomBeingEdited = selectedRooms.First();
+            var phongToEdit = _roomBeingEdited.Phong;
+
+            // Tải dữ liệu của phòng đó vào các thuộc tính để binding với popup
+            EditingRoomNumber = phongToEdit.MaPhong;
+            EditingRoomArea = (decimal)phongToEdit.DienTich;
+            EditingRoomCost = (decimal)phongToEdit.GiaThue;
+            EditingRoomNotes = phongToEdit.GhiChu;
 
             IsEditRoomPopupVisible = true;
         }
 
+
+
+        // ✅ SỬA LẠI: Logic cho nút Lưu sau khi Sửa Phòng
         [RelayCommand]
         private void SaveEditRoom()
         {
+            if (_roomBeingEdited == null) return;
+
             try
             {
-                if (SelectedPhong == null) return; // Kiểm tra an toàn
+                var phongToUpdate = _roomBeingEdited.Phong;
 
                 if (string.IsNullOrWhiteSpace(EditingRoomNumber))
                 {
@@ -424,19 +486,17 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     return;
                 }
 
-                // Cập nhật thông tin cho đối tượng SelectedPhong
-                // (Mã phòng là khóa chính, thường không nên cho sửa)
-                // SelectedPhong.MaPhong = EditingRoomNumber; 
-                SelectedPhong.DienTich = (float)EditingRoomArea;
-                SelectedPhong.GiaThue = (float)EditingRoomCost;
-                SelectedPhong.GhiChu = EditingRoomNotes;
-                // Lưu ý: LoaiPhong và TrangThai sẽ được giữ nguyên
+                // Cập nhật thông tin vào đối tượng Phong gốc
+                // Mã phòng (khóa chính) thường không nên thay đổi
+                // phongToUpdate.MaPhong = EditingRoomNumber;
+                phongToUpdate.DienTich = EditingRoomArea;
+                phongToUpdate.GiaThue = EditingRoomCost;
+                phongToUpdate.GhiChu = EditingRoomNotes;
 
-                // Gọi hàm CapNhatPhong từ BusinessLayer (bạn đã có)
-                if (_service.CapNhatPhong(SelectedPhong))
+                if (_service.CapNhatPhong(phongToUpdate))
                 {
                     MessageBox.Show("Cập nhật phòng thành công!");
-                    OnSelectedNhaChanged(SelectedNha); // Tải lại danh sách phòng
+                    OnSelectedNhaChanged(SelectedNha); // Tải lại danh sách
                     IsEditRoomPopupVisible = false; // Đóng popup
                 }
                 else
@@ -448,13 +508,13 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 MessageBox.Show($"Lỗi: {ex.Message}");
             }
+            finally
+            {
+                _roomBeingEdited = null; // Reset lại phòng đang sửa
+            }
         }
 
         [RelayCommand]
-        private void CancelEditRoom()
-        {
-            IsEditRoomPopupVisible = false;
-        }
-        [RelayCommand] private void DeleteRoom() { MessageBox.Show("Delete Room Clicked!"); }
+        private void CancelEditRoom() { IsEditRoomPopupVisible = false; _roomBeingEdited = null; }
     }
 }

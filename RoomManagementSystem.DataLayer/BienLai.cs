@@ -23,10 +23,14 @@ namespace RoomManagementSystem.DataLayer
         public string DiaChi { get; set; }
         public string TenTaiKhoan { get; set; }
 
-        // ✅ BỔ SUNG 3 THUỘC TÍNH NÀY VÀO
+        // BỔ SUNG 3 THUỘC TÍNH NÀY VÀO
         public DateTime? NgayLapHoaDon { get; set; }
         public DateTime? NgayGuiThongBao { get; set; }
         public DateTime? NgayHanThanhToan { get; set; }
+
+        //add 2 properties
+        public decimal SoTienDaThanhToan { get; set; }
+        public decimal ConLai { get; set; }
     }
 
     public class BienLaiDAL
@@ -53,6 +57,8 @@ namespace RoomManagementSystem.DataLayer
                             hd.NgayTao AS NgayLapHoaDon,
                             tbp.NgayGui AS NgayGuiThongBao,
                             tt.NgayHanThanhToan,
+                            tt.SoTienDaThanhToan,
+                            tt.SoTienConLai,
                             p.MaPhong,
                             nha.DiaChi AS TenNha,
                             (SELECT STRING_AGG(nt.HoTen, ', ') 
@@ -94,6 +100,8 @@ namespace RoomManagementSystem.DataLayer
                         NgayGuiThongBao = dr["NgayGuiThongBao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dr["NgayGuiThongBao"]),
                         NgayHanThanhToan = dr["NgayHanThanhToan"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dr["NgayHanThanhToan"]),
                         TongTien = dr["TongTien"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["TongTien"]),
+                        SoTienDaThanhToan = dr["SoTienDaThanhToan"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["SoTienDaThanhToan"]),
+                        ConLai = dr["SoTienConLai"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["SoTienConLai"]),
 
                         MaPhong = dr["MaPhong"]?.ToString(),
                         TenNha = dr["TenNha"]?.ToString(),

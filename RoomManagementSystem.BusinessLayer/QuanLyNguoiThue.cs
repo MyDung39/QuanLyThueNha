@@ -141,5 +141,16 @@ namespace RoomManagementSystem.BusinessLayer
 
             return _nguoiThueDAL.XoaNguoiThue(maNguoiThue);
         }
+
+
+        public List<NguoiThue> GetTenantsWithoutActiveContract()
+        {
+            var allTenants = _nguoiThueDAL.getAllNguoiThue();
+            // Bạn cần tạo phương thức này trong HopDongDAL
+            var activeContractDetails = _hopDongDAL.GetActiveContractDetails();
+            var tenantIdsWithContract = activeContractDetails.Select(cd => cd.MaNguoiThue).Distinct().ToList();
+            return allTenants.Where(t => !tenantIdsWithContract.Contains(t.MaNguoiThue)).ToList();
+        }
+
     }
 }

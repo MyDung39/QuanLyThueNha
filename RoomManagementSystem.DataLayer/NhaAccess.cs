@@ -171,5 +171,17 @@ namespace RoomManagementSystem.DataLayer
 
             return ds;
         }
+
+        public bool DeleteHouse(string MaNha)
+        {
+            string qr = "DELETE FROM Nha WHERE MaNha = @MaNha";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaNha", MaNha)
+            };
+            int result = db.ExecuteNonQuery(qr, parameters);
+            return result > 0; // Trả về true nếu xóa thành công
+        }
+
     }
 }

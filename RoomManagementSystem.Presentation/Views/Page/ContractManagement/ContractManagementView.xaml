@@ -3,12 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
+             xmlns:local="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ContractManagement"
              mc:Ignorable="d" 
              d:DesignHeight="794" d:DesignWidth="1302"
              FontFamily="Roboto"
              Background="White">
 
+    <!-- Gán DataContext để View này kết nối với ViewModel tương ứng -->
+    <UserControl.DataContext>
+        <vm:ContractManagementViewModel/>
+    </UserControl.DataContext>
+
     <UserControl.Resources>
+        <!-- Converter để chuyển đổi true/false thành Visible/Collapsed -->
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+
         <!-- Style cho các nút Tab ở header -->
         <Style x:Key="HeaderTabRadioButtonStyle" TargetType="RadioButton">
             <Setter Property="Background" Value="Transparent"/>
@@ -48,73 +58,47 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <Image Source="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}" 
-                                   Width="20" Height="20"/>
+                            <Image Source="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}" Width="20" Height="20"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
     </UserControl.Resources>
 
-    <Grid Margin="8,0,0,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="357"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <!-- Sử dụng Grid làm thẻ gốc để có thể xếp lớp các phần tử (popup) -->
+    <Grid>
 
-        <!-- =================== CỘT BÊN TRÁI - DANH SÁCH HỢP ĐỒNG ================= -->
-        <Grid Grid.Column="0">
-            <Grid>
+        <!-- LỚP 1: NỘI DUNG CHÍNH CỦA TRANG -->
+        <Grid Margin="8,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="357"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- CỘT BÊN TRÁI - DANH SÁCH HỢP ĐỒNG -->
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-
                 <TextBlock Grid.Row="0" Text="Danh sách hợp đồng" FontSize="15" FontWeight="Bold" Foreground="#969696" Margin="26,30,0,15"/>
-
                 <Border Grid.Row="1" Background="#F0EDFF" Opacity="0.5" CornerRadius="10" Height="38" Margin="21,0,21,20">
                     <Grid>
                         <Image Source="../../../Resources/Images/search_icon.png" Width="18" Height="18" HorizontalAlignment="Left" Margin="12,0,0,0" Opacity="0.6" VerticalAlignment="Center"/>
-                        <TextBox x:Name="searchTextBox" 
-                                 Background="Transparent" 
-                                 BorderThickness="0" 
-                                 FontSize="12" 
-                                 VerticalContentAlignment="Center"
-                                 Margin="40,0,10,0"
-                                 TextChanged="SearchTextBox_TextChanged"
-                                 GotFocus="SearchTextBox_GotFocus"
-                                 LostFocus="SearchTextBox_LostFocus">
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Setter Property="Foreground" Value="#000000"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="Text" Value="">
-                                            <Setter Property="Foreground" Value="#B5B7C0"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
-                        <TextBlock x:Name="searchPlaceholder" 
-                                   Text="Tìm kiếm theo tên người thuê" 
-                                   Foreground="#B5B7C0" 
-                                   FontSize="12" 
-                                   IsHitTestVisible="False" 
-                                   VerticalAlignment="Center" 
-                                   Margin="40,0,0,0"/>
+                        <TextBox Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="12" VerticalContentAlignment="Center" Margin="40,0,10,0"/>
                     </Grid>
                 </Border>
-
-                <ListBox x:Name="contractsListBox" 
-                         Grid.Row="2" 
+                <!-- ✅ SỬA LẠI LISTBOX ĐỂ CÓ ITEMTEMPLATE VÀ STYLE -->
+                <ListBox Grid.Row="2" 
+                         ItemsSource="{Binding ContractList}" 
+                         SelectedItem="{Binding SelectedContract, Mode=TwoWay}"
                          Background="Transparent" 
                          BorderThickness="0" 
-                         ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                         SelectionChanged="ListBox_SelectionChanged">
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="FontWeight" Value="Medium"/>
@@ -122,15 +106,22 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
                                         <Grid Height="60">
-                                            <Border x:Name="background" Background="Transparent" CornerRadius="10" Margin="5,0"/>
+                                            <Border x:Name="background" Background="Transparent" CornerRadius="10" Margin="15,0"/>
                                             <ContentPresenter VerticalAlignment="Center" Margin="20,0"/>
-                                            <Line Stroke="#000000" StrokeThickness="1" Opacity="0.12" 
-                                                  X1="15" X2="315" VerticalAlignment="Bottom"/>
+                                            <Line Stroke="#000000" StrokeThickness="1" Opacity="0.12" X1="20" X2="310" VerticalAlignment="Bottom" Margin="0,0,0,1"/>
                                         </Grid>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="background" Property="Background" Value="#1F666666"/>
+                                                <Setter TargetName="background" Property="Background" Value="#F0EDFF"/>
                                                 <Setter Property="FontWeight" Value="Bold"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <!-- Thay đổi màu nền khi di chuột qua nếu chưa được chọn -->
+                                                <Setter TargetName="background" Property="Background" Value="#F9F8FF"/>
+                                            </Trigger>
+                                            <!-- Thêm Trigger để giữ màu khi được chọn và di chuột qua -->
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="background" Property="Background" Value="#F0EDFF"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -138,8 +129,25 @@
                             </Setter>
                         </Style>
                     </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="{Binding ContractName}" 
+                                           Foreground="#586A84" 
+                                           FontSize="14"/>
+                                <TextBlock Text="{Binding TenantName}" 
+                                           Foreground="#586A84" 
+                                           FontSize="14"
+                                           HorizontalAlignment="Right"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
 
+                
+                <!-- ... ItemContainerStyle và ItemTemplate của bạn ... -->
+                
                 <Grid Grid.Row="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -147,73 +155,111 @@
                         <RowDefinition Height="15"/>
                     </Grid.RowDefinitions>
                     <Border Grid.Row="1" Background="White" CornerRadius="15" Height="60" Margin="22,0">
-                        <Grid>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
-                                    <Button x:Name="DeleteContractButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png" Click="DeleteContractButton_Click"/>
-                                    <TextBlock Text="Xóa hợp đồng" Foreground="#969696" FontSize="13" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <Button x:Name="AddContractButton" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png" Click="AddContractButton_Click"/>
-                                    <TextBlock Text="Thêm hợp đồng" Foreground="#969696" FontSize="13" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button Command="{Binding OpenDeleteConfirmationCommand}" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/delete_icon.png"/>
+                            <TextBlock Text="Xóa hợp đồng" Foreground="#969696" FontSize="13" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,20,0"/>
+                            <!-- ✅ THAY CLICK BẰNG COMMAND -->
+                            <Button Command="{Binding OpenAddContractPopupCommand}" Style="{StaticResource ActionButtonStyle}" Tag="../../../Resources/Images/add_icon.png"/>
+                            <TextBlock Text="Thêm hợp đồng" Foreground="#969696" FontSize="13" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </StackPanel>
                     </Border>
                 </Grid>
             </Grid>
-        </Grid>
 
-        <Grid Grid.Column="1">
-            <Border Background="#F0EDFF" Opacity="0.3" CornerRadius="15,0,0,15"/>
-            <Grid Margin="18,17,18,16">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <!-- CỘT BÊN PHẢI -->
+            <Grid Grid.Column="1">
+                <Border Background="#F0EDFF" Opacity="0.3" CornerRadius="15,0,0,15"/>
+                <Grid Margin="18,17,18,16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <!-- Thanh Tabs -->
-                <Border Grid.Row="0" Background="White" CornerRadius="10" Height="62">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Column="0" 
-                                     x:Name="viewTab" 
-                                     Style="{StaticResource HeaderTabRadioButtonStyle}" 
-                                     Content="Xem" 
-                                     IsChecked="True"
-                                     Checked="ViewTab_Checked"/>
-                        <RadioButton Grid.Column="1" 
-                                     x:Name="infoTab" 
-                                     Style="{StaticResource HeaderTabRadioButtonStyle}" 
-                                     Content="Thông tin"
-                                     Checked="InfoTab_Checked"/>
-                        <RadioButton Grid.Column="2" 
-                                     x:Name="editTab" 
-                                     Style="{StaticResource HeaderTabRadioButtonStyle}" 
-                                     Content="Chỉnh sửa"
-                                     Checked="EditTab_Checked"/>
-                        <RadioButton Grid.Column="3" 
-                                     x:Name="notificationTab" 
-                                     Style="{StaticResource HeaderTabRadioButtonStyle}" 
-                                     Content="Thông báo"
-                                     Checked="NotificationTab_Checked"/>
-                    </Grid>
-                </Border>
+                    <!-- Thanh Tabs -->
+                    <Border Grid.Row="0" Background="White" CornerRadius="10" Height="62">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Sử dụng Command để báo cho ViewModel biết tab nào đang được chọn -->
+                            <RadioButton Grid.Column="0" GroupName="ContractTabs" Style="{StaticResource HeaderTabRadioButtonStyle}" Content="Xem" IsChecked="True"
+                                         Command="{Binding ChangeTabCommand}" CommandParameter="Xem"/>
+                            <RadioButton Grid.Column="1" GroupName="ContractTabs" Style="{StaticResource HeaderTabRadioButtonStyle}" Content="Thông tin"
+                                         Command="{Binding ChangeTabCommand}" CommandParameter="Thông tin"/>
+                            <RadioButton Grid.Column="2" GroupName="ContractTabs" Style="{StaticResource HeaderTabRadioButtonStyle}" Content="Chỉnh sửa"
+                                         Command="{Binding ChangeTabCommand}" CommandParameter="Chỉnh sửa"/>
+                            <RadioButton Grid.Column="3" GroupName="ContractTabs" Style="{StaticResource HeaderTabRadioButtonStyle}" Content="Thông báo"
+                                         Command="{Binding ChangeTabCommand}" CommandParameter="Thông báo"/>
+                        </Grid>
+                    </Border>
 
-                <!-- Content area cho các tab -->
-                <ContentControl x:Name="tabContentControl" Grid.Row="2"/>
-
+                    <!-- Khung chứa nội dung cho các tab -->
+                    <ContentControl Grid.Row="2">
+                        <ContentControl.Style>
+                            <Style TargetType="ContentControl">
+                                <!-- Mặc định, hiển thị tab "Xem" -->
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <local:ViewContractView/>
+                                    </Setter.Value>
+                                </Setter>
+                                <!-- Sử dụng DataTriggers để thay đổi nội dung dựa trên thuộc tính SelectedTab trong ViewModel -->
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedTab}" Value="Thông tin">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <local:InformationContractView/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SelectedTab}" Value="Chỉnh sửa">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <local:EditContractView/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SelectedTab}" Value="Thông báo">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <local:NotificationContractView/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                </Grid>
             </Grid>
+
+
+
         </Grid>
-        <!-- Modal overlay host -->
-        <Grid x:Name="ModalLayer" Grid.ColumnSpan="2" Visibility="Collapsed" Panel.ZIndex="1000" Background="#80000000"/>
+
+        <!-- LỚP 2: LỚP PHỦ MÀU ĐEN MỜ (CHỈ HIỂN THỊ KHI POPUP MỞ) -->
+        <Border Background="#80000000"
+                Visibility="{Binding IsAddContractPopupVisible, Converter={StaticResource BoolToVisConverter}}"/>
+
+        <!-- ✅ THÊM LỚP PHỦ CHO POPUP XÓA -->
+        <Border Background="#80000000"
+                Visibility="{Binding IsDeleteConfirmationVisible, Converter={StaticResource BoolToVisConverter}}"/>
+
+        <!-- LỚP 3: POPUP THÊM HỢP ĐỒNG (CHỈ HIỂN THỊ KHI POPUP MỞ) -->
+        <local:AddContractView 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center"
+            Visibility="{Binding IsAddContractPopupVisible, Converter={StaticResource BoolToVisConverter}}"
+            DataContext="{Binding}"/>
+        <!-- Dùng chung DataContext với View cha -->
+
+        <!-- ✅ THÊM POPUP XÓA VÀO ĐÂY -->
+        <local:DeleteContractView Visibility="{Binding IsDeleteConfirmationVisible, Converter={StaticResource BoolToVisConverter}}" DataContext="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
+
     </Grid>
 </UserControl>

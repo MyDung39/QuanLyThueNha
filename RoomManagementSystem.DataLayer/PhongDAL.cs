@@ -130,8 +130,12 @@ namespace RoomManagementSystem.DataLayer
                     MaPhong = ToSafeString(row["MaPhong"]),
                     MaNha = ToSafeString(row["MaNha"]),
                     LoaiPhong = ToSafeString(row["LoaiPhong"]),
-                    DienTich = row["DienTich"] is DBNull ? 0.0f : Convert.ToSingle(row["DienTich"]),
-                    GiaThue = row["GiaThue"] is DBNull ? 0.0f : Convert.ToSingle(row["GiaThue"]),
+                    //DienTich = row["DienTich"] is DBNull ? 0.0f : Convert.ToSingle(row["DienTich"]),
+                    //GiaThue = row["GiaThue"] is DBNull ? 0.0f : Convert.ToSingle(row["GiaThue"]),
+
+                    DienTich = row["DienTich"] is DBNull ? 0m : Convert.ToDecimal(row["DienTich"]),
+                    GiaThue = row["GiaThue"] is DBNull ? 0m : Convert.ToDecimal(row["GiaThue"]),
+
                     TrangThai = ToSafeString(row["TrangThai"]),
                     SoNguoiHienTai = row["SoNguoiHienTai"] is DBNull ? 0 : Convert.ToInt32(row["SoNguoiHienTai"]),
                     GhiChu = ToSafeString(row["GhiChu"]),
@@ -163,8 +167,8 @@ namespace RoomManagementSystem.DataLayer
                 string trangThai = ToSafeString(row["TrangThai"]);
                 string ghiChu = ToSafeString(row["GhiChu"]);
 
-                float dienTich = row["DienTich"] is DBNull ? 0.0f : Convert.ToSingle(row["DienTich"]);
-                float giaThue = row["GiaThue"] is DBNull ? 0.0f : Convert.ToSingle(row["GiaThue"]);
+                decimal dienTich = row["DienTich"] is DBNull ? 0m : Convert.ToDecimal(row["DienTich"]);
+                decimal giaThue = row["GiaThue"] is DBNull ? 0m : Convert.ToDecimal(row["GiaThue"]);
                 int soNguoiHienTai = row["SoNguoiHienTai"] is DBNull ? 0 : Convert.ToInt32(row["SoNguoiHienTai"]);
 
                 DateTime ngayTao = row["NgayTao"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayTao"]);
@@ -186,5 +190,50 @@ namespace RoomManagementSystem.DataLayer
             }
             return null;
         }
+
+
+        public int GetRoomCountByHouse(string maNha)
+        {
+            string qr = "SELECT COUNT(*) FROM Phong WHERE MaNha = @MaNha";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaNha", maNha)
+            };
+            object result = db.ExecuteScalar(qr, parameters);
+            return result != null ? Convert.ToInt32(result) : 0;
+        }
+
+
+
+        public bool UpdateRoomStatus(string maPhong, string newStatus)
+        {
+            string sql = "UPDATE Phong SET TrangThai = @TrangThai WHERE MaPhong = @MaPhong";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+        new SqlParameter("@TrangThai", newStatus),
+        new SqlParameter("@MaPhong", maPhong)
+            };
+            return db.ExecuteNonQuery(sql, parameters) > 0;
+        }
+
+
+        public List<Phong> GetAvailableRooms()
+        {
+            List<Phong> ds = new List<Phong>();
+            string q = "SELECT MaPhong, MaNha, GiaThue, TrangThai FROM Phong WHERE TrangThai = N'Trống'";
+            DataTable dt = db.ExecuteQuery(q);
+            foreach (DataRow reader in dt.Rows)
+            {
+                ds.Add(new Phong
+                {
+                    MaPhong = reader["MaPhong"].ToString(),
+                    MaNha = reader["MaNha"].ToString(),
+                    GiaThue = Convert.ToDecimal(reader["GiaThue"]),
+                    TrangThai = reader["TrangThai"].ToString(),
+                });
+            }
+            return ds;
+        }
+
     }
 }

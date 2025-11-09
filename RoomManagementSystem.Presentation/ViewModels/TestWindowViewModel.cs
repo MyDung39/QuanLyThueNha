@@ -50,7 +50,7 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
                     break;
                 case "Contract":
                     // CurrentViewModel = new ContractViewModel();
-                    MessageBox.Show("Trang Hợp đồng (chưa tạo)");
+                    CurrentViewModel = new ContractManagementViewModel();
                     break;
                 case "Overview":
                     MessageBox.Show("Trang Tổng quan (chưa tạo)");
