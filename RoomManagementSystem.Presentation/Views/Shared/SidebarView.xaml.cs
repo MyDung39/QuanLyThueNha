@@ -10,5 +10,10 @@ namespace RoomManagementSystem.Presentation.Views.Shared
 
             // KHÔNG CÓ CODE NÀO KHÁC Ở ĐÂY
         }
+
+        private void RadioButton_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

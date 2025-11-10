@@ -22,6 +22,8 @@
     <PackageReference Include="FreeSpire.Doc" Version="12.2.0" />
 
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
+
+    <PackageReference Include="ScottPlot.WPF" Version="5.1.57" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +38,10 @@
   <ItemGroup>
     <None Update="Templates\mau-hop-dong-thue-nha-o.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\ConnectionStrings.config">
+      <Link>ConnectionStrings.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

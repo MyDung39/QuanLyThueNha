@@ -1,4 +1,5 @@
-﻿using RoomManagementSystem.Presentation.Views.Page.TenantManagement;
+using RoomManagementSystem.Presentation.Views.Page.TenantManagement;
+using RoomManagementSystem.Presentation.ViewModels.Windows;
 using System;
 using System.Windows;
 
@@ -9,8 +10,8 @@ namespace RoomManagementSystem.Presentation.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
-            // Sử dụng Grid thay vì Frame để tránh lỗi navigation
-            MainContent.Children.Add(new TenantManagementView());
+            // Thiết lập DataContext để Sidebar và nội dung chính hoạt động theo ViewModel
+            DataContext = new TestWindowViewModel();
         }
 
         // === LOGIC XỬ LÝ SỰ KIỆN TỪ HEADERVIEW ===

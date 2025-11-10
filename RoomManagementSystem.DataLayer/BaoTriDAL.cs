@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,6 +21,27 @@ namespace RoomManagementSystem.DataLayer
             int nextNumber = Convert.ToInt32(db.ExecuteScalar(qr)); // Không cần tham số
 
             return "BT" + nextNumber.ToString("D3");
+        }
+
+        // Thêm nhanh 1 bản ghi chi phí bảo trì theo phòng và thời kỳ (đánh dấu Hoàn tất)
+        public void InsertChiPhiBaoTri(string maPhong, DateTime thoiKyDate, decimal chiPhi)
+        {
+            string ma = AutoMaBT();
+            string sql = @"INSERT INTO BaoTri
+                            (MaBaoTri, MaPhong, MaNguoiThue, MoTa, TrangThaiXuLy, NgayYeuCau, NgayHoanThanh, ChiPhi, NgayTao, NgayCapNhat)
+                           VALUES
+                            (@MaBaoTri, @MaPhong, NULL, @MoTa, N'Hoàn tất', @Ngay, @Ngay, @ChiPhi, GETDATE(), GETDATE())";
+
+            SqlParameter[] ps = new SqlParameter[]
+            {
+                new SqlParameter("@MaBaoTri", ma),
+                new SqlParameter("@MaPhong", maPhong),
+                new SqlParameter("@MoTa", $"Chi phí bảo trì kỳ {thoiKyDate:MM/yyyy}"),
+                new SqlParameter("@Ngay", thoiKyDate),
+                new SqlParameter("@ChiPhi", chiPhi)
+            };
+
+            db.ExecuteNonQuery(sql, ps);
         }
 
         // Thêm mới yêu cầu bảo trì

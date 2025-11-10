@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 
@@ -35,7 +35,7 @@ namespace RoomManagementSystem.DataLayer
 
     public class BienLaiDAL
     {
-        string connect = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        string connect = DbConfig.ConnectionString;
 
         public List<BienLai> GetBienLaiTheoMaPhong(string maPhong)
         {

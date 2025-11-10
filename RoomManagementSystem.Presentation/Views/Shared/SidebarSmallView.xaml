@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="RoomManagementSystem.Presentation.Views.Shared.SidebarSmallView"
+<UserControl x:Class="RoomManagementSystem.Presentation.Views.Shared.SidebarSmallView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Width="59"
@@ -91,7 +91,7 @@
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                              CommandParameter="HouseManagement"/>
                 <!-- Người thuê -->
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/nguoi_thue_icon.png" ToolTip="Người thuê" IsChecked="True"
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/nguoi_thue_icon.png" ToolTip="Người thuê"
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                              CommandParameter="Tenant"/>
                 <!-- Hợp đồng -->
@@ -107,7 +107,9 @@
                 <!-- Bảo trì -->
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/bao_tri_icon.png" ToolTip="Bảo trì"/>
                 <!-- Dịch vụ -->
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/dich_vu_icon.png" ToolTip="Dịch vụ"/>
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/dich_vu_icon.png" ToolTip="Dịch vụ"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="ServiceManagement"/>
                 <!-- Thanh toán -->
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/thanh_toan_icon.png" ToolTip="Thanh toán"
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"

@@ -1,4 +1,4 @@
-﻿<Window x:Class="RoomManagementSystem.Presentation.Views.Windows.TestWindow"
+<Window x:Class="RoomManagementSystem.Presentation.Views.Windows.TestWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,9 +16,12 @@
         xmlns:house="clr-namespace:RoomManagementSystem.Presentation.Views.Page.HouseManagement"
 
         xmlns:viewModel="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
+        xmlns:service="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ServiceManagement"
+        xmlns:dash="clr-namespace:RoomManagementSystem.Presentation.Views"
         
         mc:Ignorable="d"
-        Title="Test - Tenant Management" Height="720" Width="1280"
+        Title="Quản lý thuê nhà" Height="720" Width="1280"
+        Icon="/Resources/Images/logo_app.png"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -40,8 +43,16 @@
             <house:HouseManagementView />
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:ServiceManagementViewModel}">
+            <service:ServiceManagementView />
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type viewModel:ContractManagementViewModel}">
             <contract:ContractManagementView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+            <dash:DashboardView />
         </DataTemplate>
 
 

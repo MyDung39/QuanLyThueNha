@@ -40,35 +40,89 @@
                 </Grid.RowDefinitions>
 
                 <!-- Vùng nội dung chính -->
-                <StackPanel Grid.Row="0" Margin="20">
-                    <!-- Mục Internet -->
-                    <TextBlock Text="Internet" Style="{StaticResource LabelStyle}" FontWeight="Bold"/>
-                    <TextBox x:Name="InternetCostTextBox" 
-                             Style="{StaticResource InputTextBoxStyle}"
-                             Margin="0,8,0,0"
-                             materialDesign:HintAssist.Hint="Nhập chi phí Internet"/>
+                <ScrollViewer Grid.Row="0" Margin="20" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- Thông tin chung -->
+                        <TextBlock Text="Mã phòng" Style="{StaticResource LabelStyle}" FontWeight="Bold"/>
+                        <TextBox x:Name="MaPhongTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,8,0,12" materialDesign:HintAssist.Hint="Nhập mã phòng (ví dụ: PHONG001)"
+                                 Text="{Binding SelectedPhong.MaPhong}"/>
 
-                    <!-- Mục Vệ sinh -->
-                    <TextBlock Text="Vệ sinh" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
-                    <TextBox x:Name="CleaningCostTextBox" 
-                             Style="{StaticResource InputTextBoxStyle}"
-                             Margin="0,8,0,0"
-                             materialDesign:HintAssist.Hint="Nhập chi phí Vệ sinh"/>
+                        <TextBlock Text="Thời kỳ" Style="{StaticResource LabelStyle}" FontWeight="Bold"/>
+                        <TextBox x:Name="ThoiKyTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,8,0,20" materialDesign:HintAssist.Hint="MM/yyyy"/>
 
-                    <!-- Mục Rác -->
-                    <TextBlock Text="Rác" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
-                    <TextBox x:Name="TrashCostTextBox" 
-                             Style="{StaticResource InputTextBoxStyle}"
-                             Margin="0,8,0,0"
-                             materialDesign:HintAssist.Hint="Nhập chi phí Rác"/>
+                        <TextBlock Text="Internet" Style="{StaticResource LabelStyle}" FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <RadioButton x:Name="InternetYesRadio" GroupName="InternetGroup" Content="Có" Margin="0,0,16,0" Checked="OnSelectionChanged"/>
+                            <RadioButton x:Name="InternetNoRadio" GroupName="InternetGroup" Content="Không" IsChecked="True" Checked="OnSelectionChanged"/>
+                        </StackPanel>
+                        <TextBox x:Name="InternetCostTextBox"
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,8,0,0"
+                                 IsEnabled="{Binding IsChecked, ElementName=InternetYesRadio}"
+                                 materialDesign:HintAssist.Hint="Nhập chi phí Internet"/>
 
-                    <!-- Tổng -->
-                    <Separator Margin="0,32,0,16"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Tổng: " Style="{StaticResource LabelStyle}" FontWeight="Bold"/>
-                        <TextBlock x:Name="TotalText" Text="0 VND" Style="{StaticResource LabelStyle}" FontWeight="Bold"/>
+                        <TextBlock Text="Vệ sinh" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <RadioButton x:Name="CleaningYesRadio" GroupName="CleaningGroup" Content="Có" Margin="0,0,16,0" Checked="OnSelectionChanged"/>
+                            <RadioButton x:Name="CleaningNoRadio" GroupName="CleaningGroup" Content="Không" IsChecked="True" Checked="OnSelectionChanged"/>
+                        </StackPanel>
+                        <TextBox x:Name="CleaningCostTextBox"
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,8,0,0"
+                                 IsEnabled="{Binding IsChecked, ElementName=CleaningYesRadio}"
+                                 materialDesign:HintAssist.Hint="Nhập chi phí Vệ sinh"/>
+
+                        <TextBlock Text="Rác" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <RadioButton x:Name="TrashYesRadio" GroupName="TrashGroup" Content="Có" Margin="0,0,16,0" Checked="OnSelectionChanged"/>
+                            <RadioButton x:Name="TrashNoRadio" GroupName="TrashGroup" Content="Không" IsChecked="True" Checked="OnSelectionChanged"/>
+                        </StackPanel>
+                        <TextBox x:Name="TrashCostTextBox"
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,8,0,0"
+                                 IsEnabled="{Binding IsChecked, ElementName=TrashYesRadio}"
+                                 materialDesign:HintAssist.Hint="Nhập chi phí Rác"/>
+
+                        <TextBlock Text="Bảo trì" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <RadioButton x:Name="MaintenanceYesRadio" GroupName="MaintenanceGroup" Content="Có" Margin="0,0,16,0" Checked="OnSelectionChanged"/>
+                            <RadioButton x:Name="MaintenanceNoRadio" GroupName="MaintenanceGroup" Content="Không" IsChecked="True" Checked="OnSelectionChanged"/>
+                        </StackPanel>
+                        <TextBox x:Name="MaintenanceCostTextBox"
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,8,0,0"
+                                 IsEnabled="{Binding IsChecked, ElementName=MaintenanceYesRadio}"
+                                 materialDesign:HintAssist.Hint="Nhập chi phí Bảo trì"/>
+
+                        <TextBlock Text="Phí gửi xe (từ 2 xe/phòng)" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <RadioButton x:Name="ParkingYesRadio" GroupName="ParkingGroup" Content="Có" Margin="0,0,16,0" Checked="OnSelectionChanged"/>
+                            <RadioButton x:Name="ParkingNoRadio" GroupName="ParkingGroup" Content="Không" IsChecked="True" Checked="OnSelectionChanged"/>
+                        </StackPanel>
+                        <TextBox x:Name="ParkingCostTextBox"
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,8,0,0"
+                                 IsEnabled="{Binding IsChecked, ElementName=ParkingYesRadio}"
+                                 materialDesign:HintAssist.Hint="Nhập chi phí Phí gửi xe"/>
+
+                        <TextBlock Text="Trễ hạn" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <RadioButton x:Name="LateFeeYesRadio" GroupName="LateFeeGroup" Content="Có" Margin="0,0,16,0" Checked="OnSelectionChanged"/>
+                            <RadioButton x:Name="LateFeeNoRadio" GroupName="LateFeeGroup" Content="Không" IsChecked="True" Checked="OnSelectionChanged"/>
+                        </StackPanel>
+                        <TextBox x:Name="LateFeeCostTextBox"
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,8,0,0"
+                                 IsEnabled="{Binding IsChecked, ElementName=LateFeeYesRadio}"
+                                 materialDesign:HintAssist.Hint="Nhập chi phí Phí trễ hạn"/>
+
+                        <Separator Margin="0,32,0,16"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Tổng: " Style="{StaticResource LabelStyle}" FontWeight="Bold"/>
+                            <TextBlock x:Name="TotalText" Text="0 VND" Style="{StaticResource LabelStyle}" FontWeight="Bold"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </ScrollViewer>
 
                 <!-- Nút Lưu -->
                 <Button Grid.Row="1" 
