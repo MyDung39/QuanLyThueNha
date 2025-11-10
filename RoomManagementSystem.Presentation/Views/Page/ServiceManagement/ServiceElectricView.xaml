@@ -41,41 +41,52 @@
                 </Grid.RowDefinitions>
 
                 <!-- Vùng nội dung chính (các ô nhập liệu và tóm tắt) -->
-                <StackPanel Grid.Row="0" Margin="20">
-                    <!-- Chỉ số điện cũ -->
-                    <TextBlock Text="Chỉ số điện cũ" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="OldIndexTextBox" 
-                             Style="{StaticResource InputTextBoxStyle}" 
-                             Margin="0,6,0,0" 
-                             Text="12503" 
-                             TextChanged="OldIndexTextBox_TextChanged"/>
+                <ScrollViewer Grid.Row="0" Margin="20" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- Thông tin chung -->
+                        <TextBlock Text="Mã phòng" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="MaPhongTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,6,0,0"
+                                 Text="{Binding SelectedPhong.MaPhong}"/>
 
-                    <!-- Chỉ số điện mới -->
-                    <TextBlock Text="Chỉ số điện mới" Style="{StaticResource LabelStyle}" Margin="0,24,0,0"/>
-                    <TextBox x:Name="NewIndexTextBox" 
-                             Style="{StaticResource InputTextBoxStyle}"
-                             Margin="0,6,0,0"
-                             materialDesign:HintAssist.Hint="Vui lòng nhập chỉ số điện mới"/>
+                        <TextBlock Text="Thời kỳ (MM/yyyy)" Style="{StaticResource LabelStyle}" Margin="0,16,0,0"/>
+                        <TextBox x:Name="ThoiKyTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,6,0,12"
+                                 materialDesign:HintAssist.Hint="MM/yyyy"/>
 
-                    <!-- Đơn giá -->
-                    <TextBlock Text="Đơn giá cho mỗi kWh" Style="{StaticResource LabelStyle}" Margin="0,24,0,0"/>
-                    <TextBox x:Name="UnitPriceTextBox" 
-                             Style="{StaticResource InputTextBoxStyle}"
-                             Margin="0,6,0,0" 
-                             Text="4000"/>
+                        <!-- Chỉ số điện cũ -->
+                        <TextBlock Text="Chỉ số điện cũ" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="OldIndexTextBox" 
+                                 Style="{StaticResource InputTextBoxStyle}" 
+                                 Margin="0,6,0,0" 
+                                 Text="12503" 
+                                 TextChanged="OldIndexTextBox_TextChanged"/>
 
-                    <!-- Tóm tắt -->
-                    <StackPanel Margin="0,32,0,0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Mức tiêu thụ: " Style="{StaticResource LabelStyle}"/>
-                            <TextBlock x:Name="ConsumptionText" Text="104 kWh" Style="{StaticResource LabelStyle}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <TextBlock Text="Tổng số tiền: " Style="{StaticResource LabelStyle}"/>
-                            <TextBlock x:Name="TotalText" Text="416 000 VND" Style="{StaticResource LabelStyle}"/>
+                        <!-- Chỉ số điện mới -->
+                        <TextBlock Text="Chỉ số điện mới" Style="{StaticResource LabelStyle}" Margin="0,24,0,0"/>
+                        <TextBox x:Name="NewIndexTextBox" 
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,6,0,0"
+                                 materialDesign:HintAssist.Hint="Vui lòng nhập chỉ số điện mới"/>
+
+                        <!-- Đơn giá -->
+                        <TextBlock Text="Đơn giá cho mỗi kWh" Style="{StaticResource LabelStyle}" Margin="0,24,0,0"/>
+                        <TextBox x:Name="UnitPriceTextBox" 
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,6,0,0" 
+                                 Text="4000"/>
+
+                        <!-- Tóm tắt ở cuối form -->
+                        <StackPanel Margin="0,32,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Mức tiêu thụ: " Style="{StaticResource LabelStyle}"/>
+                                <TextBlock x:Name="ConsumptionText" Text="0 kWh" Style="{StaticResource LabelStyle}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <TextBlock Text="Tổng số tiền: " Style="{StaticResource LabelStyle}"/>
+                                <TextBlock x:Name="TotalText" Text="0 VND" Style="{StaticResource LabelStyle}"/>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </ScrollViewer>
 
                 <!-- Nút Lưu -->
                 <Button Grid.Row="1" 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="RoomManagementSystem.Presentation.Views.Shared.SidebarView"
+<UserControl x:Class="RoomManagementSystem.Presentation.Views.Shared.SidebarView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Width="240"
@@ -139,7 +139,9 @@
                              Tag="/Resources/Images/bao_tri_icon.png"/>
                 <RadioButton Content="Dịch vụ" 
                              Style="{StaticResource SidebarRadioButton}"
-                             Tag="/Resources/Images/dich_vu_icon.png"/>
+                             Tag="/Resources/Images/dich_vu_icon.png"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="ServiceManagement"/>
              <!--   <RadioButton Content="Thanh toán" 
                              Style="{StaticResource SidebarRadioButton}"
                              Tag="/Resources/Images/thanh_toan_icon.png"/>  -->

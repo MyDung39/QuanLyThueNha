@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +10,7 @@ namespace RoomManagementSystem.DataLayer
 {
     public class ThanhToanDAL
     {
-        private string connectionString = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private readonly string connectionString = DbConfig.ConnectionString;
         // Lấy danh sách thanh toán
         public DataTable GetDanhSachThanhToan()
         {
@@ -21,6 +21,24 @@ namespace RoomManagementSystem.DataLayer
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 return dt;
+            }
+        }
+
+        // Cập nhật cộng thêm vào Tổng công nợ theo MaHoaDon (dùng cho phí trễ hạn)
+        public bool CapNhatCongNoTheoHoaDon(string maHoaDon, decimal congThem)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"UPDATE ThanhToan 
+                                 SET TongCongNo = ISNULL(TongCongNo,0) + @CongThem,
+                                     NgayCapNhat = GETDATE()
+                                 WHERE MaHoaDon = @MaHoaDon";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@CongThem", congThem);
+                cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
         //Tự động sinh mã thanh toán (TT001, TT002, ...)

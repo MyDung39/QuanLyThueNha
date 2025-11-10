@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,6 +11,7 @@
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="DS.Documents.Word" Version="8.2.1" />
     <PackageReference Include="Spire.Doc" Version="13.9.10" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,6 +2,8 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using RoomManagementSystem.BusinessLayer;
+using RoomManagementSystem.Presentation.ViewModels;
 
 namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
 {
@@ -10,16 +12,28 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
         public ServiceWaterView()
         {
             InitializeComponent();
-            OldIndexTextBox.TextChanged += OnInputsChanged;
-            NewIndexTextBox.TextChanged += OnInputsChanged;
-            UnitPriceTextBox.TextChanged += OnInputsChanged;
-            UpdateSummary();
+            this.Loaded += (s, e) =>
+            {
+                if (OldIndexTextBox != null) OldIndexTextBox.TextChanged += OnInputsChanged;
+                if (NewIndexTextBox != null) NewIndexTextBox.TextChanged += OnInputsChanged;
+                if (UnitPriceTextBox != null) UnitPriceTextBox.TextChanged += OnInputsChanged;
+                // Nếu chưa nhập thời kỳ, tự điền tháng hiện tại MM/yyyy
+                if (ThoiKyTextBox != null && string.IsNullOrWhiteSpace(ThoiKyTextBox.Text))
+                {
+                    ThoiKyTextBox.Text = DateTime.Now.ToString("MM/yyyy");
+                }
+                UpdateSummary();
+            };
         }
 
         private void OnInputsChanged(object sender, TextChangedEventArgs e) => UpdateSummary();
 
         private void UpdateSummary()
         {
+            if (OldIndexTextBox == null || NewIndexTextBox == null || UnitPriceTextBox == null ||
+                ConsumptionText == null || TotalText == null)
+                return;
+
             if (!TryParseDouble(OldIndexTextBox.Text, out double oldIdx)) oldIdx = 0;
             if (!TryParseDouble(NewIndexTextBox.Text, out double newIdx)) newIdx = oldIdx;
             if (!TryParseDouble(UnitPriceTextBox.Text, out double unitPrice)) unitPrice = 0;
@@ -39,7 +53,47 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Đã lưu chỉ số nước và tính tiền thành công.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                var vm = this.DataContext as ServiceManagementViewModel;
+                string maPhong = vm?.SelectedPhong?.MaPhong?.Trim();
+                string thoiKy = ThoiKyTextBox?.Text?.Trim(); // MM/yyyy
+
+                if (string.IsNullOrWhiteSpace(maPhong))
+                {
+                    MessageBox.Show("Vui lòng chọn hoặc nhập Mã phòng.");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(thoiKy))
+                {
+                    MessageBox.Show("Vui lòng nhập Thời kỳ (MM/yyyy).");
+                    return;
+                }
+
+                if (!TryParseDouble(OldIndexTextBox.Text, out double oldIdx)) oldIdx = 0;
+                if (!TryParseDouble(NewIndexTextBox.Text, out double newIdx)) newIdx = oldIdx;
+                if (!TryParseDouble(UnitPriceTextBox.Text, out double unitPrice)) unitPrice = 0;
+                double consumption = Math.Max(0, newIdx - oldIdx);
+                double total = consumption * unitPrice;
+
+                var mgr = new ServiceManager();
+                mgr.SaveServiceCosts(
+                    maPhong,
+                    thoiKy,
+                    dien: null,
+                    nuoc: Convert.ToDecimal(total),
+                    internet: null,
+                    rac: null,
+                    guiXe: null,
+                    baoTri: null,
+                    treHan: null);
+
+                MessageBox.Show($"Đã lưu tiền nước cho phòng {maPhong} kỳ {thoiKy}.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu nước: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

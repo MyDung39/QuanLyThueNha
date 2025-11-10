@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoomManagementSystem.BusinessLayer; // Service
 using RoomManagementSystem.Presentation.ViewModels; // Các VM con
@@ -47,6 +47,9 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
                     // Truyền các service ĐÚNG vào BillingViewModel
                     //CurrentViewModel = new BillingViewModel(_taiSanPhongService, _xuatBienLaiService);
                     CurrentViewModel = new BillingViewModel();
+                    break;
+                case "ServiceManagement":
+                    CurrentViewModel = new ServiceManagementViewModel();
                     break;
                 case "Contract":
                     // CurrentViewModel = new ContractViewModel();

@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +10,7 @@ namespace RoomManagementSystem.DataLayer
 {
     public class CongNo
     {
-        public string con = "Data Source=LAPTOP-JH9IJG9F\\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        public string con = DbConfig.ConnectionString;
         public DataTable GetDanhSachCongNo()
         {
             using(SqlConnection conn = new SqlConnection(con))

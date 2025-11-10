@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,8 +10,7 @@ namespace RoomManagementSystem.DataLayer
 {
     public class Database
     {
-        private string connectionString =
-            @"Data Source=LAPTOP-JH9IJG9F\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private readonly string connectionString = DbConfig.ConnectionString;
 
         // Hàm thực thi SELECT, trả về DataTable
         public DataTable ExecuteQuery(string query, SqlParameter[] parameters = null)
