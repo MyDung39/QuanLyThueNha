@@ -22,8 +22,8 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
             _taiSanPhongService = new QL_TaiSan_Phong();
             _xuatBienLaiService = new XuatBienLai(); // <-- Đã khởi tạo service đúng
 
-            // 4. Khởi tạo ViewModel mặc định
-            CurrentViewModel = new TenantManagementViewModel();
+            // 4. Khởi tạo ViewModel mặc định (Dashboard)
+            CurrentViewModel = new DashboardViewModel();
         }
 
         // 5. Command điều hướng (tự động tạo 'NavigateCommand')
@@ -57,9 +57,12 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
                     break;
                 case "Overview":
                     CurrentViewModel = new DashboardViewModel();
+<<<<<<< Updated upstream
                     break;
                 case "Maintenance":
                     CurrentViewModel = new MaintenanceManagementViewModel();
+=======
+>>>>>>> Stashed changes
                     break;
                 case "Asset":
                     MessageBox.Show("Trang Tài sản (chưa tạo)");
