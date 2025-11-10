@@ -9,56 +9,12 @@
              FontFamily="Roboto"
              Background="White">
 
+    <!-- ✅ THÊM LẠI KHỐI RESOURCES BỊ THIẾU -->
     <UserControl.Resources>
         <Style x:Key="LabelText" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#3B4758"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Medium"/>
-        </Style>
-        <Style x:Key="FlatComboBox" TargetType="ComboBox">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="14,0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBox">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Border Background="Transparent" Grid.ColumnSpan="2"/>
-                            <ContentPresenter Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
-                            <ToggleButton Grid.Column="1"
-                                          IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                          Focusable="False"
-                                          Background="Transparent"
-                                          BorderThickness="0"
-                                          Margin="0,0,14,0">
-                                <Path Data="M 0 0 L 3 3 L 6 0" Stroke="#3B4758" StrokeThickness="1.2" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
-                            </ToggleButton>
-                            <Popup x:Name="Popup"
-                                   IsOpen="{TemplateBinding IsDropDownOpen}"
-                                   Placement="Bottom"
-                                   AllowsTransparency="True"
-                                   Focusable="False">
-                                <Border Background="White" BorderBrush="#E0E6EE" BorderThickness="1" MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
-                                    <ScrollViewer>
-                                        <ItemsPresenter/>
-                                    </ScrollViewer>
-                                </Border>
-                            </Popup>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="InputBox" TargetType="Control">
-            <Setter Property="Height" Value="34"/>
-            <Setter Property="Background" Value="#F2F6FA"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="14,0"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
         <Style x:Key="SecondaryText" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#586A84"/>
@@ -85,7 +41,8 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
+    <!-- DataContext của Grid này được gán vào đối tượng "EditingContract" trong ViewModel cha -->
+    <Grid DataContext="{Binding EditingContract}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="8"/>
@@ -98,39 +55,21 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Người thuê -->
+        <!-- Người thuê (Vô hiệu hóa, chỉ hiển thị) -->
         <StackPanel Grid.Row="0" Margin="24,16,24,0">
             <TextBlock Text="Người thuê" Style="{StaticResource LabelText}" Margin="0,0,0,6"/>
-            <Border Background="#F2F6FA" CornerRadius="8" Height="40">
-                <ComboBox x:Name="TenantComboBox" Style="{StaticResource FlatComboBox}" Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center" SelectionChanged="TenantComboBox_SelectionChanged">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                    <ComboBoxItem>Lê Công Bảo</ComboBoxItem>
-                    <ComboBoxItem>Nguyễn Văn A</ComboBoxItem>
-                    <ComboBoxItem>Trần Thanh Nhã</ComboBoxItem>
-                </ComboBox>
+            <Border Background="#E9ECEF" CornerRadius="8" Height="40" ToolTip="Không thể thay đổi người thuê trên hợp đồng đã có.">
+                <TextBlock Text="{Binding DataContext.SelectedContract.TenantName, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="14,0" Opacity="0.7"/>
             </Border>
         </StackPanel>
 
-        <!-- Phòng -->
+        <!-- Phòng (Vô hiệu hóa, chỉ hiển thị) -->
         <StackPanel Grid.Row="2" Margin="24,16,24,0">
             <TextBlock Text="Phòng" Style="{StaticResource LabelText}" Margin="0,0,0,6"/>
-            <Border Background="#F2F6FA" CornerRadius="8" Height="40">
-                <ComboBox x:Name="RoomComboBox" Style="{StaticResource FlatComboBox}" Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                    <ComboBoxItem>APPLE-001</ComboBoxItem>
-                    <ComboBoxItem>APPLE-002</ComboBoxItem>
-                    <ComboBoxItem>ORANGE-101</ComboBoxItem>
-                </ComboBox>
+            <Border Background="#E9ECEF" CornerRadius="8" Height="40" ToolTip="Không thể thay đổi phòng trên hợp đồng đã có.">
+                <TextBlock Text="{Binding MaPhong}"
+                           Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="14,0" Opacity="0.7"/>
             </Border>
         </StackPanel>
 
@@ -138,7 +77,7 @@
         <StackPanel Grid.Row="4" Margin="24,16,24,0">
             <TextBlock Text="Tiền cọc" Style="{StaticResource LabelText}" Margin="0,0,0,6"/>
             <Border Background="#F2F6FA" CornerRadius="8" Height="40">
-                <TextBox x:Name="DepositTextBox" Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center" Text="2000000"/>
+                <TextBox Text="{Binding TienCoc, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center"/>
             </Border>
         </StackPanel>
 
@@ -146,13 +85,11 @@
         <StackPanel Grid.Row="6" Margin="24,16,24,0">
             <TextBlock Text="Ghi chú" Style="{StaticResource LabelText}" Margin="0,0,0,6"/>
             <Border Background="#F2F6FA" CornerRadius="8" MinHeight="120">
-                <TextBox x:Name="NoteTextBox" Background="Transparent" BorderThickness="0" Padding="14" 
-                         TextWrapping="Wrap" AcceptsReturn="True"
-                         Text="Lê Công Bảo cần tiền cọc, do thời gian nhập học gấp rút, chưa chạy được chi phí nên tạm chấp nhận khoản cọc này"/>
+                <TextBox Text="{Binding GhiChu, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" Padding="14" TextWrapping="Wrap" AcceptsReturn="True"/>
             </Border>
         </StackPanel>
 
-        <!-- Ngày bắt đầu / kết thúc -->
+        <!-- Ngày bắt đầu & Thời hạn -->
         <Grid Grid.Row="7" Margin="24,0,24,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -162,20 +99,15 @@
 
             <StackPanel Grid.Column="0" Margin="0,24,0,0">
                 <TextBlock Text="Ngày bắt đầu" Style="{StaticResource LabelText}" Margin="0,0,0,6"/>
-                <Border Background="#F2F6FA" CornerRadius="8" Height="40" ClipToBounds="True">
-                    <DatePicker x:Name="StartDatePicker" Background="Transparent" BorderThickness="0" Padding="14,0"
-                                VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                SelectedDate="{x:Static sys:DateTime.Today}"/>
+                <Border Background="#F2F6FA" CornerRadius="8" Height="40">
+                    <DatePicker SelectedDate="{Binding NgayBatDau, Mode=TwoWay}" Background="Transparent" BorderThickness="0" Padding="14,0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                 </Border>
             </StackPanel>
-            
-            <!-- Ngày kết thúc -->
-            <StackPanel Grid.Column="2" Margin="12,22,0,0">
-                <TextBlock Text="Ngày kết thúc" Style="{StaticResource LabelText}" Margin="0,0,0,6"/>
-                <Border Background="#F2F6FA" CornerRadius="8" Height="40" ClipToBounds="True">
-                    <DatePicker x:Name="EndDatePicker" Background="Transparent" BorderThickness="0" Padding="14,0"
-                                VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                SelectedDate="{x:Static sys:DateTime.Today}"/>
+
+            <StackPanel Grid.Column="2" Margin="0,24,0,0">
+                <TextBlock Text="Thời hạn (tháng)" Style="{StaticResource LabelText}" Margin="0,0,0,6"/>
+                <Border Background="#F2F6FA" CornerRadius="8" Height="40">
+                    <TextBox Text="{Binding ThoiHan, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center"/>
                 </Border>
             </StackPanel>
         </Grid>
@@ -186,13 +118,14 @@
             <TextBlock Text="Gửi thông báo chỉnh sửa này đến cho người thuê" Style="{StaticResource SecondaryText}" Margin="0,6,0,8"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <CheckBox Content="Có" Foreground="#3B4758" FontSize="14"/>
-                <CheckBox Content="Không" Foreground="#3B4758" FontSize="14" Margin="24,0,0,0"/>
+                <CheckBox Content="Không" IsChecked="True" Foreground="#3B4758" FontSize="14" Margin="24,0,0,0"/>
             </StackPanel>
         </StackPanel>
 
         <!-- Nút Lưu -->
         <Grid Grid.Row="8" Margin="24,12,24,16">
-            <Button Content="Lưu" Style="{StaticResource SaveButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            <Button Command="{Binding DataContext.SaveContractChangesCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    Content="Lưu" Style="{StaticResource SaveButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
         </Grid>
     </Grid>
 </UserControl>

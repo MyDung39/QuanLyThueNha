@@ -1,12 +1,10 @@
 ﻿using RoomManagementSystem.DataLayer;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Globalization;
-using Spire.Doc;
-using Spire.Doc.Documents;
-using System.Transactions; // ✅ Cần using này
+using System.Linq;
+using System.Transactions;
 
+// Xóa các using không cần thiết ở đây như Spire.Doc, Globalization, IO nếu có
 
 namespace RoomManagementSystem.BusinessLayer
 {
@@ -15,56 +13,12 @@ namespace RoomManagementSystem.BusinessLayer
         private readonly HopDongDAL _hdDAL = new HopDongDAL();
         private readonly PhongDAL _phongDAL = new PhongDAL();
         private readonly NguoiThueDAL _nguoiThueDAL = new NguoiThueDAL();
+        private readonly LichSuHopDongDAL _lichSuDAL = new LichSuHopDongDAL();
+        private readonly ThongBaoHanDAL _thongBaoDAL = new ThongBaoHanDAL();
 
-        /*
-        public bool ThemHopDong(HopDong hd, string maChuHopDong)
-        {
-
-            if (string.IsNullOrEmpty(hd.MaPhong))
-            {
-                throw new Exception("Mã phòng không được để trống");
-            }
-            if (string.IsNullOrEmpty(maChuHopDong))
-            {
-                throw new Exception("Mã chủ hợp đồng không được để trống");
-            }
-
-            hd.ChuNha = "ND001"; // Mặc định
-            string newMaHD = hdDAL.AutoMaHD();
-            hd.MaHopDong = newMaHD;
-
-            // 1. Thêm hợp đồng chính
-            bool success = hdDAL.InsertHopDong(hd);
-            if (!success)
-
-            {
-                throw new Exception("Thêm hợp đồng thất bại do lỗi CSDL (Bảng HopDong).");
-            }
-
-
-            // 2. Thêm chủ hợp đồng vào bảng trung gian
-            HopDong_NguoiThue ct = new HopDong_NguoiThue
-            {
-                MaHopDong = hd.MaHopDong,
-                MaNguoiThue = maChuHopDong,
-                VaiTro = "Chủ hợp đồng",
-                TrangThaiThue = "Đang ở",
-                NgayDonVao = hd.NgayBatDau, // Ngày dọn vào = ngày bắt đầu HĐ
-                NgayBatDauThue = hd.NgayBatDau
-            };
-
-            bool successCT = hdDAL.InsertHopDongNguoiThue(ct);
-            if (!successCT)
-            {
-                throw new Exception("Thêm hợp đồng thất bại do lỗi CSDL (Bảng HopDong_NguoiThue).");
-            }
-
-            return true;
-
-        }
-        */
-
-
+        /// <summary>
+        /// Tạo mới một hợp đồng và ghi lại lịch sử.
+        /// </summary>
         public string TaoHopDong(HopDong hopDong, string maNguoiThueChuHopDong)
         {
             if (hopDong == null || string.IsNullOrEmpty(hopDong.MaPhong) || string.IsNullOrEmpty(maNguoiThueChuHopDong))
@@ -76,10 +30,7 @@ namespace RoomManagementSystem.BusinessLayer
             {
                 // 1. Tạo mã và chèn hợp đồng chính
                 hopDong.MaHopDong = _hdDAL.AutoMaHD();
-                if (!_hdDAL.InsertHopDong(hopDong))
-                {
-                    throw new Exception("Không thể lưu hợp đồng vào CSDL.");
-                }
+                if (!_hdDAL.InsertHopDong(hopDong)) throw new Exception("Không thể lưu hợp đồng vào CSDL.");
 
                 // 2. Chèn chi tiết người thuê (chủ hợp đồng)
                 var chiTiet = new HopDong_NguoiThue
@@ -91,290 +42,140 @@ namespace RoomManagementSystem.BusinessLayer
                     NgayBatDauThue = hopDong.NgayBatDau,
                     NgayDonVao = hopDong.NgayBatDau
                 };
-                if (!_hdDAL.InsertHopDongNguoiThue(chiTiet))
-                {
-                    throw new Exception("Không thể thêm chi tiết người thuê vào hợp đồng.");
-                }
+                if (!_hdDAL.InsertHopDongNguoiThue(chiTiet)) throw new Exception("Không thể thêm chi tiết người thuê vào hợp đồng.");
 
                 // 3. Cập nhật trạng thái phòng thành "Đang thuê"
-                // Bạn cần tạo phương thức này trong PhongDAL
-                if (!_phongDAL.UpdateRoomStatus(hopDong.MaPhong, "Đang thuê"))
+                if (!_phongDAL.UpdateRoomStatus(hopDong.MaPhong, "Đang thuê")) throw new Exception("Không thể cập nhật trạng thái của phòng.");
+
+                // 4. Ghi lịch sử hành động "Tạo mới"
+                var lichSu = new LichSuHopDong
                 {
-                    throw new Exception("Không thể cập nhật trạng thái của phòng.");
-                }
+                    MaHopDong = hopDong.MaHopDong,
+                    MaNguoiThayDoi = hopDong.ChuNha,
+                    HanhDong = "Tạo mới hợp đồng",
+                    NoiDungThayDoi = $"Tạo hợp đồng cho phòng {hopDong.MaPhong}."
+                };
+                _lichSuDAL.Insert(lichSu);
 
-                // Nếu tất cả thành công, commit transaction
                 scope.Complete();
-
                 return hopDong.MaHopDong;
             }
         }
 
-        // Tra ve danh sach hop dong hien co
-        public List<HopDong> DanhSachHopDong()
-        {
-            // ✅ ĐÃ SỬA
-            return _hdDAL.GetAllHopDong();
-        }
-
-        // Tìm hợp đồng theo mã phòng
-        public List<HopDong> TimHopDongTheoPhong(string maPhong)
-        {
-            if (string.IsNullOrEmpty(maPhong))
-            {
-                throw new Exception("Mã phòng không được để trống");
-            }
-            return _hdDAL.GetHopDongByMaPhong(maPhong);
-        }
-
-        // Cap nhat hop dong (trang thai, ngay ket thuc,...)
-        public bool CapNhatHopDong(HopDong hd)
-        {
-            if (string.IsNullOrEmpty(hd.MaHopDong))
-            {
-                throw new Exception("Mã hợp đồng không được để trống");
-            }
-            return _hdDAL.UpdateHopDong(hd);
-        }
-
-        // Xoa hop dong
-        public bool XoaHopDong(string maHopDong)
-        {
-            if (string.IsNullOrEmpty(maHopDong))
-            {
-                throw new Exception("Mã hợp đồng không được để trống");
-            }
-            return _hdDAL.DeleteHopDong(maHopDong);
-        }
-
-        // Lay thong tin chi tiet cua hop dong
-        public HopDongXemIn? LayChiTietHopDong(string maHopDong)
-        {
-            if (string.IsNullOrEmpty(maHopDong))
-            {
-                throw new Exception("Mã hợp đồng không được để trống");
-            }
-
-            // Gọi hàm GetInHD đã được viết lại trong DAL
-            return _hdDAL.GetInHD(maHopDong);
-        }
-
-        // Xuat hop dong ra file PDF
-        public bool XuatHopDongRaPdf(string maHopDong, string outputPath)
-        {
-            // 1. Lấy dữ liệu chi tiết của hợp đồng
-            HopDongXemIn? data = _hdDAL.GetInHD(maHopDong);
-            if (data == null)
-            {
-                Console.WriteLine("Lỗi: Không tìm thấy thông tin hợp đồng để xuất file.");
-                return false;
-            }
-
-            // Lấy tên tệp mẫu từ dữ liệu và xây dựng đường dẫn động
-            if (string.IsNullOrEmpty(data.FileDinhKem))
-            {
-                Console.WriteLine("Lỗi: Hợp đồng này không có tệp mẫu được định nghĩa trong CSDL.");
-                return false;
-            }
-
-            string templateFileName = data.FileDinhKem;
-            // Lấy đường dẫn thư mục gốc của ứng dụng (ví dụ: .../bin/Debug/netX.X)
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            // Kết hợp để tạo đường dẫn đầy đủ đến tệp mẫu trong thư mục Templates
-            string templatePath = Path.Combine(baseDirectory, "Templates", templateFileName);
-
-
-            if (!File.Exists(templatePath))
-            {
-                Console.WriteLine($"Lỗi: File mẫu không tồn tại tại đường dẫn: {templatePath}");
-                return false;
-            }
-
-            try
-            {
-                // 2. Tải file Word mẫu bằng Spire.Doc
-                Document document = new Document();
-                document.LoadFromFile(templatePath);
-
-                // 3. Tạo một Dictionary chứa các placeholder và giá trị tương ứng
-                var culture = new CultureInfo("vi-VN");
-                Dictionary<string, string> replacements = new Dictionary<string, string>
-                {
-                    { "{{NgayBatDau}}", $"{data.NgayBatDau.Day:00}" },
-                    { "{{ThangBatDau}}", $"{data.NgayBatDau.Month:00}" },
-                    { "{{NamBatDau}}", data.NgayBatDau.Year.ToString() },
-                    { "{{TenBenB}}", data.TenNguoiThue ?? "Không có dữ liệu" },
-                    { "{{CccdBenB}}", data.CccdNguoiThue ?? "Không có dữ liệu" },
-                    { "{{TongSoPhong}}", data.TongSoPhong.ToString() },
-                    { "{{DiaChi}}", data.DiaChiNha ?? "Không có dữ liệu" },
-                    { "{{NgayDonVao}}", $"{data.NgayDonVao.Day:00}" },
-                    { "{{ThangDonVao}}", $"{data.NgayDonVao.Month:00}" },
-                    { "{{NamDonVao}}", data.NgayDonVao.Year.ToString() },
-                    { "{{TienCoc}}", data.TienCoc.ToString("N0", culture) },
-                    { "{{GiaThue}}", data.GiaThue.ToString("N0", culture) },
-                    { "{{DienTich}}", data.DienTich.ToString("N2", culture) },
-                    { "{{ThoiHan}}", $"{data.ThoiHan} tháng" },
-                    { "{{MaHD}}", data.MaHopDong ?? "N/A" },
-                    { "{{MaPhong}}", data.MaPhong ?? "N/A" },
-                    { "{{SoNguoiHienTai}}", (data.ThanhVien.Count + 1).ToString() } // +1 (chủ hợp đồng)
-                };
-
-                // Thay thế tất cả các placeholder trong văn bản
-                foreach (var item in replacements)
-                {
-                    document.Replace(item.Key, item.Value, false, true);
-                }
-                // Điền dữ liệu vào Bảng trong Phụ Lục
-                if (document.Sections[0].Tables.Count > 1)
-                {
-                    // Lấy bảng từ Section đầu tiên
-                    Table table = document.Sections[0].Tables[1] as Table;
-                    var roommates = data.ThanhVien;
-
-                    int dataRowTemplateCount = 3; // 3 dòng trống có sẵn trong mẫu
-                    int dataRowStartIndex = 1;    // Dòng 0 là header
-
-                    for (int i = 0; i < roommates.Count; i++)
-                    {
-                        var roommate = roommates[i];
-                        TableRow dataRow;
-
-                        if (i < dataRowTemplateCount)
-                        {
-                            // Sử dụng các dòng trống có sẵn
-                            dataRow = table.Rows[dataRowStartIndex + i];
-                            // Xóa văn bản trống (nếu có) trước khi thêm
-                            dataRow.Cells[0].Paragraphs[0].Text = "";
-                            dataRow.Cells[1].Paragraphs[0].Text = "";
-                            dataRow.Cells[2].Paragraphs[0].Text = "";
-                        }
-                        else
-                        {
-                            // Thêm dòng mới nếu nhiều hơn 3 người
-                            dataRow = table.AddRow(true); // true = sao chép định dạng
-                        }
-
-                        // Điền dữ liệu
-                        dataRow.Cells[0].Paragraphs[0].AppendText((i + 1).ToString());
-                        dataRow.Cells[1].Paragraphs[0].AppendText(roommate.HoTen ?? "");
-                        dataRow.Cells[2].Paragraphs[0].AppendText(roommate.Cccd ?? "");
-                    }
-
-                    // Xóa các dòng mẫu không sử dụng (nếu số người < 3)
-                    if (roommates.Count < dataRowTemplateCount)
-                    {
-                        // Lặp ngược để tránh lỗi index
-                        for (int i = dataRowTemplateCount - 1; i >= roommates.Count; i--)
-                        {
-                            table.Rows.RemoveAt(dataRowStartIndex + i);
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Cảnh báo: Bảng Phụ lục sẽ không được điền.");
-                    }
-                }
-
-                // 4. Lưu tài liệu ra file PDF (Spire.Doc có phương thức riêng cho việc này)
-                document.SaveToFile(outputPath, FileFormat.PDF);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Đã xảy ra lỗi khi xuất file PDF: {ex.Message}");
-                return false;
-            }
-        }
-
-        // Tim ma nguoi thue bang so giay to
-        public string? TimMaNguoiThueBangSoGiayTo(string soGiayTo)
-        {
-            if (string.IsNullOrEmpty(soGiayTo))
-            {
-                return null;
-            }
-            // Gọi xuống DAL để thực hiện truy vấn
-            return _hdDAL.GetMaNguoiThueBySoGiayTo(soGiayTo);
-        }
-
-        // Tao thong bao het han neu sap het han (logic: < 30 ngay tu ngay hien tai)
-        public bool TaoThongBaoHetHan(string maHopDong)
-        {
-            HopDong? hd =   _hdDAL.GetHopDongById(maHopDong);
-            if (hd == null)
-            {
-                throw new Exception("Hợp đồng không tồn tại");
-            }
-
-            DateTime ngayHienTai = DateTime.Now;
-            // Kiểm tra xem hợp đồng có ngày kết thúc không và có sắp hết hạn không
-            if (hd.NgayKetThuc != default(DateTime) && (hd.NgayKetThuc - ngayHienTai).TotalDays < 30 && (hd.NgayKetThuc - ngayHienTai).TotalDays > 0)
-            {
-                string maThongBao = "TB" + Guid.NewGuid().ToString().Substring(0, 8);
-                string noiDung = $"Hợp đồng {maHopDong} sắp hết hạn vào {hd.NgayKetThuc:dd/MM/yyyy}";
-                DateTime ngayThongBao = ngayHienTai;
-                string trangThai = "Chưa thông báo";
-
-                return _hdDAL.InsertThongBaoHan(maThongBao, maHopDong, noiDung, ngayThongBao, trangThai);
-            }
-            return false;
-        }
-
-
-        // ✅ THÊM PHƯƠNG THỨC MỚI NÀY
         /// <summary>
-        /// Lấy danh sách hợp đồng kèm theo tên của người đứng tên (chủ hợp đồng).
+        /// Cập nhật thông tin của một hợp đồng và ghi lại các thay đổi vào bảng lịch sử.
+        /// </summary>
+        public bool CapNhatHopDong(HopDong hopDongDaChinhSua, string maNguoiDung)
+        {
+            // Lấy thông tin hợp đồng CŨ từ CSDL để so sánh
+            HopDong hopDongCu = _hdDAL.GetHopDongById(hopDongDaChinhSua.MaHopDong);
+            if (hopDongCu == null) throw new Exception("Hợp đồng không tồn tại để cập nhật.");
+
+            using (var scope = new TransactionScope())
+            {
+                // 1. Cập nhật bản ghi HopDong chính trong CSDL
+                if (!_hdDAL.UpdateHopDong(hopDongDaChinhSua))
+                {
+                    throw new Exception("Cập nhật thông tin hợp đồng thất bại.");
+                }
+
+                // 2. So sánh dữ liệu cũ và mới để tạo mô tả thay đổi
+                string noiDungThayDoi = GenerateChangeLog(hopDongCu, hopDongDaChinhSua);
+
+                // 3. Nếu có sự thay đổi, ghi lại vào bảng lịch sử
+                if (!string.IsNullOrEmpty(noiDungThayDoi))
+                {
+                    var lichSu = new LichSuHopDong
+                    {
+                        MaHopDong = hopDongDaChinhSua.MaHopDong,
+                        MaNguoiThayDoi = maNguoiDung,
+                        HanhDong = "Cập nhật thông tin",
+                        NoiDungThayDoi = noiDungThayDoi
+                    };
+                    if (!_lichSuDAL.Insert(lichSu))
+                    {
+                        throw new Exception("Không thể ghi lại lịch sử cập nhật.");
+                    }
+                }
+
+                scope.Complete();
+            }
+            return true;
+        }
+
+        // Hàm trợ giúp để tạo chuỗi mô tả các thay đổi
+        private string GenerateChangeLog(HopDong oldData, HopDong newData)
+        {
+            var changes = new List<string>();
+            if (oldData.TienCoc != newData.TienCoc) changes.Add($"Tiền cọc: {oldData.TienCoc:N0} -> {newData.TienCoc:N0}.");
+            if (oldData.ThoiHan != newData.ThoiHan) changes.Add($"Thời hạn: {oldData.ThoiHan} tháng -> {newData.ThoiHan} tháng.");
+            if (oldData.NgayBatDau.Date != newData.NgayBatDau.Date) changes.Add($"Ngày bắt đầu: {oldData.NgayBatDau:dd/MM/yyyy} -> {newData.NgayBatDau:dd/MM/yyyy}.");
+            if (oldData.GhiChu != newData.GhiChu) changes.Add("Cập nhật ghi chú.");
+            return string.Join("\n", changes);
+        }
+
+        /// <summary>
+        /// Lấy toàn bộ lịch sử thay đổi của một hợp đồng.
+        /// </summary>
+        public List<LichSuHopDong> GetContractHistory(string maHopDong)
+        {
+            return _lichSuDAL.GetByContractId(maHopDong);
+        }
+
+        /// <summary>
+        /// Lấy danh sách các hợp đồng còn hiệu lực và tên người thuê tương ứng.
         /// </summary>
         public Dictionary<HopDong, string> GetContractsWithTenantNames()
         {
-            var allContracts = _hdDAL.GetAllHopDong();
+            var allContracts = _hdDAL.GetAllHopDong()
+                                     .Where(c => c.TrangThai == "Hiệu lực")
+                                     .ToList();
             var allContractDetails = _hdDAL.GetAllHopDongNguoiThue();
             var allTenants = _nguoiThueDAL.getAllNguoiThue();
 
-            // Dùng Dictionary để tra cứu nhanh
-            var tenantDict = allTenants.ToDictionary(t => t.MaNguoiThue);
+            var tenantDict = allTenants.ToDictionary(t => t.MaNguoiThue, t => t.HoTen);
             var result = new Dictionary<HopDong, string>();
 
             foreach (var contract in allContracts)
             {
-                // Tìm chủ hợp đồng của hợp đồng này
-                var contractOwnerDetail = allContractDetails.FirstOrDefault(
-                    cd => cd.MaHopDong == contract.MaHopDong && cd.VaiTro == "Chủ hợp đồng"
-                );
-
-                string tenantName = "Không xác định";
-                if (contractOwnerDetail != null && tenantDict.TryGetValue(contractOwnerDetail.MaNguoiThue, out NguoiThue tenant))
-                {
-                    tenantName = tenant.HoTen;
-                }
-
+                var ownerDetail = allContractDetails.FirstOrDefault(cd => cd.MaHopDong == contract.MaHopDong && cd.VaiTro == "Chủ hợp đồng");
+                string tenantName = ownerDetail != null && tenantDict.TryGetValue(ownerDetail.MaNguoiThue, out var name) ? name : "Không xác định";
                 result.Add(contract, tenantName);
             }
-
             return result;
         }
 
+        public List<HopDong_NguoiThue> GetAllHopDongNguoiThue()
+        {
+            return _hdDAL.GetAllHopDongNguoiThue();
+        }
+
+        public HopDongXemIn? LayChiTietHopDong(string maHopDong)
+        {
+            return _hdDAL.GetInHD(maHopDong);
+        }
+
+        public bool XoaHopDong(string maHopDong)
+        {
+            if (string.IsNullOrEmpty(maHopDong)) throw new Exception("Mã hợp đồng không được để trống");
+            return _hdDAL.DeleteHopDong(maHopDong);
+        }
 
         public string GetContractFilePath(string maHopDong)
         {
-            // Lấy thông tin hợp đồng từ CSDL
             var contract = _hdDAL.GetHopDongById(maHopDong);
-            if (contract == null || string.IsNullOrEmpty(contract.FileDinhKem))
-            {
-                // Trả về null nếu không tìm thấy hợp đồng hoặc không có tên file
-                return null;
-            }
-
-            // Lấy đường dẫn thư mục thực thi của ứng dụng (ví dụ: .../bin/Debug/netX.X)
+            if (contract == null || string.IsNullOrEmpty(contract.FileDinhKem)) return null;
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-            // Kết hợp với thư mục Templates và tên file để tạo đường dẫn đầy đủ
-            string filePath = Path.Combine(baseDirectory, "Templates", contract.FileDinhKem);
-
-            return filePath;
+            return Path.Combine(baseDirectory, "Templates", contract.FileDinhKem);
         }
 
-
+        public List<ThongBaoHan> GetNotificationsByContractId(string maHopDong)
+        {
+            if (string.IsNullOrEmpty(maHopDong))
+            {
+                return new List<ThongBaoHan>();
+            }
+            return _thongBaoDAL.GetByContractId(maHopDong);
+        }
     }
 }

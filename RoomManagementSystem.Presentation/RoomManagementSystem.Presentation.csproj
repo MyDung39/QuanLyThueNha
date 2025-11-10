@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="FreeSpire.Doc" Version="12.2.0" />
 
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
   </ItemGroup>
@@ -30,6 +31,12 @@
 
     <PackageReference Include="MaterialDesignThemes" Version="5.3.0" />
 
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\mau-hop-dong-thue-nha-o.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

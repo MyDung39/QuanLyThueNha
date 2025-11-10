@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ContractManagement"
              mc:Ignorable="d"
              d:DesignHeight="627" d:DesignWidth="877"
              FontFamily="Roboto"
              Background="White">
 
+    <!-- ========== RESOURCE STYLES ========== -->
     <UserControl.Resources>
         <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16"/>
@@ -45,6 +47,8 @@
         </Style>
     </UserControl.Resources>
 
+
+    <!-- ========== MAIN GRID ========== -->
     <Grid Margin="37">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -55,79 +59,86 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="THÔNG TIN CHI TIẾT HỢP ĐỒNG" Style="{StaticResource HeaderTextStyle}"/>
+        <!-- ========== THÔNG TIN CHI TIẾT ========== -->
+        <Grid Grid.Row="0" Grid.RowSpan="3" DataContext="{Binding DetailedContractInfo}">
+            <TextBlock Text="THÔNG TIN CHI TIẾT HỢP ĐỒNG"
+                       Style="{StaticResource HeaderTextStyle}"
+                       VerticalAlignment="Top"/>
 
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <Grid Margin="0,30,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" Background="#FAFAFA" CornerRadius="8" Padding="20">
-                <StackPanel>
-                    <TextBlock Text="Ngày lập hợp đồng" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
-                    <TextBlock Text="03/05/2020" Style="{StaticResource SectionContentStyle}" Margin="0,0,0,15"/>
+                <!-- Cột trái -->
+                <Border Grid.Column="0" Background="#FAFAFA" CornerRadius="8" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Ngày lập hợp đồng" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding NgayLapHopDong, StringFormat='dd/MM/yyyy'}"
+                                   Style="{StaticResource SectionContentStyle}" Margin="0,0,0,15"/>
 
-                    <TextBlock Text="Ngày bắt đầu" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
-                    <TextBlock Text="03/05/2020" Style="{StaticResource SectionContentStyle}" Margin="0,0,0,15"/>
+                        <TextBlock Text="Ngày bắt đầu" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding NgayBatDau, StringFormat='dd/MM/yyyy'}"
+                                   Style="{StaticResource SectionContentStyle}" Margin="0,0,0,15"/>
 
-                    <TextBlock Text="Thời hạn" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
-                    <TextBlock Text="1 Tháng" Style="{StaticResource SectionContentStyle}" Margin="0,0,0,15"/>
+                        <TextBlock Text="Thời hạn" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding ThoiHan}" Style="{StaticResource SectionContentStyle}" Margin="0,0,0,15"/>
 
-                    <TextBlock Text="Ngày kết thúc" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
-                    <TextBlock Text="02/06/2020" Style="{StaticResource SectionContentStyle}"/>
+                        <TextBlock Text="Ngày kết thúc" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding NgayKetThuc, StringFormat='dd/MM/yyyy'}"
+                                   Style="{StaticResource SectionContentStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Cột phải -->
+                <StackPanel Grid.Column="1" Margin="28,10,0,0">
+                    <TextBlock Text="Thông tin người thuê"
+                               Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,10"/>
+                    <TextBlock Text="{Binding TenNguoiThue}"
+                               Style="{StaticResource SectionContentStyle}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Địa chỉ thuê"
+                               Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
+                    <TextBlock Text="{Binding DiaChiThue}"
+                               Style="{StaticResource SectionContentStyle}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Thông tin liên hệ"
+                               Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
+                    <TextBlock Text="{Binding ThongTinLienHe}"
+                               Style="{StaticResource SectionContentStyle}" Margin="0,0,0,15"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBlock Text="Mã hợp đồng: " Style="{StaticResource SectionHeaderStyle}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding MaHopDong, TargetNullValue='--'}" Style="{StaticResource SectionContentStyle}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <TextBlock Text="Tiền cọc: " Style="{StaticResource SectionHeaderStyle}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding TienCoc, TargetNullValue='0 VND'}"
+                                   Style="{StaticResource SectionContentStyle}" FontWeight="SemiBold"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Ghi chú" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource SectionContentStyle}"
+                               TextWrapping="Wrap"
+                               Text="{Binding GhiChu, TargetNullValue='Không có ghi chú.'}"/>
                 </StackPanel>
-            </Border>
-
-            <StackPanel Grid.Column="1" Margin="28,10,0,0">
-                <TextBlock Text="Thông tin người thuê" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,10"/>
-                <TextBlock Text="Lê Công Bảo" Style="{StaticResource SectionContentStyle}" Margin="0,0,0,10"/>
-
-                <TextBlock Text="Nhà Nguyễn Trãi - Phòng APPLE-001" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,10"/>
-                <TextBlock Text="0972230414 | le.cong.bao@gmail.com" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,10"/>
-
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <TextBlock Text="Mã hợp đồng:" Style="{StaticResource SectionHeaderStyle}" FontWeight="SemiBold"/>
-                    <TextBlock Text=" HD521" Style="{StaticResource SectionHeaderStyle}"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <TextBlock Text="TVA:" Style="{StaticResource SectionHeaderStyle}" FontWeight="SemiBold"/>
-                    <TextBlock Text=" 842-484021" Style="{StaticResource SectionHeaderStyle}"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                    <TextBlock Text="Tiền cọc:" Style="{StaticResource SectionHeaderStyle}" FontWeight="SemiBold"/>
-                    <TextBlock Text=" 2,000,000 VND" Style="{StaticResource SectionHeaderStyle}" FontWeight="SemiBold"/>
-                </StackPanel>
-
-                <TextBlock Text="Ghi chú" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,5"/>
-                <TextBlock Style="{StaticResource SectionHeaderStyle}" TextWrapping="Wrap">
-                    Lê Công Bảo cần tiền cọc, do thời gian nhập học gấp rút, chưa chạy được chi phí nên tạm chấp
-                    nhận khoản cọc này
-                </TextBlock>
-            </StackPanel>
+            </Grid>
         </Grid>
 
-        <TextBlock Grid.Row="4" Text="LỊCH SỬ CHỈNH SỬA HỢP ĐỒNG" Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+        <!-- ========== LỊCH SỬ CHỈNH SỬA ========== -->
+        <TextBlock Grid.Row="4" Text="LỊCH SỬ CHỈNH SỬA HỢP ĐỒNG"
+                   Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
 
-        <DataGrid x:Name="historyDataGrid" Grid.Row="5" AutoGenerateColumns="False" IsReadOnly="True"
+        <DataGrid Grid.Row="5"
+                  ItemsSource="{Binding ContractHistory}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
                   Background="White" BorderThickness="0"
                   HeadersVisibility="Column" GridLinesVisibility="Horizontal"
-                  HorizontalGridLinesBrush="#E0E2E7"
-                  AlternationCount="2"
-                  AlternatingRowBackground="#FAFAFA"
-                  RowHeaderWidth="0"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  EnableColumnVirtualization="True"
-                  CanUserAddRows="False">
+                  HorizontalGridLinesBrush="#F0F1F3"
+                  RowHeaderWidth="0">
             <DataGrid.Resources>
-                <Style x:Key="CenterTextBlock" TargetType="TextBlock">
-                    <Setter Property="TextAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
                 <Style TargetType="DataGridRow">
                     <Setter Property="BorderThickness" Value="0"/>
                     <Setter Property="MinHeight" Value="40"/>
@@ -135,23 +146,22 @@
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                 </Style>
             </DataGrid.Resources>
+
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridHeaderStyle}">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="Padding" Value="20,12"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="Padding" Value="16,12"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
 
+            <!-- Cột dữ liệu -->
             <DataGrid.Columns>
-                <DataGridTextColumn Header="STT" Binding="{Binding STT}" Width="60" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterTextBlock}" EditingElementStyle="{StaticResource CenterTextBlock}"/>
-                <DataGridTextColumn Header="NGÀY SỬA" Binding="{Binding NgaySua}" Width="120" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterTextBlock}" EditingElementStyle="{StaticResource CenterTextBlock}"/>
-                <DataGridTextColumn Header="NGƯỜI THUÊ" Binding="{Binding NguoiThue}" Width="220" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterTextBlock}" EditingElementStyle="{StaticResource CenterTextBlock}"/>
-                <DataGridTextColumn Header="PHÒNG" Binding="{Binding Phong}" Width="140" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterTextBlock}" EditingElementStyle="{StaticResource CenterTextBlock}"/>
-                <DataGridTextColumn Header="BẮT ĐẦU" Binding="{Binding BatDau}" Width="120" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterTextBlock}" EditingElementStyle="{StaticResource CenterTextBlock}"/>
-                <DataGridTextColumn Header="KẾT THÚC" Binding="{Binding KetThuc}" Width="120" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterTextBlock}" EditingElementStyle="{StaticResource CenterTextBlock}"/>
-                <DataGridTextColumn Header="TIỀN CỌC" Binding="{Binding TienCoc}" Width="140" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterTextBlock}" EditingElementStyle="{StaticResource CenterTextBlock}"/>
+                <DataGridTextColumn Header="STT" Binding="{Binding Stt}" Width="60" CellStyle="{StaticResource DataGridCellStyle}"/>
+                <DataGridTextColumn Header="NGÀY SỬA" Binding="{Binding NgaySua, StringFormat='dd/MM/yyyy HH:mm'}" Width="150" CellStyle="{StaticResource DataGridCellStyle}"/>
+                <DataGridTextColumn Header="NGƯỜI THỰC HIỆN" Binding="{Binding NguoiThucHien}" Width="150" CellStyle="{StaticResource DataGridCellStyle}"/>
+                <DataGridTextColumn Header="HÀNH ĐỘNG" Binding="{Binding HanhDong}" Width="150" CellStyle="{StaticResource DataGridCellStyle}"/>
+                <DataGridTextColumn Header="NỘI DUNG THAY ĐỔI" Binding="{Binding NoiDung}" Width="*" CellStyle="{StaticResource DataGridCellStyle}"/>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </UserControl>

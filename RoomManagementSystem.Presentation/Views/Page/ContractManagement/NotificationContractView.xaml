@@ -15,11 +15,6 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
 
-        <Style x:Key="SectionHeaderStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Foreground" Value="#667085"/>
-        </Style>
-
         <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="#FAFAFA"/>
             <Setter Property="Foreground" Value="#667085"/>
@@ -37,12 +32,9 @@
             <Setter Property="Foreground" Value="#333843"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
         <Style x:Key="CenterAllText" TargetType="TextBlock">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
@@ -56,41 +48,45 @@
 
         <TextBlock Grid.Row="0" Text="LỊCH SỬ THÔNG BÁO HỢP ĐỒNG" Style="{StaticResource HeaderTextStyle}"/>
 
-        <DataGrid x:Name="notificationDataGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True"
+        <!-- BINDING ItemsSource VÀO "NotificationList" -->
+        <DataGrid Grid.Row="2" 
+                  ItemsSource="{Binding NotificationList}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
                   Background="White" BorderThickness="0"
                   HeadersVisibility="Column" GridLinesVisibility="Horizontal"
                   HorizontalGridLinesBrush="#E0E2E7"
-                  AlternationCount="2"
-                  AlternatingRowBackground="#FAFAFA"
-                  RowHeaderWidth="0"
-                  CanUserAddRows="False"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  EnableColumnVirtualization="True">
+                  RowHeaderWidth="0" CanUserAddRows="False">
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
                     <Setter Property="BorderThickness" Value="0"/>
                     <Setter Property="MinHeight" Value="40"/>
-                    <Setter Property="FontSize" Value="12"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridHeaderStyle}">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                </Style>
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridHeaderStyle}"/>
             </DataGrid.ColumnHeaderStyle>
 
+            <!-- SỬA LẠI CÁC CỘT CHO KHỚP VỚI NotificationItemViewModel -->
             <DataGrid.Columns>
-                <DataGridTextColumn Header="STT" Binding="{Binding STT}" Width="80" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
-                <DataGridTextColumn Header="LOẠI THÔNG BÁO" Binding="{Binding LoaiThongBao}" Width="260" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
-                <DataGridTextColumn Header="NGƯỜI THUÊ" Binding="{Binding NguoiThue}" Width="200" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
-                <DataGridTextColumn Header="PHÒNG" Binding="{Binding Phong}" Width="160" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
-                <DataGridTextColumn Header="BẮT ĐẦU" Binding="{Binding BatDau}" Width="140" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
-                <DataGridTextColumn Header="KẾT THÚC" Binding="{Binding KetThuc}" Width="140" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
-                <DataGridTextColumn Header="TIỀN CỌC" Binding="{Binding TienCoc}" Width="160" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
+                <DataGridTextColumn Header="STT" Binding="{Binding Stt}" Width="60" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
+
+                <DataGridTextColumn Header="LOẠI THÔNG BÁO" Binding="{Binding LoaiThongBao}" Width="160" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
+
+                <DataGridTextColumn Header="NGƯỜI LIÊN QUAN" Binding="{Binding NguoiLienQuan}" Width="160" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
+
+                <DataGridTextColumn Header="NGÀY" Binding="{Binding NgayThongBao, StringFormat='dd/MM/yyyy HH:mm'}" Width="150" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
+
+                <!-- Cột Nội dung sẽ chiếm hết không gian còn lại -->
+                <DataGridTextColumn Header="NỘI DUNG" Binding="{Binding NoiDung}" Width="*" CellStyle="{StaticResource DataGridCellStyle}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </UserControl>

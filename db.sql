@@ -335,6 +335,19 @@ CREATE TABLE BaoCaoTrangThai (
 );
 GO
 
+
+
+
+CREATE TABLE LichSuHopDong (
+    MaLichSu INT IDENTITY(1,1) PRIMARY KEY,
+    MaHopDong VARCHAR(20) NOT NULL FOREIGN KEY REFERENCES HopDong(MaHopDong) ON DELETE CASCADE,
+    NgayThayDoi DATETIME NOT NULL DEFAULT GETDATE(),
+    MaNguoiThayDoi VARCHAR(20) NOT NULL FOREIGN KEY REFERENCES NguoiDung(MaNguoiDung),
+    HanhDong NVARCHAR(100) NOT NULL, -- Ví dụ: 'Tạo mới', 'Cập nhật', 'Gia hạn'
+    NoiDungThayDoi NVARCHAR(MAX) NULL -- Mô tả chi tiết thay đổi
+);
+GO
+
 -- DỮ LIỆU THÊM SẴN (ĐÃ CẬP NHẬT)
 INSERT INTO NguoiDung (MaNguoiDung, TenDangNhap, MatKhau, TenTaiKhoan, SoDienThoai, PhuongThucDN, TrangThai)
 VALUES ('ND001', 'admin@gmail.com', 'admin', 'Vanila', '0908083890', N'MatKhau', N'Hoạt động');
@@ -430,3 +443,9 @@ VALUES
 ('HDN002', 'DV1', N'kWh', 3500, 90),      -- Tiền điện
 ('HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
 GO
+
+
+
+
+
+

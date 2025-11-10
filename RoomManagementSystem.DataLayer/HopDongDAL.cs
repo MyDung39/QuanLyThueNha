@@ -110,15 +110,45 @@ namespace RoomManagementSystem.DataLayer
         }
 
         // Lấy tất cả hợp đồng
+        /*    public List<HopDong> GetAllHopDong()
+            {
+                List<HopDong> ds = new List<HopDong>();
+                string qr = "SELECT * FROM HopDong";
+
+                // Gọi hàm ExecuteQuery để lấy về DataTable
+                DataTable dt = db.ExecuteQuery(qr);
+
+                // Duyệt qua DataTable (thay vì SqlDataReader)
+                foreach (DataRow reader in dt.Rows)
+                {
+                    HopDong hd = new HopDong()
+                    {
+                        MaHopDong = reader["MaHopDong"]?.ToString(),
+                        MaPhong = reader["MaPhong"]?.ToString(),
+                        ChuNha = reader["ChuNha"]?.ToString(),
+                        TienCoc = Convert.ToDecimal(reader["TienCoc"]),
+                        NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                        ThoiHan = Convert.ToInt32(reader["ThoiHan"]),
+                        NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
+                        TrangThai = reader["TrangThai"]?.ToString(),
+                        GhiChu = reader["GhiChu"]?.ToString(),
+                        NgayTao = Convert.ToDateTime(reader["NgayTao"]),
+                        NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"])
+                    };
+                    ds.Add(hd);
+                }
+
+                return ds;
+            }
+        */
+
         public List<HopDong> GetAllHopDong()
         {
             List<HopDong> ds = new List<HopDong>();
-            string qr = "SELECT * FROM HopDong";
-
-            // Gọi hàm ExecuteQuery để lấy về DataTable
+            // ✅ THÊM CỘT FileDinhKem VÀO CÂU SELECT
+            string qr = "SELECT MaHopDong, MaPhong, ChuNha, TienCoc, NgayBatDau, ThoiHan, NgayKetThuc, TrangThai, GhiChu, NgayTao, NgayCapNhat, FileDinhKem FROM HopDong";
             DataTable dt = db.ExecuteQuery(qr);
 
-            // Duyệt qua DataTable (thay vì SqlDataReader)
             foreach (DataRow reader in dt.Rows)
             {
                 HopDong hd = new HopDong()
@@ -129,7 +159,11 @@ namespace RoomManagementSystem.DataLayer
                     TienCoc = Convert.ToDecimal(reader["TienCoc"]),
                     NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
                     ThoiHan = Convert.ToInt32(reader["ThoiHan"]),
-                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
+                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default : Convert.ToDateTime(reader["NgayKetThuc"]),
+
+                    // ✅ THÊM DÒNG NÀY ĐỂ ĐỌC TÊN FILE
+                    FileDinhKem = reader["FileDinhKem"]?.ToString(),
+
                     TrangThai = reader["TrangThai"]?.ToString(),
                     GhiChu = reader["GhiChu"]?.ToString(),
                     NgayTao = Convert.ToDateTime(reader["NgayTao"]),
@@ -137,11 +171,11 @@ namespace RoomManagementSystem.DataLayer
                 };
                 ds.Add(hd);
             }
-
             return ds;
         }
 
         // Lấy hợp đồng theo mã hợp đồng
+        /*
         public HopDong? GetHopDongById(string maHopDong)
         {
             string qr = "SELECT * FROM HopDong WHERE MaHopDong = @MaHopDong";
@@ -175,8 +209,42 @@ namespace RoomManagementSystem.DataLayer
             }
             return null;
         }
+        */
+
+        public HopDong? GetHopDongById(string maHopDong)
+        {
+            // ✅ THÊM CỘT FileDinhKem VÀO CÂU SELECT
+            string qr = "SELECT MaHopDong, MaPhong, ChuNha, TienCoc, NgayBatDau, ThoiHan, NgayKetThuc, TrangThai, GhiChu, NgayTao, NgayCapNhat, FileDinhKem FROM HopDong WHERE MaHopDong = @MaHopDong";
+            SqlParameter[] parameters = new SqlParameter[] { new SqlParameter("@MaHopDong", maHopDong) };
+            DataTable dt = db.ExecuteQuery(qr, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow reader = dt.Rows[0];
+                return new HopDong()
+                {
+                    MaHopDong = reader["MaHopDong"]?.ToString(),
+                    MaPhong = reader["MaPhong"]?.ToString(),
+                    ChuNha = reader["ChuNha"]?.ToString(),
+                    TienCoc = Convert.ToDecimal(reader["TienCoc"]),
+                    NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                    ThoiHan = Convert.ToInt32(reader["ThoiHan"]),
+                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default : Convert.ToDateTime(reader["NgayKetThuc"]),
+
+                    // ✅ THÊM DÒNG NÀY ĐỂ ĐỌC TÊN FILE
+                    FileDinhKem = reader["FileDinhKem"]?.ToString(),
+
+                    TrangThai = reader["TrangThai"]?.ToString(),
+                    GhiChu = reader["GhiChu"]?.ToString(),
+                    NgayTao = Convert.ToDateTime(reader["NgayTao"]),
+                    NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"])
+                };
+            }
+            return null;
+        }
 
         // Lấy hợp đồng theo mã phòng
+        /*
         public List<HopDong> GetHopDongByMaPhong(string maPhong)
         {
             List<HopDong> ds = new List<HopDong>();
@@ -212,6 +280,43 @@ namespace RoomManagementSystem.DataLayer
             }
             return ds;
         }
+        */
+
+
+        public List<HopDong> GetHopDongByMaPhong(string maPhong)
+        {
+            List<HopDong> ds = new List<HopDong>();
+            // ✅ SỬA LẠI: SELECT * để lấy tất cả các cột
+            string qr = "SELECT * FROM HopDong WHERE MaPhong = @MaPhong";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+        new SqlParameter("@MaPhong", maPhong)
+            };
+            DataTable dt = db.ExecuteQuery(qr, parameters);
+
+            foreach (DataRow reader in dt.Rows)
+            {
+                HopDong hd = new HopDong()
+                {
+                    // ✅ ĐẢM BẢO ĐỌC ĐỦ CÁC CỘT CẦN THIẾT CHO LỊCH SỬ
+                    MaHopDong = reader["MaHopDong"]?.ToString(),
+                    MaPhong = reader["MaPhong"]?.ToString(),
+                    NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
+                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default : Convert.ToDateTime(reader["NgayKetThuc"]),
+                    TienCoc = Convert.ToDecimal(reader["TienCoc"]),
+                    NgayCapNhat = Convert.ToDateTime(reader["NgayCapNhat"]), // <<== DÒNG QUAN TRỌNG
+                                                                             // Các thuộc tính khác nếu cần
+                    ChuNha = reader["ChuNha"]?.ToString(),
+                    ThoiHan = Convert.ToInt32(reader["ThoiHan"]),
+                    TrangThai = reader["TrangThai"]?.ToString(),
+                    GhiChu = reader["GhiChu"]?.ToString(),
+                    NgayTao = Convert.ToDateTime(reader["NgayTao"])
+                };
+                ds.Add(hd);
+            }
+            return ds;
+        }
 
 
         // Lấy thông tin chi tiết của hợp đồng để xuất ra file
@@ -219,58 +324,46 @@ namespace RoomManagementSystem.DataLayer
         {
             // Query 1: Lấy thông tin Hợp đồng, Phòng, Nhà, và CHỦ HỢP ĐỒNG
             string qr = @"SELECT 
-                nt.HoTen,
-                nt.SoGiayTo,
-                ct.NgayDonVao,
-                hd.MaHopDong, 
-                hd.NgayBatDau,
-                hd.NgayKetThuc,
-                hd.ThoiHan,
-                hd.TienCoc,
-                hd.FileDinhKem,
-                p.MaPhong, 
-                p.GiaThue,
-                p.DienTich,
-                n.DiaChi,
-                n.TongSoPhong
-              FROM HopDong hd
-              JOIN Phong p ON hd.MaPhong = p.MaPhong
-              JOIN Nha n ON p.MaNha = n.MaNha
-              -- Lấy thông tin CHỦ HỢP ĐỒNG
-              JOIN HopDong_NguoiThue ct ON hd.MaHopDong = ct.MaHopDong
-              JOIN NguoiThue nt ON ct.MaNguoiThue = nt.MaNguoiThue
-              WHERE hd.MaHopDong = @MaHopDong AND ct.VaiTro = N'Chủ hợp đồng'";
+                        nt.HoTen, nt.SoGiayTo, nt.SoDienThoai, nt.Email,
+                        ct.NgayDonVao,
+                        hd.MaHopDong, hd.NgayBatDau, hd.NgayKetThuc, hd.ThoiHan, hd.TienCoc, hd.FileDinhKem, hd.GhiChu, hd.NgayTao,
+                        p.MaPhong, p.GiaThue, p.DienTich,
+                        n.DiaChi
+                      FROM HopDong hd
+                      JOIN Phong p ON hd.MaPhong = p.MaPhong
+                      JOIN Nha n ON p.MaNha = n.MaNha
+                      JOIN HopDong_NguoiThue ct ON hd.MaHopDong = ct.MaHopDong
+                      JOIN NguoiThue nt ON ct.MaNguoiThue = nt.MaNguoiThue
+                      WHERE hd.MaHopDong = @MaHopDong AND ct.VaiTro = N'Chủ hợp đồng'";
 
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@MaHopDong", maHopDong)
-            };
-
-            // Lấy về DataTable
+            SqlParameter[] parameters = new SqlParameter[] { new SqlParameter("@MaHopDong", maHopDong) };
             DataTable dt = db.ExecuteQuery(qr, parameters);
 
             if (dt.Rows.Count > 0)
             {
-                DataRow reader = dt.Rows[0]; // Lấy dòng đầu tiên
-                string? maPhong = reader["MaPhong"]?.ToString(); // Lấy mã phòng để truy vấn
-                // Khởi tạo đối tượng HopDongXemIn
+                DataRow reader = dt.Rows[0];
+
+                // ✅ ĐỐI TƯỢNG ĐÃ CẬP NHẬT ĐỂ ĐỌC THÊM CỘT
                 HopDongXemIn hdXemIn = new HopDongXemIn()
                 {
                     MaHopDong = reader["MaHopDong"]?.ToString(),
                     MaPhong = reader["MaPhong"]?.ToString(),
-                    TenNguoiThue = reader["HoTen"]?.ToString(), // Chủ hợp đồng
-                    CccdNguoiThue = reader["SoGiayTo"]?.ToString(), // Chủ hợp đồng
-                    NgayDonVao = Convert.ToDateTime(reader["NgayDonVao"]), // Chủ hợp đồng
+                    TenNguoiThue = reader["HoTen"]?.ToString(),
+                    CccdNguoiThue = reader["SoGiayTo"]?.ToString(),
+                    SdtNguoiThue = reader["SoDienThoai"]?.ToString(),
+                    EmailNguoiThue = reader["Email"]?.ToString(),
+                    GhiChuHopDong = reader["GhiChu"]?.ToString(),
+                    NgayTao = Convert.ToDateTime(reader["NgayTao"]),
+                    NgayDonVao = Convert.ToDateTime(reader["NgayDonVao"]),
                     NgayBatDau = Convert.ToDateTime(reader["NgayBatDau"]),
-                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default(DateTime) : Convert.ToDateTime(reader["NgayKetThuc"]),
+                    NgayKetThuc = reader["NgayKetThuc"] == DBNull.Value ? default : Convert.ToDateTime(reader["NgayKetThuc"]),
                     ThoiHan = Convert.ToInt32(reader["ThoiHan"]),
                     TienCoc = Convert.ToDecimal(reader["TienCoc"]),
                     FileDinhKem = reader["FileDinhKem"]?.ToString(),
                     GiaThue = Convert.ToDecimal(reader["GiaThue"]),
                     DienTich = Convert.ToDecimal(reader["DienTich"]),
                     DiaChiNha = reader["DiaChi"]?.ToString(),
-                    TongSoPhong = Convert.ToInt32(reader["TongSoPhong"]),
-                    ThanhVien = new List<ThanhVienCungPhong>() // Khởi tạo danh sách
+                    ThanhVien = new List<ThanhVienCungPhong>()
                 };
 
                 // Query 2: Lấy thông tin NGƯỜI Ở CÙNG
@@ -373,6 +466,45 @@ namespace RoomManagementSystem.DataLayer
                 list.Add(new HopDong_NguoiThue { MaNguoiThue = row["MaNguoiThue"].ToString() });
             }
             return list;
+        }
+
+        public bool UpdateContractStatus(string maHopDong, string newStatus)
+        {
+            string sql = "UPDATE HopDong SET TrangThai = @TrangThai, NgayCapNhat = GETDATE() WHERE MaHopDong = @MaHopDong";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@TrangThai", newStatus),
+                new SqlParameter("@MaHopDong", maHopDong)
+            };
+            return db.ExecuteNonQuery(sql, parameters) > 0;
+        }
+
+
+
+        public List<HopDong_NguoiThue> GetTenantsByContractId(string maHopDong)
+        {
+            List<HopDong_NguoiThue> ds = new List<HopDong_NguoiThue>();
+            string qr = "SELECT * FROM HopDong_NguoiThue WHERE MaHopDong = @MaHopDong";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaHopDong", maHopDong)
+            };
+            DataTable dt = db.ExecuteQuery(qr, parameters);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                ds.Add(new HopDong_NguoiThue
+                {
+                    MaHopDong = row["MaHopDong"].ToString(),
+                    MaNguoiThue = row["MaNguoiThue"].ToString(),
+                    VaiTro = row["VaiTro"].ToString(),
+                    TrangThaiThue = row["TrangThaiThue"].ToString(),
+                    NgayDonVao = row["NgayDonVao"] as DateTime?,
+                    NgayDonRa = row["NgayDonRa"] as DateTime?,
+                    NgayBatDauThue = row["NgayBatDauThue"] as DateTime?
+                });
+            }
+            return ds;
         }
 
     }

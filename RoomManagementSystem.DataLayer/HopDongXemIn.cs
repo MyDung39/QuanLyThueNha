@@ -8,20 +8,23 @@ namespace RoomManagementSystem.DataLayer
         public string? HoTen { get; set; }
         public string? Cccd { get; set; }
     }
+
     public class HopDongXemIn
     {
-        // Thông tin bảng NguoiThue
+        // Thông tin NguoiThue
         public string? TenNguoiThue { get; set; }
         public string? CccdNguoiThue { get; set; }
+        public string SdtNguoiThue { get; set; }
+        public string EmailNguoiThue { get; set; }
         public DateTime NgayDonVao { get; set; }
 
-        // Thông tin bảng Nha - Phong
+        // Thông tin Nha - Phong
         public string? DiaChiNha { get; set; }
         public int TongSoPhong { get; set; }
         public decimal GiaThue { get; set; }
         public decimal DienTich { get; set; }
 
-        // Thông tin bảng HopDong
+        // Thông tin HopDong
         public string? MaHopDong { get; set; }
         public string? MaPhong { get; set; }
         public DateTime NgayBatDau { get; set; }
@@ -29,8 +32,9 @@ namespace RoomManagementSystem.DataLayer
         public decimal TienCoc { get; set; }
         public string? FileDinhKem { get; set; }
         public int ThoiHan { get; set; }
+        public string GhiChuHopDong { get; set; }
+        public DateTime NgayTao { get; set; } // Dùng cho "Ngày lập hợp đồng"
 
-        // Danh sách người ở cùng (cho Phụ lục)
         public List<ThanhVienCungPhong> ThanhVien { get; set; } = new List<ThanhVienCungPhong>();
     }
 }
