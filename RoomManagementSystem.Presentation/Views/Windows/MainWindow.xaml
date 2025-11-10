@@ -12,7 +12,8 @@
         xmlns:house="clr-namespace:RoomManagementSystem.Presentation.Views.Page.HouseManagement"
         xmlns:service="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ServiceManagement"
         mc:Ignorable="d"
-        Title="Hệ thống quản lý phòng trọ" Height="720" Width="1280"
+        Title="Quản lý thuê nhà" Height="720" Width="1280"
+        Icon="/Resources/Images/logo_app.png"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:TenantManagementViewModel}">

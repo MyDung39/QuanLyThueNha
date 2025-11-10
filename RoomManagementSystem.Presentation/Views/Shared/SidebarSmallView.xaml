@@ -91,7 +91,7 @@
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                              CommandParameter="HouseManagement"/>
                 <!-- Người thuê -->
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/nguoi_thue_icon.png" ToolTip="Người thuê" IsChecked="True"
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/nguoi_thue_icon.png" ToolTip="Người thuê"
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                              CommandParameter="Tenant"/>
                 <!-- Hợp đồng -->
