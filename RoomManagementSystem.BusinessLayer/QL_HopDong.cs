@@ -177,5 +177,16 @@ namespace RoomManagementSystem.BusinessLayer
             }
             return _thongBaoDAL.GetByContractId(maHopDong);
         }
+
+
+        public HopDong? GetActiveContractByTenant(string maNguoiThue)
+        {
+            if (string.IsNullOrEmpty(maNguoiThue))
+            {
+                return null;
+            }
+            return _hdDAL.GetActiveContractByTenantId(maNguoiThue);
+        }
+
     }
 }

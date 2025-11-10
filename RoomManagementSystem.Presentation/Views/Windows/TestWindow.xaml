@@ -11,6 +11,7 @@
         
         xmlns:contract="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ContractManagement"
         
+        xmlns:maintenance="clr-namespace:RoomManagementSystem.Presentation.Views.Page.MaintenanceManagement"
 
         xmlns:house="clr-namespace:RoomManagementSystem.Presentation.Views.Page.HouseManagement"
 
@@ -28,6 +29,10 @@
 
         <DataTemplate DataType="{x:Type viewModel:BillingViewModel}">
             <page:BillingView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:MaintenanceManagementViewModel}">
+            <maintenance:MaintenanceManagementView />
         </DataTemplate>
 
 

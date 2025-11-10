@@ -55,8 +55,8 @@
             <!-- Hàng 1: Tiêu đề và nút Đóng -->
             <Grid Grid.Row="0">
                 <TextBlock Text="Thêm thông tin bảo trì và sự cố" FontSize="20" Foreground="#8A8A8A" VerticalAlignment="Center"/>
-                <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-25,-28,0"
-                        Background="Transparent" BorderThickness="0" Cursor="Hand" Click="CloseButton_Click">
+                <Button Command="{Binding CancelAddCommand}" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-25,-28,0"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
                     <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" StrokeThickness="1.5">
                         <Path.Stroke>
                             <SolidColorBrush Color="Black" Opacity="0.34"/>
@@ -76,18 +76,21 @@
                 <!-- Cột trái -->
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="Phòng" FontSize="13" Foreground="#292D32" Margin="0,0,0,4"/>
-                    <Border Background="#F9FBFF" CornerRadius="9.5" Height="36" BorderBrush="#F0EEEE" BorderThickness="1">
-                        <Grid>
-                            <TextBlock Text="Nhập số phòng" Style="{StaticResource PlaceholderTextStyle}"/>
-                            <TextBox Background="Transparent" BorderThickness="0" Padding="12,0" VerticalContentAlignment="Center"/>
-                        </Grid>
+                    <Border Background="#E9ECEF" CornerRadius="9.5" Height="36" BorderBrush="#F0EEEE" BorderThickness="1" 
+            ToolTip="Phòng được tự động chọn dựa trên người thuê.">
+
+                        <!-- Cách 1: Dùng TextBlock (đơn giản, đẹp hơn) -->
+                        <TextBlock Text="{Binding SelectedRoom.MaPhong}" 
+                   Foreground="#333" VerticalAlignment="Center" Margin="12,0"/>
                     </Border>
 
                     <TextBlock Text="Mô tả" FontSize="13" Foreground="#292D32" Margin="0,20,0,4"/>
                     <Border Background="#F9FBFF" CornerRadius="9.5" Height="36" BorderBrush="#F0EEEE" BorderThickness="1">
                         <Grid>
-                            <TextBlock Text="Nhập mô tả" Style="{StaticResource PlaceholderTextStyle}"/>
-                            <TextBox Background="Transparent" BorderThickness="0" Padding="12,0" VerticalContentAlignment="Center"/>
+                            
+                            <TextBox Text="{Binding NewDescription, UpdateSourceTrigger=PropertyChanged}" 
+                                 TextWrapping="Wrap" AcceptsReturn="True"
+                                 Background="Transparent" BorderThickness="0" Padding="12,8"/>
                         </Grid>
                     </Border>
                 </StackPanel>
@@ -98,30 +101,27 @@
                     <Border Background="#F9FBFF" CornerRadius="9.5" Height="36" BorderBrush="#F0EEEE" BorderThickness="1">
                         <Grid>
                             <TextBlock Text="Lựa chọn người thuê" Style="{StaticResource PlaceholderTextStyle}"/>
-                            <ComboBox Background="Transparent" BorderThickness="0" Padding="12,0" VerticalContentAlignment="Center"
-                                      IsEditable="True" IsReadOnly="True">
-                                <ComboBox.Resources>
-                                    <!-- Ghi đè màu nền khi focus để giữ trong suốt -->
-                                    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="Transparent"/>
-                                </ComboBox.Resources>
-                            </ComboBox>
+                            <ComboBox ItemsSource="{Binding TenantList}"
+                                  SelectedItem="{Binding SelectedTenant}"
+                                  DisplayMemberPath="HoTen"
+                                  Background="Transparent" BorderThickness="0" Padding="12,0" VerticalContentAlignment="Center"/>
                         </Grid>
                     </Border>
 
                     <TextBlock Text="Ngày yêu cầu" FontSize="13" Foreground="#292D32" Margin="0,20,0,4"/>
                     <Border Background="#F9FBFF" CornerRadius="9.5" Height="36" BorderBrush="#F0EEEE" BorderThickness="1">
-                        <Grid>
+                        
                             <!-- Không cần placeholder vì đã có ngày mặc định -->
-                            <DatePicker Background="Transparent" BorderThickness="0" Padding="12,0,5,0" VerticalContentAlignment="Center"
-                                        SelectedDate="{x:Static sys:DateTime.Now}"/>
-                        </Grid>
+                            <DatePicker SelectedDate="{Binding NewRequestDate}" 
+                                    Background="Transparent" BorderThickness="0" Padding="12,0,5,0" VerticalContentAlignment="Center"/>
                     </Border>
                 </StackPanel>
             </Grid>
 
             <!-- Hàng 5: Nút xác nhận -->
             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Thêm" Width="78" Height="37" Style="{StaticResource PrimaryButtonStyle}" Click="ConfirmButton_Click"/>
+                <Button Content="Thêm" Width="78" Height="37" Style="{StaticResource PrimaryButtonStyle}" 
+                        Command="{Binding ConfirmAddCommand}"/>
             </StackPanel>
         </Grid>
     </Border>

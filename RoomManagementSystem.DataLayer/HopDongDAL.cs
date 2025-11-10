@@ -507,5 +507,36 @@ namespace RoomManagementSystem.DataLayer
             return ds;
         }
 
+
+        public HopDong? GetActiveContractByTenantId(string maNguoiThue)
+        {
+            // Câu truy vấn này JOIN 3 bảng để tìm MaPhong từ MaNguoiThue
+            string qr = @"SELECT TOP 1 h.* 
+                  FROM HopDong h
+                  JOIN HopDong_NguoiThue hnt ON h.MaHopDong = hnt.MaHopDong
+                  WHERE hnt.MaNguoiThue = @MaNguoiThue AND h.TrangThai = N'Hiệu lực'
+                  ORDER BY h.NgayBatDau DESC"; // Lấy hợp đồng mới nhất nếu có nhiều
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+        new SqlParameter("@MaNguoiThue", maNguoiThue)
+            };
+
+            DataTable dt = db.ExecuteQuery(qr, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow reader = dt.Rows[0];
+                // Sử dụng lại logic đọc HopDong từ các phương thức khác của bạn
+                return new HopDong()
+                {
+                    MaHopDong = reader["MaHopDong"]?.ToString(),
+                    MaPhong = reader["MaPhong"]?.ToString(),
+                    // ... điền các thuộc tính khác
+                };
+            }
+            return null;
+        }
+
     }
 }

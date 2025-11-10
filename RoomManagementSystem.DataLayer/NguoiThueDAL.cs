@@ -135,5 +135,23 @@ namespace RoomManagementSystem.DataLayer
         }
 
 
+        public List<NguoiThue> GetByRoomId(string maPhong)
+        {
+            List<NguoiThue> list = new List<NguoiThue>();
+            string sql = @"SELECT nt.* 
+                   FROM NguoiThue nt
+                   JOIN HopDong_NguoiThue hnt ON nt.MaNguoiThue = hnt.MaNguoiThue
+                   JOIN HopDong h ON hnt.MaHopDong = h.MaHopDong
+                   WHERE h.MaPhong = @MaPhong AND h.TrangThai = N'Hiệu lực'";
+            SqlParameter[] parameters = new SqlParameter[] { new SqlParameter("@MaPhong", maPhong) };
+            DataTable dt = db.ExecuteQuery(sql, parameters);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new NguoiThue { /* ... điền các thuộc tính ... */ });
+            }
+            return list;
+        }
+
     }
 }

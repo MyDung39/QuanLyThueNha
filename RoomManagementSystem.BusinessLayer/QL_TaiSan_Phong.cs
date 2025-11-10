@@ -145,7 +145,11 @@ namespace RoomManagementSystem.BusinessLayer
         }
 
 
-
+        public List<Phong> GetAllRooms()
+        {
+            // Gọi đúng phương thức vừa tạo trong DAL
+            return p.GetAllRooms();
+        }
 
     }
 }

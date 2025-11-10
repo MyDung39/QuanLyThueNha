@@ -235,5 +235,32 @@ namespace RoomManagementSystem.DataLayer
             return ds;
         }
 
+
+        public List<Phong> GetAllRooms()
+        {
+            List<Phong> ds = new List<Phong>();
+            // Câu SELECT không có điều kiện WHERE
+            string qr = "SELECT * FROM Phong";
+            DataTable dt = db.ExecuteQuery(qr);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                ds.Add(new Phong()
+                {
+                    MaPhong = ToSafeString(row["MaPhong"]),
+                    MaNha = ToSafeString(row["MaNha"]),
+                    LoaiPhong = ToSafeString(row["LoaiPhong"]),
+                    DienTich = row["DienTich"] is DBNull ? 0m : Convert.ToDecimal(row["DienTich"]),
+                    GiaThue = row["GiaThue"] is DBNull ? 0m : Convert.ToDecimal(row["GiaThue"]),
+                    TrangThai = ToSafeString(row["TrangThai"]),
+                    SoNguoiHienTai = row["SoNguoiHienTai"] is DBNull ? 0 : Convert.ToInt32(row["SoNguoiHienTai"]),
+                    GhiChu = ToSafeString(row["GhiChu"]),
+                    NgayTao = row["NgayTao"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayTao"]),
+                    NgayCapNhat = row["NgayCapNhat"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(row["NgayCapNhat"])
+                });
+            }
+            return ds;
+        }
+
     }
 }

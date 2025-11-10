@@ -134,9 +134,16 @@
                              Style="{StaticResource SidebarRadioButton}"
                              Tag="/Resources/Images/lich_icon.png"/>
                 <TextBlock Text="TÁC VỤ" Style="{StaticResource SectionHeader}"/>
+                
+
+
                 <RadioButton Content="Bảo trì" 
-                             Style="{StaticResource SidebarRadioButton}"
-                             Tag="/Resources/Images/bao_tri_icon.png"/>
+             Style="{StaticResource SidebarRadioButton}"
+             Tag="/Resources/Images/bao_tri_icon.png"
+             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+             CommandParameter="Maintenance"/>
+
+
                 <RadioButton Content="Dịch vụ" 
                              Style="{StaticResource SidebarRadioButton}"
                              Tag="/Resources/Images/dich_vu_icon.png"/>

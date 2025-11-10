@@ -152,5 +152,16 @@ namespace RoomManagementSystem.BusinessLayer
             return allTenants.Where(t => !tenantIdsWithContract.Contains(t.MaNguoiThue)).ToList();
         }
 
+
+        public List<NguoiThue> GetTenantsByRoom(string maPhong)
+        {
+            if (string.IsNullOrEmpty(maPhong))
+            {
+                return new List<NguoiThue>();
+            }
+            // Bạn cần tạo phương thức GetByRoomId trong NguoiThueDAL
+            return _nguoiThueDAL.GetByRoomId(maPhong);
+        }
+
     }
 }

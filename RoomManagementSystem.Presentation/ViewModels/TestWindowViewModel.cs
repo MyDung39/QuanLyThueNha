@@ -55,6 +55,9 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
                 case "Overview":
                     MessageBox.Show("Trang Tổng quan (chưa tạo)");
                     break;
+                case "Maintenance":
+                    CurrentViewModel = new MaintenanceManagementViewModel();
+                    break;
                 case "Asset":
                     MessageBox.Show("Trang Tài sản (chưa tạo)");
                     break;

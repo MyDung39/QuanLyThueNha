@@ -128,5 +128,17 @@ namespace RoomManagementSystem.BusinessLayer
             return tenants;
 
         }
+
+
+        public bool XoaYeuCau(List<string> maBaoTris)
+        {
+            if (maBaoTris == null || !maBaoTris.Any())
+                throw new ArgumentException("Danh sách mã bảo trì không được rỗng.");
+
+            return dal.Delete(maBaoTris);
+        }
+
+
+
     }
 }

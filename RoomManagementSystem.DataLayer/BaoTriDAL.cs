@@ -211,5 +211,31 @@ namespace RoomManagementSystem.DataLayer
 
             return db.ExecuteQuery(query, parameters);
         }
+
+
+        public bool Delete(List<string> maBaoTris)
+        {
+            if (maBaoTris == null || !maBaoTris.Any())
+            {
+                return false;
+            }
+
+            // Tạo danh sách các tham số động (@p0, @p1, @p2, ...)
+            var parameters = new List<SqlParameter>();
+            var parameterNames = new List<string>();
+            for (int i = 0; i < maBaoTris.Count; i++)
+            {
+                string paramName = $"@p{i}";
+                parameterNames.Add(paramName);
+                parameters.Add(new SqlParameter(paramName, maBaoTris[i]));
+            }
+
+            // Xây dựng câu lệnh SQL với IN clause
+            string sql = $"DELETE FROM BaoTri WHERE MaBaoTri IN ({string.Join(", ", parameterNames)})";
+
+            return db.ExecuteNonQuery(sql, parameters.ToArray()) > 0;
+        }
+
+
     }
 }
