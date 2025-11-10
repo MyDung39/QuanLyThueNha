@@ -97,7 +97,9 @@
             <StackPanel Margin="0,15,0,0">
                 <RadioButton Content="Tổng quan" 
                              Style="{StaticResource SidebarRadioButton}" 
-                             Tag="/Resources/Images/tong_quan_icon.png"/>
+                             Tag="/Resources/Images/tong_quan_icon.png"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Overview"/>
 
                 <TextBlock Text="QUẢN LÝ" Style="{StaticResource SectionHeader}"/>
                 <RadioButton Content="Tài sản" 

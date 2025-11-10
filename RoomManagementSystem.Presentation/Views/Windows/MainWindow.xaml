@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:shared="clr-namespace:RoomManagementSystem.Presentation.Views.Shared"
         xmlns:viewModel="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
+        xmlns:dash="clr-namespace:RoomManagementSystem.Presentation.Views"
         xmlns:tenant="clr-namespace:RoomManagementSystem.Presentation.Views.Page.TenantManagement"
         xmlns:page="clr-namespace:RoomManagementSystem.Presentation.Views.Page"
         xmlns:contract="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ContractManagement"
@@ -28,6 +29,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ServiceManagementViewModel}">
             <service:ServiceManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+            <dash:DashboardView />
         </DataTemplate>
     </Window.Resources>
 

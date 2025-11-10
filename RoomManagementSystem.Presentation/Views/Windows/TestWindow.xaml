@@ -16,6 +16,7 @@
 
         xmlns:viewModel="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
         xmlns:service="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ServiceManagement"
+        xmlns:dash="clr-namespace:RoomManagementSystem.Presentation.Views"
         
         mc:Ignorable="d"
         Title="Test - Tenant Management" Height="720" Width="1280"
@@ -42,6 +43,10 @@
 
         <DataTemplate DataType="{x:Type viewModel:ContractManagementViewModel}">
             <contract:ContractManagementView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+            <dash:DashboardView />
         </DataTemplate>
 
 

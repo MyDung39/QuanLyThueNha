@@ -56,7 +56,7 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
                     CurrentViewModel = new ContractManagementViewModel();
                     break;
                 case "Overview":
-                    MessageBox.Show("Trang Tổng quan (chưa tạo)");
+                    CurrentViewModel = new DashboardViewModel();
                     break;
                 case "Asset":
                     MessageBox.Show("Trang Tài sản (chưa tạo)");
