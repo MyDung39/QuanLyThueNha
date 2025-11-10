@@ -18,6 +18,9 @@
         xmlns:viewModel="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
         xmlns:service="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ServiceManagement"
         xmlns:dash="clr-namespace:RoomManagementSystem.Presentation.Views"
+        xmlns:cal="clr-namespace:RoomManagementSystem.Presentation.Views.Page.Calendar"
+        xmlns:help="clr-namespace:RoomManagementSystem.Presentation.Views.Page.Help"
+        xmlns:report="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ReportManagement"
         
         mc:Ignorable="d"
         Title="Quản lý thuê nhà" Height="720" Width="1280"
@@ -55,6 +58,17 @@
             <dash:DashboardView />
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:CalendarViewModel}">
+            <cal:CalendarView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HelpViewModel}">
+            <help:HelpView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:ReportManagementViewModel}">
+            <report:ReportManagementView />
+        </DataTemplate>
 
     </Window.Resources>
 

@@ -48,24 +48,33 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
                     //CurrentViewModel = new BillingViewModel(_taiSanPhongService, _xuatBienLaiService);
                     CurrentViewModel = new BillingViewModel();
                     break;
+                case "Help":
+                    CurrentViewModel = new HelpViewModel();
+                    break;
                 case "ServiceManagement":
                     CurrentViewModel = new ServiceManagementViewModel();
+                    break;
+                case "ReportManagement":
+                    CurrentViewModel = new ReportManagementViewModel();
                     break;
                 case "Contract":
                     // CurrentViewModel = new ContractViewModel();
                     CurrentViewModel = new ContractManagementViewModel();
                     break;
+                case "Calendar":
+                    CurrentViewModel = new CalendarViewModel();
+                    break;
                 case "Overview":
                     CurrentViewModel = new DashboardViewModel();
-<<<<<<< Updated upstream
+                    break;
+                case "FinancialReport":
+                    MessageBox.Show("Trang Báo cáo tài chính đang phát triển và sẽ có trong phiên bản sau.");
+                    break;
+                case "StatusReport":
+                    MessageBox.Show("Trang Báo cáo trạng thái đang phát triển và sẽ có trong phiên bản sau.");
                     break;
                 case "Maintenance":
                     CurrentViewModel = new MaintenanceManagementViewModel();
-=======
->>>>>>> Stashed changes
-                    break;
-                case "Asset":
-                    MessageBox.Show("Trang Tài sản (chưa tạo)");
                     break;
             }
         }

@@ -1,0 +1,41 @@
+<UserControl x:Class="RoomManagementSystem.Presentation.Views.Page.Calendar.CalendarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Background="#F5F6FA">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Width="520" Padding="24" Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" 
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="4" Direction="315" Color="#000000" Opacity="0.15" BlurRadius="12"/>
+            </Border.Effect>
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,12" VerticalAlignment="Center">
+                    <Ellipse Width="44" Height="44" Fill="#EEF2FF" Stroke="#C7D2FE" StrokeThickness="1"/>
+                    <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="Tính năng đang phát triển" FontSize="18" FontWeight="SemiBold" Foreground="#1F2937"/>
+                        <TextBlock Text="Trang Lịch sẽ có trong phiên bản sắp tới." FontSize="13" Foreground="#6B7280"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Chúng tôi đang hoàn thiện chức năng quản lý lịch hẹn, nhắc việc và đồng bộ." 
+                               TextWrapping="Wrap" Foreground="#4B5563" Margin="0,0,0,8"/>
+                    <TextBlock Grid.Row="1" Text="Cảm ơn bạn đã sử dụng hệ thống quản lý thuê nhà!" 
+                               TextWrapping="Wrap" Foreground="#4B5563"/>
+                </Grid>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

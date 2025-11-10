@@ -1,0 +1,48 @@
+<UserControl x:Class="RoomManagementSystem.Presentation.Views.Page.Help.HelpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Background="#F5F6FA">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Width="560" Padding="24" Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" 
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="4" Direction="315" Color="#000000" Opacity="0.15" BlurRadius="12"/>
+            </Border.Effect>
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,12" VerticalAlignment="Center">
+                    <Image Source="/Resources/Images/logo_app.png" Width="44" Height="44" Stretch="UniformToFill">
+                        <Image.Effect>
+                            <DropShadowEffect ShadowDepth="2" Direction="315" Color="#000000" Opacity="0.18" BlurRadius="6"/>
+                        </Image.Effect>
+                    </Image>
+                    <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="Trợ giúp &amp; Thông tin" FontSize="18" FontWeight="SemiBold" Foreground="#1F2937"/>
+                        <TextBlock Text="Thông tin sản phẩm và liên hệ hỗ trợ" FontSize="13" Foreground="#6B7280"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Text="Phiên bản: 1.0" FontSize="14" Foreground="#374151"/>
+                    <TextBlock Text="Bản quyền: PentaNix" FontSize="14" Foreground="#374151" Margin="0,4,0,0"/>
+                    <TextBlock Text="Cung cấp cho: Plumeria Family" FontSize="14" Foreground="#374151" Margin="0,4,0,0"/>
+                    <TextBlock Text="Sản phẩm: Quản lý tài sản" FontSize="14" Foreground="#374151" Margin="0,4,0,0"/>
+
+                    <Separator Margin="0,12,0,12"/>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Ellipse Width="10" Height="10" Fill="#34D399" Margin="0,4,8,0"/>
+                        <TextBlock Text="Mọi chi tiết liên hệ: " FontSize="14" Foreground="#374151"/>
+                        <TextBlock Text="pentanix79@gmail.com" FontSize="14" Foreground="#2563EB" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>
