@@ -27,7 +27,7 @@ namespace RoomManagementSystem.DataLayer
 
                 c.Open();
 
-                string querry = "SELECT COUNT(*) FROM NguoiDung WHERE TenDangNhap=@email AND MatKhau=matkhau";
+                string querry = "SELECT COUNT(*) FROM NguoiDung WHERE TenDangNhap=@email AND MatKhau=@matkhau";
                 SqlCommand cmd = new SqlCommand(querry, c);
                 cmd.Parameters.AddWithValue("@email", email);
                 cmd.Parameters.AddWithValue("@matkhau", matkhau);
