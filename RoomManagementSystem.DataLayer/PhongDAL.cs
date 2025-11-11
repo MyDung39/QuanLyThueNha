@@ -262,5 +262,19 @@ namespace RoomManagementSystem.DataLayer
             return ds;
         }
 
+
+        public bool UpdateRoomStatus(string maPhong, string trangThai, SqlConnection conn, SqlTransaction tran)
+        {
+            string qr = "UPDATE Phong SET TrangThai = @TrangThai WHERE MaPhong = @MaPhong";
+
+            // Tự tạo SqlCommand, không dùng 'db'
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran))
+            {
+                cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+                cmd.Parameters.AddWithValue("@MaPhong", maPhong);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
     }
 }

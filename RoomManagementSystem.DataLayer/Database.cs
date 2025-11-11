@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace RoomManagementSystem.DataLayer
 {
@@ -55,5 +56,24 @@ namespace RoomManagementSystem.DataLayer
                 return cmd.ExecuteScalar();
             }
         }
+
+
+        public int ExecuteNonQuery(string query, SqlTransaction transaction, SqlParameter[] parameters = null)
+        {
+            // Sử dụng kết nối và giao dịch (transaction) được truyền vào
+            // Chúng ta KHÔNG 'using' hoặc 'Close()' kết nối ở đây
+            // vì hàm gọi nó sẽ quản lý việc đó
+            SqlConnection conn = transaction.Connection;
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Transaction = transaction; // Quan trọng: Gắn giao dịch vào command
+            cmd.CommandType = CommandType.Text;
+
+            if (parameters != null)
+                cmd.Parameters.AddRange(parameters);
+
+            return cmd.ExecuteNonQuery();
+        }
+
     }
 }

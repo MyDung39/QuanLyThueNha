@@ -54,5 +54,30 @@ namespace RoomManagementSystem.DataLayer
             }
             return list;
         }
+
+
+        // HÀM ĐÃ SỬA
+        public bool Insert(LichSuHopDong lichSu, SqlConnection conn, SqlTransaction tran)
+        {
+            // 1. Lấy câu SQL chính xác từ hàm Insert gốc của bạn
+            string qr = @"INSERT INTO LichSuHopDong 
+                        (MaHopDong, MaNguoiThayDoi, HanhDong, NoiDungThayDoi)
+                      VALUES
+                        (@MaHopDong, @MaNguoiThayDoi, @HanhDong, @NoiDungThayDoi)";
+
+            // Tự tạo SqlCommand, không dùng 'db'
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran))
+            {
+                // 2. Thêm các tham số (Parameters) từ hàm Insert gốc
+                cmd.Parameters.Add(new SqlParameter("@MaHopDong", lichSu.MaHopDong));
+                cmd.Parameters.Add(new SqlParameter("@MaNguoiThayDoi", lichSu.MaNguoiThayDoi));
+                cmd.Parameters.Add(new SqlParameter("@HanhDong", lichSu.HanhDong));
+                cmd.Parameters.Add(new SqlParameter("@NoiDungThayDoi", lichSu.NoiDungThayDoi ?? (object)DBNull.Value));
+
+                // 3. Thực thi
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
     }
 }

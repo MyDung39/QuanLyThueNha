@@ -538,5 +538,94 @@ namespace RoomManagementSystem.DataLayer
             return null;
         }
 
+
+
+        // HÀM MỚI: Dùng cho giao dịch
+        public bool InsertHopDong(HopDong hopDong, SqlConnection conn, SqlTransaction tran)
+        {
+            string qr = @"INSERT INTO HopDong (MaHopDong, MaPhong, ChuNha, TienCoc, NgayBatDau, ThoiHan, TrangThai, GhiChu, NgayTao, NgayCapNhat)
+                  VALUES (@MaHopDong, @MaPhong, @ChuNha, @TienCoc, @NgayBatDau, @ThoiHan, @TrangThai, @GhiChu, GETDATE(), GETDATE())";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+        new SqlParameter("@MaHopDong", hopDong.MaHopDong),
+        new SqlParameter("@MaPhong", hopDong.MaPhong),
+        new SqlParameter("@ChuNha", hopDong.ChuNha ?? (object)DBNull.Value),
+        new SqlParameter("@TienCoc", hopDong.TienCoc),
+        new SqlParameter("@NgayBatDau", hopDong.NgayBatDau),
+        new SqlParameter("@ThoiHan", hopDong.ThoiHan),
+        new SqlParameter("@TrangThai", hopDong.TrangThai ?? (object)DBNull.Value),
+        new SqlParameter("@GhiChu", hopDong.GhiChu ?? (object)DBNull.Value)
+            };
+
+            // Tự tạo SqlCommand, không dùng 'db'
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran)) //Sử dụng conn và tran
+            {
+                cmd.Parameters.AddRange(parameters);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+
+
+        // HÀM MỚI: Dùng cho giao dịch
+        public bool InsertHopDongNguoiThue(HopDong_NguoiThue ct, SqlConnection conn, SqlTransaction tran)
+        {
+            string qr = @"INSERT INTO HopDong_NguoiThue (MaHopDong, MaNguoiThue, VaiTro, TrangThaiThue, NgayDonVao, NgayBatDauThue)
+                  VALUES (@MaHopDong, @MaNguoiThue, @VaiTro, @TrangThaiThue, @NgayDonVao, @NgayBatDauThue)";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+        new SqlParameter("@MaHopDong", ct.MaHopDong),
+        new SqlParameter("@MaNguoiThue", ct.MaNguoiThue),
+        new SqlParameter("@VaiTro", ct.VaiTro),
+        new SqlParameter("@TrangThaiThue", ct.TrangThaiThue),
+        new SqlParameter("@NgayDonVao", ct.NgayDonVao ?? (object)DBNull.Value),
+        new SqlParameter("@NgayBatDauThue", ct.NgayBatDauThue ??(object) DBNull.Value)
+            };
+
+            // Tự tạo SqlCommand, không dùng 'db'
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran)) //Sử dụng conn và tran
+            {
+                cmd.Parameters.AddRange(parameters);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+
+
+
+        // HÀM MỚI: Dùng cho giao dịch (Cần cho việc cập nhật)
+        public bool UpdateHopDong(HopDong hopDong, SqlConnection conn, SqlTransaction tran)
+        {
+            string qr = @"UPDATE HopDong 
+                  SET MaPhong = @MaPhong, ChuNha = @ChuNha, TienCoc = @TienCoc,
+                      NgayBatDau = @NgayBatDau, ThoiHan = @ThoiHan, TrangThai = @TrangThai,
+                      GhiChu = @GhiChu, NgayCapNhat = GETDATE()
+                  WHERE MaHopDong = @MaHopDong";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+        new SqlParameter("@MaHopDong", hopDong.MaHopDong),
+        new SqlParameter("@MaPhong", hopDong.MaPhong),
+        new SqlParameter("@ChuNha", hopDong.ChuNha ??(object) DBNull.Value),
+        new SqlParameter("@TienCoc", hopDong.TienCoc),
+        new SqlParameter("@NgayBatDau", hopDong.NgayBatDau),
+        new SqlParameter("@ThoiHan", hopDong.ThoiHan),
+        new SqlParameter("@TrangThai", hopDong.TrangThai ??(object) DBNull.Value),
+        new SqlParameter("@GhiChu", hopDong.GhiChu ??(object) DBNull.Value)
+            };
+
+            // Tự tạo SqlCommand, không dùng 'db'
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran)) //Sử dụng conn và tran
+            {
+                cmd.Parameters.AddRange(parameters);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+
+
+
     }
 }

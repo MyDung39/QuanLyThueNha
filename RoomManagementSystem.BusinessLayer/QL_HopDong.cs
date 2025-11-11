@@ -1,8 +1,10 @@
-﻿using RoomManagementSystem.DataLayer;
+﻿using RoomManagementSystem.DataLayer; // ✅ ĐÃ THÊM
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Data.SqlClient; // ✅ ĐÃ SỬA
 using System.Transactions;
+using System.IO;
 
 // Xóa các using không cần thiết ở đây như Spire.Doc, Globalization, IO nếu có
 
@@ -19,6 +21,9 @@ namespace RoomManagementSystem.BusinessLayer
         /// <summary>
         /// Tạo mới một hợp đồng và ghi lại lịch sử.
         /// </summary>
+        /// 
+
+        /*
         public string TaoHopDong(HopDong hopDong, string maNguoiThueChuHopDong)
         {
             if (hopDong == null || string.IsNullOrEmpty(hopDong.MaPhong) || string.IsNullOrEmpty(maNguoiThueChuHopDong))
@@ -61,10 +66,81 @@ namespace RoomManagementSystem.BusinessLayer
                 return hopDong.MaHopDong;
             }
         }
+        */
+
+
+        public string TaoHopDong(HopDong hopDong, string maNguoiThueChuHopDong)
+        {
+            if (hopDong == null || string.IsNullOrEmpty(hopDong.MaPhong) || string.IsNullOrEmpty(maNguoiThueChuHopDong))
+            {
+                throw new ArgumentException("Thông tin hợp đồng hoặc người thuê không hợp lệ.");
+            }
+
+            // Lấy chuỗi kết nối từ DataProvider của bạn
+            string connectionString = DbConfig.ConnectionString;
+
+            // ✅ BƯỚC 1: TẠO MỘT KẾT NỐI DUY NHẤT
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                // ✅ BƯỚC 2: BẮT ĐẦU GIAO DỊCH TRÊN KẾT NỐI ĐÓ
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Tạo mã và chèn hợp đồng chính
+                        hopDong.MaHopDong = _hdDAL.AutoMaHD();
+                        // ✅ BƯỚC 3: TRUYỀN connection VÀ transaction XUỐNG LỚP DAL
+                        if (!_hdDAL.InsertHopDong(hopDong, connection, transaction))
+                            throw new Exception("Không thể lưu hợp đồng vào CSDL.");
+
+                        // 2. Chèn chi tiết người thuê
+                        var chiTiet = new HopDong_NguoiThue
+                        {
+                            MaHopDong = hopDong.MaHopDong,
+                            MaNguoiThue = maNguoiThueChuHopDong,
+                            VaiTro = "Chủ hợp đồng",
+                            TrangThaiThue = "Đang ở",
+                            NgayBatDauThue = hopDong.NgayBatDau,
+                            NgayDonVao = hopDong.NgayBatDau
+                        };
+                        if (!_hdDAL.InsertHopDongNguoiThue(chiTiet, connection, transaction))
+                            throw new Exception("Không thể thêm chi tiết người thuê.");
+
+                        // 3. Cập nhật trạng thái phòng
+                        if (!_phongDAL.UpdateRoomStatus(hopDong.MaPhong, "Đang thuê", connection, transaction))
+                            throw new Exception("Không thể cập nhật trạng thái của phòng.");
+
+                        // 4. Ghi lịch sử hành động
+                        var lichSu = new LichSuHopDong
+                        {
+                            MaHopDong = hopDong.MaHopDong,
+                            MaNguoiThayDoi = hopDong.ChuNha,
+                            HanhDong = "Tạo mới hợp đồng",
+                            NoiDungThayDoi = $"Tạo hợp đồng cho phòng {hopDong.MaPhong}."
+                        };
+                        _lichSuDAL.Insert(lichSu, connection, transaction);
+
+                        // ✅ BƯỚC 4: NẾU TẤT CẢ THÀNH CÔNG, LƯU LẠI GIAO DỊCH
+                        transaction.Commit();
+                        return hopDong.MaHopDong;
+                    }
+                    catch (Exception)
+                    {
+                        // ✅ BƯỚC 5: NẾU CÓ LỖI, HỦY TẤT CẢ THAO TÁC
+                        transaction.Rollback();
+                        throw; // Ném lỗi ra ngoài để ViewModel có thể bắt và hiển thị
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Cập nhật thông tin của một hợp đồng và ghi lại các thay đổi vào bảng lịch sử.
         /// </summary>
+        /// 
+        /*
         public bool CapNhatHopDong(HopDong hopDongDaChinhSua, string maNguoiDung)
         {
             // Lấy thông tin hợp đồng CŨ từ CSDL để so sánh
@@ -101,6 +177,66 @@ namespace RoomManagementSystem.BusinessLayer
                 scope.Complete();
             }
             return true;
+        }
+        */
+
+
+        public bool CapNhatHopDong(HopDong hopDongDaChinhSua, string maNguoiDung)
+        {
+            // Lấy thông tin hợp đồng CŨ từ CSDL để so sánh
+            HopDong hopDongCu = _hdDAL.GetHopDongById(hopDongDaChinhSua.MaHopDong);
+            if (hopDongCu == null) throw new Exception("Hợp đồng không tồn tại để cập nhật.");
+
+            // Lấy chuỗi kết nối
+            string connectionString = DbConfig.ConnectionString;
+
+            // ✅ BẮT ĐẦU QUẢN LÝ GIAO DỊCH BẰNG TAY
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Cập nhật bản ghi HopDong chính trong CSDL (truyền conn, tran)
+                        if (!_hdDAL.UpdateHopDong(hopDongDaChinhSua, connection, transaction))
+                        {
+                            throw new Exception("Cập nhật thông tin hợp đồng thất bại.");
+                        }
+
+                        // 2. So sánh dữ liệu cũ và mới để tạo mô tả thay đổi
+                        string noiDungThayDoi = GenerateChangeLog(hopDongCu, hopDongDaChinhSua);
+
+                        // 3. Nếu có sự thay đổi, ghi lại vào bảng lịch sử (truyền conn, tran)
+                        if (!string.IsNullOrEmpty(noiDungThayDoi))
+                        {
+                            var lichSu = new LichSuHopDong
+                            {
+                                MaHopDong = hopDongDaChinhSua.MaHopDong,
+                                MaNguoiThayDoi = maNguoiDung,
+                                HanhDong = "Cập nhật thông tin",
+                                NoiDungThayDoi = noiDungThayDoi
+                            };
+
+                            // Gọi hàm Insert đã nạp chồng
+                            if (!_lichSuDAL.Insert(lichSu, connection, transaction))
+                            {
+                                throw new Exception("Không thể ghi lại lịch sử cập nhật.");
+                            }
+                        }
+
+                        // 4. Commit giao dịch
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        // 5. Rollback nếu có lỗi
+                        transaction.Rollback();
+                        throw; // Ném lỗi ra ngoài
+                    }
+                }
+            }
         }
 
         // Hàm trợ giúp để tạo chuỗi mô tả các thay đổi
