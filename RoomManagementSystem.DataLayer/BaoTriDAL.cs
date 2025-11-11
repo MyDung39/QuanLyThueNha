@@ -286,7 +286,21 @@ namespace RoomManagementSystem.DataLayer
             db.ExecuteNonQuery(sql, parameters);
         }
 
+        // HÀM MỚI: Dùng để tính tổng Phụ thu (Chi phí bảo trì)
+        public decimal GetTongChiPhiBaoTriByPhong(string maPhong)
+        {
+            // Lấy tổng chi phí của các mục đã 'Hoàn tất'
+            string qr = @"SELECT ISNULL(SUM(ChiPhi), 0) FROM BaoTri 
+                  WHERE MaPhong = @MaPhong AND TrangThaiXuLy = N'Hoàn tất'";
 
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+        new SqlParameter("@MaPhong", maPhong)
+            };
+
+            // Gọi hàm ExecuteScalar từ 'db'
+            return Convert.ToDecimal(db.ExecuteScalar(qr, parameters));
+        }
 
     }
 }

@@ -36,6 +36,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
         private readonly QL_TaiSan_Phong _taiSanPhongService;
         private readonly XuatBienLai _xuatBienLaiService;
         private readonly ThanhToanDAL _thanhToanService; // ✅ ĐÃ THÊM
+        private readonly BaoTriDAL _baoTriService; // ✅ ĐÃ THÊM BAOTRIDAL
 
         // === CÁC THUỘC TÍNH BINDING VỚI VIEW ===
 
@@ -75,6 +76,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
             _taiSanPhongService = new QL_TaiSan_Phong();
             _xuatBienLaiService = new XuatBienLai();
             _thanhToanService = new ThanhToanDAL(); // ✅ ĐÃ THÊM
+            _baoTriService = new BaoTriDAL(); // ✅ KHỞI TẠO BAOTRIDAL
 
             // Khởi tạo các Collection
             _danhSachNha = new ObservableCollection<NhaPhongViewModel>();
@@ -90,6 +92,8 @@ namespace RoomManagementSystem.Presentation.ViewModels
         /// <summary>
         /// Được gọi khi người dùng bấm chọn một phòng từ cột 1
         /// </summary>
+        /// 
+        /*
         private void OnSelectedPhongChanged(Phong value)
         {
             // 1. Xóa hết dữ liệu cũ
@@ -163,6 +167,111 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 TongTienCanTra = tienHoaDonChinh - tienCongNoCu - tienPhuThu;
 
                 // ✅ KẾT THÚC PHẦN CODE BỊ LỖI
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lấy dữ liệu hóa đơn: {ex.Message}");
+            }
+        }
+        */
+
+
+
+        private void OnSelectedPhongChanged(Phong phong)
+        {
+            // 1. Xóa hết dữ liệu cũ
+            ChiTietHoaDon.Clear();
+            DanhSachTomTat.Clear();
+            SelectedBillInfo = null;
+            TongTienCanTra = 0;
+
+            if (phong == null) return;
+
+            try
+            {
+                // 2. Tải dữ liệu cột 2 (Chi tiết hóa đơn & DataGrid)
+                var hoaDonData = _xuatBienLaiService.GetBienLai(phong.MaPhong);
+                if (hoaDonData.Any())
+                {
+                    SelectedBillInfo = hoaDonData.First();
+                    foreach (var item in hoaDonData)
+                    {
+                        ChiTietHoaDon.Add(item);
+                    }
+                }
+                else
+                {
+                    // Nếu phòng này không có hóa đơn, dừng lại
+                    return;
+                }
+
+                // 3. Tải dữ liệu cột 3 (Tóm tắt)
+
+                // Lấy Hóa đơn chính (ví dụ: 505,000)
+                decimal tienHoaDonChinh = SelectedBillInfo?.TongTien ?? 0;
+
+                // Lấy thông tin Công nợ & Đã thanh toán từ ThanhToanDAL
+                ThanhToan thanhToanHienTai = _thanhToanService.GetThanhToanHienTaiByPhong(phong.MaPhong);
+
+                // Gán giá trị từ CSDL, nếu không tìm thấy thì bằng 0
+                decimal tienCongNoCu = thanhToanHienTai?.TongCongNo ?? 0;
+                decimal tienDaThanhToan = thanhToanHienTai?.SoTienDaThanhToan ?? 0;
+
+                // Lấy Phụ thu từ BaoTriDAL (dùng hàm mới thêm ở Bước 1)
+                // (Trong ảnh demo của bạn là 300,000)
+                decimal tienPhuThu = _baoTriService.GetTongChiPhiBaoTriByPhong(phong.MaPhong);
+
+
+                // === Xây dựng danh sách Tóm Tắt (Cột 3) ===
+
+                // Thêm "Hóa đơn chính"
+                DanhSachTomTat.Add(new MucTomTat
+                {
+                    TieuDe = "Hóa đơn Số: ",
+                    MaSo = SelectedBillInfo.MaHoaDon,
+                    Ngay = SelectedBillInfo.NgayLapHoaDon,
+                    SoTien = tienHoaDonChinh
+                });
+
+                // Thêm "Công nợ" (nếu có)
+                if (tienCongNoCu > 0)
+                {
+                    DanhSachTomTat.Add(new MucTomTat
+                    {
+                        TieuDe = "Công nợ",
+                        Ngay = thanhToanHienTai?.NgayTao, // Lấy ngày của bản ghi công nợ
+                        SoTien = tienCongNoCu
+                    });
+                }
+
+                // Thêm "Phụ thu" (nếu có)
+                if (tienPhuThu > 0)
+                {
+                    DanhSachTomTat.Add(new MucTomTat
+                    {
+                        TieuDe = "Phụ thu",
+                        // (Bạn có thể lấy ngày gần nhất từ bảng BaoTri nếu muốn)
+                        SoTien = tienPhuThu
+                    });
+                }
+
+                if (tienDaThanhToan > 0)
+                {
+                    DanhSachTomTat.Add(new MucTomTat
+                    {
+                        TieuDe = "Đã thanh toán",
+                        // (Bạn có thể lấy ngày thanh toán gần nhất từ thanhToanHienTai)
+                        Ngay = thanhToanHienTai?.NgayCapNhat,
+                        SoTien = tienDaThanhToan
+                    });
+                }
+
+                // 4. Tính "Số tiền cần trả" (Logic đã sửa)
+                // (Tổng phải trả) = Hóa đơn + Công nợ + Phụ thu
+                decimal tongCacKhoanPhi = tienHoaDonChinh + tienCongNoCu + tienPhuThu;
+
+                // (Tiền cuối cùng) = (Tổng phải trả) - (Đã thanh toán)
+                TongTienCanTra = tongCacKhoanPhi - tienDaThanhToan;
             }
             catch (Exception ex)
             {
