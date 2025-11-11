@@ -98,6 +98,7 @@
                 <RadioButton Content="Tổng quan" 
                              Style="{StaticResource SidebarRadioButton}" 
                              Tag="/Resources/Images/tong_quan_icon.png"
+                             IsChecked="True"
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                              CommandParameter="Overview"/>
 
@@ -121,11 +122,9 @@
                 <RadioButton Content="Người thuê" 
                              Style="{StaticResource SidebarRadioButton}"
                              Tag="/Resources/Images/nguoi_thue_icon.png"
-                             IsChecked="True"
-             
                              Command="{Binding DataContext.NavigateCommand, 
                                                RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                             CommandParameter="Tenant" Checked="RadioButton_Checked"/>
+                             CommandParameter="Tenant"/>
 
                 <RadioButton Content="Hợp đồng" 
                              Style="{StaticResource SidebarRadioButton}"

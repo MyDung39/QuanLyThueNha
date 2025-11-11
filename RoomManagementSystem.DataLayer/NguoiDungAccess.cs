@@ -27,7 +27,7 @@ namespace RoomManagementSystem.DataLayer
 
                 c.Open();
 
-                string querry = "SELECT COUNT(*) FROM NguoiDung WHERE TenDangNhap=@email AND MatKhau=matkhau";
+                string querry = "SELECT COUNT(*) FROM NguoiDung WHERE TenDangNhap=@email AND MatKhau=@matkhau";
                 SqlCommand cmd = new SqlCommand(querry, c);
                 cmd.Parameters.AddWithValue("@email", email);
                 cmd.Parameters.AddWithValue("@matkhau", matkhau);
@@ -83,7 +83,7 @@ namespace RoomManagementSystem.DataLayer
                             TenDangNhap = r["TenDangNhap"].ToString(),
                             TenTaiKhoan = r["TenTaiKhoan"].ToString(),
                             MatKhau = r["MatKhau"].ToString(),
-                            Sdt = r["Sdt"].ToString(),
+                            Sdt = r["SoDienThoai"].ToString(),
                             PhuongThucDN = r["PhuongThucDN"].ToString(),
                             TrangThai = r["TrangThai"].ToString(),
                             NgayTao = Convert.ToDateTime(r["NgayTao"]),

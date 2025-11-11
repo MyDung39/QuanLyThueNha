@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoomManagementSystem.BusinessLayer;
 using RoomManagementSystem.DataLayer;
@@ -112,6 +112,49 @@ namespace RoomManagementSystem.Presentation.ViewModels
         {
             try
             {
+                // ✅ VALIDATION: Kiểm tra các trường bắt buộc
+                if (string.IsNullOrWhiteSpace(NewTenantName))
+                {
+                    MessageBox.Show("Vui lòng nhập tên người thuê!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(NewTenantIdCard))
+                {
+                    MessageBox.Show("Vui lòng nhập số giấy tờ (CCCD/CMND)!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // ✅ VALIDATION: Kiểm tra số CCCD phải có đúng 12 số
+                if (!string.IsNullOrWhiteSpace(NewTenantIdCard))
+                {
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(NewTenantIdCard, @"^\d{12}$"))
+                    {
+                        MessageBox.Show("Số CCCD phải có đúng 12 chữ số!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
+                // ✅ VALIDATION: Kiểm tra số điện thoại phải có đúng 10 số
+                if (!string.IsNullOrWhiteSpace(NewTenantPhone))
+                {
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(NewTenantPhone, @"^\d{10}$"))
+                    {
+                        MessageBox.Show("Số điện thoại phải có đúng 10 chữ số!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
+                // ✅ VALIDATION: Kiểm tra định dạng email
+                if (!string.IsNullOrWhiteSpace(NewTenantEmail))
+                {
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(NewTenantEmail, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                    {
+                        MessageBox.Show("Email không đúng định dạng! Vui lòng nhập email có @ và dấu chấm.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
                 var nguoiThueMoi = new NguoiThue
                 {
                     HoTen = NewTenantName,
@@ -178,6 +221,49 @@ namespace RoomManagementSystem.Presentation.ViewModels
             if (EditingTenant == null) return;
             try
             {
+                // ✅ VALIDATION: Kiểm tra các trường bắt buộc
+                if (string.IsNullOrWhiteSpace(EditingTenant.HoTen))
+                {
+                    MessageBox.Show("Vui lòng nhập tên người thuê!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(EditingTenant.SoGiayTo))
+                {
+                    MessageBox.Show("Vui lòng nhập số giấy tờ (CCCD/CMND)!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // ✅ VALIDATION: Kiểm tra số CCCD phải có đúng 12 số
+                if (!string.IsNullOrWhiteSpace(EditingTenant.SoGiayTo))
+                {
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(EditingTenant.SoGiayTo, @"^\d{12}$"))
+                    {
+                        MessageBox.Show("Số CCCD phải có đúng 12 chữ số!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
+                // ✅ VALIDATION: Kiểm tra số điện thoại phải có đúng 10 số
+                if (!string.IsNullOrWhiteSpace(EditingTenant.Sdt))
+                {
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(EditingTenant.Sdt, @"^\d{10}$"))
+                    {
+                        MessageBox.Show("Số điện thoại phải có đúng 10 chữ số!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
+                // ✅ VALIDATION: Kiểm tra định dạng email
+                if (!string.IsNullOrWhiteSpace(EditingTenant.Email))
+                {
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(EditingTenant.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                    {
+                        MessageBox.Show("Email không đúng định dạng! Vui lòng nhập email có @ và dấu chấm.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
                 if (_nguoiThueService.CapNhatNguoiThue(EditingTenant))
                 {
                     MessageBox.Show("Cập nhật thành công!");
