@@ -22,8 +22,8 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
             _taiSanPhongService = new QL_TaiSan_Phong();
             _xuatBienLaiService = new XuatBienLai(); // <-- Đã khởi tạo service đúng
 
-            // 4. Khởi tạo ViewModel mặc định
-            CurrentViewModel = new TenantManagementViewModel();
+            // 4. Khởi tạo ViewModel mặc định (Dashboard)
+            CurrentViewModel = new DashboardViewModel();
         }
 
         // 5. Command điều hướng (tự động tạo 'NavigateCommand')
@@ -48,21 +48,33 @@ namespace RoomManagementSystem.Presentation.ViewModels.Windows
                     //CurrentViewModel = new BillingViewModel(_taiSanPhongService, _xuatBienLaiService);
                     CurrentViewModel = new BillingViewModel();
                     break;
+                case "Help":
+                    CurrentViewModel = new HelpViewModel();
+                    break;
                 case "ServiceManagement":
                     CurrentViewModel = new ServiceManagementViewModel();
+                    break;
+                case "ReportManagement":
+                    CurrentViewModel = new ReportManagementViewModel();
                     break;
                 case "Contract":
                     // CurrentViewModel = new ContractViewModel();
                     CurrentViewModel = new ContractManagementViewModel();
                     break;
+                case "Calendar":
+                    CurrentViewModel = new CalendarViewModel();
+                    break;
                 case "Overview":
                     CurrentViewModel = new DashboardViewModel();
                     break;
+                case "FinancialReport":
+                    MessageBox.Show("Trang Báo cáo tài chính đang phát triển và sẽ có trong phiên bản sau.");
+                    break;
+                case "StatusReport":
+                    MessageBox.Show("Trang Báo cáo trạng thái đang phát triển và sẽ có trong phiên bản sau.");
+                    break;
                 case "Maintenance":
                     CurrentViewModel = new MaintenanceManagementViewModel();
-                    break;
-                case "Asset":
-                    MessageBox.Show("Trang Tài sản (chưa tạo)");
                     break;
             }
         }

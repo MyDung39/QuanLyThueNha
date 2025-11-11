@@ -1,4 +1,4 @@
-﻿USE master;
+USE master;
 GO
 
 IF EXISTS (SELECT name FROM sys.databases WHERE name = N'QLTN')
@@ -444,8 +444,9 @@ VALUES
 ('HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
 GO
 
-
-
-
+-- Thêm tài khoản đăng nhập cho My Dung
+INSERT INTO NguoiDung (MaNguoiDung, TenDangNhap, MatKhau, TenTaiKhoan, SoDienThoai, PhuongThucDN, TrangThai)
+VALUES ('ND002', 'nguyenthimydungntmd39@gmail.com', 'pass123', N'My Dung', NULL, N'MatKhau', N'Hoạt động');
+GO
 
 
