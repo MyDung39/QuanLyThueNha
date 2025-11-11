@@ -210,7 +210,7 @@
                                     <TextBlock Text="{Binding SelectedBillInfo.DanhSachNguoiThue, StringFormat='Đến: {0}'}" TextWrapping="Wrap" FontSize="12" Foreground="#555" Margin="0,0,0,6"/>
                                     <TextBlock Text="{Binding SelectedBillInfo.SoNguoiHienTai, StringFormat='Số người lưu trú: {0}'}" FontSize="12" Foreground="#555" Margin="0,0,0,6"/>
                                     <TextBlock Text="Ghi chú" FontSize="12" Foreground="#777" Margin="0,4,0,2"/>
-                                    <TextBlock Text="Cảm ơn quý khách đã lưu trú tại đây. Hóa đơn này áp dụng cho thời gian từ 04/06/2025 đến 05/06/2025. Vui lòng thanh toán trước ngày 16/10/2025."
+                                    <TextBlock Text="Cảm ơn quý khách đã lưu trú tại đây. Vui lòng thanh toán trong thời hạn."
                                TextWrapping="Wrap"
                                FontSize="12"
                                Foreground="#555"/>

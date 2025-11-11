@@ -36,12 +36,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Templates\mau-hop-dong-thue-nha-o.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="..\Shared\ConnectionStrings.config">
       <Link>ConnectionStrings.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\mau-hop-dong-thue-nha-o.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

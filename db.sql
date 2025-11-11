@@ -350,8 +350,7 @@ GO
 
 -- DỮ LIỆU THÊM SẴN (ĐÃ CẬP NHẬT)
 INSERT INTO NguoiDung (MaNguoiDung, TenDangNhap, MatKhau, TenTaiKhoan, SoDienThoai, PhuongThucDN, TrangThai)
-VALUES ('ND001', 'admin@gmail.com', 'admin', 'Vanila', '0908083890', N'MatKhau', N'Hoạt động');
-GO
+VALUES ('ND001', 'nguyenthimydungntmd39@gmail.com', 'pass123', N'My Dung', NULL, N'MatKhau', N'Hoạt động');
 
 INSERT INTO DichVu (MaDichVu, TenDichVu, DVT, DonGia)
 VALUES
@@ -371,7 +370,7 @@ GO
 INSERT INTO Phong (MaPhong, MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, SoNguoiHienTai, GhiChu)
 VALUES
 ('PHONG001', 'NHA001', N'Phòng trống', 20.0, 2500000, N'Đang thuê', 1, N'Có ban công'),
-('PHONG002', 'NHA001', N'Phòng có đồ cơ bản', 30.0, 3500000, N'Đang thuê', 2, N'Phòng rộng rãi'),
+('PHONG002', 'NHA001', N'Phòng có đồ cơ bản', 30.0, 3500000, N'Đang thuê', 3, N'Phòng rộng rãi'),
 ('PHONG003', 'NHA001', N'Phòng trống', 18.0, 2300000, N'Trống', 0, N'Đang sơn lại');
 GO
 
@@ -445,8 +444,8 @@ VALUES
 GO
 
 -- Thêm tài khoản đăng nhập cho My Dung
-INSERT INTO NguoiDung (MaNguoiDung, TenDangNhap, MatKhau, TenTaiKhoan, SoDienThoai, PhuongThucDN, TrangThai)
-VALUES ('ND002', 'nguyenthimydungntmd39@gmail.com', 'pass123', N'My Dung', NULL, N'MatKhau', N'Hoạt động');
-GO
+--INSERT INTO NguoiDung (MaNguoiDung, TenDangNhap, MatKhau, TenTaiKhoan, SoDienThoai, PhuongThucDN, TrangThai)
+--VALUES ('ND002', 'nguyenthimydungntmd39@gmail.com', 'pass123', N'My Dung', NULL, N'MatKhau', N'Hoạt động');
+--GO
 
 
