@@ -624,7 +624,27 @@ namespace RoomManagementSystem.DataLayer
             }
         }
 
+        public bool DeleteHopDong(HopDong hopDong, SqlConnection conn, SqlTransaction tran)
+        {
+            string qr = "DELETE FROM HopDong WHERE MaHopDong = @MaHopDong";
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran))
+            {
+                cmd.Parameters.AddWithValue("@MaHopDong", hopDong.MaHopDong);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
 
+
+        public bool DeleteNguoiThueByContractId(string maHopDong, SqlConnection conn, SqlTransaction tran)
+        {
+            string qr = "DELETE FROM HopDong_NguoiThue WHERE MaHopDong = @MaHopDong";
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran))
+            {
+                cmd.Parameters.AddWithValue("@MaHopDong", maHopDong);
+                cmd.ExecuteNonQuery(); // Xóa 0 hoặc nhiều dòng đều được, không cần kiểm tra > 0
+                return true;
+            }
+        }
 
 
     }

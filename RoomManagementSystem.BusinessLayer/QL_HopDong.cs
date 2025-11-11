@@ -294,7 +294,56 @@ namespace RoomManagementSystem.BusinessLayer
         public bool XoaHopDong(string maHopDong)
         {
             if (string.IsNullOrEmpty(maHopDong)) throw new Exception("Mã hợp đồng không được để trống");
-            return _hdDAL.DeleteHopDong(maHopDong);
+
+            // --- BẮT ĐẦU SỬA LỖI ---
+
+            // 1. Lấy MaPhong TRƯỚC KHI XÓA
+            // (Chúng ta dùng hàm GetHopDongById mà bạn đã có)
+            HopDong hopDongCanXoa = _hdDAL.GetHopDongById(maHopDong);
+            if (hopDongCanXoa == null) throw new Exception("Không tìm thấy hợp đồng để xóa.");
+            string maPhong = hopDongCanXoa.MaPhong;
+
+            string connectionString = DbConfig.ConnectionString; // Sửa nếu tên của bạn khác
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // 2. (RẤT QUAN TRỌNG) Xóa các bảng phụ (Foreign Key) trước
+                        // Bạn sẽ cần tạo các hàm này trong DAL (xem Bước 2)
+                        _lichSuDAL.DeleteByContractId(maHopDong, connection, transaction);
+                        _hdDAL.DeleteNguoiThueByContractId(maHopDong, connection, transaction);
+                        // (Thêm các hàm xóa khác nếu còn, ví dụ: Xóa ThongBaoHan)
+
+                        // 3. Xóa hợp đồng chính
+                        // (Chúng ta cần sửa hàm DeleteHopDong trong HopDongDAL, xem Bước 2)
+                        if (!_hdDAL.DeleteHopDong(hopDongCanXoa, connection, transaction))
+                        {
+                            throw new Exception("Xóa bản ghi hợp đồng chính thất bại.");
+                        }
+
+                        // 4. Cập nhật trạng thái phòng (MỤC TIÊU CHÍNH CỦA BẠN)
+                        // (Hàm này bạn đã có sẵn từ lúc sửa 'TaoHopDong')
+                        if (!_phongDAL.UpdateRoomStatus(maPhong, "Trống", connection, transaction)) // Ghi chú: "Trống" hoặc "Sẵn sàng"
+                        {
+                            throw new Exception("Cập nhật trạng thái phòng thất bại.");
+                        }
+
+                        // 5. Hoàn tất
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        // Ném lỗi ra ngoài để ViewModel hiển thị
+                        throw new Exception($"Lỗi khi xóa hợp đồng: {ex.Message}");
+                    }
+                }
+            }
         }
 
         public string GetContractFilePath(string maHopDong)

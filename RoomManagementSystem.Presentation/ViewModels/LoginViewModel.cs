@@ -46,23 +46,28 @@ namespace RoomManagementSystem.Presentation.ViewModels
         [RelayCommand]
         private void Login(PasswordBox passwordBox)
         {
-
-
             string email = Email;
-
-            // Lấy mật khẩu từ PasswordBox được truyền vào
             string password = passwordBox.Password;
 
+            // ================================================================
+            // ✅ BƯỚC 1: THÊM VALIDATION (KIỂM TRA ĐẦU VÀO)
+            // ================================================================
+            if (string.IsNullOrEmpty(email))
+            {
+                MessageBox.Show("Vui lòng nhập địa chỉ email.", "Thông báo lỗi");
+                return; // Dừng hàm, không làm gì cả
+            }
 
+            if (string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Vui lòng nhập mật khẩu.", "Thông báo lỗi");
+                return; // Dừng hàm, không làm gì cả
+            }
+            // ================================================================
+            // ✅ KẾT THÚC VALIDATION
+            // ================================================================
 
-            // ===== LOGIC ĐĂNG NHẬP Ở ĐÂY =====
-            // Trong tương lai, bạn sẽ gọi một service từ BusinessLayer
-            // Ví dụ: var user = _authService.Login(Email, password);
-
-            // Hiện tại, chúng ta chỉ hiển thị một thông báo để kiểm tra
-
-            //MessageBox.Show($"Email: {Email}\nPassword: {password}\n\nAttempting to log in...");
-
+            // Code bên dưới này CHỈ CHẠY khi cả email và mật khẩu đều đã được nhập
             if (_dangNhap.Login(Email, password))
             {
                 // Hiển thị thông báo thành công
@@ -82,7 +87,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 MessageBox.Show("Sai email hoặc mật khẩu!", "Lỗi");
             }
-
         }
 
         private void CloseCurrentWindow()

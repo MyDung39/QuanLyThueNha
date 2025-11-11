@@ -77,5 +77,9 @@ namespace RoomManagementSystem.DataLayer
             var n = Convert.ToInt32(cmd.ExecuteScalar());
             return "HD" + n.ToString("D3");
         }
+
+
+        
+
     }
 }

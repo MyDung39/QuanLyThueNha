@@ -79,5 +79,19 @@ namespace RoomManagementSystem.DataLayer
             }
         }
 
+
+
+        public bool DeleteByContractId(string maHopDong, SqlConnection conn, SqlTransaction tran)
+        {
+            string qr = "DELETE FROM LichSuHopDong WHERE MaHopDong = @MaHopDong";
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran))
+            {
+                cmd.Parameters.AddWithValue("@MaHopDong", maHopDong);
+                cmd.ExecuteNonQuery(); // Xóa 0 hoặc nhiều dòng đều được
+                return true;
+            }
+        }
+
+
     }
 }
