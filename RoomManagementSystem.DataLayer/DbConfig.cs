@@ -11,7 +11,9 @@ namespace RoomManagementSystem.DataLayer
                 var fromConfig = ConfigurationManager.ConnectionStrings["DefaultConnection"]?.ConnectionString;
                 if (!string.IsNullOrWhiteSpace(fromConfig)) return fromConfig;
                 // Fallback to current known working connection for development.
-                return @"Data Source=THANHNHA-PC\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=""SQL Server Management Studio"";Connect Timeout=30";
+                // Thay đổi "Data Source" thành tên SQL Server của bạn
+                // Ví dụ: localhost\SQLEXPRESS hoặc .\SQLEXPRESS hoặc (local)\SQLEXPRESS
+                return @"Data Source=.\SQLEXPRESS;Initial Catalog=QLTN;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connect Timeout=30";
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoomManagementSystem.BusinessLayer;
 using RoomManagementSystem.DataLayer;
@@ -51,6 +51,9 @@ namespace RoomManagementSystem.Presentation.ViewModels
         [ObservableProperty] private string _newRoomNumber;
         [ObservableProperty] private decimal _newRoomArea;
         [ObservableProperty] private decimal _newRoomCost;
+        // Text bindings for validation before parsing
+        [ObservableProperty] private string _newRoomAreaText;
+        [ObservableProperty] private string _newRoomCostText;
         [ObservableProperty] private string _newRoomNotes;
         [ObservableProperty] private ObservableCollection<string> _loaiPhongOptions;
         [ObservableProperty] private string _newRoomLoaiPhong;
@@ -58,6 +61,9 @@ namespace RoomManagementSystem.Presentation.ViewModels
         [ObservableProperty] private string _editingRoomNumber;
         [ObservableProperty] private decimal _editingRoomArea;
         [ObservableProperty] private decimal _editingRoomCost;
+        // Text bindings for edit validation
+        [ObservableProperty] private string _editingRoomAreaText;
+        [ObservableProperty] private string _editingRoomCostText;
         [ObservableProperty] private string _editingRoomNotes;
 
         // ✅ THAY ĐỔI: Thuộc tính này sẽ điều khiển popup xác nhận xóa phòng
@@ -373,12 +379,14 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 return;
             }
 
-            // Reset các trường
+            // ✅ Reset TẤT CẢ các trường để tránh lưu giá trị cũ
             NewRoomNumber = string.Empty;
             NewRoomArea = 0;
             NewRoomCost = 0;
+            NewRoomAreaText = string.Empty;  // ← Quan trọng: Reset text binding
+            NewRoomCostText = string.Empty;  // ← Quan trọng: Reset text binding
             NewRoomNotes = string.Empty;
-            NewRoomLoaiPhong = LoaiPhongOptions.FirstOrDefault(); // ✅ ĐẶT LẠI GIÁ TRỊ MẶC ĐỊNH
+            NewRoomLoaiPhong = LoaiPhongOptions.FirstOrDefault();
 
             // Hiển thị popup
             IsAddRoomPopupVisible = true;
@@ -392,10 +400,94 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 if (SelectedNha == null) return; // Kiểm tra an toàn
 
+                // ✅ VALIDATION: Kiểm tra số phòng
                 if (string.IsNullOrWhiteSpace(NewRoomNumber))
                 {
-                    MessageBox.Show("Vui lòng nhập số phòng.");
+                    MessageBox.Show("❌ Lỗi: Vui lòng nhập số phòng!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
+                }
+
+                // ✅ VALIDATION: Kiểm tra diện tích - TUYỆT ĐỐI KHÔNG CHO QUA
+                if (string.IsNullOrWhiteSpace(NewRoomAreaText))
+                {
+                    MessageBox.Show("❌ Lỗi: Vui lòng nhập diện tích phòng!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // 🚫 KIỂM TRA TUYỆT ĐỐI: Không cho phép bất kỳ ký tự nào khác ngoài số và dấu thập phân
+                string cleanNewAreaText = NewRoomAreaText.Trim();
+                if (string.IsNullOrEmpty(cleanNewAreaText))
+                {
+                    MessageBox.Show("❌ Lỗi: Diện tích không được để trống!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Kiểm tra từng ký tự trong chuỗi diện tích
+                bool hasInvalidNewAreaChar = false;
+                foreach (char c in cleanNewAreaText)
+                {
+                    if (!char.IsDigit(c) && c != '.' && c != ',')
+                    {
+                        hasInvalidNewAreaChar = true;
+                        break;
+                    }
+                }
+
+                if (hasInvalidNewAreaChar)
+                {
+                    MessageBox.Show($"❌ CHẶN: Diện tích '{cleanNewAreaText}' chứa ký tự không hợp lệ!\n\n🚫 Phát hiện ký tự chữ cái hoặc ký tự đặc biệt\n✅ Chỉ được nhập: số (0-9), dấu chấm (.) hoặc dấu phẩy (,)\n\n📝 Ví dụ hợp lệ: 25, 25.5, 25,5", "ĐỊNH DẠNG SAI", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Kiểm tra regex bổ sung
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cleanNewAreaText, @"^[0-9]+([\.\,][0-9]{0,2})?$"))
+                {
+                    MessageBox.Show($"❌ Lỗi: Diện tích '{cleanNewAreaText}' không đúng định dạng!\n\n✅ Chỉ được nhập số (ví dụ: 25 hoặc 25.5)", "Định dạng không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                decimal parsedNewArea;
+                if (!decimal.TryParse(cleanNewAreaText.Replace(',', '.'), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out parsedNewArea) || parsedNewArea <= 0)
+                {
+                    MessageBox.Show($"❌ Lỗi: Diện tích '{cleanNewAreaText}' phải là số lớn hơn 0!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // ✅ VALIDATION: Kiểm tra chi phí theo tháng
+                decimal parsedNewCost = 0m;
+                if (!string.IsNullOrWhiteSpace(NewRoomCostText))
+                {
+                    string cleanNewCostText = NewRoomCostText.Trim();
+                    
+                    // Kiểm tra từng ký tự trong chuỗi chi phí
+                    bool hasInvalidNewCostChar = false;
+                    foreach (char c in cleanNewCostText)
+                    {
+                        if (!char.IsDigit(c) && c != '.' && c != ',')
+                        {
+                            hasInvalidNewCostChar = true;
+                            break;
+                        }
+                    }
+
+                    if (hasInvalidNewCostChar)
+                    {
+                        MessageBox.Show($"❌ CHẶN: Chi phí '{cleanNewCostText}' chứa ký tự không hợp lệ!\n\n🚫 Phát hiện ký tự chữ cái hoặc ký tự đặc biệt\n✅ Chỉ được nhập: số (0-9), dấu chấm (.) hoặc dấu phẩy (,)", "ĐỊNH DẠNG SAI", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Kiểm tra regex
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(cleanNewCostText, @"^[0-9]+([\.\,][0-9]{0,2})?$"))
+                    {
+                        MessageBox.Show($"❌ Lỗi: Chi phí '{cleanNewCostText}' không đúng định dạng!\n\n✅ Chỉ được nhập số (ví dụ: 5000000 hoặc 5000000.50)", "Định dạng không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    if (!decimal.TryParse(cleanNewCostText.Replace(',', '.'), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out parsedNewCost) || parsedNewCost < 0)
+                    {
+                        MessageBox.Show($"❌ Lỗi: Chi phí '{cleanNewCostText}' phải là số không âm!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                 }
 
                 // Tạo đối tượng Phong mới
@@ -403,8 +495,8 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 {
                     MaNha = SelectedNha.MaNha,
                     MaPhong = NewRoomNumber, // Mã phòng này sẽ được gán tự động ở BLL
-                    DienTich = NewRoomArea,  // ✅ ĐÃ SỬA: Ép kiểu sang float
-                    GiaThue = NewRoomCost,   // ✅ ĐÃ SỬA: Ép kiểu sang float
+                    DienTich = parsedNewArea,
+                    GiaThue = parsedNewCost,
                     GhiChu = NewRoomNotes,
                     TrangThai = "Trống", // Mặc định là trống
                     LoaiPhong = NewRoomLoaiPhong // ✅ SỬA LỖI: Lấy giá trị từ ComboBox
@@ -459,11 +551,14 @@ namespace RoomManagementSystem.Presentation.ViewModels
             _roomBeingEdited = selectedRooms.First();
             var phongToEdit = _roomBeingEdited.Phong;
 
-            // Tải dữ liệu của phòng đó vào các thuộc tính để binding với popup
-            EditingRoomNumber = phongToEdit.MaPhong;
+            // ✅ Tải dữ liệu của phòng đó vào các thuộc tính để binding với popup
+            EditingRoomNumber = phongToEdit.MaPhong ?? string.Empty;
             EditingRoomArea = (decimal)phongToEdit.DienTich;
             EditingRoomCost = (decimal)phongToEdit.GiaThue;
-            EditingRoomNotes = phongToEdit.GhiChu;
+            // ← Quan trọng: Đảm bảo text binding được cập nhật đúng
+            EditingRoomAreaText = phongToEdit.DienTich.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            EditingRoomCostText = phongToEdit.GiaThue.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            EditingRoomNotes = phongToEdit.GhiChu ?? string.Empty;
 
             IsEditRoomPopupVisible = true;
         }
@@ -480,17 +575,194 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 var phongToUpdate = _roomBeingEdited.Phong;
 
+                // 🚨 KIỂM TRA TUYỆT ĐỐI - KHÔNG CHO QUA BẤT KỲ TRƯỜNG HỢP NÀO
+                
+                // 1. Kiểm tra diện tích
+                if (string.IsNullOrWhiteSpace(EditingRoomAreaText))
+                {
+                    MessageBox.Show("❌ Lỗi: Bạn chưa nhập diện tích!\n\n📝 Vui lòng nhập diện tích hợp lệ (ví dụ: 25 hoặc 25.5)", "Thiếu thông tin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // 2. Kiểm tra từng ký tự trong diện tích
+                string areaText = EditingRoomAreaText.Trim();
+                bool hasInvalidAreaChar = false;
+                char invalidAreaChar = ' ';
+                
+                foreach (char c in areaText)
+                {
+                    if (!char.IsDigit(c) && c != '.' && c != ',')
+                    {
+                        hasInvalidAreaChar = true;
+                        invalidAreaChar = c;
+                        break;
+                    }
+                }
+                
+                if (hasInvalidAreaChar)
+                {
+                    MessageBox.Show($"❌ Lỗi: Diện tích chứa ký tự không hợp lệ!\n\n" +
+                        $"🚫 Ký tự sai: '{invalidAreaChar}'\n" +
+                        $"📝 Bạn đã nhập: '{areaText}'\n\n" +
+                        $"✅ Chỉ được nhập:\n" +
+                        $"   • Số (0-9)\n" +
+                        $"   • Dấu chấm (.)\n" +
+                        $"   • Dấu phẩy (,)\n\n" +
+                        $"📝 Ví dụ đúng: 25, 30.5, 42,75", 
+                        "Nhập sai định dạng", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                
+                // 3. Kiểm tra chi phí (nếu có nhập)
+                if (!string.IsNullOrWhiteSpace(EditingRoomCostText))
+                {
+                    string costText = EditingRoomCostText.Trim();
+                    bool hasInvalidCostChar = false;
+                    char invalidCostChar = ' ';
+                    
+                    foreach (char c in costText)
+                    {
+                        if (!char.IsDigit(c) && c != '.' && c != ',')
+                        {
+                            hasInvalidCostChar = true;
+                            invalidCostChar = c;
+                            break;
+                        }
+                    }
+                    
+                    if (hasInvalidCostChar)
+                    {
+                        MessageBox.Show($"❌ Lỗi: Chi phí chứa ký tự không hợp lệ!\n\n" +
+                            $"🚫 Ký tự sai: '{invalidCostChar}'\n" +
+                            $"📝 Bạn đã nhập: '{costText}'\n\n" +
+                            $"✅ Chỉ được nhập số (ví dụ: 5000000 hoặc 2500000.50)", 
+                            "Nhập sai định dạng", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                
+                // 4. Kiểm tra parse được thành số không
+                decimal parsedArea;
+                if (!decimal.TryParse(areaText.Replace(',', '.'), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out parsedArea))
+                {
+                    MessageBox.Show($"❌ Lỗi: Diện tích không phải là số hợp lệ!\n\n" +
+                        $"📝 Bạn đã nhập: '{areaText}'\n" +
+                        $"✅ Ví dụ đúng: 25, 30.5, 42,75", 
+                        "Không phải số", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                
+                if (parsedArea <= 0)
+                {
+                    MessageBox.Show($"❌ Lỗi: Diện tích phải lớn hơn 0!\n\n" +
+                        $"📝 Bạn đã nhập: {parsedArea}\n" +
+                        $"✅ Vui lòng nhập số dương (ví dụ: 25, 30.5)", 
+                        "Số không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // 🔍 DEBUG: Log tất cả giá trị để debug
+                System.Diagnostics.Debug.WriteLine($"=== SAVE EDIT ROOM DEBUG ===");
+                System.Diagnostics.Debug.WriteLine($"EditingRoomNumber: '{EditingRoomNumber}'");
+                System.Diagnostics.Debug.WriteLine($"EditingRoomAreaText: '{EditingRoomAreaText}'");
+                System.Diagnostics.Debug.WriteLine($"EditingRoomCostText: '{EditingRoomCostText}'");
+                System.Diagnostics.Debug.WriteLine($"EditingRoomNotes: '{EditingRoomNotes}'");
+
+                // VALIDATION: Kiểm tra số phòng
                 if (string.IsNullOrWhiteSpace(EditingRoomNumber))
                 {
-                    MessageBox.Show("Vui lòng nhập số phòng.");
+                    MessageBox.Show(" Lỗi: Vui lòng nhập số phòng!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
+                }
+
+                // VALIDATION: Kiểm tra diện tích - TUYỆT ĐỐI KHÔNG CHO QUA
+                if (string.IsNullOrWhiteSpace(EditingRoomAreaText))
+                {
+                    MessageBox.Show(" Lỗi: Vui lòng nhập diện tích phòng!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // KIỂM TRA TUYỆT ĐỐI: Không cho phép bất kỳ ký tự nào khác ngoài số và dấu thập phân
+                string cleanAreaText = EditingRoomAreaText.Trim();
+                if (string.IsNullOrEmpty(cleanAreaText))
+                {
+                    MessageBox.Show(" Lỗi: Diện tích không được để trống!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Kiểm tra từng ký tự trong chuỗi diện tích
+                bool hasInvalidChar = false;
+                foreach (char c in cleanAreaText)
+                {
+                    if (!char.IsDigit(c) && c != '.' && c != ',')
+                    {
+                        hasInvalidChar = true;
+                        break;
+                    }
+                }
+
+                if (hasInvalidChar)
+                {
+                    MessageBox.Show($" CHẶN: Diện tích '{cleanAreaText}' chứa ký tự không hợp lệ!\n\n Phát hiện ký tự chữ cái hoặc ký tự đặc biệt\n Chỉ được nhập: số (0-9), dấu chấm (.) hoặc dấu phẩy (,)\n\n Ví dụ hợp lệ: 25, 25.5, 25,5", "ĐỊNH DẠNG SAI", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Kiểm tra regex bổ sung
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cleanAreaText, @"^[0-9]+([\.\,][0-9]{0,2})?$"))
+                {
+                    MessageBox.Show($" Lỗi: Diện tích '{cleanAreaText}' không đúng định dạng!\n\n Chỉ được nhập số (ví dụ: 25 hoặc 25.5)", "Định dạng không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                decimal parsedEditArea;
+                if (!decimal.TryParse(cleanAreaText.Replace(',', '.'), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out parsedEditArea) || parsedEditArea <= 0)
+                {
+                    MessageBox.Show($" Lỗi: Diện tích '{cleanAreaText}' phải là số lớn hơn 0!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // VALIDATION: Kiểm tra chi phí theo tháng
+                decimal parsedEditCost = 0m;
+                if (!string.IsNullOrWhiteSpace(EditingRoomCostText))
+                {
+                    string cleanCostText = EditingRoomCostText.Trim();
+                    
+                    // Kiểm tra từng ký tự trong chuỗi chi phí
+                    bool hasInvalidCostChar = false;
+                    foreach (char c in cleanCostText)
+                    {
+                        if (!char.IsDigit(c) && c != '.' && c != ',')
+                        {
+                            hasInvalidCostChar = true;
+                            break;
+                        }
+                    }
+
+                    if (hasInvalidCostChar)
+                    {
+                        MessageBox.Show($" CHẶN: Chi phí '{cleanCostText}' chứa ký tự không hợp lệ!\n\n Phát hiện ký tự chữ cái hoặc ký tự đặc biệt\n Chỉ được nhập: số (0-9), dấu chấm (.) hoặc dấu phẩy (,)", "ĐỊNH DẠNG SAI", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Kiểm tra regex
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(cleanCostText, @"^[0-9]+([\.\,][0-9]{0,2})?$"))
+                    {
+                        MessageBox.Show($" Lỗi: Chi phí '{cleanCostText}' không đúng định dạng!\n\n Chỉ được nhập số (ví dụ: 5000000 hoặc 5000000.50)", "Định dạng không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    if (!decimal.TryParse(cleanCostText.Replace(',', '.'), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out parsedEditCost) || parsedEditCost < 0)
+                    {
+                        MessageBox.Show($" Lỗi: Chi phí '{cleanCostText}' phải là số không âm!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                 }
 
                 // Cập nhật thông tin vào đối tượng Phong gốc
                 // Mã phòng (khóa chính) thường không nên thay đổi
                 // phongToUpdate.MaPhong = EditingRoomNumber;
-                phongToUpdate.DienTich = EditingRoomArea;
-                phongToUpdate.GiaThue = EditingRoomCost;
+                phongToUpdate.DienTich = parsedEditArea;
+                phongToUpdate.GiaThue = parsedEditCost;
                 phongToUpdate.GhiChu = EditingRoomNotes;
 
                 if (_service.CapNhatPhong(phongToUpdate))

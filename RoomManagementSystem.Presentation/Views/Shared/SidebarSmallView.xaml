@@ -13,8 +13,8 @@
             <Setter Property="Margin" Value="0,2,0,2"/>
             <Setter Property="Cursor" Value="Hand"/>
 
-            <Setter Property="GroupName" Value="SidebarMenuItems"/>
-            <!-- ✅ ĐÃ THÊM GROUPNAME ĐỂ ĐỒNG BỘ -->
+            <Setter Property="GroupName" Value="SidebarMenuItemsSmall"/>
+            <!-- ✅ Dùng GroupName riêng cho sidebar nhỏ để tránh xung đột với sidebar lớn -->
 
             <Setter Property="ToolTipService.ShowOnDisabled" Value="False"/>
             <Setter Property="Template">

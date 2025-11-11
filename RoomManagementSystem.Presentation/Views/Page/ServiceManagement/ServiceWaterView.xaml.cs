@@ -70,10 +70,31 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
                     return;
                 }
 
-                if (!TryParseDouble(OldIndexTextBox.Text, out double oldIdx)) oldIdx = 0;
-                if (!TryParseDouble(NewIndexTextBox.Text, out double newIdx)) newIdx = oldIdx;
-                if (!TryParseDouble(UnitPriceTextBox.Text, out double unitPrice)) unitPrice = 0;
-                double consumption = Math.Max(0, newIdx - oldIdx);
+                // Validate chỉ số nước cũ
+                if (!TryParseDouble(OldIndexTextBox.Text, out double oldIdx) || oldIdx < 0)
+                {
+                    MessageBox.Show("Chỉ số nước cũ phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                // Validate chỉ số nước mới
+                if (!TryParseDouble(NewIndexTextBox.Text, out double newIdx) || newIdx < 0)
+                {
+                    MessageBox.Show("Chỉ số nước mới phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                // Validate đơn giá
+                if (!TryParseDouble(UnitPriceTextBox.Text, out double unitPrice) || unitPrice <= 0)
+                {
+                    MessageBox.Show("Đơn giá phải là số lớn hơn 0!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                // Validate logic: chỉ số mới >= chỉ số cũ
+                if (newIdx < oldIdx)
+                {
+                    MessageBox.Show("Chỉ số nước mới phải lớn hơn hoặc bằng chỉ số cũ!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                double consumption = newIdx - oldIdx;
                 double total = consumption * unitPrice;
 
                 var mgr = new ServiceManager();

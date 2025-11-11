@@ -16,7 +16,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="GroupName" Value="SidebarMenuItems"/>
+            <Setter Property="GroupName" Value="SidebarMenuItemsFull"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">

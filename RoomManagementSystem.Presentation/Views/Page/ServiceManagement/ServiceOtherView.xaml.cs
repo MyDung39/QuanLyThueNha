@@ -114,14 +114,56 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
                     return;
                 }
 
-                decimal? internet = InternetYesRadio.IsChecked == true ? TryParseDecimalNullable(InternetCostTextBox.Text) : null;
-                decimal? rac = TrashYesRadio.IsChecked == true ? TryParseDecimalNullable(TrashCostTextBox.Text) : null;
-                decimal? baoTri = MaintenanceYesRadio.IsChecked == true ? TryParseDecimalNullable(MaintenanceCostTextBox.Text) : null;
-                decimal? treHan = LateFeeYesRadio.IsChecked == true ? TryParseDecimalNullable(LateFeeCostTextBox.Text) : null;
-                decimal? guiXe = ParkingYesRadio.IsChecked == true ? TryParseDecimalNullable(ParkingCostTextBox.Text) : null;
+                // Validate từng trường dịch vụ
+                if (InternetYesRadio.IsChecked == true)
+                {
+                    if (!TryParseDouble(InternetCostTextBox.Text, out double internet) || internet < 0)
+                    {
+                        MessageBox.Show("Tiền Internet phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+                if (TrashYesRadio.IsChecked == true)
+                {
+                    if (!TryParseDouble(TrashCostTextBox.Text, out double rac) || rac < 0)
+                    {
+                        MessageBox.Show("Tiền rác phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+                if (MaintenanceYesRadio.IsChecked == true)
+                {
+                    if (!TryParseDouble(MaintenanceCostTextBox.Text, out double baoTri) || baoTri < 0)
+                    {
+                        MessageBox.Show("Tiền bảo trì phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+                if (LateFeeYesRadio.IsChecked == true)
+                {
+                    if (!TryParseDouble(LateFeeCostTextBox.Text, out double treHan) || treHan < 0)
+                    {
+                        MessageBox.Show("Tiền trễ hạn phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+                if (ParkingYesRadio.IsChecked == true)
+                {
+                    if (!TryParseDouble(ParkingCostTextBox.Text, out double guiXe) || guiXe < 0)
+                    {
+                        MessageBox.Show("Tiền gửi xe phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
+                decimal? internetVal = InternetYesRadio.IsChecked == true ? TryParseDecimalNullable(InternetCostTextBox.Text) : null;
+                decimal? racVal = TrashYesRadio.IsChecked == true ? TryParseDecimalNullable(TrashCostTextBox.Text) : null;
+                decimal? baoTriVal = MaintenanceYesRadio.IsChecked == true ? TryParseDecimalNullable(MaintenanceCostTextBox.Text) : null;
+                decimal? treHanVal = LateFeeYesRadio.IsChecked == true ? TryParseDecimalNullable(LateFeeCostTextBox.Text) : null;
+                decimal? guiXeVal = ParkingYesRadio.IsChecked == true ? TryParseDecimalNullable(ParkingCostTextBox.Text) : null;
 
                 var mgr = new ServiceManager();
-                mgr.SaveServiceCosts(maPhong, thoiKy, null, null, internet, rac, guiXe, baoTri, treHan);
+                mgr.SaveServiceCosts(maPhong, thoiKy, null, null, internetVal, racVal, guiXeVal, baoTriVal, treHanVal);
 
                 MessageBox.Show($"Đã lưu dịch vụ cho phòng {maPhong} kỳ {thoiKy}.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }

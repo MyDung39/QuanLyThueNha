@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoomManagementSystem.BusinessLayer;
 using RoomManagementSystem.DataLayer;
@@ -40,6 +40,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
         // --- Properties cho Popup Thêm ---
         [ObservableProperty] private string _newDescription;
         [ObservableProperty] private DateTime? _newRequestDate;
+        [ObservableProperty] private decimal _newCost;
 
         // --- Properties cho Popup Sửa ---
         [ObservableProperty] private MaintenanceItemViewModel _selectedItemForEdit;
@@ -218,6 +219,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
             SelectedTenant = null;
             NewDescription = string.Empty;
             NewRequestDate = DateTime.Today;
+            NewCost = 0;
             IsAddPopupVisible = true;
         }
 
@@ -230,6 +232,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 MessageBox.Show("Vui lòng chọn phòng, nhập mô tả và ngày yêu cầu."); return;
             }
+            // Validate chi phí (chỉ nếu nhập)
+            if (NewCost != 0 && NewCost <= 0)
+            {
+                MessageBox.Show("Chi phí sửa chữa phải là số lớn hơn 0 và chỉ được nhập số!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             try
             {
                 var newMaintenance = new BaoTri
@@ -239,7 +247,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     MoTa = NewDescription,
                     NgayYeuCau = NewRequestDate.Value,
                     TrangThaiXuLy = "Chưa xử lý", // Trạng thái mặc định
-                    ChiPhi = 0
+                    ChiPhi = NewCost
                 };
                 _maintenanceService.Insert(newMaintenance);
                 MessageBox.Show("Thêm yêu cầu bảo trì thành công!");
@@ -284,6 +292,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
             if (SelectedItemForEdit == null || string.IsNullOrWhiteSpace(EditDescription) || EditRequestDate == null)
             {
                 MessageBox.Show("Mô tả và ngày yêu cầu không được để trống.");
+                return;
+            }
+            // Validate chi phí
+            if (EditCost <= 0)
+            {
+                MessageBox.Show("Chi phí sửa chữa phải là số lớn hơn 0 và chỉ được nhập số!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             try

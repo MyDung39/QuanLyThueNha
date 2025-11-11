@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoomManagementSystem.BusinessLayer;
 using RoomManagementSystem.DataLayer;
@@ -305,6 +305,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin."); return;
             }
+            // Validate deposit
+            if (NewContractDeposit <= 0)
+            {
+                MessageBox.Show("Tiền cọc phải là số lớn hơn 0 và chỉ được nhập số!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             try
             {
                 HopDong newContract = new HopDong
@@ -355,6 +361,13 @@ namespace RoomManagementSystem.Presentation.ViewModels
         private void SaveContractChanges()
         {
             if (EditingContract == null) return;
+
+            // Validate deposit
+            if (EditingContract.TienCoc <= 0)
+            {
+                MessageBox.Show("Tiền cọc phải là số lớn hơn 0 và chỉ được nhập số!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             string currentContractId = EditingContract.MaHopDong;
 
