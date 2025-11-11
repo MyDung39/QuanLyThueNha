@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
+using Microsoft.Win32;
+
 
 namespace RoomManagementSystem.Presentation.ViewModels
 {
@@ -384,7 +386,59 @@ namespace RoomManagementSystem.Presentation.ViewModels
             catch (Exception ex) { MessageBox.Show($"Lỗi khi cập nhật hợp đồng: {ex.Message}"); }
         }
 
-        [RelayCommand] private void DownloadContract() => MessageBox.Show("Chức năng tải xuống đang được phát triển.");
+        //[RelayCommand] private void DownloadContract() => MessageBox.Show("Chức năng tải xuống đang được phát triển.");
+
+
+        [RelayCommand]
+        private void DownloadContract()
+        {
+            if (SelectedContract == null)
+            {
+                MessageBox.Show("Vui lòng chọn hợp đồng cần tải xuống.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                // Lấy đường dẫn file gốc
+                string maHopDong = SelectedContract.OriginalContract.MaHopDong;
+                string sourcePath = _contractService.GetContractFilePath(maHopDong);
+
+                if (string.IsNullOrEmpty(sourcePath) || !File.Exists(sourcePath))
+                {
+                    MessageBox.Show("Không tìm thấy file hợp đồng gốc!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Gợi ý tên file lưu
+                string defaultFileName = $"HopDong_{maHopDong}{Path.GetExtension(sourcePath)}";
+
+                // Hiển thị hộp thoại chọn nơi lưu
+                SaveFileDialog saveDialog = new SaveFileDialog
+                {
+                    Title = "Chọn nơi lưu hợp đồng",
+                    FileName = defaultFileName,
+                    Filter = "Word Documents (*.docx)|*.docx|RTF Documents (*.rtf)|*.rtf|All files (*.*)|*.*",
+                    DefaultExt = Path.GetExtension(sourcePath)
+                };
+
+                bool? result = saveDialog.ShowDialog();
+                if (result == true)
+                {
+                    string destinationPath = saveDialog.FileName;
+
+                    File.Copy(sourcePath, destinationPath, overwrite: true);
+                    MessageBox.Show($"Đã tải xuống thành công:\n{destinationPath}", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải hợp đồng: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
         [RelayCommand] private void SendContract() => MessageBox.Show("Chức năng gửi đang được phát triển.");
     }
 }

@@ -19,12 +19,19 @@ namespace RoomManagementSystem.DataLayer
             return value == null || value is DBNull ? string.Empty : value.ToString() ?? string.Empty;
         }
 
-        // Tạo mã phòng tự động
-        public string AutoMaPhong()
+        public string AutoMaPhong(string maNha)
         {
-            string qr = "SELECT ISNULL(MAX(CAST(SUBSTRING(MaPhong, 6, LEN(MaPhong) - 5) AS INT)), 0) + 1 FROM Phong";
-            int nextNumber = Convert.ToInt32(db.ExecuteScalar(qr));
-            return "PHONG" + nextNumber.ToString("D3");
+            string qr = @"
+                SELECT ISNULL(MAX(CAST(RIGHT(MaPhong, 3) AS INT)), 0) + 1
+                FROM Phong
+                WHERE MaNha = @MaNha";
+
+            SqlParameter[] parameters = {
+                new SqlParameter("@MaNha", maNha)
+            };
+
+            int nextNumber = Convert.ToInt32(db.ExecuteScalar(qr, parameters));
+            return $"{maNha}-PHONG{nextNumber:D3}";
         }
 
         // Thêm phòng
@@ -275,6 +282,19 @@ namespace RoomManagementSystem.DataLayer
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
-
+        // Update số người thuê và trạng thái phòng khi tạo hợp đồng
+        public bool UpdateRoomOccupancyAndStatus(string maPhong, SqlConnection conn, SqlTransaction tran)
+        {
+            string qr = "UPDATE Phong SET SoNguoiHienTai = @SoNguoiHienTai, TrangThai = @TrangThai WHERE MaPhong = @MaPhong";
+            int soNguoiHienTai = GetSoNguoiHienTai(maPhong);
+            string trangThai = soNguoiHienTai > 0 ? "Đang thuê" : "Trống";
+            using (SqlCommand cmd = new SqlCommand(qr, conn, tran))
+            {
+                cmd.Parameters.AddWithValue("@SoNguoiHienTai", soNguoiHienTai);
+                cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+                cmd.Parameters.AddWithValue("@MaPhong", maPhong);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
     }
 }

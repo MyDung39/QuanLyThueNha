@@ -1,7 +1,9 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using RoomManagementSystem.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using RoomManagementSystem.DataLayer;
+using System.Text.RegularExpressions;
 
 namespace RoomManagementSystem.BusinessLayer
 {
@@ -26,6 +28,22 @@ namespace RoomManagementSystem.BusinessLayer
             {
                 a.MaNguoiThue = nt.AutoMaNguoiThue();
             }
+            // Kiểm tra SĐT
+            if (!Regex.IsMatch(a.Sdt, @"^\d{10}$"))
+                throw new Exception("Số điện thoại phải gồm đúng 10 chữ số!");
+
+            // Kiểm tra CCCD
+            if (!Regex.IsMatch(a.SoGiayTo, @"^\d{12}$"))
+                throw new Exception("CCCD phải gồm đúng 12 chữ số!");
+
+            // Kiểm tra Email
+            if (!Regex.IsMatch(a.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                throw new Exception("Email không hợp lệ (phải chứa ký tự '@').");
+
+            if (string.IsNullOrEmpty(a.MaNguoiThue))
+            {
+                a.MaNguoiThue = nt.AutoMaNguoiThue();
+            }
 
             return nt.ThemNguoiThue(a);
         }
@@ -33,11 +51,28 @@ namespace RoomManagementSystem.BusinessLayer
         //Cập nhật thông tin
         public bool CapNhatNguoiThue(NguoiThue a)
         {
+            // Kiểm tra nghiệp vụ cơ bản
+            if (string.IsNullOrEmpty(a.HoTen))
+                throw new Exception("Họ tên không được để trống!");
+
             if (string.IsNullOrEmpty(a.SoGiayTo))
                 throw new Exception("Số giấy tờ (CCCD/CMND) không được để trống!");
 
-            if (string.IsNullOrEmpty(a.HoTen))
-                throw new Exception("Họ tên không được để trống!");
+            if (string.IsNullOrEmpty(a.MaNguoiThue))
+            {
+                a.MaNguoiThue = nt.AutoMaNguoiThue();
+            }
+            // Kiểm tra SĐT
+            if (!Regex.IsMatch(a.Sdt, @"^\d{10}$"))
+                throw new Exception("Số điện thoại phải gồm đúng 10 chữ số!");
+
+            // Kiểm tra CCCD
+            if (!Regex.IsMatch(a.SoGiayTo, @"^\d{12}$"))
+                throw new Exception("CCCD phải gồm đúng 12 chữ số!");
+
+            // Kiểm tra Email
+            if (!Regex.IsMatch(a.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                throw new Exception("Email không hợp lệ (phải chứa ký tự '@').");
 
             return nt.CapNhatNguoiThue(a);
         }
@@ -138,6 +173,11 @@ namespace RoomManagementSystem.BusinessLayer
         {
             if (string.IsNullOrEmpty(maNguoiThue))
                 throw new Exception("Mã người thuê không hợp lệ!");
+            bool conHan = _nguoiThueDAL.KiemTraHopDongConHan(maNguoiThue);
+            if (conHan)
+            {
+                throw new Exception("Không thể xóa người thuê vì hợp đồng vẫn còn thời hạn!");
+            }
 
             return _nguoiThueDAL.XoaNguoiThue(maNguoiThue);
         }

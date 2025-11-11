@@ -47,7 +47,7 @@ namespace RoomManagementSystem.BusinessLayer
 
         public bool ThemPhong(Phong a)
         {
-            string newMaPhong = p.AutoMaPhong();
+            string newMaPhong = p.AutoMaPhong(a.MaNha);
             a.MaPhong = newMaPhong;
             return p.InsertPhong(a);
         }

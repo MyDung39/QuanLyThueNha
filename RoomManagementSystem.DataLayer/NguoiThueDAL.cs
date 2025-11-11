@@ -133,7 +133,21 @@ namespace RoomManagementSystem.DataLayer
 
             return db.ExecuteNonQuery(qr_nguoithue, param_nguoithue) > 0;
         }
+        public bool KiemTraHopDongConHan(string maNguoiThue)
+        {
+            string query = @"
+SELECT COUNT(*) 
+FROM HopDong_NguoiThue AS hnt
+JOIN HopDong AS hd ON hnt.MaHopDong = hd.MaHopDong
+WHERE hnt.MaNguoiThue = @MaNguoiThue 
+AND DATEADD(month, hd.ThoiHan, hd.NgayBatDau) >= GETDATE()";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaNguoiThue", maNguoiThue)
+            };
+            return Convert.ToInt32(db.ExecuteScalar(query, parameters)) > 0;
 
+        }
 
         public List<NguoiThue> GetByRoomId(string maPhong)
         {
