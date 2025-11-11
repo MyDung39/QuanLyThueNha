@@ -258,5 +258,35 @@ namespace RoomManagementSystem.DataLayer
         }
 
 
+        public void Update(BaoTri baoTri)
+        {
+            string sql = @"UPDATE BaoTri
+                   SET MaPhong = @MaPhong,
+                       MaNguoiThue = @MaNguoiThue,
+                       MoTa = @MoTa,
+                       TrangThaiXuLy = @TrangThaiXuLy,
+                       NgayYeuCau = @NgayYeuCau,
+                       NgayHoanThanh = @NgayHoanThanh,
+                       ChiPhi = @ChiPhi,
+                       NgayCapNhat = GETDATE()
+                   WHERE MaBaoTri = @MaBaoTri";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaPhong", baoTri.MaPhong),
+                new SqlParameter("@MaNguoiThue", baoTri.MaNguoiThue ?? (object)DBNull.Value),
+                new SqlParameter("@MoTa", baoTri.MoTa),
+                new SqlParameter("@TrangThaiXuLy", baoTri.TrangThaiXuLy),
+                new SqlParameter("@NgayYeuCau", baoTri.NgayYeuCau),
+                new SqlParameter("@NgayHoanThanh", baoTri.NgayHoanThanh ?? (object)DBNull.Value),
+                new SqlParameter("@ChiPhi", baoTri.ChiPhi),
+                new SqlParameter("@MaBaoTri", baoTri.MaBaoTri)
+            };
+
+            db.ExecuteNonQuery(sql, parameters);
+        }
+
+
+
     }
 }

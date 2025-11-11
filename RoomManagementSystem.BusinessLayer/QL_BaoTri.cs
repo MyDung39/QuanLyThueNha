@@ -140,5 +140,26 @@ namespace RoomManagementSystem.BusinessLayer
 
 
 
+        public void Update(BaoTri baoTri)
+        {
+            if (string.IsNullOrEmpty(baoTri.MaBaoTri))
+                throw new Exception("Mã bảo trì không được để trống!");
+
+            if (string.IsNullOrEmpty(baoTri.MoTa))
+                throw new Exception("Mô tả sự cố không được để trống!");
+
+            if (baoTri.NgayYeuCau > DateTime.Now)
+                throw new Exception("Ngày yêu cầu không hợp lệ!");
+
+            if (!ValidTrangThai.Contains(baoTri.TrangThaiXuLy))
+                throw new Exception($"Trạng thái xử lý không hợp lệ! Phải là một trong: {string.Join(", ", ValidTrangThai)}");
+
+            if (baoTri.ChiPhi < 0)
+                throw new Exception("Chi phí không được là số âm!");
+
+            dal.Update(baoTri);
+        }
+
+
     }
 }

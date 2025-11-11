@@ -139,10 +139,9 @@ namespace RoomManagementSystem.Presentation.ViewModels
         partial void OnIsAllSelectedChanged(bool value)
         {
             foreach (var item in MaintenanceList)
-            {
                 item.IsSelected = value;
-            }
         }
+
 
         partial void OnSearchKeywordChanged(string value) { CurrentPage = 1; RefreshDisplayList(); }
 
@@ -278,12 +277,14 @@ namespace RoomManagementSystem.Presentation.ViewModels
         [RelayCommand]
         private void CancelEdit() => IsEditPopupVisible = false;
 
+        
         [RelayCommand]
         private void ConfirmEdit()
         {
             if (SelectedItemForEdit == null || string.IsNullOrWhiteSpace(EditDescription) || EditRequestDate == null)
             {
-                MessageBox.Show("Mô tả và ngày yêu cầu không được để trống."); return;
+                MessageBox.Show("Mô tả và ngày yêu cầu không được để trống.");
+                return;
             }
             try
             {
@@ -294,11 +295,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 originalData.ChiPhi = EditCost;
                 originalData.TrangThaiXuLy = EditStatus;
 
-               // _maintenanceService.Update(originalData);
+                _maintenanceService.Update(originalData); // <-- Gọi update mới
+
                 MessageBox.Show("Cập nhật thông tin thành công!");
 
                 IsEditPopupVisible = false;
-                LoadData();
+                LoadData(); // tải lại danh sách mới
             }
             catch (Exception ex)
             {
@@ -306,23 +308,30 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
+
         // ===================================
         // ===== CHỨC NĂNG XÓA (DELETE) =====
         // ===================================
 
+
         [RelayCommand]
         private void OpenDeletePopup()
         {
-            // <<== ĐẶT BREAKPOINT Ở ĐÂY
-            var selectedItems = _allItems.Where(item => item.IsSelected).ToList();
+            var selectedItems = _allItems.Where(i => i.IsSelected).ToList();
 
-            if (!selectedItems.Any()) // Hoặc if (selectedItems.Count == 0)
+            
+
+            if (!selectedItems.Any())
             {
                 MessageBox.Show("Vui lòng chọn ít nhất một yêu cầu để xóa.", "Chưa chọn mục");
                 return;
             }
+
             IsDeletePopupVisible = true;
         }
+
+
+
 
         [RelayCommand] private void CancelDelete() => IsDeletePopupVisible = false;
 
@@ -331,23 +340,47 @@ namespace RoomManagementSystem.Presentation.ViewModels
         {
             try
             {
-                var idsToDelete = _allItems.Where(i => i.IsSelected).Select(i => i.OriginalData.MaBaoTri).ToList();
+                // 🔹 Lấy từ MaintenanceList thay vì _allItems
+                var idsToDelete = MaintenanceList.Where(i => i.IsSelected)
+                                 .Select(i => i.OriginalData.MaBaoTri)
+                                 .ToList();
+
+
                 if (!idsToDelete.Any())
                 {
-                    MessageBox.Show("Không có mục nào được chọn để xóa."); IsDeletePopupVisible = false; return;
+                    MessageBox.Show("Không có mục nào được chọn để xóa.");
+                    IsDeletePopupVisible = false;
+                    return;
                 }
+
                 if (_maintenanceService.XoaYeuCau(idsToDelete))
                 {
                     MessageBox.Show($"Đã xóa thành công {idsToDelete.Count} yêu cầu.");
                 }
-                else { MessageBox.Show("Không có yêu cầu nào được xóa."); }
+                else
+                {
+                    MessageBox.Show("Không có yêu cầu nào được xóa.");
+                }
             }
-            catch (Exception ex) { MessageBox.Show($"Lỗi khi xóa: {ex.Message}"); }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi xóa: {ex.Message}");
+            }
             finally
             {
                 IsDeletePopupVisible = false;
-                LoadData();
+                LoadData(); // 🔄 Refresh lại danh sách sau khi xóa
             }
         }
+
+
+        [RelayCommand]
+        private void TestSelectedItems()
+        {
+            var selectedCount = _allItems.Count(i => i.IsSelected);
+            MessageBox.Show($"Đã chọn {selectedCount} mục (trong _allItems)");
+        }
+
+
     }
 }

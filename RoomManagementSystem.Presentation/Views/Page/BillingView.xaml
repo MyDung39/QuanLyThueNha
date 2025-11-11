@@ -259,58 +259,52 @@
                 </Border>
 
 
-                <!-- ===== CỘT 3: TÓM TẮT ===== -->
+                <!-- ===== CỘT 3: TÓM TẮT (ĐÃ SỬA LỖI BINDING) ===== -->
                 <Border Grid.Column="2" Padding="20" CornerRadius="12"
-                    Background="White" Margin="15,0,0,0"
-                    BorderBrush="#E0E0E0"
-                    Width="290"
-                    BorderThickness="1">
+        Background="White" Margin="15,0,0,0"
+        BorderBrush="#E0E0E0"
+        Width="290"
+        BorderThickness="1">
                     <StackPanel>
                         <TextBlock Text="Tóm tắt" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
 
+                        <!-- ✅ BƯỚC 1: SỬA BINDING TỔNG TIỀN -->
                         <Grid Margin="0,0,0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Tổng" FontWeight="SemiBold"/>
-                            <TextBlock Text="{Binding TotalAmount}" 
-                                   Grid.Column="1" 
-                                   FontWeight="Bold" 
-                                   Foreground="#333"/>
+                            <TextBlock Text="{Binding SelectedBillInfo.TongTien, StringFormat='{}{0:N0} VND'}" 
+                       Grid.Column="1" 
+                       FontWeight="Bold" 
+                       Foreground="#333"/>
                         </Grid>
 
                         <Separator Margin="0,0,0,10"/>
 
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <Ellipse Width="8" Height="8" Fill="#22C55E" VerticalAlignment="Top" Margin="0,5,10,0"/>
-                                <StackPanel>
-                                    <TextBlock Text="Hóa đơn Số: #HD/20225/APPLE-001" FontWeight="Bold"/>
-                                    <TextBlock Text="Ngày 5 Thg 6, 2025" Foreground="Gray" FontSize="12"/>
-                                    <TextBlock Text="Số tiền 3,550,000 VND" Foreground="#111827" FontSize="13" FontWeight="SemiBold"/>
-                                </StackPanel>
-                            </StackPanel>
+                        <!-- ✅ BƯỚC 2: DÙNG ITEMSCONTROL ĐỂ HIỂN THỊ DANH SÁCH TÓM TẮT -->
+                        <ItemsControl ItemsSource="{Binding DanhSachTomTat}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <Ellipse Width="8" Height="8" Fill="#22C55E" VerticalAlignment="Top" Margin="0,5,10,0"/>
+                                        <StackPanel>
+                                            <!-- Kết hợp Tiêu đề và Mã số -->
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TieuDe}" FontWeight="Bold"/>
+                                                <TextBlock Text="{Binding MaSo}" FontWeight="Bold" Margin="2,0,0,0"/>
+                                            </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <Ellipse Width="8" Height="8" Fill="#22C55E" VerticalAlignment="Top" Margin="0,5,10,0"/>
-                                <StackPanel>
-                                    <TextBlock Text="Công nợ" FontWeight="Bold"/>
-                                    <TextBlock Text="Ngày 3 Thg 5, 2025" Foreground="Gray" FontSize="12"/>
-                                    <TextBlock Text="Số tiền 700,000 VND" Foreground="#111827" FontSize="13" FontWeight="SemiBold"/>
-                                </StackPanel>
-                            </StackPanel>
+                                            <TextBlock Text="{Binding Ngay, StringFormat='dd/MM/yyyy'}" Foreground="Gray" FontSize="12"/>
+                                            <TextBlock Text="{Binding SoTien, StringFormat='Số tiền {0:N0} VND'}" Foreground="#111827" FontSize="13" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <Ellipse Width="8" Height="8" Fill="#22C55E" VerticalAlignment="Top" Margin="0,5,10,0"/>
-                                <StackPanel>
-                                    <TextBlock Text="Phụ thu" FontWeight="Bold"/>
-                                    <TextBlock Text="Ngày 1 Thg 5, 2025" Foreground="Gray" FontSize="12"/>
-                                    <TextBlock Text="Số tiền 300,000 VND" Foreground="#111827" FontSize="13" FontWeight="SemiBold"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-
+                        <!-- ✅ BƯỚC 3: SỬA BINDING SỐ TIỀN CẦN TRẢ -->
                         <Border Background="#FDF2F8" CornerRadius="6" Margin="0,15,0,0" Padding="10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -319,13 +313,13 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Số tiền cần trả" FontWeight="Bold"/>
                                 <Border Grid.Column="1"
-                                    Background="#F3E8FF"
-                                    CornerRadius="4"
-                                    Padding="6,2"
-                                    VerticalAlignment="Center">
-                                    <TextBlock Text="2,550,000 VND"
-                                           FontWeight="Bold"
-                                           Foreground="#6B21A8"/>
+                    Background="#F3E8FF"
+                    CornerRadius="4"
+                    Padding="6,2"
+                    VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding TongTienCanTra, StringFormat='{}{0:N0} VND'}"
+                                   FontWeight="Bold"
+                                   Foreground="#6B21A8"/>
                                 </Border>
                             </Grid>
                         </Border>

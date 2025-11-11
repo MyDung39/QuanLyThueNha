@@ -10,6 +10,8 @@
              Background="#F7F8FC"
              FontFamily="Roboto">
 
+    
+    
     <UserControl.DataContext>
         <vm:MaintenanceManagementViewModel/>
     </UserControl.DataContext>
@@ -198,11 +200,12 @@
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"/>
+                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+
                         </DataGridTemplateColumn>
 
                         <!-- Các cột Text được đặt IsReadOnly="True" để ngăn chỉnh sửa -->
