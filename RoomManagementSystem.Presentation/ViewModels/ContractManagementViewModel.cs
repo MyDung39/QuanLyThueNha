@@ -1,41 +1,65 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using RoomManagementSystem.BusinessLayer;
 using RoomManagementSystem.DataLayer;
-using Spire.Doc;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using Microsoft.Win32;
+using RoomManagementSystem.BusinessLayer;
+using CommunityToolkit.Mvvm.Input;
 
 
+// ----- LỚP: TenantSelectItemViewModel -----
 namespace RoomManagementSystem.Presentation.ViewModels
 {
+    // LỚP HỖ TRỢ CHO YÊU CẦU 2 (CHỌN NHIỀU NGƯỜI THUÊ)
+    public partial class TenantSelectItemViewModel : ObservableObject
+    {
+        public NguoiThue Tenant { get; }
+
+        [ObservableProperty]
+        private bool _isSelected;
+
+        [ObservableProperty]
+        private bool _isEnabled = true;
+
+        public string HoTen => Tenant.HoTen;
+        public string MaNguoiThue => Tenant.MaNguoiThue;
+        public TenantSelectItemViewModel(NguoiThue tenant)
+        {
+            Tenant = tenant;
+            _isSelected = false;
+        }
+    }
+
+    // ----- LỚP: ContractManagementViewModel (Đã cập nhật) -----
     public partial class ContractManagementViewModel : ViewModelBase
     {
         // --- Properties cho Popup Thêm ---
         [ObservableProperty] private bool _isAddContractPopupVisible;
-        [ObservableProperty] private ObservableCollection<NguoiThue> _tenantList;
+        // Thay đổi danh sách người thuê
+        [ObservableProperty] private ObservableCollection<TenantSelectItemViewModel> _tenantList;
         [ObservableProperty] private ObservableCollection<Phong> _availableRoomList;
-        [ObservableProperty] private NguoiThue _selectedNewTenant;
         [ObservableProperty] private Phong _selectedNewRoom;
         [ObservableProperty] private decimal _newContractDeposit;
         [ObservableProperty] private string _newContractNotes;
         [ObservableProperty] private DateTime? _newContractStartDate;
         [ObservableProperty] private int _newContractDuration;
 
+        [ObservableProperty] // <-- THÊM MỚI (Cho Yêu cầu 2)
+        private ObservableCollection<TenantSelectItemViewModel> _editingTenantList;
+
         // --- Properties cho Danh sách chính ---
-        private readonly ObservableCollection<ContractItemViewModel> _allContracts; // Danh sách gốc để lọc
-        [ObservableProperty] private ObservableCollection<ContractItemViewModel> _contractList; // Danh sách binding với UI
+        private readonly ObservableCollection<ContractItemViewModel> _allContracts;
+        [ObservableProperty] private ObservableCollection<ContractItemViewModel> _contractList;
         [ObservableProperty] private ContractItemViewModel _selectedContract;
         [ObservableProperty] private string _searchKeyword;
-
         // --- Properties cho Popup Xóa ---
         [ObservableProperty] private bool _isDeleteConfirmationVisible;
-
         // --- Properties cho các Tab ---
         [ObservableProperty] private string _selectedTab = "Xem";
         [ObservableProperty] private FlowDocument _contractDocument;
@@ -43,8 +67,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
         [ObservableProperty] private ObservableCollection<ContractHistoryItemViewModel> _contractHistory;
         [ObservableProperty] private HopDong _editingContract;
         [ObservableProperty] private ObservableCollection<NotificationItemViewModel> _notificationList;
-
-
         // --- Services ---
         private readonly QuanLyNguoiThue _tenantService;
         private readonly QL_TaiSan_Phong _roomService;
@@ -58,20 +80,51 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
             _allContracts = new ObservableCollection<ContractItemViewModel>();
             _contractList = new ObservableCollection<ContractItemViewModel>();
-            _tenantList = new ObservableCollection<NguoiThue>();
+            // Khởi tạo danh sách mới
+            _tenantList = new ObservableCollection<TenantSelectItemViewModel>();
+            _editingTenantList = new ObservableCollection<TenantSelectItemViewModel>();
             _availableRoomList = new ObservableCollection<Phong>();
             _contractHistory = new ObservableCollection<ContractHistoryItemViewModel>();
             _notificationList = new ObservableCollection<NotificationItemViewModel>();
 
             LoadContracts();
+            // Kích hoạt kiểm tra hợp đồng hết hạn ở luồng nền
+            Task.Run(() =>
+            {
+                try
+                {
+                    _contractService.KiemTraVaTaoThongBaoHetHan();
+                }
+                catch (Exception)
+                {
+                    /* Tùy chọn: Ghi log lỗi nếu tác vụ nền thất bại */
+                }
+            });
+            // KẾT THÚC THÊM MỚI
         }
+
+        /// <summary>
+        /// Tự động cập nhật tiền cọc khi người dùng chọn một phòng mới.
+        /// </summary>
+        partial void OnSelectedNewRoomChanged(Phong value)
+        {
+            if (value != null)
+            {
+                // Lấy giá thuê của phòng đã chọn và gán vào Tiền cọc
+                NewContractDeposit = value.GiaThue;
+            }
+            else
+            {
+                NewContractDeposit = 0;
+            }
+        }
+
 
         private void LoadContracts(string selectContractId = null)
         {
             try
             {
                 var contractsWithTenants = _contractService.GetContractsWithTenantNames();
-
                 _allContracts.Clear();
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -83,7 +136,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
                         ContractList.Add(contractVM);
                     }
                 });
-
                 ContractItemViewModel itemToSelect = null;
                 if (selectContractId != null)
                 {
@@ -100,7 +152,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             if (value != null)
             {
                 string maHopDong = value.OriginalContract.MaHopDong;
-
                 LoadContractDocument(maHopDong);
                 LoadDetailedContractInfo(maHopDong);
                 LoadContractHistory(maHopDong);
@@ -118,8 +169,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
-
-
         private void LoadNotifications(string maHopDong)
         {
             try
@@ -129,9 +178,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
                 // 1. Lấy thông báo từ Lịch sử thay đổi
                 var historyList = _contractService.GetContractHistory(maHopDong);
-                // Lấy thông tin hợp đồng gốc để điền các trường còn thiếu
                 var originalContract = _contractService.LayChiTietHopDong(maHopDong);
-
                 foreach (var history in historyList)
                 {
                     notifications.Add(new NotificationItemViewModel
@@ -140,8 +187,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
                         NguoiLienQuan = history.TenNguoiThayDoi,
                         NgayThongBao = history.NgayThayDoi,
                         NoiDung = history.NoiDungThayDoi,
-
-                        // ✅ ĐIỀN DỮ LIỆU BỔ SUNG (Lấy từ hợp đồng gốc)
                         Phong = originalContract?.MaPhong,
                         BatDau = originalContract?.NgayBatDau,
                         KetThuc = originalContract?.NgayKetThuc,
@@ -159,8 +204,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
                         NguoiLienQuan = originalContract?.TenNguoiThue ?? "Hệ thống",
                         NgayThongBao = expiryNotif.NgayThongBao,
                         NoiDung = expiryNotif.NoiDung,
-
-                        // ✅ ĐIỀN DỮ LIỆU BỔ SUNG
                         Phong = originalContract?.MaPhong,
                         BatDau = originalContract?.NgayBatDau,
                         KetThuc = originalContract?.NgayKetThuc,
@@ -182,14 +225,18 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
-
+        // Cập nhật cách tải danh sách người thuê
         private void LoadDataForPopup()
         {
             try
             {
                 TenantList.Clear();
                 var tenants = _tenantService.GetTenantsWithoutActiveContract();
-                foreach (var tenant in tenants) { TenantList.Add(tenant); }
+                foreach (var tenant in tenants)
+                {
+                    // Thêm vào danh sách mới
+                    TenantList.Add(new TenantSelectItemViewModel(tenant));
+                }
 
                 AvailableRoomList.Clear();
                 var rooms = _roomService.GetAvailableRooms();
@@ -198,27 +245,27 @@ namespace RoomManagementSystem.Presentation.ViewModels
             catch (Exception ex) { MessageBox.Show($"Lỗi khi tải dữ liệu cho popup: {ex.Message}"); }
         }
 
+
+        // Cập nhật logic tải văn bản hợp đồng
         private void LoadContractDocument(string maHopDong)
         {
             var docToDisplay = new FlowDocument();
             try
             {
-                string filePath = _contractService.GetContractFilePath(maHopDong);
-                if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+                // 1. Gọi BLL để lấy MemoryStream của file RTF ĐÃ ĐƯỢC TRỘN DỮ LIỆU
+                using (var ms = _contractService.GetMergedContractDocument(maHopDong))
                 {
-                    docToDisplay.Blocks.Add(new Paragraph(new Run($"Lỗi: Không tìm thấy file hợp đồng tại đường dẫn:\n{filePath}")));
-                    ContractDocument = docToDisplay;
-                    return;
-                }
-                Document document = new Document();
-                document.LoadFromFile(filePath);
-                using (var ms = new MemoryStream())
-                {
-                    document.SaveToStream(ms, FileFormat.Rtf);
+                    if (ms == null || ms.Length == 0)
+                    {
+                        throw new Exception("Không thể tạo file hợp đồng từ dữ liệu.");
+                    }
+
+                    // 2. Tải MemoryStream RTF vào FlowDocument
                     ms.Position = 0;
                     var textRange = new TextRange(docToDisplay.ContentStart, docToDisplay.ContentEnd);
                     textRange.Load(ms, DataFormats.Rtf);
                 }
+
                 ContractDocument = docToDisplay;
             }
             catch (Exception ex)
@@ -227,6 +274,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 ContractDocument = docToDisplay;
             }
         }
+
 
         private void LoadDetailedContractInfo(string maHopDong)
         {
@@ -241,7 +289,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             catch (Exception ex) { MessageBox.Show($"Lỗi khi tải thông tin chi tiết: {ex.Message}"); }
         }
 
-        // ✅ SỬA LẠI: Tải lịch sử theo MaHopDong
         private void LoadContractHistory(string maHopDong)
         {
             try
@@ -270,6 +317,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
         private void LoadDataForEdit(HopDong selected)
         {
+            // 1. Sao chép các thuộc tính của hợp đồng đang chỉnh sửa
             EditingContract = new HopDong
             {
                 MaHopDong = selected.MaHopDong,
@@ -281,16 +329,58 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 ChuNha = selected.ChuNha,
                 TrangThai = selected.TrangThai
             };
+
+            // Tải danh sách người thuê cho popup chỉnh sửa
+            try
+            {
+                EditingTenantList.Clear();
+                var allTenantsDict = _tenantService.getAll().ToDictionary(t => t.MaNguoiThue);
+
+                // 2. Lấy những người thuê HIỆN TẠI của hợp đồng này
+                var currentTenantDetails = _contractService.GetAllHopDongNguoiThue()
+                    .Where(d => d.MaHopDong == selected.MaHopDong);
+
+                foreach (var detail in currentTenantDetails)
+                {
+                    if (allTenantsDict.TryGetValue(detail.MaNguoiThue, out var tenant))
+                    {
+                        var vm = new TenantSelectItemViewModel(tenant)
+                        {
+                            IsSelected = true,
+                            IsEnabled = false // Không cho phép bỏ chọn người thuê hiện tại
+                        };
+                        EditingTenantList.Add(vm);
+                    }
+                }
+
+                // 3. Lấy những người thuê CHƯA CÓ HỢP ĐỒNG
+                var availableTenants = _tenantService.GetTenantsWithoutActiveContract();
+                foreach (var tenant in availableTenants)
+                {
+                    var vm = new TenantSelectItemViewModel(tenant)
+                    {
+                        IsSelected = false,
+                        IsEnabled = true // Cho phép chọn thêm
+                    };
+                    EditingTenantList.Add(vm);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải danh sách người thuê: {ex.Message}");
+            }
+            // KẾT THÚC THÊM MỚI
         }
 
         [RelayCommand]
         private void ChangeTab(string tabName) => SelectedTab = tabName;
-
         [RelayCommand]
         private void OpenAddContractPopup()
         {
             LoadDataForPopup();
-            NewContractDeposit = 0;
+            // NewContractDeposit = 0; // <-- XÓA BỎ, sẽ được set tự động
+            SelectedNewRoom = null;
+            // Đảm bảo chọn phòng để kích hoạt OnSelectedNewRoomChanged
             NewContractNotes = string.Empty;
             NewContractStartDate = DateTime.Today;
             NewContractDuration = 12;
@@ -299,39 +389,55 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
         [RelayCommand]
         private void CancelAddContract() => IsAddContractPopupVisible = false;
-
+        // Cập nhật logic tạo hợp đồng
         [RelayCommand]
         private void CreateContract()
         {
-            if (SelectedNewTenant == null || SelectedNewRoom == null || NewContractStartDate == null)
+            // 1. Lấy danh sách người thuê được chọn
+            var selectedTenants = TenantList
+                .Where(t => t.IsSelected)
+                .Select(t => t.Tenant)
+                .ToList();
+            // 2. Validate
+            if (selectedTenants.Count == 0 || SelectedNewRoom == null || NewContractStartDate == null)
             {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin."); return;
+                MessageBox.Show("Vui lòng chọn ít nhất một người thuê, một phòng và ngày bắt đầu.");
+                return;
             }
-            // Validate deposit
             if (NewContractDeposit <= 0)
             {
                 MessageBox.Show("Tiền cọc phải là số lớn hơn 0 và chỉ được nhập số!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
             try
             {
+                // 3. Chuẩn bị dữ liệu
+                string maNguoiThueChuHopDong = selectedTenants.First().MaNguoiThue;
+                List<string> maNguoiThueOCung = selectedTenants.Skip(1).Select(t => t.MaNguoiThue).ToList();
+
                 HopDong newContract = new HopDong
                 {
                     MaPhong = SelectedNewRoom.MaPhong,
-                    ChuNha = "ND001",
+                    ChuNha = "ND001", // Giả định
                     TienCoc = NewContractDeposit,
                     NgayBatDau = NewContractStartDate.Value,
                     ThoiHan = NewContractDuration,
                     TrangThai = "Hiệu lực",
                     GhiChu = NewContractNotes
                 };
-                string newContractId = _contractService.TaoHopDong(newContract, SelectedNewTenant.MaNguoiThue);
-                MessageBox.Show($"Tạo hợp đồng {newContractId} thành công!");
+
+                // 4. Gọi BLL với chữ ký mới
+                string newContractId = _contractService.TaoHopDong(newContract, maNguoiThueChuHopDong, maNguoiThueOCung);
+                MessageBox.Show($"Tạo hợp đồng {newContractId} thành công!\n" +
+                                $"Chủ hợp đồng: {selectedTenants.First().HoTen}\n" +
+                                $"{maNguoiThueOCung.Count} người ở cùng.");
                 IsAddContractPopupVisible = false;
-                LoadContracts();
+                LoadContracts(newContractId); // Tải lại và chọn hợp đồng vừa tạo
             }
             catch (Exception ex) { MessageBox.Show($"Lỗi khi tạo hợp đồng: {ex.Message}"); }
         }
+
 
         [RelayCommand]
         private void OpenDeleteConfirmation()
@@ -358,13 +464,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
         }
 
         [RelayCommand]
-        private void CancelDeleteContract() => IsDeleteConfirmationVisible = false;
+        private void CancelDeleteContract() => IsDeleteConfirmationVisible = false; // <-- SỬA LỖI LOGIC
+
         [RelayCommand]
         private void SaveContractChanges()
         {
             if (EditingContract == null) return;
-
-            // Validate deposit
             if (EditingContract.TienCoc <= 0)
             {
                 MessageBox.Show("Tiền cọc phải là số lớn hơn 0 và chỉ được nhập số!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -373,10 +478,17 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
             string currentContractId = EditingContract.MaHopDong;
 
+            // Lấy danh sách người thuê mới
+            var newlyAddedTenantIds = EditingTenantList
+                .Where(t => t.IsEnabled && t.IsSelected) // Chỉ lấy những người mới được thêm (IsEnabled) và được chọn
+                .Select(t => t.Tenant.MaNguoiThue)
+                .ToList();
+            // KẾT THÚC THÊM MỚI
+
             try
             {
                 string currentUser = "ND001";
-                if (_contractService.CapNhatHopDong(EditingContract, currentUser))
+                if (_contractService.CapNhatHopDong(EditingContract, currentUser, newlyAddedTenantIds)) //
                 {
                     MessageBox.Show("Cập nhật hợp đồng thành công!");
                     LoadContracts(currentContractId);
@@ -386,9 +498,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             catch (Exception ex) { MessageBox.Show($"Lỗi khi cập nhật hợp đồng: {ex.Message}"); }
         }
 
-        //[RelayCommand] private void DownloadContract() => MessageBox.Show("Chức năng tải xuống đang được phát triển.");
-
-
         [RelayCommand]
         private void DownloadContract()
         {
@@ -397,47 +506,42 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 MessageBox.Show("Vui lòng chọn hợp đồng cần tải xuống.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-
             try
             {
-                // Lấy đường dẫn file gốc
                 string maHopDong = SelectedContract.OriginalContract.MaHopDong;
-                string sourcePath = _contractService.GetContractFilePath(maHopDong);
+                string defaultFileName = $"HopDong_{maHopDong}.pdf";
 
-                if (string.IsNullOrEmpty(sourcePath) || !File.Exists(sourcePath))
-                {
-                    MessageBox.Show("Không tìm thấy file hợp đồng gốc!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                // Gợi ý tên file lưu
-                string defaultFileName = $"HopDong_{maHopDong}{Path.GetExtension(sourcePath)}";
-
-                // Hiển thị hộp thoại chọn nơi lưu
                 SaveFileDialog saveDialog = new SaveFileDialog
                 {
-                    Title = "Chọn nơi lưu hợp đồng",
+                    Title = "Chọn nơi lưu hợp đồng (PDF)",
                     FileName = defaultFileName,
-                    Filter = "Word Documents (*.docx)|*.docx|RTF Documents (*.rtf)|*.rtf|All files (*.*)|*.*",
-                    DefaultExt = Path.GetExtension(sourcePath)
+                    Filter = "PDF Documents (*.pdf)|*.pdf", // Chỉ cho phép lưu PDF
+                    DefaultExt = ".pdf"
                 };
-
                 bool? result = saveDialog.ShowDialog();
                 if (result == true)
                 {
-                    string destinationPath = saveDialog.FileName;
+                    // 1. Gọi BLL để lấy MemoryStream của file PDF
+                    using (var ms = _contractService.GetMergedContractDocumentAsPdf(maHopDong))
+                    {
+                        if (ms == null || ms.Length == 0)
+                        {
+                            throw new Exception("Không thể tạo file PDF từ dữ liệu hợp đồng.");
+                        }
 
-                    File.Copy(sourcePath, destinationPath, overwrite: true);
-                    MessageBox.Show($"Đã tải xuống thành công:\n{destinationPath}", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                        // 2. Lưu MemoryStream xuống file
+                        File.WriteAllBytes(saveDialog.FileName, ms.ToArray());
+                    }
+
+                    MessageBox.Show($"Đã tải xuống file PDF thành công:\n{saveDialog.FileName}", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải hợp đồng: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Lỗi khi tải hợp đồng PDF: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            // KẾT THÚC SỬA ĐỔI
         }
-
-
 
         [RelayCommand] private void SendContract() => MessageBox.Show("Chức năng gửi đang được phát triển.");
     }

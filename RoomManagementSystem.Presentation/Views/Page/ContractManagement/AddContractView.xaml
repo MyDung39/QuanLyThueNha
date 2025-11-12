@@ -7,6 +7,7 @@
              d:DesignHeight="560" d:DesignWidth="640"
              FontFamily="Roboto">
 
+
     <UserControl.Resources>
         <DropShadowEffect x:Key="DropShadowEffect" 
                           Color="Black" Direction="315" ShadowDepth="1" BlurRadius="5.4" Opacity="0.14"/>
@@ -15,154 +16,178 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="#FFB27D"/>
             <Setter Property="BorderThickness" Value="0"/>
+
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
+
                         <Border Background="{TemplateBinding Background}" CornerRadius="10">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
+
                 </Setter.Value>
             </Setter>
         </Style>
     </UserControl.Resources>
 
-    <!-- Không cần Rectangle overlay vì lớp phủ đã được đặt ở View cha (ContractManagementView) -->
     <Border Background="White" CornerRadius="14" Width="560" Height="520"
             HorizontalAlignment="Center" VerticalAlignment="Center"
             Effect="{StaticResource DropShadowEffect}" Padding="24">
         <Grid>
             <Grid.RowDefinitions>
+
                 <RowDefinition Height="Auto"/>
-                <!-- Title và Nút đóng -->
                 <RowDefinition Height="12"/>
-                <!-- Khoảng cách -->
                 <RowDefinition Height="*"/>
-                <!-- Form nội dung -->
+
                 <RowDefinition Height="16"/>
-                <!-- Khoảng cách -->
                 <RowDefinition Height="Auto"/>
-                <!-- Nút "Tạo hợp đồng" -->
             </Grid.RowDefinitions>
 
-            <!-- Hàng 1: Title và Nút đóng -->
+
             <Grid Grid.Row="0">
                 <TextBlock Text="Thêm hợp đồng" FontSize="20" Foreground="#8A8A8A" VerticalAlignment="Center"/>
 
-                <!-- ✅ THAY CLICK BẰNG COMMAND: Nút này sẽ gọi CancelAddContractCommand trong ViewModel -->
                 <Button Command="{Binding CancelAddContractCommand}" 
-                        Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
+  
+                         Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
                         Margin="0,-10,-10,0" Background="Transparent" BorderThickness="0" Cursor="Hand">
                     <Path Data="M 0,0 L 12,12 M 0,12 L 12,0" StrokeThickness="1.5">
+
                         <Path.Stroke>
                             <SolidColorBrush Color="#565656" Opacity="0.34"/>
                         </Path.Stroke>
                     </Path>
                 </Button>
+
             </Grid>
 
-            <!-- Hàng 3: Form nội dung -->
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <!-- Hướng dẫn -->
-                    <TextBlock Text="Vui lòng nhập đầy đủ thông tin bên dưới. Lựa chọn thông tin phù hợp với người thuê và phòng." Foreground="#6F6F6F" Margin="0,0,0,12"/>
+                    <TextBlock Text="Vui 
+lòng nhập đầy đủ thông tin bên dưới. Lựa chọn thông tin phù hợp với người thuê và phòng." Foreground="#6F6F6F" Margin="0,0,0,12"/>
 
-                    <!-- Người thuê -->
                     <StackPanel Margin="0,8,0,0">
-                        <TextBlock Text="Người thuê" Foreground="#3B4758" FontSize="12" Margin="0,0,0,6"/>
-                        <Border Background="#F2F6FA" CornerRadius="8" Height="40">
-                            <!-- ✅ BINDING CHO COMBOBOX NGƯỜI THUÊ -->
-                            <ComboBox ItemsSource="{Binding TenantList}"
-                                      SelectedItem="{Binding SelectedNewTenant}"
-                                      DisplayMemberPath="HoTen"
-                                      Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Người thuê (chọn một hoặc nhiều)" Foreground="#3B4758" FontSize="12" Margin="0,0,0,6"/>
+                        <Border Background="#F2F6FA" CornerRadius="8" MinHeight="80" MaxHeight="150">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5">
+                                <ListBox ItemsSource="{Binding TenantList}"
+                                         Background="Transparent" 
+                                         BorderThickness="0"
+                                         SelectionMode="Multiple">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <ContentPresenter/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding HoTen}" 
+                                                      IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                                      Margin="10,5"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
                         </Border>
-                        <TextBlock Text="Chọn người thuê phù hợp" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
+                        <TextBlock Text="Người đầu tiên được chọn sẽ là chủ hợp đồng" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
                     </StackPanel>
-
-                    <!-- Phòng -->
                     <StackPanel Margin="0,16,0,0">
                         <TextBlock Text="Phòng" Foreground="#3B4758" FontSize="12" Margin="0,0,0,6"/>
                         <Border Background="#F2F6FA" CornerRadius="8" Height="40">
-                            <!-- ✅ BINDING CHO COMBOBOX PHÒNG -->
+
                             <ComboBox ItemsSource="{Binding AvailableRoomList}"
                                       SelectedItem="{Binding SelectedNewRoom}"
+                    
                                       DisplayMemberPath="MaPhong"
                                       Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center"/>
                         </Border>
+
                         <TextBlock Text="Chọn phòng phù hợp" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
                     </StackPanel>
 
-                    <!-- Tiền cọc -->
                     <StackPanel Margin="0,16,0,0">
+
                         <TextBlock Text="Tiền cọc" Foreground="#3B4758" FontSize="12" Margin="0,0,0,6"/>
                         <Border Background="#F2F6FA" CornerRadius="8" Height="40">
-                            <!-- ✅ BINDING CHO TEXTBOX TIỀN CỌC -->
-                            <TextBox Text="{Binding NewContractDeposit, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding NewContractDeposit, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}"
                                      Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center"/>
                         </Border>
-                        <TextBlock Text="Nhập số tiền cọc (VNĐ)" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
+                        <TextBlock Text="Tự động điền theo giá phòng (VNĐ)" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
+
                     </StackPanel>
 
-                    <!-- Ghi chú -->
                     <StackPanel Margin="0,16,0,0">
                         <TextBlock Text="Ghi chú" Foreground="#3B4758" FontSize="12" Margin="0,0,0,6"/>
+
                         <Border Background="#F2F6FA" CornerRadius="8" MinHeight="120">
-                            <!-- ✅ BINDING CHO TEXTBOX GHI CHÚ -->
                             <TextBox Text="{Binding NewContractNotes, UpdateSourceTrigger=PropertyChanged}"
-                                     Background="Transparent" BorderThickness="0" Padding="14" TextWrapping="Wrap" AcceptsReturn="True"/>
+                  
+                                   Background="Transparent" BorderThickness="0" Padding="14" TextWrapping="Wrap" AcceptsReturn="True"/>
                         </Border>
                         <TextBlock Text="Nhập ghi chú (không bắt buộc)" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
+
                     </StackPanel>
 
-                    <!-- Ngày bắt đầu / kết thúc -->
                     <Grid Margin="0,16,0,0">
                         <Grid.ColumnDefinitions>
+
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="12"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
+
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="Ngày bắt đầu" Foreground="#3B4758" FontSize="12" Margin="0,0,0,6"/>
                             <Border Background="#F2F6FA" CornerRadius="8" Height="40">
-                                <!-- ✅ BINDING CHO DATEPICKER NGÀY BẮT ĐẦU -->
+
                                 <DatePicker SelectedDate="{Binding NewContractStartDate}"
                                             Background="Transparent" BorderThickness="0" Padding="14,0" VerticalAlignment="Center"/>
+
                             </Border>
                             <TextBlock Text="Chọn ngày bắt đầu" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
                         </StackPanel>
 
+
                         <StackPanel Grid.Column="2">
-                            <TextBlock Text="Thời hạn (tháng)" Foreground="#3B4758" FontSize="12" Margin="0,0,0,6"/>
+                            <TextBlock Text="Ngày kết thúc" Foreground="#3B4758" FontSize="12" Margin="0,0,0,6"/>
                             <Border Background="#F2F6FA" CornerRadius="8" Height="40">
-                                <TextBox Text="{Binding NewContractDuration, UpdateSourceTrigger=PropertyChanged}"
-                 Background="Transparent" BorderThickness="0" Padding="14,0" VerticalContentAlignment="Center"/>
+
+                                <DatePicker SelectedDate="{Binding NewContractEndDate}"
+                                            Background="Transparent" BorderThickness="0" Padding="14,0" VerticalAlignment="Center"/>
+
                             </Border>
-                            <TextBlock Text="Nhập số tháng thuê" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
+                            <TextBlock Text="Chọn ngày kết thúc" Foreground="#969696" FontSize="11" Margin="4,4,0,0"/>
                         </StackPanel>
                     </Grid>
 
-                    <!-- Gửi thông báo -->
+
                     <StackPanel Margin="0,16,0,0">
                         <TextBlock Text="Gửi thông báo" Foreground="#3B4758" FontSize="12"/>
-                        <TextBlock Text="Gửi thông báo chỉnh sửa này đến cho người thuê" Foreground="#586A84" FontSize="12" Margin="0,6,0,8"/>
+                        <TextBlock Text="Gửi thông 
+báo chỉnh sửa này đến cho người thuê" Foreground="#586A84" FontSize="12" Margin="0,6,0,8"/>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <!-- ✅ BINDING CHO CHECKBOX GỬI THÔNG BÁO -->
                             <CheckBox Content="Có" IsChecked="{Binding ShouldSendNotification}" Foreground="#3B4758" FontSize="14"/>
-                            <!-- RadioButton có thể là lựa chọn tốt hơn ở đây -->
                         </StackPanel>
                     </StackPanel>
+
                 </StackPanel>
             </ScrollViewer>
 
-            <!-- Hàng 5: Nút bấm ở footer -->
             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                <!-- ✅ THAY CLICK BẰNG COMMAND: Nút này sẽ gọi CreateContractCommand trong ViewModel -->
-                <Button Content="Tạo hợp đồng" Width="120" Height="37" 
+                <Button Content="Tạo hợp đồng" Width="120" 
+                        Height="37" 
                         Style="{StaticResource PrimaryButtonStyle}" 
                         Command="{Binding CreateContractCommand}"/>
             </StackPanel>

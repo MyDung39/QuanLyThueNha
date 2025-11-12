@@ -71,11 +71,11 @@ namespace RoomManagementSystem.DataLayer
             using var cmd = new SqlCommand(@"
                 SELECT ISNULL(MAX(CAST(SUBSTRING(MaHoaDon,3,LEN(MaHoaDon)-2) AS INT)),0)+1 
                 FROM HoaDon 
-                WHERE MaHoaDon LIKE 'HD[0-9]%' 
+                WHERE MaHoaDon LIKE 'HDN[0-9]%' 
                   AND MaHoaDon NOT LIKE 'HD[A-Z]%'
-                  AND ISNUMERIC(SUBSTRING(MaHoaDon,3,LEN(MaHoaDon)-2)) = 1", conn);
+                  AND ISNUMERIC(SUBSTRING(MaHoaDon,4,LEN(MaHoaDon)-3)) = 1", conn);
             var n = Convert.ToInt32(cmd.ExecuteScalar());
-            return "HD" + n.ToString("D3");
+            return "HDN" + n.ToString("D3");
         }
 
 
