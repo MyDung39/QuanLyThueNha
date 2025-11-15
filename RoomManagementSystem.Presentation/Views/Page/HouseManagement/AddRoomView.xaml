@@ -10,7 +10,6 @@
     <UserControl.Resources>
         <DropShadowEffect x:Key="DropShadowEffect" Color="Black" Direction="135" ShadowDepth="1" BlurRadius="5.4" Opacity="0.14"/>
 
-        <!-- Style cho ComboBox để trông giống TextBox -->
         <Style TargetType="ComboBox">
             <Setter Property="Background" Value="#F9FBFF"/>
             <Setter Property="BorderBrush" Value="#F0EEEE"/>
@@ -90,7 +89,6 @@
     <Grid>
         <Rectangle Fill="#80000000"/>
 
-        <!-- ✅ SỬA: Tăng Height để chứa ComboBox mới -->
         <Border Background="White" CornerRadius="14" Width="535" Height="420"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Effect="{StaticResource DropShadowEffect}" Padding="40,18,40,37">
@@ -98,24 +96,15 @@
             <Grid Margin="0,32,0,7">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <!-- 0: Title -->
                     <RowDefinition Height="Auto"/>
-                    <!-- 1: Số phòng, Diện tích -->
                     <RowDefinition Height="Auto"/>
-                    <!-- 2: Chi phí, Ghi chú -->
                     <RowDefinition Height="Auto"/>
-                    <!-- 3: (MỚI) Loại phòng -->
                     <RowDefinition Height="*"/>
-                    <!-- 4: Spacer -->
                     <RowDefinition Height="Auto"/>
-                    <!-- 5: Button -->
                 </Grid.RowDefinitions>
 
-                <!-- Title and Close -->
                 <Grid Grid.Row="0" Margin="0,0,0,20">
                     <TextBlock Text="Thêm phòng mới" FontSize="20" Foreground="#8A8A8A"/>
-
-                    <!-- ✅ SỬA: Dùng Command -->
                     <Button Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"
                             Background="Transparent" BorderThickness="0" Cursor="Hand" 
                             Command="{Binding CancelAddRoomCommand}">
@@ -123,7 +112,6 @@
                     </Button>
                 </Grid>
 
-                <!-- Row 1: Room number and area -->
                 <Grid Grid.Row="1" Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -131,17 +119,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel>
-                        <TextBlock Text="Số phòng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
-                            <!-- ✅ SỬA: Binding Text -->
-                            <TextBox x:Name="RoomNumberTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
-                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
-                                     Text="{Binding NewRoomNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </Border>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="2">
+                    <StackPanel Grid.Column="0">
                         <TextBlock Text="Diện tích" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
                         <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
                             <Grid>
@@ -149,12 +127,11 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <!-- ✅ SỬA: Binding Text -->
                                 <TextBox x:Name="AreaTextBox" Grid.Column="0" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
                                          VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
                                          PreviewTextInput="NumericTextBox_PreviewTextInput"
                                          DataObject.Pasting="NumericTextBox_Pasting"
-                                                                                  LostFocus="NumericTextBox_LostFocus"
+                                         LostFocus="NumericTextBox_LostFocus"
                                          ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
                                     <TextBox.Text>
                                         <Binding Path="NewRoomAreaText" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True" NotifyOnValidationError="True">
@@ -168,61 +145,46 @@
                             </Grid>
                         </Border>
                     </StackPanel>
-                </Grid>
-
-                <!-- Row 2: Monthly cost and notes -->
-                <Grid Grid.Row="2" Margin="0,0,0,16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel>
-                        <TextBlock Text="Chi phí theo tháng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
-                            <!-- ✅ SỬA: Binding Text -->
-                            <TextBox x:Name="MonthlyCostTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
-                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
-                                     PreviewTextInput="NumericTextBox_PreviewTextInput"
-                                     DataObject.Pasting="NumericTextBox_Pasting"
-                                                                          LostFocus="NumericTextBox_LostFocus"
-                                     ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
-                                <TextBox.Text>
-                                    <Binding Path="NewRoomCostText" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True" NotifyOnValidationError="True">
-                                        <Binding.ValidationRules>
-                                            <val:DecimalValidationRule AllowEmpty="True" MaxDecimalPlaces="2" NonNegative="True"/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                        </Border>
-                    </StackPanel>
 
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Ghi chú" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
-                            <!-- ✅ SỬA: Binding Text -->
-                            <TextBox x:Name="NotesTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
-                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
-                                     Text="{Binding NewRoomNotes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Loại phòng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                        <Border CornerRadius="9.5" Height="36" BorderBrush="#F0EEEE" BorderThickness="1">
+                            <ComboBox ItemsSource="{Binding LoaiPhongOptions}"
+                                      SelectedItem="{Binding NewRoomLoaiPhong, Mode=TwoWay}"/>
                         </Border>
                     </StackPanel>
                 </Grid>
 
-                <!-- ✅ HÀNG MỚI: ComboBox Loại phòng -->
-                <StackPanel Grid.Row="3" Margin="0,0,0,16">
-                    <TextBlock Text="Loại phòng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                    <Border CornerRadius="9.5" Height="36" BorderBrush="#F0EEEE" BorderThickness="1">
-                        <ComboBox ItemsSource="{Binding LoaiPhongOptions}"
-                                  SelectedItem="{Binding NewRoomLoaiPhong, Mode=TwoWay}"/>
+                <StackPanel Grid.Row="2" Margin="0,0,0,16">
+                    <TextBlock Text="Chi phí theo tháng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                    <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
+                        <TextBox x:Name="MonthlyCostTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
+                                 VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
+                                 PreviewTextInput="NumericTextBox_PreviewTextInput"
+                                 DataObject.Pasting="NumericTextBox_Pasting"
+                                 LostFocus="NumericTextBox_LostFocus"
+                                 ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                            <TextBox.Text>
+                                <Binding Path="NewRoomCostText" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True" NotifyOnValidationError="True">
+                                    <Binding.ValidationRules>
+                                        <val:DecimalValidationRule AllowEmpty="True" MaxDecimalPlaces="2" NonNegative="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </Border>
                 </StackPanel>
 
-                <!-- Add Button -->
-                <!-- ✅ SỬA: Chuyển sang Grid.Row="5" -->
+                <StackPanel Grid.Row="3" Margin="0,0,0,16">
+                    <TextBlock Text="Ghi chú" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
+                    <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
+                        <TextBox x:Name="NotesTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
+                                 VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32"
+                                 Text="{Binding NewRoomNotes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                </StackPanel>
+
                 <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <!-- ✅ SỬA: Dùng Command -->
                     <Button x:Name="AddButton" Content="Thêm" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA"
                             Width="80" Padding="0,8" 
                             Command="{Binding SaveNewRoomCommand}">

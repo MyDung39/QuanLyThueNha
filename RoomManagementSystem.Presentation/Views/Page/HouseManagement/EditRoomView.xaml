@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="362" d:DesignWidth="535"
              FontFamily="Roboto">
-    
+
     <UserControl.Resources>
         <DropShadowEffect x:Key="DropShadowEffect" 
                           Color="Black" 
@@ -38,7 +38,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Title and Close -->
                 <Grid Grid.Row="0" Margin="0,0,0,20">
                     <TextBlock Text="Chỉnh sửa phòng trong Nhà Nguyễn Trãi" 
                                FontSize="20" 
@@ -50,7 +49,6 @@
                     </Button>
                 </Grid>
 
-                <!-- Row 1: Room number and area -->
                 <Grid Grid.Row="1" Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -60,9 +58,10 @@
 
                     <StackPanel>
                         <TextBlock Text="Số phòng" FontSize="13" Foreground="#292D32" Margin="0,0,0,8"/>
-                        <Border Background="#F9FBFF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
+                        <Border Background="#EFEFEF" BorderBrush="#F0EEEE" BorderThickness="1" CornerRadius="9.5" Height="36">
                             <TextBox x:Name="RoomNumberTextBox" Background="Transparent" BorderThickness="0" Padding="15,0,10,0"
-                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32" Text="{Binding EditingRoomNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                     VerticalContentAlignment="Center" FontSize="12" Foreground="#292D32" Text="{Binding EditingRoomNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     IsReadOnly="True" />
                         </Border>
                     </StackPanel>
 
@@ -79,7 +78,7 @@
                                          PreviewTextInput="NumericTextBox_PreviewTextInput"
                                          DataObject.Pasting="NumericTextBox_Pasting"
                                          LostFocus="NumericTextBox_LostFocus"
-                                                                                  ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                                                                                 ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
                                     <TextBox.Text>
                                         <Binding Path="EditingRoomAreaText" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True" NotifyOnValidationError="True">
                                             <Binding.ValidationRules>
@@ -94,7 +93,6 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Row 2: Monthly cost and notes -->
                 <Grid Grid.Row="2" Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -110,7 +108,7 @@
                                      PreviewTextInput="NumericTextBox_PreviewTextInput"
                                      DataObject.Pasting="NumericTextBox_Pasting"
                                      LostFocus="NumericTextBox_LostFocus"
-                                                                          ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                                                                       ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
                                 <TextBox.Text>
                                     <Binding Path="EditingRoomCostText" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True" NotifyOnValidationError="True">
                                         <Binding.ValidationRules>
@@ -131,7 +129,6 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Save Button -->
                 <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="SaveButton" Content="Lưu" FontSize="14" FontWeight="Medium" Foreground="White" Background="#5A67BA"
                             Width="80" Padding="0,8" Command="{Binding SaveEditRoomCommand}">
@@ -146,5 +143,3 @@
         </Border>
     </Grid>
 </UserControl>
-
-
