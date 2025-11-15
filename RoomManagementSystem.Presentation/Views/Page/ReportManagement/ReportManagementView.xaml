@@ -3,12 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             
+             xmlns:vm="clr-namespace:RoomManagementSystem.Presentation.ViewModels"
+             xmlns:local="clr-namespace:RoomManagementSystem.Presentation.Views.Page.ReportManagement"
+             
              mc:Ignorable="d"
              d:DesignHeight="794" d:DesignWidth="1302"
              FontFamily="Roboto"
              Background="White">
 
+    <!-- ✅ SỬA LẠI: Gán DataContext ở đây, bên ngoài Resources -->
+    <UserControl.DataContext>
+        <vm:ReportManagementViewModel/>
+    </UserControl.DataContext>
+
     <UserControl.Resources>
+        <!-- DataTemplate bây giờ sẽ hoạt động -->
+        <DataTemplate DataType="{x:Type vm:ReportMonthlyRevenueViewModel}">
+            <local:ReportMonthlyRevenueView/>
+        </DataTemplate>
+
+
+        <DataTemplate DataType="{x:Type vm:ReportMonthlyExpenseViewModel}">
+            <local:ReportMonthlyExpenseView/>
+        </DataTemplate>
+
         <Style x:Key="HeaderTabRadioButtonStyle" TargetType="RadioButton">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#586A84"/>
@@ -54,35 +73,40 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <RadioButton Grid.Column="0"
-                             x:Name="revenueTab"
                              Style="{StaticResource HeaderTabRadioButtonStyle}"
                              Content="Doanh thu tháng"
+                             GroupName="ReportTabs"
                              IsChecked="True"
-                             Checked="RevenueTab_Checked"/>
+                             Command="{Binding ChangeTabCommand}"
+                             CommandParameter="Doanh thu"/>
                 <RadioButton Grid.Column="1"
-                             x:Name="expenseTab"
                              Style="{StaticResource HeaderTabRadioButtonStyle}"
                              Content="Chi phí tháng"
-                             Checked="ExpenseTab_Checked"/>
+                             GroupName="ReportTabs"
+                             Command="{Binding ChangeTabCommand}"
+                             CommandParameter="Chi phí"/>
                 <RadioButton Grid.Column="2"
-                             x:Name="profitTab"
                              Style="{StaticResource HeaderTabRadioButtonStyle}"
                              Content="Lợi nhuận tháng"
-                             Checked="ProfitTab_Checked"/>
+                             GroupName="ReportTabs"
+                             Command="{Binding ChangeTabCommand}"
+                             CommandParameter="Lợi nhuận"/>
                 <RadioButton Grid.Column="3"
-                             x:Name="roomListTab"
                              Style="{StaticResource HeaderTabRadioButtonStyle}"
                              Content="Danh sách phòng"
-                             Checked="RoomListTab_Checked"/>
+                             GroupName="ReportTabs"
+                             Command="{Binding ChangeTabCommand}"
+                             CommandParameter="Danh sách phòng"/>
                 <RadioButton Grid.Column="4"
-                             x:Name="debtListTab"
                              Style="{StaticResource HeaderTabRadioButtonStyle}"
                              Content="Công nợ"
-                             Checked="DebtListTab_Checked"/>
+                             GroupName="ReportTabs"
+                             Command="{Binding ChangeTabCommand}"
+                             CommandParameter="Công nợ"/>
             </Grid>
         </Border>
 
         <!-- Tab content -->
-        <ContentControl x:Name="tabContentControl" Grid.Row="2"/>
+        <ContentControl Content="{Binding CurrentReportViewModel}" Grid.Row="2"/>
     </Grid>
 </UserControl>

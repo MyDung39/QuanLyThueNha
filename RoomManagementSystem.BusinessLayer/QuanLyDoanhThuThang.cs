@@ -20,6 +20,29 @@ namespace RoomManagementSystem.BusinessLayer
             return dtBaoCao;
         }
 
+        /*
+        public decimal TinhTongDoanhThu(int thang, int nam)
+        {
+            DataTable dtBaoCao = LayBaoCaoThang(thang, nam);
+            decimal tong = 0;
+
+            foreach (DataRow row in dtBaoCao.Rows)
+            {
+                if (decimal.TryParse(row["DoanhThu"].ToString(), out decimal doanhThu))
+                    tong += doanhThu;
+            }
+
+            return tong;
+        }
+        */
+
+
+        public decimal TinhTongDoanhThu(int thang, int nam)
+        {
+            // Ủy quyền việc tính tổng cho tầng DAL để có hiệu suất tốt nhất
+            return dt.TinhTongDoanhThuThang(thang, nam);
+        }
+
         //Xuat Excel
         public void ExportToExcel(DataTable dt, string filePath, string sheetName = "Sheet1")
         {
@@ -29,10 +52,14 @@ namespace RoomManagementSystem.BusinessLayer
                 ws.Cell(1, 1).InsertTable(dt); // tự động ghi header + dữ liệu
                 ws.Columns().AdjustToContents();
 
-                // Format cột tiền
-                if (dt.Columns.Contains("GiaThue"))
-                    ws.Column("C").Style.NumberFormat.Format = "#,##0.00";
+                if (dt.Columns.Contains("Tiền thuê"))
+                {
+                    ws.Column(dt.Columns["Tiền thuê"].Ordinal + 1).Style.NumberFormat.Format = "#,##0 \"VNĐ\"";
+                }
 
+                if (dt.Columns.Contains("DoanhThu"))
+                    ws.Column(dt.Columns["DoanhThu"].Ordinal + 1).Style.NumberFormat.Format = "#,##0 \"VNĐ\"";
+                ws.Columns().AdjustToContents();
                 workbook.SaveAs(filePath);
             }
         }

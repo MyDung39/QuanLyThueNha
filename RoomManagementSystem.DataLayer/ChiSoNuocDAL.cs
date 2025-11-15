@@ -119,5 +119,25 @@ namespace RoomManagementSystem.DataLayer
             cmd.Parameters.AddWithValue("@MucTieuThu", (object?)e.MucTieuThu ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@NguonThuThap", (object?)e.NguonThuThap ?? DBNull.Value);
         }
+
+
+
+
+        public ChiSoNuoc GetByMaPhongThoiKy(string maPhong, string thoiKy)
+        {
+            using var conn = new SqlConnection(connectionString);
+            string q = @"
+                SELECT TOP 1 * FROM ChiSoNuoc
+                WHERE MaDichVu=@MaPhong AND FORMAT(NgayGhiThangNay,'MM/yyyy')=@ThoiKy
+                ORDER BY NgayGhiThangNay DESC";
+            using var cmd = new SqlCommand(q, conn);
+            cmd.Parameters.AddWithValue("@MaPhong", maPhong);
+            cmd.Parameters.AddWithValue("@ThoiKy", thoiKy);
+            conn.Open();
+            using var r = cmd.ExecuteReader();
+            return r.Read() ? Map(r) : null;
+        }
+
+
     }
 }

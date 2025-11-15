@@ -37,21 +37,50 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
+
     <Grid Margin="37">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <!-- Header + filters + button -->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="CHI PHÍ THÁNG" Style="{StaticResource HeaderTextStyle}" VerticalAlignment="Center"/>
-            <Button Grid.Column="1" Click="DownloadButton_Click" Cursor="Hand" Padding="10,4" Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+
+            <TextBlock Text="CHI PHÍ THÁNG" 
+                       Style="{StaticResource HeaderTextStyle}" 
+                       VerticalAlignment="Center"/>
+
+            <!-- ComboBox chọn tháng -->
+            
+        <!--    <ComboBox Grid.Column="1"
+                      Width="120"
+                      Margin="12,0,0,0"
+                      ItemsSource="{Binding Months}"
+                      SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" />
+-->
+           
+            <!-- ComboBox chọn năm -->
+       <!--     <ComboBox Grid.Column="2"
+                      Width="120"
+                      Margin="8,0,0,0"
+                      ItemsSource="{Binding Years}"
+                      SelectedItem="{Binding SelectedYear, Mode=TwoWay}" />
+            -->
+
+            <!-- Nút tải xuống -->
+            <Button Grid.Column="3" Command="{Binding DownloadCommand}" Cursor="Hand" 
+                    Padding="8,4" Background="Transparent" BorderThickness="0" Margin="12,0,0,0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Grid Width="20" Height="20" Margin="0,0,8,0">
+                        <!-- (icon path giữ nguyên từ bạn) -->
                         <Path Fill="#FFB27D" Data="M18.75 11.4287C18.5858 11.4286 18.4232 11.4655 18.2715 11.5372C18.1198 11.609 17.982 11.7142 17.8659 11.8469C17.7498 11.9796 17.6577 12.1371 17.595 12.3105C17.5322 12.4838 17.4999 12.6696 17.5 12.8573V17.143H2.5V12.8573C2.5 12.4784 2.3683 12.115 2.13388 11.8471C1.89946 11.5792 1.58152 11.4287 1.25 11.4287C0.91848 11.4287 0.600537 11.5792 0.366117 11.8471C0.131696 12.115 0 12.4784 0 12.8573V18.5716C-0.0000929128 18.7592 0.0321757 18.945 0.0949611 19.1184C0.157747 19.2918 0.249817 19.4493 0.365909 19.582C0.482001 19.7146 0.619837 19.8199 0.771536 19.8916C0.923235 19.9634 1.08582 20.0002 1.25 20.0001H18.75C18.9142 20.0002 19.0768 19.9634 19.2285 19.8916C19.3802 19.8199 19.518 19.7146 19.6341 19.582C19.7502 19.4493 19.8423 19.2918 19.905 19.1184C19.9678 18.945 20.0001 18.7592 20 18.5716V12.8573C20.0001 12.6696 19.9678 12.4838 19.905 12.3105C19.8423 12.1371 19.7502 11.9796 19.6341 11.8469C19.518 11.7142 19.3802 11.609 19.2285 11.5372C19.0768 11.4655 18.9142 11.4286 18.75 11.4287Z"/>
                         <Path Fill="#FFB27D" Data="M9.11631 13.8672C9.23235 13.9999 9.37013 14.1051 9.52177 14.1769C9.67342 14.2488 9.83595 14.2857 10.0001 14.2857C10.1642 14.2857 10.3268 14.2488 10.4784 14.1769C10.6301 14.1051 10.7679 13.9999 10.8839 13.8672L14.6339 9.58148C14.8672 9.31334 14.998 8.95041 14.9975 8.57225C14.9971 8.1941 14.8654 7.83158 14.6314 7.56419C14.3975 7.29679 14.0803 7.14634 13.7494 7.14581C13.4185 7.14529 13.1009 7.29473 12.8663 7.56138L11.2501 9.40848V1.42857C11.2501 1.04969 11.1184 0.686328 10.884 0.418419C10.6496 0.15051 10.3316 0 10.0001 0C9.66858 0 9.35064 0.15051 9.11622 0.418419C8.8818 0.686328 8.7501 1.04969 8.7501 1.42857V9.40848L7.13389 7.56138C6.89927 7.29473 6.58171 7.14529 6.25082 7.14581C5.91994 7.14634 5.60274 7.29679 5.36877 7.56419C5.13479 7.83158 5.00315 8.1941 5.00269 8.57225C5.00223 8.95041 5.13299 9.31334 5.36631 9.58148L9.11631 13.8672Z"/>
                     </Grid>
@@ -59,9 +88,49 @@
                 </StackPanel>
             </Button>
         </Grid>
-        <DataGrid x:Name="reportDataGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True"
-                  Background="White" BorderThickness="0"
-                  HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+
+
+
+
+        <Grid Grid.Row="1" Margin="0,10,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ComboBox chọn tháng -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Tháng:" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1"
+                          Width="120"
+                          Margin="12,0,0,0"
+                          ItemsSource="{Binding Months}"
+                          SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" />
+            </StackPanel>
+
+            <!-- ComboBox chọn năm -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Năm:" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="2"
+                          Width="120"
+                          Margin="8,0,0,0"
+                          ItemsSource="{Binding Years}"
+                          SelectedItem="{Binding SelectedYear, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+
+
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding ExpenseData}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Background="White"
+                  BorderThickness="0"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
                   HorizontalGridLinesBrush="#E0E2E7"
                   AlternationCount="2"
                   AlternatingRowBackground="#FAFAFA"
@@ -78,16 +147,17 @@
                     <Setter Property="FontSize" Value="12"/>
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsSummary}" Value="True">
+                        <DataTrigger Binding="{Binding DonViChi}" Value="Tổng">
                             <Setter Property="FontWeight" Value="Bold"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.Resources>
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="STT" Binding="{Binding STT}" Width="60" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
-                <DataGridTextColumn Header="ĐƠN VỊ THU" Binding="{Binding DonViThu}" Width="*" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
-                <DataGridTextColumn Header="SỐ TIỀN" Binding="{Binding SoTien}" Width="160" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
+                <DataGridTextColumn Header="ĐƠN VỊ CHI" Binding="{Binding DonViChi}" Width="*" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
+                <DataGridTextColumn Header="SỐ TIỀN" Binding="{Binding SoTien, StringFormat='{}{0:N0} đ'}" Width="160" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

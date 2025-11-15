@@ -10,55 +10,55 @@ namespace RoomManagementSystem.DataLayer
 {
     public class CongNo
     {
-        public string con = DbConfig.ConnectionString;
+        Database db = new Database();
+
         public DataTable GetDanhSachCongNo()
         {
-            using(SqlConnection conn = new SqlConnection(con))
+            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
             {
                 string query = @"
-                SELECT 
-                    kt.MaNguoiThue,
-                    kt.HoTen,
-                    p.MaPhong,
-                    t.MaThanhToan,
-                    t.TongCongNo,
-                    t.SoTienDaThanhToan,
-                    t.SoTienConLai,
-                    t.NgayHanThanhToan,
-                    t.TrangThai
-                FROM ThanhToan t
-                INNER JOIN HopDong hd ON t.MaHopDong = hd.MaHopDong
-                INNER JOIN NguoiThue kt ON hd.MaNguoiThue = kt.MaNguoiThue
-                INNER JOIN Phong p ON hd.MaPhong = p.MaPhong
-                WHERE t.SoTienConLai > 0
-                ORDER BY t.NgayHanThanhToan ASC;
-            ";
+                    SELECT 
+                        kt.MaNguoiThue,
+                        kt.HoTen,
+                        p.MaPhong,
+                        t.MaThanhToan,
+                        t.TongCongNo,
+                        t.SoTienDaThanhToan,
+                        t.SoTienConLai,
+                        t.NgayHanThanhToan,
+                        t.TrangThai
+                    FROM ThanhToan t
+                    INNER JOIN HopDong_NguoiThue hd ON t.MaHopDong = hd.MaHopDong
+                    INNER JOIN NguoiThue kt ON hd.MaNguoiThue = kt.MaNguoiThue
+                    INNER JOIN Phong p ON t.MaPhong = p.MaPhong
+                    WHERE t.SoTienConLai > 0
+                    ORDER BY t.NgayHanThanhToan ASC;
+                ";
 
                 SqlDataAdapter da = new SqlDataAdapter(query, conn);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 return dt;
-            } 
-            
+            }
         }
 
         public DataTable GetLichSuThanhToan(string maKhach)
         {
-            using (SqlConnection conn = new SqlConnection(con))
+            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
             {
                 string query = @"
-                SELECT 
-                    t.MaThanhToan,
-                    t.NgayTao,
-                    t.PhuongThucThanhToan,
-                    t.SoTienDaThanhToan,
-                    t.SoTienConLai,
-                    t.TrangThai
-                FROM ThanhToan t
-                INNER JOIN HopDong hd ON t.MaHopDong = hd.MaHopDong
-                WHERE hd.MaKhachThue = @MaKhach
-                ORDER BY t.NgayTao DESC;
-            ";
+                    SELECT 
+                        t.MaThanhToan,
+                        t.NgayTao,
+                        t.PhuongThucThanhToan,
+                        t.SoTienDaThanhToan,
+                        t.SoTienConLai,
+                        t.TrangThai
+                    FROM ThanhToan t
+                    INNER JOIN HopDong hd ON t.MaHopDong = hd.MaHopDong
+                    WHERE hd.MaKhachThue = @MaKhach
+                    ORDER BY t.NgayTao DESC;
+                ";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@MaKhach", maKhach);
@@ -68,7 +68,6 @@ namespace RoomManagementSystem.DataLayer
                 da.Fill(dt);
                 return dt;
             }
-                
         }
     }
 }

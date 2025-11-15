@@ -10,7 +10,7 @@ namespace RoomManagementSystem.DataLayer
 {
     public class BaoCaoTinhTrangPhong
     {
-        Database dt= new Database();
+        Database dt = new Database();
         // 1. Phòng trống
         public DataTable GetPhongTrong()
         {
@@ -25,19 +25,21 @@ namespace RoomManagementSystem.DataLayer
                 SELECT p.MaPhong, p.GiaThue, n.HoTen,hd.NgayBatDau, hd.NgayKetThuc
                 FROM Phong p
                 JOIN HopDong hd ON p.MaPhong = hd.MaPhong
-                JOIN NguoiThue n ON hd.MaNguoiThue = n.MaNguoiThue
+                JOIN HopDong_NguoiThue hdnt ON hd.MaHopDong = hdnt.MaHopDong
+                JOIN NguoiThue n ON hdnt.MaNguoiThue = n.MaNguoiThue
                 WHERE p.TrangThai=N'Đang thuê'";
             return dt.ExecuteQuery(sql);
         }
 
-         //3. Phòng dự kiến trống (hợp đồng sắp hết hạn)
+        //3. Phòng dự kiến trống (hợp đồng sắp hết hạn)
         public DataTable GetPhongSapTrong()
         {
             string sql = @"
                 SELECT p.MaPhong,n.HoTen, hd.NgayKetThuc
                 FROM Phong p
                 JOIN HopDong hd ON p.MaPhong = hd.MaPhong
-                JOIN NguoiThue n ON hd.MaNguoiThue = n.MaNguoiThue
+                JOIN HopDong_NguoiThue hdnt ON hd.MaHopDong = hdnt.MaHopDong
+                JOIN NguoiThue n ON hdnt.MaNguoiThue = n.MaNguoiThue
                 WHERE hd.NgayKetThuc BETWEEN GETDATE() AND DATEADD(day,7,GETDATE())";
             return dt.ExecuteQuery(sql);
         }
