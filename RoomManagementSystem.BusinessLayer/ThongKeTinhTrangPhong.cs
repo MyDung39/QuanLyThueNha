@@ -65,6 +65,36 @@ namespace RoomManagementSystem.BusinessLayer
                 AddSheet(workbook, "PhongSapTrong", GetPhongSapTrong());
                 AddSheet(workbook, "PhongBaoTri", GetPhongBaoTri());
 
+
+                // Tạo sheet "Tất cả"
+                DataTable dtTatCa = new DataTable();
+                dtTatCa.Columns.Add("STT", typeof(int));
+                dtTatCa.Columns.Add("Phòng", typeof(string));
+                dtTatCa.Columns.Add("Tình trạng", typeof(string));
+                dtTatCa.Columns.Add("Số tiền", typeof(decimal));
+
+                int stt = 1;
+
+                void AddRowsFromTable(DataTable dt, string tinhTrang)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        decimal soTien = dt.Columns.Contains("GiaThue") && row["GiaThue"] != DBNull.Value
+                            ? Convert.ToDecimal(row["GiaThue"])
+                            : 0;
+
+                        dtTatCa.Rows.Add(stt++, row["MaPhong"].ToString(), tinhTrang, soTien);
+                    }
+                }
+
+                AddRowsFromTable(GetPhongTrong(), "Trống");
+                AddRowsFromTable(GetPhongDangThue(), "Đang thuê");
+                AddRowsFromTable(GetPhongSapTrong(), "Dự kiến");
+                AddRowsFromTable(GetPhongBaoTri(), "Bảo trì");
+
+                AddSheet(workbook, "TatCaPhong", dtTatCa);
+
+
                 // Sheet tỷ lệ lấp đầy
                 DataTable dtTyLe = new DataTable();
                 dtTyLe.Columns.Add("TyLeLapDay (%)", typeof(decimal));
@@ -75,5 +105,6 @@ namespace RoomManagementSystem.BusinessLayer
                 workbook.SaveAs(filePath);
             }
         }
+
     }
 }

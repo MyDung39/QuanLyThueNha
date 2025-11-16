@@ -5,6 +5,8 @@ using RoomManagementSystem.BusinessLayer;
 using System;
 using System.Data;
 using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RoomManagementSystem.Presentation.ViewModels
 {
@@ -12,31 +14,28 @@ namespace RoomManagementSystem.Presentation.ViewModels
     {
         private readonly QuanLyDoanhThuThang _revenueService;
 
-        // Thuộc tính để binding với DataGrid. Dùng DataView là tốt nhất cho WPF khi làm việc với DataTable.
         [ObservableProperty]
         private DataView _revenueData;
-
-
-
 
         [ObservableProperty] private List<int> _months;
         [ObservableProperty] private List<int> _years;
         [ObservableProperty] private int _selectedMonth;
         [ObservableProperty] private int _selectedYear;
 
+        private string _currentPeriodDisplay; // MM/yyyy dùng để đặt tên file
+
         public ReportMonthlyRevenueViewModel()
         {
             _revenueService = new QuanLyDoanhThuThang();
 
-            //LoadData();
-
             Months = Enumerable.Range(1, 12).ToList();
             Years = Enumerable.Range(DateTime.Now.Year - 5, 10).ToList();
 
-            // Mặc định chọn tháng trước
             var previousMonthDate = DateTime.Now.AddMonths(-1);
             SelectedMonth = previousMonthDate.Month;
             SelectedYear = previousMonthDate.Year;
+
+            _currentPeriodDisplay = $"{SelectedMonth:00}/{SelectedYear}";
             LoadData(SelectedMonth, SelectedYear);
         }
 
@@ -44,7 +43,8 @@ namespace RoomManagementSystem.Presentation.ViewModels
         {
             try
             {
-                // Chỉ cần lấy DataTable và gán trực tiếp, không cần tính tổng
+                _currentPeriodDisplay = $"{month:00}/{year}";
+
                 DataTable dt = _revenueService.LayBaoCaoThang(month, year);
                 RevenueData = dt.DefaultView;
             }
@@ -54,22 +54,18 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
-
-
-        // Xử lý khi người dùng chọn tháng mới
         partial void OnSelectedMonthChanged(int value)
         {
+            _currentPeriodDisplay = $"{SelectedMonth:00}/{SelectedYear}";
             LoadData(SelectedMonth, SelectedYear);
         }
 
-        // Xử lý khi người dùng chọn năm mới
         partial void OnSelectedYearChanged(int value)
         {
+            _currentPeriodDisplay = $"{SelectedMonth:00}/{SelectedYear}";
             LoadData(SelectedMonth, SelectedYear);
         }
 
-
-        // Command cho nút "Tải xuống"
         [RelayCommand]
         private void Download()
         {
@@ -85,17 +81,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 {
                     Filter = "Excel Workbook|*.xlsx",
                     Title = "Lưu báo cáo doanh thu",
-                    FileName = $"BaoCaoDoanhThu_{DateTime.Now:yyyy_MM}.xlsx"
+                    FileName = $"BaoCaoDoanhThu_{_currentPeriodDisplay.Replace('/', '_')}.xlsx"
                 };
 
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     DataTable dtToExport = RevenueData.ToTable();
-                    // Bỏ dòng tổng trước khi xuất nếu bạn muốn
-                    if (dtToExport.Rows.Count > 0)
-                    {
-                        // dtToExport.Rows.RemoveAt(dtToExport.Rows.Count - 1);
-                    }
                     _revenueService.ExportToExcel(dtToExport, saveFileDialog.FileName, "DoanhThuThang");
                     MessageBox.Show($"Đã xuất file thành công!\nĐường dẫn: {saveFileDialog.FileName}", "Thành công");
                 }

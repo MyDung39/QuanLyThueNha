@@ -100,13 +100,17 @@
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                              CommandParameter="Contract"/>
                 <!-- Lịch -->
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/lich_icon.png" ToolTip="Lịch"/>
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/lich_icon.png" ToolTip="Lịch"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Calendar"/>
 
                 <!-- Khoảng trống -->
                 <Border Height="48" />
 
                 <!-- Bảo trì -->
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/bao_tri_icon.png" ToolTip="Bảo trì"/>
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/bao_tri_icon.png" ToolTip="Bảo trì"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Maintenance"/>
                 <!-- Dịch vụ -->
                 <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/dich_vu_icon.png" ToolTip="Dịch vụ"
                              Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
@@ -120,10 +124,14 @@
                 <Border Height="48" />
 
                 <!-- Báo cáo -->
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/bao_cao_icon.png" ToolTip="Báo cáo"/>
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/bao_cao_icon.png" ToolTip="Báo cáo"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="ReportManagement"/>
                 <!-- Trợ giúp -->
 
-                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tro_giup_icon.png" ToolTip="Trợ giúp"/>
+                <RadioButton Style="{StaticResource SidebarIconButton}" Tag="../../../Resources/Images/tro_giup_icon.png" ToolTip="Trợ giúp"
+                             Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                             CommandParameter="Help"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

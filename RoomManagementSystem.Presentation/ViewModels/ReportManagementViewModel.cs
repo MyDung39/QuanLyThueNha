@@ -31,13 +31,13 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     CurrentReportViewModel = new ReportMonthlyExpenseViewModel();
                     break;
                 case "Lợi nhuận":
-                    CurrentReportViewModel = new TextBlock { Text = "Chức năng Báo cáo Lợi nhuận đang được phát triển." };
+                    CurrentReportViewModel = new ReportMonthlyProfitViewModel();
                     break;
                 case "Danh sách phòng":
-                    CurrentReportViewModel = new TextBlock { Text = "Chức năng Báo cáo Danh sách phòng đang được phát triển." };
+                    CurrentReportViewModel = new ReportRoomListViewModel();
                     break;
                 case "Công nợ":
-                    CurrentReportViewModel = new TextBlock { Text = "Chức năng Báo cáo Công nợ đang được phát triển." };
+                    CurrentReportViewModel = new ReportDebtListViewModel();
                     break;
                 default:
                     CurrentReportViewModel = null;
