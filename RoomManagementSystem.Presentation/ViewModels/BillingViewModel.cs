@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using RoomManagementSystem.BusinessLayer;
 using RoomManagementSystem.DataLayer;
 using System;
@@ -83,9 +85,19 @@ namespace RoomManagementSystem.Presentation.ViewModels
             _chiTietHoaDon = new ObservableCollection<BienLai>();
             _danhSachTomTat = new ObservableCollection<MucTomTat>(); // ✅ ĐÃ THÊM
 
+
+            _chiTietHoaDon.CollectionChanged += (s, e) =>
+            {
+                OnPropertyChanged(nameof(TongTienCot2));
+            };
+
+
             // Tải dữ liệu ban đầu cho cột 1
             LoadSideBarData();
         }
+
+        public decimal TongTienCot2 => ChiTietHoaDon.Sum(x => x.ThanhTien);
+
 
         // === LOGIC TẢI DỮ LIỆU ===
 
@@ -179,7 +191,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
         private void OnSelectedPhongChanged(Phong phong)
         {
-            // 1. Xóa hết dữ liệu cũ
+            // 1. Xóa dữ liệu cũ
             ChiTietHoaDon.Clear();
             DanhSachTomTat.Clear();
             SelectedBillInfo = null;
@@ -189,95 +201,86 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
             try
             {
-                // 2. Tải dữ liệu cột 2 (Chi tiết hóa đơn & DataGrid)
                 var hoaDonData = _xuatBienLaiService.GetBienLai(phong.MaPhong);
+                var thanhToanHienTai = _thanhToanService.GetThanhToanHienTaiByPhong(phong.MaPhong);
+
+                // 2. Thêm tiền thuê phòng
+                ChiTietHoaDon.Add(new BienLai
+                {
+                    TenDichVu = "Tiền thuê phòng",
+                    DVT = "Tháng",
+                    SoLuong = 1,
+                    DonGia = phong.GiaThue,
+                    ThanhTien = phong.GiaThue
+                });
+                DanhSachTomTat.Add(new MucTomTat
+                {
+                    TieuDe = "Tiền thuê phòng",
+                    SoTien = phong.GiaThue
+                });
+
+                // 3. Thêm hóa đơn dịch vụ
                 if (hoaDonData.Any())
                 {
                     SelectedBillInfo = hoaDonData.First();
                     foreach (var item in hoaDonData)
                     {
                         ChiTietHoaDon.Add(item);
+                        DanhSachTomTat.Add(new MucTomTat
+                        {
+                            TieuDe = item.TenDichVu,
+                            SoTien = item.ThanhTien,
+                            Ngay = item.NgayLapHoaDon
+                        });
                     }
                 }
-                else
+
+                // 4. Công nợ còn lại
+                decimal tienCongNoConLai = Math.Max(0, (thanhToanHienTai?.TongCongNo ?? 0) - (thanhToanHienTai?.SoTienDaThanhToan ?? 0));
+                if (tienCongNoConLai > 0)
                 {
-                    // Nếu phòng này không có hóa đơn, dừng lại
-                    return;
+                    ChiTietHoaDon.Add(new BienLai
+                    {
+                        TenDichVu = "Công nợ cũ",
+                        ThanhTien = tienCongNoConLai
+                    });
+                    DanhSachTomTat.Add(new MucTomTat
+                    {
+                        TieuDe = "Công nợ cũ",
+                        SoTien = tienCongNoConLai,
+                        Ngay = thanhToanHienTai?.NgayTao
+                    });
                 }
 
-                // 3. Tải dữ liệu cột 3 (Tóm tắt)
-
-                // Lấy Hóa đơn chính (ví dụ: 505,000)
-                decimal tienHoaDonChinh = SelectedBillInfo?.TongTien ?? 0;
-
-                // Lấy thông tin Công nợ & Đã thanh toán từ ThanhToanDAL
-                ThanhToan thanhToanHienTai = _thanhToanService.GetThanhToanHienTaiByPhong(phong.MaPhong);
-
-                // Gán giá trị từ CSDL, nếu không tìm thấy thì bằng 0
-                decimal tienCongNoCu = thanhToanHienTai?.TongCongNo ?? 0;
+                // 5. Đã thanh toán (nếu có)
                 decimal tienDaThanhToan = thanhToanHienTai?.SoTienDaThanhToan ?? 0;
-
-                // Lấy Phụ thu từ BaoTriDAL (dùng hàm mới thêm ở Bước 1)
-                // (Trong ảnh demo của bạn là 300,000)
-                decimal tienPhuThu = _baoTriService.GetTongChiPhiBaoTriByPhong(phong.MaPhong);
-
-
-                // === Xây dựng danh sách Tóm Tắt (Cột 3) ===
-
-                // Thêm "Hóa đơn chính"
-                DanhSachTomTat.Add(new MucTomTat
-                {
-                    TieuDe = "Hóa đơn Số: ",
-                    MaSo = SelectedBillInfo.MaHoaDon,
-                    Ngay = SelectedBillInfo.NgayLapHoaDon,
-                    SoTien = tienHoaDonChinh
-                });
-
-                // Thêm "Công nợ" (nếu có)
-                if (tienCongNoCu > 0)
-                {
-                    DanhSachTomTat.Add(new MucTomTat
-                    {
-                        TieuDe = "Công nợ",
-                        Ngay = thanhToanHienTai?.NgayTao, // Lấy ngày của bản ghi công nợ
-                        SoTien = tienCongNoCu
-                    });
-                }
-
-                // Thêm "Phụ thu" (nếu có)
-                if (tienPhuThu > 0)
-                {
-                    DanhSachTomTat.Add(new MucTomTat
-                    {
-                        TieuDe = "Phụ thu",
-                        // (Bạn có thể lấy ngày gần nhất từ bảng BaoTri nếu muốn)
-                        SoTien = tienPhuThu
-                    });
-                }
-
                 if (tienDaThanhToan > 0)
                 {
                     DanhSachTomTat.Add(new MucTomTat
                     {
                         TieuDe = "Đã thanh toán",
-                        // (Bạn có thể lấy ngày thanh toán gần nhất từ thanhToanHienTai)
-                        Ngay = thanhToanHienTai?.NgayCapNhat,
-                        SoTien = tienDaThanhToan
+                        SoTien = tienDaThanhToan,
+                        Ngay = thanhToanHienTai?.NgayCapNhat
                     });
                 }
 
-                // 4. Tính "Số tiền cần trả" (Logic đã sửa)
-                // (Tổng phải trả) = Hóa đơn + Công nợ + Phụ thu
-                decimal tongCacKhoanPhi = tienHoaDonChinh + tienCongNoCu + tienPhuThu;
+                // 6. Tổng cộng
+                decimal tong = ChiTietHoaDon.Sum(x => x.ThanhTien) + tienCongNoConLai;
+                DanhSachTomTat.Add(new MucTomTat
+                {
+                    TieuDe = "Tổng cộng",
+                    SoTien = tong
+                });
 
-                // (Tiền cuối cùng) = (Tổng phải trả) - (Đã thanh toán)
-                TongTienCanTra = tongCacKhoanPhi - tienDaThanhToan;
+                TongTienCanTra = tong;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi lấy dữ liệu hóa đơn: {ex.Message}");
             }
         }
+
+
 
 
         /// <summary>
@@ -307,5 +310,51 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 MessageBox.Show($"Lỗi khi tải danh sách nhà: {ex.Message}");
             }
         }
+
+
+
+
+        [RelayCommand]
+        private void XuatExcel()
+        {
+            XuatHoaDon();
+        }
+
+
+
+
+
+        public void XuatHoaDon()
+        {
+            if (ChiTietHoaDon == null || !ChiTietHoaDon.Any())
+            {
+                MessageBox.Show("Không có dữ liệu để xuất.");
+                return;
+            }
+
+            // Mở SaveFileDialog để chọn đường dẫn
+            SaveFileDialog saveFile = new SaveFileDialog
+            {
+                Filter = "Excel files (*.xlsx)|*.xlsx",
+                FileName = $"BienLai_{SelectedBillInfo?.MaHoaDon ?? "ChuaCo"}.xlsx"
+            };
+
+            if (saveFile.ShowDialog() == true)
+            {
+                try
+                {
+                    //_xuatBienLaiService.XuatBienLaiExcel(ChiTietHoaDon.ToList(), saveFile.FileName);
+                    _xuatBienLaiService.XuatBienLaiExcel(SelectedBillInfo, ChiTietHoaDon.ToList(), saveFile.FileName);
+
+                    MessageBox.Show("Xuất Excel thành công!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi xuất Excel: {ex.Message}");
+                }
+            }
+        }
+
+
     }
 }
