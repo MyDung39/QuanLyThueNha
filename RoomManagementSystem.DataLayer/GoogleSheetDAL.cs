@@ -18,7 +18,19 @@ namespace DAL
         public GoogleSheetDAL()
         {
             GoogleCredential credential;
-            var path = Path.Combine(AppContext.BaseDirectory, "ServiceAccount", "confident-facet-478405-f3-6a6670539754.json");
+            string baseDirectory = AppContext.BaseDirectory;
+            string solutionRoot = Path.GetFullPath(Path.Combine(baseDirectory, @"..\..\..\..\"));
+
+            // 3. Ghép chuỗi để đi vào folder RoomManagementSystem.Presentation
+            string path = Path.Combine(solutionRoot,
+                                       "RoomManagementSystem.Presentation",
+                                       "ServiceAccount",
+                                       "confident-facet-478405-f3-6a6670539754.json");
+
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException($"Không tìm thấy file JSON tại đường dẫn: {path}");
+            }
 
             using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {

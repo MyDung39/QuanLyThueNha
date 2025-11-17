@@ -323,6 +323,24 @@ CREATE TABLE BaoCaoTrangThai (
 );
 GO
 
+-- Hàm tính số người hiện tại trong 1 phòng
+CREATE OR ALTER FUNCTION fn_TinhSoNguoiHienTai(@MaPhong VARCHAR(20))
+RETURNS INT
+AS
+BEGIN
+    DECLARE @Count INT;
+    SELECT @Count = COUNT(hnt.MaNguoiThue)
+    FROM Phong p
+    JOIN HopDong hd ON p.MaPhong = hd.MaPhong
+    JOIN HopDong_NguoiThue hnt ON hd.MaHopDong = hnt.MaHopDong
+    WHERE p.MaPhong = @MaPhong
+      AND hd.TrangThai = N'Hiệu lực'
+      AND hnt.TrangThaiThue = N'Đang ở';
+    
+    RETURN ISNULL(@Count, 0);
+END;
+GO
+
 -- DỮ LIỆU THÊM SẴN (ĐÃ CẬP NHẬT)
 INSERT INTO NguoiDung (MaNguoiDung, TenDangNhap, MatKhau, TenTaiKhoan, SoDienThoai, PhuongThucDN, TrangThai)
 VALUES ('ND001', 'nguyenthimydungntmd39@gmail.com', 'pass123', N'Vanila', NULL, N'MatKhau', N'Hoạt động');
@@ -364,7 +382,7 @@ GO
 INSERT INTO BaoTri (MaBaoTri, MaPhong, MaNguoiThue, MoTa, TrangThaiXuLy, NgayYeuCau, NgayHoanThanh, ChiPhi) 
 VALUES 
 ('BT001', 'NHA001-PHONG001', 'NT001', N'Vòi nước bồn rửa mặt bị rò rỉ.', N'Hoàn tất', '2025-03-10', '2025-03-11', 150000),
-('BT002', 'NHA001-PHONG002', 'NT002', N'Bóng đèn chính của phòng bị cháy.', N'Đang xử lý', '2025-04-01', '2025-04-21', 100000);
+('BT002', 'NHA001-PHONG002', 'NT002', N'Bóng đèn chính của phòng bị cháy.', N'Hoàn tất', '2025-04-01', '2025-04-21', 100000);
 GO
 
 INSERT INTO DichVu (MaDichVu, TenDichVu, DVT, DonGia)
