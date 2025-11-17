@@ -103,3 +103,12 @@ Tầng `Presentation` đã hoàn thành các công việc nền tảng quan tr�
 3.  Mở file `RoomManagementSystem.sln` bằng Visual Studio.
 4.  Chuột phải vào project `RoomManagementSystem.Presentation` và chọn **Set as Startup Project**.
 5.  Nhấn **F5** để biên dịch và chạy ứng dụng.
+
+## 🚀 Dữ liệu tài khoản Google và Google Forms lấy chỉ số điện/nước
+1.  **Tài khoản Google:**
+    - Email: pentanix79@gmail.com
+    - Password: TH3cnpmtdtu
+2.  **Google Forms (dùng email Pentanix):**
+    - Edit form thu thập chỉ số: https://tinyurl.com/ye76s7y6
+    - Form người thuê điền: https://tinyurl.com/6y8e4ups
+    - Google Sheet lấy thông tin chỉ số: https://tinyurl.com/55ecmdez

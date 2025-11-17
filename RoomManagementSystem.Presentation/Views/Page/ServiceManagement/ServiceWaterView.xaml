@@ -3,24 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
+     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignWidth="974" d:DesignHeight="624"
              FontFamily="Roboto"
              Background="Transparent">
-    <!-- Nền trong suốt để hòa vào nền của view cha -->
-
     <UserControl.Resources>
-        <!-- Style cho các nhãn (TextBlock) -->
-        <Style x:Key="LabelStyle" TargetType="TextBlock">
+        <Style 
+x:Key="LabelStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#3B4758"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Medium"/>
         </Style>
 
-        <!-- Style cho các ô nhập liệu (TextBox) -->
         <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
             <Setter Property="Height" Value="36"/>
+
             <Setter Property="Background" Value="#F2F6FA"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="12,0"/>
@@ -31,93 +30,114 @@
     </UserControl.Resources>
 
     <Grid>
-        <!-- Container chính màu trắng với bo góc -->
         <Border Background="White" CornerRadius="10" Padding="24">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <!-- Vùng nội dung -->
                     <RowDefinition Height="Auto"/>
-                    <!-- Vùng nút Lưu -->
                 </Grid.RowDefinitions>
 
-                <!-- Vùng nội dung chính (các ô nhập liệu và tóm tắt) -->
                 <ScrollViewer Grid.Row="0" Margin="20" VerticalScrollBarVisibility="Auto">
+
                     <StackPanel>
-                    <!-- Thông tin chung -->
-                    <TextBlock Text="Mã phòng" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="MaPhongTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,6,0,0"
-                             Text="{Binding SelectedPhong.MaPhong}"/>
+                        <TextBlock Text="Mã phòng" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="MaPhongTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,6,0,0"
+         
+                    Text="{Binding SelectedPhong.MaPhong}" IsReadOnly="True"/>
 
-                    <TextBlock Text="Thời kỳ (MM/yyyy)" Style="{StaticResource LabelStyle}" Margin="0,16,0,0"/>
-                    <TextBox x:Name="ThoiKyTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,6,0,12"
-                             materialDesign:HintAssist.Hint="MM/yyyy"/>
-                    <!-- Chỉ số nước cũ -->
-                    <TextBlock Text="Chỉ số nước cũ" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="OldIndexTextBox" 
-                             Style="{StaticResource InputTextBoxStyle}" 
+                        <TextBlock Text="Thời kỳ (MM/yyyy)" Style="{StaticResource LabelStyle}" Margin="0,16,0,0"/>
+                        <TextBox x:Name="ThoiKyTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,6,0,0"
+                             
+materialDesign:HintAssist.Hint="MM/yyyy"
+                             Text="{Binding ThoiKy, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,12">
+                            <Button Content="Lấy từ Google Forms"
+                                Command="{Binding FetchDataFromGoogleSheetCommand}"
+                                Margin="0,0,10,0"/>
+                            <TextBlock Text="{Binding GoogleSheetStatus}" 
+                                   VerticalAlignment="Center" 
+                                   FontStyle="Italic"
+                                   TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Chỉ số nước cũ" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="OldIndexTextBox" 
+                           
+  Style="{StaticResource InputTextBoxStyle}" 
                              Margin="0,6,0,0" 
-                             Text="103"/>
+                             Text="{Binding OldWaterIndex, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <!-- Chỉ số nước mới -->
-                    <TextBlock Text="Chỉ số nước mới" Style="{StaticResource LabelStyle}" Margin="0,24,0,0"/>
-                    <TextBox x:Name="NewIndexTextBox" 
+                        <TextBlock Text="Chỉ số nước mới" Style="{StaticResource LabelStyle}" Margin="0,24,0,0"/>
+                        <TextBox x:Name="NewIndexTextBox" 
                              Style="{StaticResource InputTextBoxStyle}"
                              Margin="0,6,0,0"
-                             materialDesign:HintAssist.Hint="Vui lòng nhập chỉ số nước mới"/>
+    
+                         materialDesign:HintAssist.Hint="Vui lòng nhập chỉ số nước mới"
+                             Text="{Binding NewWaterIndex, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <!-- Đơn giá -->
-                    <TextBlock Text="Đơn giá cho mỗi m³" Style="{StaticResource LabelStyle}" Margin="0,24,0,0"/>
-                    <TextBox x:Name="UnitPriceTextBox" 
+                        <TextBlock Text="Đơn giá cho mỗi m³" Style="{StaticResource LabelStyle}" Margin="0,24,0,0"/>
+
+                        <TextBox x:Name="UnitPriceTextBox" 
                              Style="{StaticResource InputTextBoxStyle}"
                              Margin="0,6,0,0" 
-                             Text="12000"/>
+                             Text="{Binding UnitPriceWater, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <!-- Tóm tắt ở cuối form -->
-                    <StackPanel Margin="0,32,0,0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Mức tiêu thụ: " Style="{StaticResource LabelStyle}"/>
-                            <TextBlock x:Name="ConsumptionText" Text="10 m³" Style="{StaticResource LabelStyle}"/>
+
+                        <StackPanel Margin="0,32,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Mức tiêu thụ: " Style="{StaticResource LabelStyle}"/>
+
+                                <TextBlock x:Name="ConsumptionText" Text="10 m³" Style="{StaticResource LabelStyle}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+
+                                <TextBlock Text="Tổng số tiền: " Style="{StaticResource LabelStyle}"/>
+                                <TextBlock x:Name="TotalText" Text="120 000 VND" Style="{StaticResource LabelStyle}"/>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <TextBlock Text="Tổng số tiền: " Style="{StaticResource LabelStyle}"/>
-                            <TextBlock x:Name="TotalText" Text="120 000 VND" Style="{StaticResource LabelStyle}"/>
-                        </StackPanel>
-                    </StackPanel>
+
                     </StackPanel>
                 </ScrollViewer>
 
-                <!-- Nút Lưu -->
                 <Button Grid.Row="1" 
                         HorizontalAlignment="Right" 
-                        VerticalAlignment="Bottom"
+        
+                VerticalAlignment="Bottom"
                         Margin="0,20,20,20"
                         Width="100" Height="36"
                         Click="SaveButton_Click">
+
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="#FFB27D"/>
                             <Setter Property="Foreground" Value="White"/>
+
                             <Setter Property="BorderBrush" Value="Transparent"/>
                             <Setter Property="Cursor" Value="Hand"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>
+
                             <Setter Property="FontSize" Value="12"/>
                             <Setter Property="Template">
                                 <Setter.Value>
+
                                     <ControlTemplate TargetType="Button">
                                         <Border CornerRadius="18" Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <ContentPresenter 
+HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </ControlTemplate>
+
                                 </Setter.Value>
                             </Setter>
                         </Style>
                     </Button.Style>
+
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Lưu"/>
-                        <!-- Biểu tượng Lưu -->
                     </StackPanel>
                 </Button>
+
             </Grid>
         </Border>
     </Grid>

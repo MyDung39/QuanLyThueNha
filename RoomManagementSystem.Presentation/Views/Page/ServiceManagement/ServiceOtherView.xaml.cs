@@ -15,10 +15,11 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
             InternetCostTextBox.TextChanged += OnInputsChanged;
             CleaningCostTextBox.TextChanged += OnInputsChanged;
             TrashCostTextBox.TextChanged += OnInputsChanged;
-            // New services
-            if (MaintenanceCostTextBox != null) MaintenanceCostTextBox.TextChanged += OnInputsChanged;
+            
+            // Các dịch vụ mới (Đã loại bỏ Maintenance)
             if (ParkingCostTextBox != null) ParkingCostTextBox.TextChanged += OnInputsChanged;
             if (LateFeeCostTextBox != null) LateFeeCostTextBox.TextChanged += OnInputsChanged;
+            
             this.Loaded += (s, e) =>
             {
                 // Tự điền thời kỳ tháng hiện tại nếu trống
@@ -42,7 +43,7 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
                 total += Math.Max(0, TryParseDoubleOrZero(InternetCostTextBox.Text));
             }
 
-            // Cleaning
+            // Cleaning (Máy giặt)
             if (CleaningYesRadio != null && CleaningYesRadio.IsChecked == true)
             {
                 total += Math.Max(0, TryParseDoubleOrZero(CleaningCostTextBox.Text));
@@ -52,12 +53,6 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
             if (TrashYesRadio != null && TrashYesRadio.IsChecked == true)
             {
                 total += Math.Max(0, TryParseDoubleOrZero(TrashCostTextBox.Text));
-            }
-
-            // Maintenance
-            if (MaintenanceYesRadio != null && MaintenanceYesRadio.IsChecked == true)
-            {
-                total += Math.Max(0, TryParseDoubleOrZero(MaintenanceCostTextBox.Text));
             }
 
             // Parking
@@ -98,7 +93,6 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
         {
             try
             {
-                // Lấy đầu vào từ ViewModel để đảm bảo đúng phòng được chọn
                 var vm = this.DataContext as ServiceManagementViewModel;
                 string maPhong = vm?.SelectedPhong?.MaPhong?.Trim();
                 string thoiKy = ThoiKyTextBox?.Text?.Trim(); // MM/yyyy
@@ -131,14 +125,7 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
                         return;
                     }
                 }
-                if (MaintenanceYesRadio.IsChecked == true)
-                {
-                    if (!TryParseDouble(MaintenanceCostTextBox.Text, out double baoTri) || baoTri < 0)
-                    {
-                        MessageBox.Show("Tiền bảo trì phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
-                }
+                
                 if (LateFeeYesRadio.IsChecked == true)
                 {
                     if (!TryParseDouble(LateFeeCostTextBox.Text, out double treHan) || treHan < 0)
@@ -158,12 +145,12 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
 
                 decimal? internetVal = InternetYesRadio.IsChecked == true ? TryParseDecimalNullable(InternetCostTextBox.Text) : null;
                 decimal? racVal = TrashYesRadio.IsChecked == true ? TryParseDecimalNullable(TrashCostTextBox.Text) : null;
-                decimal? baoTriVal = MaintenanceYesRadio.IsChecked == true ? TryParseDecimalNullable(MaintenanceCostTextBox.Text) : null;
                 decimal? treHanVal = LateFeeYesRadio.IsChecked == true ? TryParseDecimalNullable(LateFeeCostTextBox.Text) : null;
                 decimal? guiXeVal = ParkingYesRadio.IsChecked == true ? TryParseDecimalNullable(ParkingCostTextBox.Text) : null;
 
                 var mgr = new ServiceManager();
-                mgr.SaveServiceCosts(maPhong, thoiKy, null, null, internetVal, racVal, guiXeVal, baoTriVal, treHanVal);
+                // Truyền null cho tham số baoTriVal (bảo trì)
+                mgr.SaveServiceCosts(maPhong, thoiKy, null, null, internetVal, racVal, guiXeVal, null, treHanVal);
 
                 MessageBox.Show($"Đã lưu dịch vụ cho phòng {maPhong} kỳ {thoiKy}.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }

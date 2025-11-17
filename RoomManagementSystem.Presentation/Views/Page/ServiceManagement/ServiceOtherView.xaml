@@ -59,9 +59,9 @@
                                  Style="{StaticResource InputTextBoxStyle}"
                                  Margin="0,8,0,0"
                                  IsEnabled="{Binding IsChecked, ElementName=InternetYesRadio}"
-                                 materialDesign:HintAssist.Hint="Nhập chi phí Internet"/>
+                                 Text="50000"/>
 
-                        <TextBlock Text="Vệ sinh" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
+                        <TextBlock Text="Sử dụng máy giặt" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <RadioButton x:Name="CleaningYesRadio" GroupName="CleaningGroup" Content="Có" Margin="0,0,16,0" Checked="OnSelectionChanged"/>
                             <RadioButton x:Name="CleaningNoRadio" GroupName="CleaningGroup" Content="Không" IsChecked="True" Checked="OnSelectionChanged"/>
@@ -70,7 +70,7 @@
                                  Style="{StaticResource InputTextBoxStyle}"
                                  Margin="0,8,0,0"
                                  IsEnabled="{Binding IsChecked, ElementName=CleaningYesRadio}"
-                                 materialDesign:HintAssist.Hint="Nhập chi phí Vệ sinh"/>
+                                 Text="35000"/>
 
                         <TextBlock Text="Rác" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -81,18 +81,7 @@
                                  Style="{StaticResource InputTextBoxStyle}"
                                  Margin="0,8,0,0"
                                  IsEnabled="{Binding IsChecked, ElementName=TrashYesRadio}"
-                                 materialDesign:HintAssist.Hint="Nhập chi phí Rác"/>
-
-                        <TextBlock Text="Bảo trì" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <RadioButton x:Name="MaintenanceYesRadio" GroupName="MaintenanceGroup" Content="Có" Margin="0,0,16,0" Checked="OnSelectionChanged"/>
-                            <RadioButton x:Name="MaintenanceNoRadio" GroupName="MaintenanceGroup" Content="Không" IsChecked="True" Checked="OnSelectionChanged"/>
-                        </StackPanel>
-                        <TextBox x:Name="MaintenanceCostTextBox"
-                                 Style="{StaticResource InputTextBoxStyle}"
-                                 Margin="0,8,0,0"
-                                 IsEnabled="{Binding IsChecked, ElementName=MaintenanceYesRadio}"
-                                 materialDesign:HintAssist.Hint="Nhập chi phí Bảo trì"/>
+                                 Text="30000"/>
 
                         <TextBlock Text="Phí gửi xe (từ 2 xe/phòng)" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -103,7 +92,7 @@
                                  Style="{StaticResource InputTextBoxStyle}"
                                  Margin="0,8,0,0"
                                  IsEnabled="{Binding IsChecked, ElementName=ParkingYesRadio}"
-                                 materialDesign:HintAssist.Hint="Nhập chi phí Phí gửi xe"/>
+                                 Text="100000"/>
 
                         <TextBlock Text="Trễ hạn" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -114,7 +103,7 @@
                                  Style="{StaticResource InputTextBoxStyle}"
                                  Margin="0,8,0,0"
                                  IsEnabled="{Binding IsChecked, ElementName=LateFeeYesRadio}"
-                                 materialDesign:HintAssist.Hint="Nhập chi phí Phí trễ hạn"/>
+                                 Text="100000"/>
 
                         <Separator Margin="0,32,0,16"/>
                         <StackPanel Orientation="Horizontal">

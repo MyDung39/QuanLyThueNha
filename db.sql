@@ -331,11 +331,11 @@ INSERT INTO Nha (MaNha, MaNguoiDung, DiaChi, GhiChu)
 VALUES ('NHA001', 'ND001', N'123 Lê Lợi, Q.1, TP.HCM', N'Nhà trọ hiện đại, nằm trong trung tâm thành phố');
 GO
 
-INSERT INTO Phong (MaPhong, MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, SoNguoiHienTai, GhiChu)
+INSERT INTO Phong (MaPhong, MaNha, LoaiPhong, DienTich, GiaThue, TrangThai, GhiChu)
 VALUES
-('NHA001-PHONG001', 'NHA001', N'Phòng trống', 20.0, 2500000, N'Đang thuê', 1, N'Có ban công'),
-('NHA001-PHONG002', 'NHA001', N'Phòng có đồ cơ bản', 30.0, 3500000, N'Đang thuê', 3, N'Phòng rộng rãi'),
-('NHA001-PHONG003', 'NHA001', N'Phòng trống', 18.0, 2300000, N'Trống', 0, N'Có gác lửng');
+('NHA001-PHONG001', 'NHA001', N'Phòng trống', 20.0, 2500000, N'Đang thuê', N'Có ban công'),
+('NHA001-PHONG002', 'NHA001', N'Phòng có đồ cơ bản', 30.0, 3500000, N'Đang thuê', N'Phòng rộng rãi'),
+('NHA001-PHONG003', 'NHA001', N'Phòng trống', 18.0, 2300000, N'Trống', N'Có gác lửng');
 GO
 
 INSERT INTO NguoiThue (MaNguoiThue, HoTen, SoDienThoai, Email, SoGiayTo)
@@ -364,13 +364,13 @@ GO
 INSERT INTO BaoTri (MaBaoTri, MaPhong, MaNguoiThue, MoTa, TrangThaiXuLy, NgayYeuCau, NgayHoanThanh, ChiPhi) 
 VALUES 
 ('BT001', 'NHA001-PHONG001', 'NT001', N'Vòi nước bồn rửa mặt bị rò rỉ.', N'Hoàn tất', '2025-03-10', '2025-03-11', 150000),
-('BT002', 'NHA001-PHONG002', 'NT002', N'Bóng đèn chính của phòng bị cháy.', N'Đang xử lý', '2025-04-01', NULL, 100000);
+('BT002', 'NHA001-PHONG002', 'NT002', N'Bóng đèn chính của phòng bị cháy.', N'Đang xử lý', '2025-04-01', '2025-04-21', 100000);
 GO
 
 INSERT INTO DichVu (MaDichVu, TenDichVu, DVT, DonGia)
 VALUES
 ('DV1', N'Điện', N'kWh', 4000),
-('DV2', N'Nước', N'm3', 12000),
+('DV2', N'Nước', N'm3', 20000),
 ('DV3', N'Internet', N'tháng', 50000),
 ('DV4', N'Rác', N'phòng/tháng', 30000), 
 ('DV5', N'Gửi xe máy', N'xe/tháng', 100000), 
@@ -380,11 +380,11 @@ GO
 
 INSERT INTO HoaDon (MaHoaDon, MaPhong, ThoiKy)
 VALUES
-('HDN001', 'NHA001-PHONG001', '10/2025'),
-('HDN002', 'NHA001-PHONG002', '10/2025');
+('HDN001', 'NHA001-PHONG001', '11/2025'),
+('HDN002', 'NHA001-PHONG002', '11/2025');
 GO
 
-INSERT INTO ChiTietHoaDon (MaHoaDon, MaDichVu, DVT, DonGia, SoLuong)
+/*INSERT INTO ChiTietHoaDon (MaHoaDon, MaDichVu, DVT, DonGia, SoLuong)
 VALUES
 -- Chi tiết cho hóa đơn HDN001 (Phòng PHONG001)
 -- Tiền thuê phòng lấy tự động từ bảng phòng
@@ -396,17 +396,17 @@ VALUES
 ('HDN002', 'DV1', N'kWh', 4000, 90),      -- Tiền điện
 ('HDN002', 'DV2', N'm3', 12000, 15),      -- Tiền nước
 ('HDN002', 'DV5', N'xe/tháng', 100000, 2);  -- Tiền gửi xe
-GO
+GO*/
 
 INSERT INTO ThongBaoPhi (MaThongBaoPhi, MaPhong, ThoiKy, TongTien, FileDinhKem, NgayGui, TrangThai)
 VALUES
-('TBP001', 'NHA001-PHONG001', '10/2025', 2500000, 'TBP001.pdf', '2025-10-02', N'Đã gửi'),
-('TBP002', 'NHA001-PHONG002', '10/2025', 3500000, 'TBP002.pdf', '2025-10-02', N'Đã gửi');
+('TBP001', 'NHA001-PHONG001', '11/2025', 2500000, 'TBP001.pdf', '2025-11-17', N'Đã gửi'),
+('TBP002', 'NHA001-PHONG002', '11/2025', 3500000, 'TBP002.pdf', '2025-11-17', N'Đã gửi');
 GO
 
 INSERT INTO ThanhToan 
-(MaThanhToan, MaPhong, MaHoaDon, MaHopDong, MaThongBaoPhi, TongCongNo, SoTienDaThanhToan, NgayHanThanhToan, PhuongThucThanhToan, TrangThai)
+(MaThanhToan, MaPhong, MaHoaDon, MaHopDong, MaThongBaoPhi, TongCongNo, SoTienDaThanhToan, PhuongThucThanhToan, TrangThai)
 VALUES
-('TT001', 'NHA001-PHONG001', 'HDN001', 'HD001', 'TBP001', 2500000, 2500000, '2025-10-10', N'Chuyển khoản', N'Đã trả'),
-('TT002', 'NHA001-PHONG002', 'HDN002', 'HD002', 'TBP002', 3500000, 0, '2025-10-10', N'Tiền mặt', N'Chưa trả');
+('TT001', 'NHA001-PHONG001', 'HDN001', 'HD001', 'TBP001', 2500000, 2500000, N'Chuyển khoản', N'Đã trả'),
+('TT002', 'NHA001-PHONG002', 'HDN002', 'HD002', 'TBP002', 3500000, 0, N'Tiền mặt', N'Chưa trả');
 GO
