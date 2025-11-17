@@ -178,8 +178,8 @@
                                 <StackPanel Grid.Column="0" Margin="0,0,12,0">
                                     <TextBlock Text="Ngày lập hóa đơn" FontSize="12" Foreground="#777"/>
                                     <TextBlock Text="{Binding SelectedBillInfo.NgayLapHoaDon, StringFormat='dd/MM/yyyy'}" FontSize="13" FontWeight="SemiBold" Foreground="#1E1E2F" Margin="0,2,0,6"/>
-                                    <TextBlock Text="Ngày gửi thông báo" FontSize="12" Foreground="#777"/>
-                                    <TextBlock Text="{Binding SelectedBillInfo.NgayGuiThongBao, StringFormat='dd/MM/yyyy'}" FontSize="13" FontWeight="SemiBold" Margin="0,2,0,6"/>
+                                    <TextBlock Text="Thời kỳ" FontSize="12" Foreground="#777"/>
+                                    <TextBlock Text="{Binding SelectedBillInfo.ThoiKy}" FontSize="13" FontWeight="SemiBold" Margin="0,2,0,6"/>
                                     <TextBlock Text="Thời gian thanh toán" FontSize="12" Foreground="#777"/>
                                     <TextBlock Text="Trong vòng 15 ngày" FontSize="13" FontWeight="SemiBold" Margin="0,2,0,6"/>
                                     <TextBlock Text="Ngày hạn thanh toán" FontSize="12" Foreground="#777"/>

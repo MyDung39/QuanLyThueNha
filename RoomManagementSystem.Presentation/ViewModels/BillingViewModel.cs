@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace RoomManagementSystem.Presentation.ViewModels
 {
-    // Lớp helper để chứa dữ liệu cho cột Tóm Tắt (bên phải)
+    // Lớp helper để chứa dữ liệu cho cột Tóm Tắt
     public class MucTomTat
     {
         public string TieuDe { get; set; }
@@ -19,8 +19,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
         public decimal SoTien { get; set; }
     }
 
-    // Lớp helper cho danh sách phòng (bên trái)
-    // (Đã có sẵn trong file của bạn)
+    // Lớp helper cho danh sách phòng
     public partial class NhaPhongViewModel : ViewModelBase
     {
         [ObservableProperty] private string _maNha;
@@ -28,41 +27,21 @@ namespace RoomManagementSystem.Presentation.ViewModels
         [ObservableProperty] private ObservableCollection<Phong> _danhSachPhong;
     }
 
-
-    /// <summary>
-    /// ViewModel chính cho trang BillingView
-    /// </summary>
     public partial class BillingViewModel : ViewModelBase
     {
-        // === KHAI BÁO CÁC SERVICE (BLL/DAL) ===
+        // === KHAI BÁO CÁC SERVICE ===
         private readonly QL_TaiSan_Phong _taiSanPhongService;
         private readonly XuatBienLai _xuatBienLaiService;
-        private readonly ThanhToanDAL _thanhToanService; // ✅ ĐÃ THÊM
-        private readonly BaoTriDAL _baoTriService; // ✅ ĐÃ THÊM BAOTRIDAL
+        private readonly ThanhToanDAL _thanhToanService;
+        private readonly BaoTriDAL _baoTriService;
 
-        // === CÁC THUỘC TÍNH BINDING VỚI VIEW ===
+        // === CÁC THUỘC TÍNH BINDING ===
+        [ObservableProperty] private ObservableCollection<NhaPhongViewModel> _danhSachNha;
+        [ObservableProperty] private ObservableCollection<BienLai> _chiTietHoaDon;
+        [ObservableProperty] private BienLai _selectedBillInfo;
+        [ObservableProperty] private ObservableCollection<MucTomTat> _danhSachTomTat;
+        [ObservableProperty] private decimal _tongTienCanTra;
 
-        // Cột 1: Danh sách Nhà/Phòng
-        [ObservableProperty]
-        private ObservableCollection<NhaPhongViewModel> _danhSachNha;
-
-        // Cột 2 (DataGrid): Chi tiết các dịch vụ (Điện, Nước...)
-        [ObservableProperty]
-        private ObservableCollection<BienLai> _chiTietHoaDon;
-
-        // Cột 2 (Thông tin chung): Dữ liệu chính của hóa đơn
-        [ObservableProperty]
-        private BienLai _selectedBillInfo;
-
-        // Cột 3: Danh sách tóm tắt (Hóa đơn, Công nợ, Phụ thu)
-        [ObservableProperty]
-        private ObservableCollection<MucTomTat> _danhSachTomTat; // ✅ ĐÃ THÊM
-
-        // Cột 3 (Box màu hồng): Tổng tiền cuối cùng
-        [ObservableProperty]
-        private decimal _tongTienCanTra; // ✅ ĐÃ THÊM
-
-        // Thuộc tính để nhận phòng được chọn từ ListBox
         private Phong _selectedPhong;
         public Phong SelectedPhong
         {
@@ -70,128 +49,29 @@ namespace RoomManagementSystem.Presentation.ViewModels
             set { if (SetProperty(ref _selectedPhong, value)) { OnSelectedPhongChanged(value); } }
         }
 
-        // === HÀM KHỞI TẠO (CONSTRUCTOR) ===
-        // ✅ SỬA LẠI: Dùng hàm khởi tạo rỗng để XAML có thể gọi
         public BillingViewModel()
         {
-            // Tự khởi tạo các service
             _taiSanPhongService = new QL_TaiSan_Phong();
             _xuatBienLaiService = new XuatBienLai();
-            _thanhToanService = new ThanhToanDAL(); // ✅ ĐÃ THÊM
-            _baoTriService = new BaoTriDAL(); // ✅ KHỞI TẠO BAOTRIDAL
+            _thanhToanService = new ThanhToanDAL();
+            _baoTriService = new BaoTriDAL();
 
-            // Khởi tạo các Collection
             _danhSachNha = new ObservableCollection<NhaPhongViewModel>();
             _chiTietHoaDon = new ObservableCollection<BienLai>();
-            _danhSachTomTat = new ObservableCollection<MucTomTat>(); // ✅ ĐÃ THÊM
-
+            _danhSachTomTat = new ObservableCollection<MucTomTat>();
 
             _chiTietHoaDon.CollectionChanged += (s, e) =>
             {
                 OnPropertyChanged(nameof(TongTienCot2));
             };
 
-
-            // Tải dữ liệu ban đầu cho cột 1
             LoadSideBarData();
         }
 
         public decimal TongTienCot2 => ChiTietHoaDon.Sum(x => x.ThanhTien);
 
-
-        // === LOGIC TẢI DỮ LIỆU ===
-
-        /// <summary>
-        /// Được gọi khi người dùng bấm chọn một phòng từ cột 1
-        /// </summary>
-        /// 
-        /*
-        private void OnSelectedPhongChanged(Phong value)
-        {
-            // 1. Xóa hết dữ liệu cũ
-            ChiTietHoaDon.Clear();
-            DanhSachTomTat.Clear(); // ✅ ĐÃ THÊM
-            SelectedBillInfo = null;
-            TongTienCanTra = 0; // ✅ ĐÃ THÊM
-
-            if (value == null) return;
-
-            try
-            {
-                // 2. Tải dữ liệu cột 2 (Chi tiết hóa đơn & DataGrid)
-                var hoaDonData = _xuatBienLaiService.GetBienLai(value.MaPhong);
-                if (hoaDonData.Any())
-                {
-                    SelectedBillInfo = hoaDonData.First();
-                    foreach (var item in hoaDonData)
-                    {
-                        ChiTietHoaDon.Add(item);
-                    }
-                }
-                else
-                {
-                    // Nếu phòng này không có hóa đơn, dừng lại
-                    return;
-                }
-
-                // ✅ BẮT ĐẦU PHẦN CODE BỊ LỖI (ĐÃ DI CHUYỂN VÀO ĐÂY)
-
-                // 3. Tải dữ liệu cột 3 (Tóm tắt)
-                // (Dữ liệu này lấy từ ThanhToanDAL)
-                ThanhToan congNoChinh = _thanhToanService.GetThanhToanHienTaiByPhong(value.MaPhong);
-
-                decimal tienHoaDonChinh = SelectedBillInfo?.TongTien ?? 0;
-
-                // === PHẦN NÀY BẠN CẦN SERVICE RIÊNG ĐỂ TẢI ===
-                // Hiện tại đang gán cứng dữ liệu demo dựa trên giao diện của bạn
-                decimal tienCongNoCu = 700000;
-                decimal tienPhuThu = 300000;
-                // Bạn cần tạo hàm (ví dụ: _thanhToanService.GetCongNoCu(...)) để lấy số liệu thật
-                // ------------------------------------------------
-
-                // Thêm "Hóa đơn chính" vào danh sách tóm tắt
-                DanhSachTomTat.Add(new MucTomTat
-                {
-                    TieuDe = "Hóa đơn Số: ",
-                    MaSo = SelectedBillInfo.MaHoaDon,
-                    Ngay = SelectedBillInfo.NgayLapHoaDon,
-                    SoTien = tienHoaDonChinh
-                });
-
-                // Thêm "Công nợ" (placeholder)
-                DanhSachTomTat.Add(new MucTomTat
-                {
-                    TieuDe = "Công nợ",
-                    Ngay = new DateTime(2025, 5, 3), // (Ngày giả định)
-                    SoTien = tienCongNoCu
-                });
-
-                // Thêm "Phụ thu" (placeholder)
-                DanhSachTomTat.Add(new MucTomTat
-                {
-                    TieuDe = "Phụ thu",
-                    Ngay = new DateTime(2025, 5, 1), // (Ngày giả định)
-                    SoTien = tienPhuThu
-                });
-
-
-                // 4. Tính "Số tiền cần trả" (dựa trên logic hardcode của bạn)
-                TongTienCanTra = tienHoaDonChinh - tienCongNoCu - tienPhuThu;
-
-                // ✅ KẾT THÚC PHẦN CODE BỊ LỖI
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi lấy dữ liệu hóa đơn: {ex.Message}");
-            }
-        }
-        */
-
-
-
         private void OnSelectedPhongChanged(Phong phong)
         {
-            // 1. Xóa dữ liệu cũ
             ChiTietHoaDon.Clear();
             DanhSachTomTat.Clear();
             SelectedBillInfo = null;
@@ -201,10 +81,12 @@ namespace RoomManagementSystem.Presentation.ViewModels
 
             try
             {
+                // Lấy dữ liệu hóa đơn (đã được lưu từ các màn hình ServiceElectricView/ServiceWaterView...)
                 var hoaDonData = _xuatBienLaiService.GetBienLai(phong.MaPhong);
                 var thanhToanHienTai = _thanhToanService.GetThanhToanHienTaiByPhong(phong.MaPhong);
+                var phiBaoTri = ChiTietHoaDon.FirstOrDefault(x => x.TenDichVu.StartsWith("Bảo trì"));
 
-                // 2. Thêm tiền thuê phòng
+                // 1. Thêm tiền thuê phòng (luôn có)
                 ChiTietHoaDon.Add(new BienLai
                 {
                     TenDichVu = "Tiền thuê phòng",
@@ -219,7 +101,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     SoTien = phong.GiaThue
                 });
 
-                // 3. Thêm hóa đơn dịch vụ
+                // 2. Thêm các dịch vụ từ hóa đơn (Điện, Nước, Internet...)
                 if (hoaDonData.Any())
                 {
                     SelectedBillInfo = hoaDonData.First();
@@ -235,7 +117,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     }
                 }
 
-                // 4. Công nợ còn lại
+                // 3. Tính công nợ cũ
                 decimal tienCongNoConLai = Math.Max(0, (thanhToanHienTai?.TongCongNo ?? 0) - (thanhToanHienTai?.SoTienDaThanhToan ?? 0));
                 if (tienCongNoConLai > 0)
                 {
@@ -252,7 +134,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     });
                 }
 
-                // 5. Đã thanh toán (nếu có)
+                // 4. Đã thanh toán
                 decimal tienDaThanhToan = thanhToanHienTai?.SoTienDaThanhToan ?? 0;
                 if (tienDaThanhToan > 0)
                 {
@@ -264,7 +146,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     });
                 }
 
-                // 6. Tổng cộng
+                // 5. Tổng cộng
                 decimal tong = ChiTietHoaDon.Sum(x => x.ThanhTien) + tienCongNoConLai;
                 DanhSachTomTat.Add(new MucTomTat
                 {
@@ -280,13 +162,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
-
-
-
-        /// <summary>
-        /// Tải danh sách Nhà và các Phòng con cho cột 1 (Sidebar)
-        /// (Code này của bạn đã đúng)
-        /// </summary>
         private void LoadSideBarData()
         {
             try
@@ -311,18 +186,11 @@ namespace RoomManagementSystem.Presentation.ViewModels
             }
         }
 
-
-
-
         [RelayCommand]
         private void XuatExcel()
         {
             XuatHoaDon();
         }
-
-
-
-
 
         public void XuatHoaDon()
         {
@@ -332,7 +200,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 return;
             }
 
-            // Mở SaveFileDialog để chọn đường dẫn
             SaveFileDialog saveFile = new SaveFileDialog
             {
                 Filter = "Excel files (*.xlsx)|*.xlsx",
@@ -343,9 +210,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 try
                 {
-                    //_xuatBienLaiService.XuatBienLaiExcel(ChiTietHoaDon.ToList(), saveFile.FileName);
                     _xuatBienLaiService.XuatBienLaiExcel(SelectedBillInfo, ChiTietHoaDon.ToList(), saveFile.FileName);
-
                     MessageBox.Show("Xuất Excel thành công!");
                 }
                 catch (Exception ex)
@@ -354,7 +219,5 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 }
             }
         }
-
-
     }
 }

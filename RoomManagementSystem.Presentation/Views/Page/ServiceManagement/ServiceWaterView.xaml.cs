@@ -17,7 +17,6 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
                 if (OldIndexTextBox != null) OldIndexTextBox.TextChanged += OnInputsChanged;
                 if (NewIndexTextBox != null) NewIndexTextBox.TextChanged += OnInputsChanged;
                 if (UnitPriceTextBox != null) UnitPriceTextBox.TextChanged += OnInputsChanged;
-                // Nếu chưa nhập thời kỳ, tự điền tháng hiện tại MM/yyyy
                 if (ThoiKyTextBox != null && string.IsNullOrWhiteSpace(ThoiKyTextBox.Text))
                 {
                     ThoiKyTextBox.Text = DateTime.Now.ToString("MM/yyyy");
@@ -57,7 +56,7 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
             {
                 var vm = this.DataContext as ServiceManagementViewModel;
                 string maPhong = vm?.SelectedPhong?.MaPhong?.Trim();
-                string thoiKy = ThoiKyTextBox?.Text?.Trim(); // MM/yyyy
+                string thoiKy = ThoiKyTextBox?.Text?.Trim();
 
                 if (string.IsNullOrWhiteSpace(maPhong))
                 {
@@ -70,44 +69,34 @@ namespace RoomManagementSystem.Presentation.Views.Page.ServiceManagement
                     return;
                 }
 
-                // Validate chỉ số nước cũ
                 if (!TryParseDouble(OldIndexTextBox.Text, out double oldIdx) || oldIdx < 0)
                 {
-                    MessageBox.Show("Chỉ số nước cũ phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Chỉ số nước cũ không hợp lệ!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                // Validate chỉ số nước mới
                 if (!TryParseDouble(NewIndexTextBox.Text, out double newIdx) || newIdx < 0)
                 {
-                    MessageBox.Show("Chỉ số nước mới phải là số không âm!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Chỉ số nước mới không hợp lệ!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                // Validate đơn giá
                 if (!TryParseDouble(UnitPriceTextBox.Text, out double unitPrice) || unitPrice <= 0)
                 {
-                    MessageBox.Show("Đơn giá phải là số lớn hơn 0!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Đơn giá không hợp lệ!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                // Validate logic: chỉ số mới >= chỉ số cũ
                 if (newIdx < oldIdx)
                 {
-                    MessageBox.Show("Chỉ số nước mới phải lớn hơn hoặc bằng chỉ số cũ!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Chỉ số nước mới phải >= chỉ số cũ!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                double consumption = newIdx - oldIdx;
-                double total = consumption * unitPrice;
 
+                // Tính toán
+                decimal tieuThu = Convert.ToDecimal(newIdx - oldIdx);
+                decimal gia = Convert.ToDecimal(unitPrice);
+
+                // Gọi hàm chuyên biệt cho Nước
                 var mgr = new ServiceManager();
-                mgr.SaveServiceCosts(
-                    maPhong,
-                    thoiKy,
-                    dien: null,
-                    nuoc: Convert.ToDecimal(total),
-                    internet: null,
-                    rac: null,
-                    guiXe: null,
-                    baoTri: null,
-                    treHan: null);
+                mgr.SaveWater(maPhong, thoiKy, tieuThu, gia);
 
                 MessageBox.Show($"Đã lưu tiền nước cho phòng {maPhong} kỳ {thoiKy}.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }

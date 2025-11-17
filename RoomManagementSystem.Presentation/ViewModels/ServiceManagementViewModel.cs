@@ -4,7 +4,6 @@ using RoomManagementSystem.DataLayer;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Linq;
-using BLL;
 using System.Threading.Tasks;
 using System;
 using System.Data;
@@ -14,7 +13,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
     public partial class ServiceManagementViewModel : ViewModelBase
     {
         private readonly QL_TaiSan_Phong _service = new QL_TaiSan_Phong();
-        // Thêm BLL
+        private readonly BaoTriDAL _baoTriDal = new BaoTriDAL();
         private readonly GoogleSheetBL _googleSheetBL = new GoogleSheetBL();
 
         // Danh sách nhà và phòng
@@ -51,16 +50,22 @@ namespace RoomManagementSystem.Presentation.ViewModels
         private string _unitPriceElectric = "4000";
 
         [ObservableProperty]
-        private string _oldWaterIndex; 
+        private string _oldWaterIndex;
 
         [ObservableProperty]
         private string _newWaterIndex;
 
         [ObservableProperty]
-        private string _unitPriceWater = "20000"; 
+        private string _unitPriceWater = "20000";
 
         [ObservableProperty]
         private string _googleSheetStatus;
+
+        [ObservableProperty]
+        private decimal _maintenanceFeePreview;
+
+        [ObservableProperty]
+        private string _maintenanceDescPreview;
 
         public ServiceManagementViewModel()
         {
@@ -170,8 +175,8 @@ namespace RoomManagementSystem.Presentation.ViewModels
                 {
                     NewElectricIndex = row[colChiSoDienMoi]?.ToString().Trim();
                     NewWaterIndex = row[colChiSoNuocMoi]?.ToString().Trim();
-                    OldElectricIndex = row[colChiSoDienCu]?.ToString().Trim(); 
-                    OldWaterIndex = row[colChiSoNuocCu]?.ToString().Trim(); 
+                    OldElectricIndex = row[colChiSoDienCu]?.ToString().Trim();
+                    OldWaterIndex = row[colChiSoNuocCu]?.ToString().Trim();
 
                     GoogleSheetStatus = "Đã tìm thấy và cập nhật dữ liệu (cũ và mới)!";
                     return; // Thoát sau khi tìm thấy
@@ -184,6 +189,56 @@ namespace RoomManagementSystem.Presentation.ViewModels
             NewWaterIndex = "0";
             OldElectricIndex = "0";
             OldWaterIndex = "0";
+        }
+
+        // CẬP NHẬT: Khi chọn phòng, tải thông tin bảo trì
+        partial void OnSelectedPhongChanged(Phong value)
+        {
+            LoadMaintenanceInfo();
+        }
+
+        // CẬP NHẬT: Khi thay đổi thời kỳ, tải lại thông tin bảo trì
+        partial void OnThoiKyChanged(string value)
+        {
+            LoadMaintenanceInfo();
+        }
+
+        // HÀM MỚI: Tải thông tin bảo trì từ Database
+        public void LoadMaintenanceInfo()
+        {
+            if (SelectedPhong == null || string.IsNullOrWhiteSpace(ThoiKy))
+            {
+                MaintenanceFeePreview = 0;
+                MaintenanceDescPreview = "Chưa chọn phòng/thời kỳ";
+                return;
+            }
+
+            try
+            {
+                // Parse thời kỳ "MM/yyyy"
+                if (DateTime.TryParseExact(ThoiKy, "MM/yyyy",
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.None, out DateTime date))
+                {
+                    // Gọi hàm DAL đã viết ở bước trước (GetBaoTriInfoByMonth)
+                    // Lưu ý: Bạn cần đảm bảo BaoTriDAL đã có hàm GetBaoTriInfoByMonth như hướng dẫn ở phần DAL
+                    var info = _baoTriDal.GetBaoTriInfoByMonth(SelectedPhong.MaPhong, date.Month, date.Year);
+
+                    MaintenanceFeePreview = info.TongChiPhi;
+                    MaintenanceDescPreview = string.IsNullOrEmpty(info.MoTaChiTiet)
+                                             ? "Không có phát sinh"
+                                             : info.MoTaChiTiet;
+                }
+                else
+                {
+                    MaintenanceFeePreview = 0;
+                    MaintenanceDescPreview = "Định dạng thời kỳ sai";
+                }
+            }
+            catch (Exception ex)
+            {
+                MaintenanceDescPreview = "Lỗi: " + ex.Message;
+            }
         }
     }
 }

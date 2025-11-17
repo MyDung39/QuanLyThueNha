@@ -302,5 +302,48 @@ namespace RoomManagementSystem.DataLayer
             return Convert.ToDecimal(db.ExecuteScalar(qr, parameters));
         }
 
+        public (decimal TongChiPhi, string MoTaChiTiet) GetBaoTriInfoByMonth(string maPhong, int thang, int nam)
+        {
+            decimal tongChiPhi = 0;
+            string moTa = "";
+
+            // Lấy các bảo trì Hoàn tất, có ngày hoàn thành trùng với tháng/năm đang xét
+            string sql = @"SELECT ChiPhi, MoTa 
+                           FROM BaoTri 
+                           WHERE MaPhong = @MaPhong 
+                             AND TrangThaiXuLy = N'Hoàn tất'
+                             AND MONTH(NgayHoanThanh) = @Thang
+                             AND YEAR(NgayHoanThanh) = @Nam";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaPhong", maPhong),
+                new SqlParameter("@Thang", thang),
+                new SqlParameter("@Nam", nam)
+            };
+
+            DataTable dt = db.ExecuteQuery(sql, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                var listMoTa = new List<string>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    decimal chiphi = row["ChiPhi"] != DBNull.Value ? Convert.ToDecimal(row["ChiPhi"]) : 0;
+                    string mota = row["MoTa"] != DBNull.Value ? row["MoTa"].ToString() : "";
+
+                    tongChiPhi += chiphi;
+                    if (!string.IsNullOrWhiteSpace(mota))
+                    {
+                        listMoTa.Add(mota);
+                    }
+                }
+                // Ghép các mô tả lại, ví dụ: "Sửa đèn, Thay khóa"
+                moTa = string.Join(", ", listMoTa);
+            }
+
+            return (tongChiPhi, moTa);
+        }
+
     }
 }

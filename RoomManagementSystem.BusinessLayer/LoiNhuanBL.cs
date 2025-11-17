@@ -38,13 +38,26 @@ namespace RoomManagementSystem.BusinessLayer
                     // Ghi DataTable vào Excel
                     ws.Cell(4, 1).InsertTable(dt);
 
-                    // Format tiền
+                    // Format tiền (Giả sử cột: MaPhong, DoanhThu, ChiPhi, LoiNhuan)
                     int rowCount = dt.Rows.Count;
-                    ws.Range(5, 2, 4 + rowCount, dt.Columns.Count)
-                      .Style.NumberFormat.Format = "#,##0";
+                    // Format 3 cột cuối là tiền
+                    ws.Range(5, 2, 4 + rowCount, 4).Style.NumberFormat.Format = "#,##0";
+
+                    // Tô màu cột Lợi Nhuận (Cột 4 - D)
+                    var rangeLoiNhuan = ws.Range(5, 4, 4 + rowCount, 4);
+                    foreach (var cell in rangeLoiNhuan.Cells())
+                    {
+                        if (cell.GetValue<decimal>() < 0)
+                        {
+                            cell.Style.Font.FontColor = XLColor.Red; // Lỗ thì màu đỏ
+                        }
+                        else
+                        {
+                            cell.Style.Font.FontColor = XLColor.Green; // Lãi thì màu xanh
+                        }
+                    }
 
                     ws.Columns().AdjustToContents();
-
                     wb.SaveAs(filePath);
                 }
 

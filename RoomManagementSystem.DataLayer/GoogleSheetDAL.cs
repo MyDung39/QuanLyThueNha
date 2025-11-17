@@ -1,4 +1,83 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿//using Google.Apis.Auth.OAuth2;
+//using Google.Apis.Services;
+//using Google.Apis.Sheets.v4;
+//using Google.Apis.Sheets.v4.Data;
+//using System;
+//using System.Data;
+//using System.IO;
+
+//namespace RoomManagementSystem.DataLayer
+//{
+//    public class GoogleSheetDAL
+//    {
+//        private readonly string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
+//        private readonly string ApplicationName = "QL Data App";
+//        private readonly string SpreadsheetId = "1LEWD6LmyBLAU4F9HMj1Aze3lEovquOOt5UuSOyhR4gw";
+//        private SheetsService service;
+
+//        public GoogleSheetDAL()
+//        {
+//            GoogleCredential credential;
+//            string baseDirectory = AppContext.BaseDirectory;
+//            string solutionRoot = Path.GetFullPath(Path.Combine(baseDirectory, @"..\..\..\..\"));
+
+//            // 3. Ghép chuỗi để đi vào folder RoomManagementSystem.Presentation
+//            string path = Path.Combine(solutionRoot,
+//                                       "RoomManagementSystem.Presentation",
+//                                       "ServiceAccount",
+//                                       "confident-facet-478405-f3-6a6670539754.json");
+
+//            if (!File.Exists(path))
+//            {
+//                throw new FileNotFoundException($"Không tìm thấy file JSON tại đường dẫn: {path}");
+//            }
+
+//            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+//            {
+//                credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
+//            }
+
+//            service = new SheetsService(new BaseClientService.Initializer()
+//            {
+//                HttpClientInitializer = credential,
+//                ApplicationName = ApplicationName
+//            });
+//        }
+
+//        public DataTable GetSheetData(string sheetName)
+//        {
+//            var dt = new DataTable();
+//            var range = $"'{sheetName}'!A:Z";
+//            var request = service.Spreadsheets.Values.Get(SpreadsheetId, range);
+//            ValueRange response = request.Execute();
+
+//            if (response.Values == null || response.Values.Count == 0)
+//                return dt;
+
+//            // Lấy header
+//            foreach (var header in response.Values[0])
+//            {
+//                dt.Columns.Add(header.ToString());
+//            }
+
+//            // Lấy dữ liệu từ dòng 2
+//            for (int i = 1; i < response.Values.Count; i++)
+//            {
+//                var row = response.Values[i];
+//                var dr = dt.NewRow();
+//                for (int j = 0; j < dt.Columns.Count; j++)
+//                {
+//                    dr[j] = j < row.Count ? row[j].ToString() : "";
+//                }
+//                dt.Rows.Add(dr);
+//            }
+
+//            return dt;
+//        }
+//    }
+//}
+
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
@@ -6,7 +85,7 @@ using System;
 using System.Data;
 using System.IO;
 
-namespace DAL
+namespace RoomManagementSystem.DataLayer
 {
     public class GoogleSheetDAL
     {
@@ -21,7 +100,6 @@ namespace DAL
             string baseDirectory = AppContext.BaseDirectory;
             string solutionRoot = Path.GetFullPath(Path.Combine(baseDirectory, @"..\..\..\..\"));
 
-            // 3. Ghép chuỗi để đi vào folder RoomManagementSystem.Presentation
             string path = Path.Combine(solutionRoot,
                                        "RoomManagementSystem.Presentation",
                                        "ServiceAccount",
@@ -34,7 +112,10 @@ namespace DAL
 
             using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
+                // Sử dụng #pragma để ẩn cảnh báo Obsolete nếu bạn chưa muốn đổi sang CredentialFactory
+#pragma warning disable CS0618 
                 credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
+#pragma warning restore CS0618
             }
 
             service = new SheetsService(new BaseClientService.Initializer()
@@ -51,13 +132,15 @@ namespace DAL
             var request = service.Spreadsheets.Values.Get(SpreadsheetId, range);
             ValueRange response = request.Execute();
 
+            // Fix null check
             if (response.Values == null || response.Values.Count == 0)
                 return dt;
 
             // Lấy header
-            foreach (var header in response.Values[0])
+            var headerRow = response.Values[0];
+            foreach (var header in headerRow)
             {
-                dt.Columns.Add(header.ToString());
+                dt.Columns.Add(header?.ToString() ?? "Col"); // Handle null cell
             }
 
             // Lấy dữ liệu từ dòng 2
@@ -67,7 +150,7 @@ namespace DAL
                 var dr = dt.NewRow();
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
-                    dr[j] = j < row.Count ? row[j].ToString() : "";
+                    dr[j] = j < row.Count ? (row[j]?.ToString() ?? "") : "";
                 }
                 dt.Rows.Add(dr);
             }

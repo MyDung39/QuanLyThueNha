@@ -13,6 +13,7 @@ namespace RoomManagementSystem.Presentation.ViewModels
     public class ExpenseItem
     {
         public int STT { get; set; }
+        public string Phong { get; set; }
         public string DonViChi { get; set; }
         public decimal SoTien { get; set; }
     }
@@ -74,9 +75,6 @@ namespace RoomManagementSystem.Presentation.ViewModels
             {
                 if (month < 1 || month > 12) return;
 
-                // ❌ Bỏ kiểm tra năm — KHÔNG CẦN THIẾT
-                // if (!Years.Contains(year)) return;
-
                 _currentPeriodDisplay = $"{month:00}/{year}";
 
                 DataTable dt = _expenseService.GetChiPhiThang(month, year);
@@ -91,6 +89,10 @@ namespace RoomManagementSystem.Presentation.ViewModels
                         var item = new ExpenseItem
                         {
                             STT = row.Table.Columns.Contains("STT") && row["STT"] != DBNull.Value ? Convert.ToInt32(row["STT"]) : 0,
+
+                            // ✅ Ánh xạ cột MaPhong từ DataTable vào thuộc tính Phong
+                            Phong = row.Table.Columns.Contains("MaPhong") ? row["MaPhong"].ToString() : string.Empty,
+
                             DonViChi = row.Table.Columns.Contains("LoaiChiPhi") ? row["LoaiChiPhi"].ToString() : string.Empty,
                             SoTien = row.Table.Columns.Contains("SoTien") && row["SoTien"] != DBNull.Value ? Convert.ToDecimal(row["SoTien"]) : 0
                         };
@@ -99,7 +101,8 @@ namespace RoomManagementSystem.Presentation.ViewModels
                     }
                 }
 
-                items.Add(new ExpenseItem { DonViChi = "Tổng", SoTien = total });
+                // Dòng tổng cộng không có mã phòng
+                items.Add(new ExpenseItem { Phong = "", DonViChi = "Tổng", SoTien = total });
                 ExpenseData = items;
             }
             catch (Exception ex)

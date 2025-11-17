@@ -1,7 +1,7 @@
-﻿using DAL;
+﻿using RoomManagementSystem.DataLayer;
 using System.Data;
 
-namespace BLL
+namespace RoomManagementSystem.BusinessLayer
 {
     public class GoogleSheetBL
     {

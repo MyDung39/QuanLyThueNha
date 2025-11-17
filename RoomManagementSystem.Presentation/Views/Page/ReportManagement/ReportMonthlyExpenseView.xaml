@@ -156,6 +156,7 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="STT" Binding="{Binding STT}" Width="60" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
+                <DataGridTextColumn Header="PHÒNG" Binding="{Binding Phong}" Width="150" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
                 <DataGridTextColumn Header="ĐƠN VỊ CHI" Binding="{Binding DonViChi}" Width="*" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
                 <DataGridTextColumn Header="SỐ TIỀN" Binding="{Binding SoTien, StringFormat='{}{0:N0} đ'}" Width="160" CellStyle="{StaticResource DataGridCellStyle}" ElementStyle="{StaticResource CenterAllText}"/>
             </DataGrid.Columns>

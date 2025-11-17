@@ -13,6 +13,7 @@ namespace RoomManagementSystem.DataLayer
         public string TenNha { get; set; }
         public string DanhSachNguoiThue { get; set; }
         public int SoNguoiHienTai { get; set; }
+        public string ThoiKy { get; set; }
         public string TenDichVu { get; set; }
         public string DVT { get; set; }
         public decimal SoLuong { get; set; }
@@ -42,65 +43,86 @@ namespace RoomManagementSystem.DataLayer
             List<BienLai> lst = new List<BienLai>();
             using (SqlConnection con = new SqlConnection(connect))
             {
-                // ✅ ĐÂY LÀ CÂU TRUY VẤN ĐÃ CHẠY THÀNH CÔNG TRONG SSMS
                 string query = @"
-    DECLARE @MaHoaDon VARCHAR(20);
-    SELECT TOP 1 @MaHoaDon = MaHoaDon 
-    FROM HoaDon 
-    WHERE MaPhong = @MaPhong 
-    ORDER BY NgayTao DESC;
+                DECLARE @MaHoaDon VARCHAR(20);
+                SELECT TOP 1 @MaHoaDon = MaHoaDon 
+                FROM HoaDon 
+                WHERE MaPhong = @MaPhong 
+                ORDER BY NgayTao DESC;
 
-    IF @MaHoaDon IS NOT NULL
-    BEGIN
-        SELECT 
-            hd.MaHoaDon,
-            hd.NgayTao AS NgayLapHoaDon,
-            tbp.NgayGui AS NgayGuiThongBao,
-            tt.NgayHanThanhToan,
-            tt.SoTienDaThanhToan,
-            tt.SoTienConLai,
+                IF @MaHoaDon IS NOT NULL
+                BEGIN
+                    SELECT 
+                        hd.MaHoaDon,
+                        hd.NgayTao AS NgayLapHoaDon,
+                        hd.ThoiKy,
+                        tbp.NgayGui AS NgayGuiThongBao,
+                        ISNULL(tt.NgayHanThanhToan, DATEADD(day, 15, hd.NgayTao)) AS NgayHanThanhToan,
+                        tt.SoTienDaThanhToan,
+                        tt.SoTienConLai,
 
-            p.MaPhong,
-            nha.DiaChi AS DiaChi,
-            ngd.TenTaiKhoan AS TenChuNha,
+                        p.MaPhong,
+                        nha.DiaChi AS DiaChi,
+                        ngd.TenTaiKhoan AS TenChuNha,
 
-            (SELECT STRING_AGG(nt.HoTen, ', ')
-             FROM HopDong_NguoiThue h_nt
-             JOIN NguoiThue nt ON h_nt.MaNguoiThue = nt.MaNguoiThue
-             JOIN HopDong h2 ON h_nt.MaHopDong = h2.MaHopDong
-             WHERE h2.MaPhong = p.MaPhong AND h_nt.TrangThaiThue = N'Đang ở'
-            ) AS DanhSachNguoiThue,
+                        (SELECT STRING_AGG(nt.HoTen, ', ')
+                         FROM HopDong_NguoiThue h_nt
+                         JOIN NguoiThue nt ON h_nt.MaNguoiThue = nt.MaNguoiThue
+                         JOIN HopDong h2 ON h_nt.MaHopDong = h2.MaHopDong
+                         WHERE h2.MaPhong = p.MaPhong AND h_nt.TrangThaiThue = N'Đang ở'
+                        ) AS DanhSachNguoiThue,
 
-            (SELECT STRING_AGG(nt.SoDienThoai, ', ')
-             FROM HopDong_NguoiThue h_nt
-             JOIN NguoiThue nt ON h_nt.MaNguoiThue = nt.MaNguoiThue
-             JOIN HopDong h2 ON h_nt.MaHopDong = h2.MaHopDong
-             WHERE h2.MaPhong = p.MaPhong AND h_nt.TrangThaiThue = N'Đang ở'
-            ) AS DanhSachSDT,
+                        (SELECT STRING_AGG(nt.SoDienThoai, ', ')
+                         FROM HopDong_NguoiThue h_nt
+                         JOIN NguoiThue nt ON h_nt.MaNguoiThue = nt.MaNguoiThue
+                         JOIN HopDong h2 ON h_nt.MaHopDong = h2.MaHopDong
+                         WHERE h2.MaPhong = p.MaPhong AND h_nt.TrangThaiThue = N'Đang ở'
+                        ) AS DanhSachSDT,
+            
+                        (SELECT COUNT(h_nt.MaNguoiThue)
+                         FROM HopDong_NguoiThue h_nt
+                         JOIN HopDong h2 ON h_nt.MaHopDong = h2.MaHopDong
+                         WHERE h2.MaPhong = p.MaPhong 
+                           AND h2.TrangThai = N'Hiệu lực'
+                           AND h_nt.TrangThaiThue = N'Đang ở'
+                        ) AS SoNguoiHienTai,
 
-            p.SoNguoiHienTai,
+                        (SELECT SUM(cthd_sum.ThanhTien) 
+                         FROM ChiTietHoaDon cthd_sum 
+                         WHERE cthd_sum.MaHoaDon = hd.MaHoaDon) AS TongTien,
 
-            (SELECT SUM(cthd_sum.ThanhTien) 
-             FROM ChiTietHoaDon cthd_sum 
-             WHERE cthd_sum.MaHoaDon = hd.MaHoaDon) AS TongTien,
+                        CASE 
+                            WHEN cthd.MaDichVu = 'DV8' THEN 
+                                N'Bảo trì: ' + ISNULL((
+                                    SELECT STRING_AGG(bt.MoTa, ', ')
+                                    FROM BaoTri bt
+                                    WHERE bt.MaPhong = p.MaPhong 
+                                      AND bt.TrangThaiXuLy = N'Hoàn tất'
+                                      AND RIGHT('0' + CAST(MONTH(bt.NgayHoanThanh) AS VARCHAR(2)), 2) + '/' + CAST(YEAR(bt.NgayHoanThanh) AS VARCHAR(4)) = hd.ThoiKy
+                                ), N'Chi tiết')
 
-            dv.TenDichVu,
-            cthd.DVT,
-            cthd.SoLuong,
-            cthd.DonGia,
-            cthd.ThanhTien
+                            WHEN dv.TenDichVu IS NOT NULL THEN dv.TenDichVu
+                            WHEN cthd.MaDichVu = 'DV6' THEN N'Phí trễ hạn'
+                            WHEN cthd.MaDichVu = 'DV7' THEN N'Giặt sấy'
+                            ELSE N'Dịch vụ khác'
+                        END AS TenDichVu,
 
-        FROM HoaDon hd
-        LEFT JOIN Phong p ON hd.MaPhong = p.MaPhong
-        LEFT JOIN Nha nha ON p.MaNha = nha.MaNha
-        LEFT JOIN NguoiDung ngd ON nha.MaNguoiDung = ngd.MaNguoiDung      -- ⭐ Thêm JOIN lấy chủ nhà
-        LEFT JOIN HopDong h ON p.MaPhong = h.MaPhong AND h.TrangThai = N'Hiệu lực'
-        LEFT JOIN ChiTietHoaDon cthd ON hd.MaHoaDon = cthd.MaHoaDon
-        LEFT JOIN DichVu dv ON cthd.MaDichVu = dv.MaDichVu
-        LEFT JOIN ThanhToan tt ON hd.MaHoaDon = tt.MaHoaDon
-        LEFT JOIN ThongBaoPhi tbp ON tt.MaThongBaoPhi = tbp.MaThongBaoPhi
-        WHERE hd.MaHoaDon = @MaHoaDon;
-    END";
+                        cthd.DVT,
+                        cthd.SoLuong,
+                        cthd.DonGia,
+                        cthd.ThanhTien
+
+                    FROM HoaDon hd
+                    LEFT JOIN Phong p ON hd.MaPhong = p.MaPhong
+                    LEFT JOIN Nha nha ON p.MaNha = nha.MaNha
+                    LEFT JOIN NguoiDung ngd ON nha.MaNguoiDung = ngd.MaNguoiDung
+                    LEFT JOIN HopDong h ON p.MaPhong = h.MaPhong AND h.TrangThai = N'Hiệu lực'
+                    LEFT JOIN ChiTietHoaDon cthd ON hd.MaHoaDon = cthd.MaHoaDon
+                    LEFT JOIN DichVu dv ON cthd.MaDichVu = dv.MaDichVu
+                    LEFT JOIN ThanhToan tt ON hd.MaHoaDon = tt.MaHoaDon
+                    LEFT JOIN ThongBaoPhi tbp ON tt.MaThongBaoPhi = tbp.MaThongBaoPhi
+                    WHERE hd.MaHoaDon = @MaHoaDon;
+                END";
 
 
                 SqlCommand cmd = new SqlCommand(query, con);
@@ -114,21 +136,24 @@ namespace RoomManagementSystem.DataLayer
                     lst.Add(new BienLai()
                     {
                         MaHoaDon = dr["MaHoaDon"]?.ToString(),
+                        ThoiKy = dr["ThoiKy"]?.ToString(),
                         NgayLapHoaDon = dr["NgayLapHoaDon"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dr["NgayLapHoaDon"]),
                         NgayGuiThongBao = dr["NgayGuiThongBao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dr["NgayGuiThongBao"]),
-                        NgayHanThanhToan = dr["NgayHanThanhToan"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dr["NgayHanThanhToan"]),
+                        NgayHanThanhToan = dr["NgayHanThanhToan"] == DBNull.Value
+                                           ? (DateTime?)null
+                                           : Convert.ToDateTime(dr["NgayHanThanhToan"]),
                         TongTien = dr["TongTien"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["TongTien"]),
                         SoTienDaThanhToan = dr["SoTienDaThanhToan"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["SoTienDaThanhToan"]),
                         ConLai = dr["SoTienConLai"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["SoTienConLai"]),
 
                         MaPhong = dr["MaPhong"]?.ToString(),
-                    //    TenNha = dr["TenNha"]?.ToString(),      // <- Thêm TenNha
+                        //    TenNha = dr["TenNha"]?.ToString(),      // <- Thêm TenNha
                         DiaChi = dr["DiaChi"]?.ToString(),
                         DanhSachNguoiThue = dr["DanhSachNguoiThue"]?.ToString(),
                         SoNguoiHienTai = dr["SoNguoiHienTai"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SoNguoiHienTai"]),
                         DanhSachSDT = dr["DanhSachSDT"]?.ToString(),
                         TenTaiKhoan = dr["TenChuNha"]?.ToString(),
-                     //   NgayThanhToan = dr["NgayThanhToan"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["NgayThanhToan"]),
+                        //   NgayThanhToan = dr["NgayThanhToan"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["NgayThanhToan"]),
 
                         TenDichVu = dr["TenDichVu"]?.ToString(),
                         DVT = dr["DVT"]?.ToString(),

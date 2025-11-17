@@ -105,6 +105,19 @@
                                  IsEnabled="{Binding IsChecked, ElementName=LateFeeYesRadio}"
                                  Text="100000"/>
 
+                        <TextBlock Text="Chi phí bảo trì" Style="{StaticResource LabelStyle}" FontWeight="Bold" Margin="0,24,0,0"/>
+                        <TextBlock Text="{Binding MaintenanceDescPreview}" 
+                                   FontSize="11" FontStyle="Italic" Foreground="Gray" 
+                                   TextWrapping="Wrap" Margin="0,4,0,4"/>
+
+                        <TextBox x:Name="MaintenanceCostTextBox"
+                                 Style="{StaticResource InputTextBoxStyle}"
+                                 Margin="0,0,0,0"
+                                 IsReadOnly="True"
+                                 Background="#FFF0F0F0"
+                                 FontWeight="Bold"
+                                 Text="{Binding MaintenanceFeePreview, StringFormat={}{0:N0}}"/>
+
                         <Separator Margin="0,32,0,16"/>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Tổng: " Style="{StaticResource LabelStyle}" FontWeight="Bold"/>

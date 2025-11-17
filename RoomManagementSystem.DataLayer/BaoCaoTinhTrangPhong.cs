@@ -11,6 +11,7 @@ namespace RoomManagementSystem.DataLayer
     public class BaoCaoTinhTrangPhong
     {
         Database dt = new Database();
+
         // 1. Phòng trống
         public DataTable GetPhongTrong()
         {
@@ -19,23 +20,27 @@ namespace RoomManagementSystem.DataLayer
         }
 
         // 2. Phòng đang thuê
+        // ✅ ĐÃ SỬA: Bỏ JOIN bảng NguoiThue để tránh lặp lại MaPhong theo số lượng người ở
         public DataTable GetPhongDangThue()
         {
+            // Chỉ lấy thông tin Phòng và Hợp đồng (để giữ lại ngày tháng cho xuất Excel nếu cần)
+            // Đảm bảo mỗi Hợp đồng/Phòng chỉ hiện 1 dòng
             string sql = @"
-                SELECT p.MaPhong, p.GiaThue, n.HoTen,hd.NgayBatDau, hd.NgayKetThuc
+                SELECT p.MaPhong, p.GiaThue, hd.NgayBatDau, hd.NgayKetThuc
                 FROM Phong p
                 JOIN HopDong hd ON p.MaPhong = hd.MaPhong
-                JOIN HopDong_NguoiThue hdnt ON hd.MaHopDong = hdnt.MaHopDong
-                JOIN NguoiThue n ON hdnt.MaNguoiThue = n.MaNguoiThue
-                WHERE p.TrangThai=N'Đang thuê'";
+                WHERE p.TrangThai = N'Đang thuê' 
+                AND hd.TrangThai = N'Hiệu lực'";
+
             return dt.ExecuteQuery(sql);
         }
 
-        //3. Phòng dự kiến trống (hợp đồng sắp hết hạn)
+        // 3. Phòng dự kiến trống (hợp đồng sắp hết hạn)
+        // (Gợi ý: Bạn cũng nên xem xét sửa hàm này tương tự nếu danh sách "Dự kiến" cũng bị lặp)
         public DataTable GetPhongSapTrong()
         {
             string sql = @"
-                SELECT p.MaPhong,n.HoTen, hd.NgayKetThuc
+                SELECT p.MaPhong, n.HoTen, hd.NgayKetThuc
                 FROM Phong p
                 JOIN HopDong hd ON p.MaPhong = hd.MaPhong
                 JOIN HopDong_NguoiThue hdnt ON hd.MaHopDong = hdnt.MaHopDong

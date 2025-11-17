@@ -13,6 +13,8 @@ namespace RoomManagementSystem.BusinessLayer
     public class BaoCaoCongNo
     {
         CongNo cn = new CongNo();
+        // Trong file RoomManagementSystem.BusinessLayer.BaoCaoCongNo.cs
+
         public DataTable LayBaoCaoCongNo()
         {
             DataTable dt = cn.GetDanhSachCongNo();
@@ -20,66 +22,38 @@ namespace RoomManagementSystem.BusinessLayer
             dt.Columns.Add("SoThangNo", typeof(int));
             foreach (DataRow row in dt.Rows)
             {
-                DateTime han = Convert.ToDateTime(row["NgayHanThanhToan"]);
-                int thangNo = ((DateTime.Now.Year - han.Year) * 12) + DateTime.Now.Month - han.Month;
-                row["SoThangNo"] = Math.Max(thangNo, 0);
+                // Kiểm tra nếu NgayHanThanhToan không phải là NULL
+                if (row["NgayHanThanhToan"] != DBNull.Value && row["NgayHanThanhToan"] != null)
+                {
+                    DateTime han = Convert.ToDateTime(row["NgayHanThanhToan"]);
+                    int thangNo = ((DateTime.Now.Year - han.Year) * 12) + DateTime.Now.Month - han.Month;
+                    row["SoThangNo"] = Math.Max(thangNo, 0);
+                }
+                else
+                {
+                    // Nếu ngày hạn là NULL thì coi như chưa quá hạn (0 tháng)
+                    row["SoThangNo"] = 0;
+                }
             }
             return dt;
+        }
+
+        // Đồng thời, sửa hàm tính tổng để tránh lỗi nếu SoTienConLai bị NULL
+        public decimal TongCongNoHeThong(DataTable dt)
+        {
+            decimal tong = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["SoTienConLai"] != DBNull.Value)
+                {
+                    tong += Convert.ToDecimal(row["SoTienConLai"]);
+                }
+            }
+            return tong;
         }
         public DataTable LayLichSuThanhToan(string maKhach)
         {
             return cn.GetLichSuThanhToan(maKhach);
-        }
-
-        public decimal TongCongNoHeThong(DataTable dt)
-        {
-            return dt.AsEnumerable().Sum(r => r.Field<decimal>("SoTienConLai"));
-        }
-        public bool ExportCongNoToExcel(DataTable dt, string filePath)
-        {
-            try
-            {
-                using (var wb = new XLWorkbook())
-                {
-                    var ws = wb.Worksheets.Add("Báo cáo Công nợ");
-
-                    ws.Cell(1, 1).InsertTable(dt);
-
-                    var header = ws.Row(1);
-                    header.Style.Font.Bold = true;
-                    header.Style.Fill.BackgroundColor = XLColor.LightSteelBlue;
-                    header.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-
-                    // Format tiền + ngày
-                    ws.Column(dt.Columns["SoTienConLai"].Ordinal + 1)
-                        .Style.NumberFormat.Format = "#,##0 VNĐ";
-
-                    ws.Column(dt.Columns["NgayHanThanhToan"].Ordinal + 1)
-                        .Style.DateFormat.Format = "dd/MM/yyyy";
-
-                    // Tô đỏ nếu nợ > 2 tháng
-                    int soThangNoCol = dt.Columns["SoThangNo"].Ordinal + 1;
-                    foreach (var row in ws.RangeUsed().RowsUsed().Skip(1))
-                    {
-                        int soThangNo = row.Cell(soThangNoCol).GetValue<int>();
-                        if (soThangNo >= 2)
-                            row.Style.Fill.BackgroundColor = XLColor.LightPink;
-                    }
-
-                    ws.RangeUsed().Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                    ws.RangeUsed().Style.Border.InsideBorder = XLBorderStyleValues.Thin;
-
-                    ws.Columns().AdjustToContents();
-
-                    wb.SaveAs(filePath);
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Lỗi xuất Excel: " + ex.Message);
-            }
         }
     }
 }

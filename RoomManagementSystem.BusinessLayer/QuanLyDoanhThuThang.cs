@@ -49,17 +49,18 @@ namespace RoomManagementSystem.BusinessLayer
             using (var workbook = new XLWorkbook())
             {
                 var ws = workbook.Worksheets.Add(sheetName);
-                ws.Cell(1, 1).InsertTable(dt); // tự động ghi header + dữ liệu
+                ws.Cell(1, 1).InsertTable(dt);
                 ws.Columns().AdjustToContents();
 
+                // Định dạng cột Tiền thuê nếu có
                 if (dt.Columns.Contains("Tiền thuê"))
                 {
-                    ws.Column(dt.Columns["Tiền thuê"].Ordinal + 1).Style.NumberFormat.Format = "#,##0 \"VNĐ\"";
+                    // Lấy cột theo tên và định dạng tiền tệ
+                    var colIndex = dt.Columns["Tiền thuê"].Ordinal + 1;
+                    ws.Column(colIndex).Style.NumberFormat.Format = "#,##0 \"VNĐ\"";
                 }
 
-                if (dt.Columns.Contains("DoanhThu"))
-                    ws.Column(dt.Columns["DoanhThu"].Ordinal + 1).Style.NumberFormat.Format = "#,##0 \"VNĐ\"";
-                ws.Columns().AdjustToContents();
+                // ...
                 workbook.SaveAs(filePath);
             }
         }

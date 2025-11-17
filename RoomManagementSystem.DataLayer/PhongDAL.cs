@@ -59,21 +59,20 @@ namespace RoomManagementSystem.DataLayer
         //Lấy số người hiện tại trong phòng
         public int GetSoNguoiHienTai(string maPhong)
         {
-            string qr = @"
-        SELECT COUNT(DISTINCT hnt.MaNguoiThue) 
-        FROM HopDong_NguoiThue hnt
-        INNER JOIN HopDong hd ON hnt.MaHopDong = hd.MaHopDong
-        WHERE hd.MaPhong = @maPhong 
-          AND hnt.TrangThaiThue = N'Đang ở'";
-
-            SqlParameter[] parameters = new SqlParameter[]
+            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
             {
-        new SqlParameter("@maPhong", maPhong ?? (object)DBNull.Value)
-            };
+                conn.Open();
+                string query = "SELECT dbo.fn_TinhSoNguoiHienTai(@MaPhong)";
 
-            object result = db.ExecuteScalar(qr, parameters);
-            return result != null ? Convert.ToInt32(result) : 0;
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaPhong", maPhong);
+                    object result = cmd.ExecuteScalar();
+                    return result != null && result != DBNull.Value ? Convert.ToInt32(result) : 0;
+                }
+            }
         }
+
         // Cập nhật phòng
         public bool UpdatePhong(Phong phong)
         {
